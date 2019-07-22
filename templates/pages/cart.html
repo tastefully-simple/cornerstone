@@ -37,7 +37,8 @@ cart: true
                         </a>
                     {{/if}}
 
-                    <a class="button button--tertiary shopMore" href="#cart_id={{cart_id}}" title="{{lang 'cart.shop_more.title'}}">
+                    <a class="button button--tertiary shopMore"
+                       href="{{theme_settings.sitecore_url}}?cart_id={{cart_id}}" title="{{lang 'cart.shop_more.title'}}">
                         {{lang 'cart.shop_more.button'}}
                     </a>
 

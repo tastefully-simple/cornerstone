@@ -34,6 +34,10 @@
     },
     "cart": {
         "continue_shopping": "Click here to continue shopping",
+        "shop_more": {
+            "button": "Shop more",
+            "title": "Click here to shop more"
+        },
         "items": "{NUM, plural, =0{(0 items)} one {(# item)} other {(# items)}}",
         "checkout": {
             "address": {

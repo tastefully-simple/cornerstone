@@ -504,6 +504,16 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
         float: right;
         padding-top: spacing("quarter");
     }
+
+    .shopMore {
+        margin-right: 0;
+        margin-top: spacing("half");
+
+        @include breakpoint("small") {
+            margin-right: spacing("half");
+            margin-top: 0;
+        }
+    }
 }
 
 .cart-additionalCheckoutButtons { // 1

@@ -1,5 +1,5 @@
 {
-  "name": "Cornerstone",
+  "name": "Tastefully Simple Cornerstone",
   "version": "3.5.1",
   "meta": {
     "price": 0,
@@ -44,6 +44,7 @@
     "Firefox ESR"
   ],
   "settings": {
+    "sitecore_url": "https://www.tastefullysimple.com",
     "hide_breadcrumbs": false,
     "hide_page_heading": false,
     "hide_category_page_heading": false,

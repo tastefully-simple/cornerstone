@@ -379,3 +379,13 @@ $optimizedCheckout-input--error-boxShadow: 0 0 3px transparentize(stencilColor("
     background-color: stencilColor("optimizedCheckout-loadingToaster-backgroundColor");
     color: stencilColor("optimizedCheckout-loadingToaster-textColor");
 }
+
+//
+// Tastefully Simple
+// Custom Checkout Overrides
+// -----------------------------------------------------------------------------
+
+// Removes "Already have an account? Sign in now"
+#checkout-customer-guest > fieldset > div > p:nth-child(3) {
+    display: none;
+}

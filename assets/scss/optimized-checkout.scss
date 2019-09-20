@@ -389,3 +389,8 @@ $optimizedCheckout-input--error-boxShadow: 0 0 3px transparentize(stencilColor("
 #checkout-customer-guest > fieldset > div > p:nth-child(3) {
     display: none;
 }
+
+// Removes account creation on order confirmation page
+form.guest-signup {
+    display: none;
+}

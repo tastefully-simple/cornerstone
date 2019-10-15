@@ -12,9 +12,15 @@
             <tr class="cart-item" data-item-row>
                 <td class="cart-item-block cart-item-figure">
                     {{#if type '==' 'GiftCertificate'}}
-                        <img class="cart-item-fixed-image lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
+                        <img class="cart-item-fixed-image" src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
                     {{else}}
-                        <img class="cart-item-image lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage image 'productthumb_size' (cdn ../../theme_settings.default_image_product)}}" alt="{{image.alt}}" title="{{image.alt}}">
+                        {{> components/common/responsive-img
+                            image=image
+                            class="cart-item-image"
+                            fallback_size=../../theme_settings.productthumb_size
+                            lazyload='disabled'
+                            default_image=../../theme_settings.default_image_product
+                        }}
                     {{/if}}
                 </td>
                 <td class="cart-item-block cart-item-title">
@@ -76,7 +82,7 @@
 
                     <label class="form-label cart-item-label" for="qty-{{id}}">{{lang 'products.quantity'}}</label>
                     <div class="form-increment">
-                        {{# if can_modify}}
+                        {{#if can_modify}}
                             <button class="button button--icon" data-cart-update data-cart-itemid="{{id}}" data-action="dec">
                                 <span class="is-srOnly">{{lang 'products.quantity_decrease'}}</span>
                                 <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-keyboard-arrow-down" /></svg></i>
@@ -96,7 +102,7 @@
                                data-cart-itemid="{{id}}"
                                data-action="manualQtyChange"
                                aria-live="polite"{{#unless can_modify}} disabled{{/unless}}>
-                        {{# if can_modify}}
+                        {{#if can_modify}}
                             <button class="button button--icon" data-cart-update data-cart-itemid="{{id}}" data-action="inc">
                                 <span class="is-srOnly">{{lang 'products.quantity_increase'}}</span>
                                 <i class="icon" aria-hidden="true"><svg><use xlink:href="#icon-keyboard-arrow-up" /></svg></i>
@@ -116,7 +122,7 @@
                     {{else}}
                         {{> components/common/login-for-pricing}}
                     {{/or}}
-                    {{# if can_modify}}
+                    {{#if can_modify}}
                         <a class="cart-remove icon" data-cart-itemid="{{id}}" href="#" data-confirm-delete="{{lang 'cart.confirm_delete'}}">
                             <svg><use xlink:href="#icon-close"></use></svg>
                         </a>

@@ -44,7 +44,7 @@
     "Firefox ESR"
   ],
   "settings": {
-    "sitecore_url": "https://www.tastefullysimple.com",
+    "shop_more_url": "https://www.tastefullysimple.com/shop-more/",
     "hide_breadcrumbs": false,
     "hide_page_heading": false,
     "hide_category_page_heading": false,

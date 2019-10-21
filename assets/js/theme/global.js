@@ -14,6 +14,7 @@ import carousel from './common/carousel';
 import 'lazysizes';
 import svgInjector from './global/svg-injector';
 import affiliate from './global/affiliate';
+import associateAffiliate from './global/associate-affiliate';
 
 export default class Global extends PageManager {
     onReady() {
@@ -34,5 +35,6 @@ export default class Global extends PageManager {
         maintenanceMode(this.context.maintenanceMode);
         svgInjector();
         affiliate();
+        associateAffiliate();
     }
 }

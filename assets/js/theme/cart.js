@@ -3,7 +3,7 @@ import _ from 'lodash';
 import giftCertCheck from './common/gift-certificate-validator';
 import utils from '@bigcommerce/stencil-utils';
 import ShippingEstimator from './cart/shipping-estimator';
-import { defaultModal } from './global/modal';
+import modalFactory, { defaultModal, ModalEvents } from './global/modal';
 import swal from './global/sweet-alert';
 
 export default class Cart extends PageManager {
@@ -416,10 +416,37 @@ export default class Cart extends PageManager {
         toggleViews();
     }
 
+    bindFindAffiliateEvents() {
+        $('#find-affiliate-modal').on(ModalEvents.open, () => {
+            const modal = modalFactory('#find-affiliate-modal')[0];
+            const frame = document.createElement('iframe');
+
+            modal.pending = true;
+
+            frame.src = 'https://tastefullysimpl.sb-affiliate.com/iframe/activeaffiliates';
+            frame.width = '100%';
+            frame.height = '650';
+            frame.style.border = '0';
+            frame.frameborder = '0';
+            frame.scrolling = 'yes';
+
+            $('#find-affiliate-modal-iframe').append(frame);
+
+            frame.onload = () => {
+                modal.pending = false;
+            };
+        });
+
+        $('#find-affiliate-modal').on(ModalEvents.close, () => {
+            $('#find-affiliate-modal-iframe').empty();
+        });
+    }
+
     bindEvents() {
         this.bindCartEvents();
         this.bindPromoCodeEvents();
         this.bindGiftWrappingEvents();
+        this.bindFindAffiliateEvents();
         this.bindGiftCertificateEvents();
 
         // initiate shipping estimator module

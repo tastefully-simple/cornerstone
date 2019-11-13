@@ -661,3 +661,11 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     padding: spacing("double");
     text-align: center;
 }
+
+// Cart affiliate info
+// -----------------------------------------------------------------------------
+
+.cart-affiliateInfo {
+    text-align: center;
+    display: none;
+}

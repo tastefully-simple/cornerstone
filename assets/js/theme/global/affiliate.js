@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  * The Social Bug plugin does not load right away with the rest of the assets
  * on the page. We need to wait/check for the plugin until it is available.
@@ -14,6 +16,29 @@ function waitForSocialBug(callback) {
 }
 
 /**
+ * If we are on the cart page, let's make a call to the TS API to get the
+ * current consultant's full name so we can set that near the bottom of
+ * the cart page.
+ */
+function setAffiliateNameById(affiliateId) {
+    if (document.getElementById('affiliate-name') === null) {
+        return;
+    }
+
+    axios.get(`https://tsapi.tastefullysimple.com/sb/id/${affiliateId}`)
+        .then(response => {
+            if (response.data === 'null') {
+                return;
+            }
+
+            const fullName = `${response.data.FirstName} ${response.data.LastName}`;
+
+            document.getElementById('affiliate-name').innerText = fullName;
+            document.getElementById('cart-affiliate-info').style.display = 'inherit';
+        });
+}
+
+/**
  * This function grabs the affiliate id from the Social Bug <div> tag once it's
  * loaded and appends it to the "Shop more" button.
  */
@@ -23,5 +48,7 @@ export default function () {
         const affiliateParam = affiliateId !== undefined ? `&afid=${affiliateId}` : '';
 
         $('#shop-more-btn').attr('href', (i, href) => href + affiliateParam);
+
+        setAffiliateNameById(affiliateId);
     });
 }

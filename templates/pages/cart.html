@@ -39,10 +39,6 @@ cart: true
 
                     {{> components/cart/shop-more}}
 
-                    <a class="button button--tertiary" href="#find-affiliate-modal" data-reveal-id="find-affiliate-modal">
-                        {{lang 'cart.find_affiliate.button'}}
-                    </a>
-
                 </div>
             {{else}}
                 <div class="cart-actions">
@@ -60,6 +56,8 @@ cart: true
         {{else}}
             <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
         {{/if}}
+
+        {{> components/cart/affiliate-info}}
 
     </main>
 

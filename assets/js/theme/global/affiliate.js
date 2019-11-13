@@ -27,14 +27,17 @@ function setAffiliateNameById(affiliateId) {
 
     axios.get(`https://tsapi.tastefullysimple.com/sb/id/${affiliateId}`)
         .then(response => {
-            if (response.data === 'null') {
+            document.getElementById('cart-affiliate-info').style.display = 'inherit';
+
+            if (response.data === null) {
+                document.getElementById('cart-no-affiliate-name').style.display = 'inherit';
                 return;
             }
 
             const fullName = `${response.data.FirstName} ${response.data.LastName}`;
 
             document.getElementById('affiliate-name').innerText = fullName;
-            document.getElementById('cart-affiliate-info').style.display = 'inherit';
+            document.getElementById('cart-affiliate-name').style.display = 'inherit';
         });
 }
 

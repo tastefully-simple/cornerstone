@@ -670,10 +670,6 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     display: none;
 }
 
-#cart-affiliate-name {
-    display: none;
-}
-
-#cart-no-affiliate-name {
+#cart-affiliate-name, #cart-no-affiliate-name, #cart-tastefully-simple-name {
     display: none;
 }

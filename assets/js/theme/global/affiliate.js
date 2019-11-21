@@ -36,6 +36,11 @@ function setAffiliateNameById(affiliateId) {
 
             const fullName = `${response.data.FirstName} ${response.data.LastName}`;
 
+            if (fullName.toLowerCase() === 'tastefully simple') {
+                document.getElementById('cart-tastefully-simple-name').style.display = 'inherit';
+                return;
+            }
+
             document.getElementById('affiliate-name').innerText = fullName;
             document.getElementById('cart-affiliate-name').style.display = 'inherit';
         });

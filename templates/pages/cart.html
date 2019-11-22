@@ -57,7 +57,12 @@ cart: true
             <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
         {{/if}}
 
+        {{> components/cart/affiliate-info}}
+
     </main>
+
+    {{> components/cart/modals/find-affiliate}}
+
 </div>
 {{/partial}}
 {{> layout/base}}

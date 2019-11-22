@@ -127,6 +127,10 @@
             "continue_shopping": "Continue Shopping",
             "view_or_edit_cart": "View or edit your cart",
             "you_might_also_like": "You may also like"
+        },
+        "find_affiliate": {
+            "modal_title": "Change independent consultant",
+            "button": "change independent consultant"
         }
     },
     "common": {

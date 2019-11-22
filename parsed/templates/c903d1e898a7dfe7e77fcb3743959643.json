@@ -1,0 +1,1 @@
+{"components/cart/shop-more":"<a class=\"button button--tertiary shopMore\" href=\"{{theme_settings.shop_more_url}}?cid={{cart_id}}{{afid}}\"\n    title=\"{{lang 'cart.shop_more.title'}}\" id=\"shop-more-btn\">\n    {{lang 'cart.shop_more.button'}}\n</a>\n"}

@@ -1,6 +1,17 @@
 # Changelog
 
 ## Draft
+- Add jquery-migrate to Modal test [#1599](https://github.com/bigcommerce/cornerstone/pull/1599)
+- Upgrade core-js to version 3 [#1598](https://github.com/bigcommerce/cornerstone/pull/1598)
+
+## 4.3.0 (2019-11-12)
+- Fixes body text color not taking effect for cart item headings on mobile / tablet [#1586](https://github.com/bigcommerce/cornerstone/pull/1586)
+- Fix styling of review modal image [#1592](https://github.com/bigcommerce/cornerstone/pull/1592)
+- Fix typo in README.md [#1588](https://github.com/bigcommerce/cornerstone/pull/1588)
+- Fix corejs warning [#1594](https://github.com/bigcommerce/cornerstone/pull/1594)
+- Fix cart quantity calculation for bundled products [#1596](https://github.com/bigcommerce/cornerstone/pull/1596)
+
+## 4.2.1 (2019-10-15)
 - Added missing gift certificate translation
 - Fix registerValidation function to validate on writeReview-form email field [#1585](https://github.com/bigcommerce/cornerstone/pull/1585)
 

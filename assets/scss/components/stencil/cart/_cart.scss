@@ -506,6 +506,16 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
         float: right;
         padding-top: spacing("quarter");
     }
+
+    .shopMore {
+        margin-right: 0;
+        margin-top: spacing("half");
+
+        @include breakpoint("small") {
+            margin-right: spacing("half");
+            margin-top: 0;
+        }
+    }
 }
 
 .cart-additionalCheckoutButtons { // 1
@@ -652,4 +662,16 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 .previewCart-emptyBody {
     padding: spacing("double");
     text-align: center;
+}
+
+// Cart affiliate info
+// -----------------------------------------------------------------------------
+
+.cart-affiliateInfo {
+    text-align: center;
+    display: none;
+}
+
+#cart-affiliate-name, #cart-no-affiliate-name, #cart-tastefully-simple-name {
+    display: none;
 }

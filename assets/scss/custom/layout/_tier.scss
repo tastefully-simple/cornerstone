@@ -1,0 +1,7 @@
+.tier {
+    @include pillow(true, false);
+}
+
+.tier__container {
+    @include container();
+}

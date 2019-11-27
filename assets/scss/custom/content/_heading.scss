@@ -1,0 +1,29 @@
+// A heading is an HTML element.
+// A header is a design element.
+.heading {
+    @include heading();
+}
+
+.heading--1 {
+    @include heading1();
+}
+
+.heading--2 {
+    @include heading2();
+}
+
+.heading--3 {
+    @include heading3();
+}
+
+.heading--4 {
+    @include heading4();
+}
+
+.heading--5 {
+    @include heading5();
+}
+
+.heading--6 {
+    @include heading6();
+}

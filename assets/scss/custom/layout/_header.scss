@@ -1,0 +1,17 @@
+/**
+Overrides header file 
+**/
+ 
+
+@media (min-width: 801px) {
+    .header-logo--collapsed {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .header-logo-image-container {
+        margin-top: .85rem;
+    }
+}

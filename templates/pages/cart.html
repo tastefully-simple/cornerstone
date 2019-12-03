@@ -5,7 +5,7 @@ cart: true
 <div class="page">
 
     <main class="page-content" data-cart>
-        <!-- {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} -->
+       {{!-- {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} --}}
 
         {{> components/cart/page-title}}
 
@@ -46,7 +46,7 @@ cart: true
                 </div>
             {{/if}}
 
-            <!-- {{#if cart.additional_checkout_buttons}}
+            {{#if cart.additional_checkout_buttons}}
                 <div class="cart-additionalCheckoutButtons">
                     {{#each cart.additional_checkout_buttons}}
                         {{{this}}}
@@ -55,9 +55,9 @@ cart: true
             {{/if}}
         {{else}}
             <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
-        {{/if}} -->
+        {{/if}}
 
-        <!-- {{> components/cart/affiliate-info}} -->
+        {{> components/cart/affiliate-info}}
 
     </main>
 

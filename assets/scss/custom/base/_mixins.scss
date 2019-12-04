@@ -2,7 +2,6 @@
 *
 * HEADINGS
 * Mixins for headings so we can modify in one place for heading css class and WYSIWYG content.
-* Font-size properties read from config.json and follow native Stencil naming convention.
 */
 @mixin heading() {
     line-height: 1.2;

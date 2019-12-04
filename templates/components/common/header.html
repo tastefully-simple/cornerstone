@@ -10,22 +10,22 @@
 </div>
 {{/if}}
 <header class="header" role="banner">
-    <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
+    {{!-- <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
         <span class="mobileMenu-toggleIcon">Toggle menu</span>
-    </a>
-    {{> components/common/navigation}}
+    </a> --}}
+    {{!-- {{> components/common/navigation}} --}}
 
     {{#if page_type '===' 'default'}}
-        <h1 class="header-logo header-logo--{{theme_settings.logo-position}}">
+        <h1 class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
             {{> components/common/store-logo}}
         </h1>
     {{else}}
-        <div class="header-logo header-logo--{{theme_settings.logo-position}}">
+        <div class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
             {{> components/common/store-logo}}
         </div>
     {{/if}}
     <div class="navPages-container" id="menu" data-menu>
-        {{> components/common/navigation-menu}}
+        {{!-- {{> components/common/navigation-menu}} --}}
     </div>
 </header>
 {{{region name="header_bottom"}}}

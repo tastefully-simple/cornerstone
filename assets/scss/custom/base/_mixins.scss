@@ -1,0 +1,181 @@
+/**
+*
+* HEADINGS
+* Mixins for headings so we can modify in one place for heading css class and WYSIWYG content.
+*/
+@mixin heading() {
+    line-height: 1.2;
+}
+
+@mixin heading1() {
+    @include heading();
+    font-size: $FONT_SIZE_LARGE;
+    text-transform: uppercase;
+    color: $COLOR_PRIMARY_100;
+    font-weight: $FONT_WEIGHT_NORMAL;
+}
+
+@mixin heading2() {
+    @include heading();
+	font-size: $FONT_SIZE_LARGE;
+	font-weight: $FONT_WEIGHT_BOLD;
+	color: $COLOR_BLACK;
+}
+
+@mixin heading3() {
+    @include heading();
+    font-size: $FONT_SIZE_BASE;
+    color: $COLOR_PRIMARY_100;
+}
+
+@mixin heading4() {
+    @include heading();
+    font-size: $FONT_SIZE_BASE;
+	font-weight: $FONT_WEIGHT_BOLD;
+	color: $COLOR_BLACK;
+}
+
+@mixin heading5() {
+    @include heading();
+	font-size: $FONT_SIZE_SMALL;
+	color: $COLOR_BLACK;
+}
+
+@mixin heading6() {
+    @include heading();
+	font-size: $FONT_SIZE_SMALL;
+	color: $COLOR_BLACK;
+	text-transform: uppercase;
+	font-weight: $FONT_WEIGHT_BOLD;
+}
+
+/**
+* VISUALLY HIDDEN
+* Hide it! But keep it screenreader accessible!
+*/
+@mixin visuallyHidden() {
+    height: 1px; width: 1px;
+    position: absolute;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+/**
+* VISUALLY SHOWN
+* Undo visually hidden with default values. May need to specify different values in your implementation.
+*/
+@mixin visuallyShown() {
+	width: auto;
+	height: auto;
+    position: static;
+    overflow: visible;
+    clip: auto;
+}
+
+/**
+* BREAKPOINT
+* min-width based media query
+* To use, simply @include inside your rule and provide either a breakpoint variable OR numeric value (with 'px').
+*/
+@mixin breakpoint($size) {
+    @media (min-width: $size) { @content; }
+}
+
+/**
+* HORIZONTAL RHYTHM
+* Include it in your properties with a spacing variable or pixel value and watch your dreams soar!
+*/
+@mixin horizontalRhythm($spacing: 0) {
+    > * {
+      display: inline-block;
+    }
+  
+    > * + * {
+      margin-left: $spacing;
+    }
+  }
+  
+/**
+* VERTICAL RHYTHM
+* Include it in your properties with a spacing variable or pixel value and watch your dreams soar!
+*/
+@mixin verticalRhythm($spacing: 0) {
+	> * {
+		display: block;
+	}
+
+	> * + * {
+		margin-top: $spacing;
+	}
+}
+
+/**
+* PILLOW
+* A system for consistent container padding throughout breakpoints.
+*
+* @param $vertical boolean
+* @param $horizontal boolean
+*/
+@mixin pillow($vertical: true, $horizontal: true) {
+
+	@if $vertical == false and $horizontal == false {
+		padding: 0;
+
+		@include breakpoint($BREAKPOINT_MEDIUM) {
+			padding: 0;
+		}
+	}
+
+	@if $vertical and $horizontal {
+		padding: $SPACING_2;
+
+		@include breakpoint($BREAKPOINT_MEDIUM) {
+			padding: $SPACING_3;
+		}
+	}
+
+	@if $vertical and $horizontal == false {
+		padding: $SPACING_2 0;
+
+		@include breakpoint($BREAKPOINT_MEDIUM) {
+			padding: $SPACING_3 0;
+		}
+	}
+
+	@if $vertical == false and $horizontal {
+		padding: 0 $SPACING_2;
+
+		@include breakpoint($BREAKPOINT_MEDIUM) {
+			padding: 0 $SPACING_3;
+		}
+	}
+}
+
+/**
+* CONTAINER
+* Sets a max-width and assumes horizontal centering.
+*/
+@mixin container() {
+	margin-left: auto;
+    margin-right: auto;
+    max-width: $BREAKPOINT_LARGE;
+}
+
+/**
+* PADDING BOTTOM
+* Helper to make svgs act responsively. See usage in 'content/responsiveIcon'.
+*/
+@mixin paddingBottom($width: 1, $height: 1) {
+	padding-bottom: ($height / $width) * 100%;
+}
+
+/**
+ * CLEARFIX
+ */
+@mixin clearfix() {
+    &:after {
+        content: "";
+		display: table;
+		clear: both;
+    }
+}

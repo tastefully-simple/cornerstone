@@ -1,6 +1,33 @@
 # Changelog
 
 ## Draft
+- Add jquery-migrate to Modal test [#1599](https://github.com/bigcommerce/cornerstone/pull/1599)
+- Upgrade core-js to version 3 [#1598](https://github.com/bigcommerce/cornerstone/pull/1598)
+
+## 4.3.0 (2019-11-12)
+- Fixes body text color not taking effect for cart item headings on mobile / tablet [#1586](https://github.com/bigcommerce/cornerstone/pull/1586)
+- Fix styling of review modal image [#1592](https://github.com/bigcommerce/cornerstone/pull/1592)
+- Fix typo in README.md [#1588](https://github.com/bigcommerce/cornerstone/pull/1588)
+- Fix corejs warning [#1594](https://github.com/bigcommerce/cornerstone/pull/1594)
+- Fix cart quantity calculation for bundled products [#1596](https://github.com/bigcommerce/cornerstone/pull/1596)
+
+## 4.2.1 (2019-10-15)
+- Added missing gift certificate translation
+- Fix registerValidation function to validate on writeReview-form email field [#1585](https://github.com/bigcommerce/cornerstone/pull/1585)
+
+## 4.2.0 (2019-10-02)
+- Fixes and some additions to our Google Structured Data schema for the product page template [#1577](https://github.com/bigcommerce/cornerstone/pull/1577)
+- Fix thumbnail image sizes [#1579](https://github.com/bigcommerce/cornerstone/pull/1579)
+
+## 4.1.1 (2019-09-12)
+- Reset compare products counter after faceted search updates page content [#1571](https://github.com/bigcommerce/cornerstone/pull/1571)
+
+## 4.1.0 (2019-08-28)
+- deleted whitespaces in if statments(content.html) [#1560](https://github.com/bigcommerce/cornerstone/pull/1560)
+- Remove aria-hidden attribute from main menu [#1563](https://github.com/bigcommerce/cornerstone/pull/1563)
+- Fix tall images on PDPs and PLPs [#1559](https://github.com/bigcommerce/cornerstone/pull/1559)
+
+## 4.0.0 (2019-08-05)
 - Update @babel/polyfill to 7.4.4 [#1521](https://github.com/bigcommerce/cornerstone/pull/1521)
 - Add maxlength to text options [#1531](https://github.com/bigcommerce/cornerstone/pull/1531)
 - Add return instructions in return-saved.html [#1525](https://github.com/bigcommerce/cornerstone/pull/1525)
@@ -11,6 +38,12 @@
 - Fix incorrect DOM selectors causing the payment method form on the account page from working properly in Safari [#1541](https://github.com/bigcommerce/cornerstone/pull/1541)
 - Add Amazon Pay and Google Pay to payment icons in footer [#1542](https://github.com/bigcommerce/cornerstone/pull/1542)
 - Remove head.rsslinks [#1539](https://github.com/bigcommerce/cornerstone/pull/1539)
+- Prevent heading from displaying when no price ranges are available [#1545](https://github.com/bigcommerce/cornerstone/pull/1545)
+- Utilize srcset for responsive images [#1507](https://github.com/bigcommerce/cornerstone/pull/1507)
+- Clean up conditional logic in a couple component templates [#1547](https://github.com/bigcommerce/cornerstone/pull/1547)
+- Remove "demo" product conditional logic [#1551](https://github.com/bigcommerce/cornerstone/pull/1551)
+- Add responsive breakpoints to product carousel. [#1458](https://github.com/bigcommerce/cornerstone/pull/1458)
+- Add nanobar back to fix tests [#1553](https://github.com/bigcommerce/cornerstone/pull/1553)
 
 ## 3.5.1 (2019-06-24)
 - Fix conditional logic in share.html [#1522](https://github.com/bigcommerce/cornerstone/pull/1522)

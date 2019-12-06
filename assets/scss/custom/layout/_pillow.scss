@@ -1,0 +1,37 @@
+// Pillow classes offer static container padding among breakpoints.
+.pillow {
+    padding: $SPACING_1;
+}
+
+// The responsive modifier applies padding unique to each breakpoint.
+.pillow--responsive {
+    @include pillow();
+}
+
+.pillow--2 {
+    padding: $SPACING_2;
+}
+
+.pillow--3 {
+    padding: $SPACING_3;
+}
+
+.pillow--4 {
+    padding: $SPACING_4;
+}
+
+.pillow--5 {
+    padding: $SPACING_5;
+}
+
+.pillow--6 {
+    padding: $SPACING_6;
+}
+
+.pillow--7 {
+    padding: $SPACING_7;
+}
+
+.pillow--8 {
+    padding: $SPACING_8;
+}

@@ -1,0 +1,29 @@
+/**
+Overrides header file 
+**/
+ 
+@media all {
+    .header {
+        border-bottom: none !important;
+    }
+}
+
+@media (min-width: 801px) {
+    .header-logo--collapsed {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .header-logo-image-container {
+        margin-top: .85rem;
+        margin-bottom: .5rem;
+    }
+
+    .header-logo-image {
+        top: 80% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%);
+    }
+}

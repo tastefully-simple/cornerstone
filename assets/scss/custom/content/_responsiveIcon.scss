@@ -1,0 +1,42 @@
+/**
+
+ICON
+
+1. Wrap your svg in an element with 'responsiveIcon'.
+2. Apply the responsiveIcon__inner class to the svg tag itself.
+3. Specify the desired width to the parent containing element. Height will automatically be calculated proportionately.
+4. Ensure parent containing element is either display: block or display: inline-block.
+
+Usage:
+
+<div class="parent">
+    <span class="responsiveIcon responsiveIcon--account">
+        <svg class="responsiveIcon__inner">
+            <use xlink:href="#icon-account" />
+        </svg>
+    </span>
+</div>
+
+*/
+
+.responsiveIcon {
+    width: 100%;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  
+.responsiveIcon::before {
+    width: inherit;
+    display: inherit;
+    padding-bottom: 100%;
+    content: '';
+}
+
+.responsiveIcon__inner {
+    width: inherit;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

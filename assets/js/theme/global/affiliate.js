@@ -27,6 +27,7 @@ function setAffiliateNameById(affiliateId) {
 
     axios.get(`https://tsapi.tastefullysimple.com/sb/id/${affiliateId}`)
         .then(response => {
+            document.getElementById('cart-tastefully-simple-name').style.display = 'none';
             document.getElementById('cart-affiliate-info').style.display = 'inherit';
 
             if (response.data === null) {

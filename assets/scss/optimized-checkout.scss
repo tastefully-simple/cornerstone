@@ -145,6 +145,7 @@ body {
     color: stencilColor("optimizedCheckout-buttonSecondary-color");
     font-family: stencilFontFamily("optimizedCheckout-buttonSecondary-font"), Arial, Helvetica, sans-serif;
     font-weight: stencilFontWeight("optimizedCheckout-buttonSecondary-font");
+    display: none;
 
     &:focus,
     &:hover {

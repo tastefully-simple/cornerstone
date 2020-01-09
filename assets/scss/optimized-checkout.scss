@@ -145,7 +145,6 @@ body {
     color: stencilColor("optimizedCheckout-buttonSecondary-color");
     font-family: stencilFontFamily("optimizedCheckout-buttonSecondary-font"), Arial, Helvetica, sans-serif;
     font-weight: stencilFontWeight("optimizedCheckout-buttonSecondary-font");
-    display: none;
 
     &:focus,
     &:hover {
@@ -393,5 +392,10 @@ $optimizedCheckout-input--error-boxShadow: 0 0 3px transparentize(stencilColor("
 
 // Removes account creation on order confirmation page
 form.guest-signup {
+    display: none;
+}
+
+// Removes continue shopping button on order confirmation page
+.continueButtonContainer {
     display: none;
 }

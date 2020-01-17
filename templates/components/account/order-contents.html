@@ -21,6 +21,7 @@
             </div>
             <figure class="account-product-figure">
                 {{#if type '===' 'giftcertificate'}}
+<<<<<<< HEAD
                     <img src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="Gift Certificate" title="Gift Certificate">
                 {{else}}
                     {{> components/common/responsive-img
@@ -30,6 +31,16 @@
                         lazyload=../../theme_settings.lazyload_mode
                         default_image=../../theme_settings.default_image_product
                     }}
+=======
+                    <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="Gift Certificate" title="Gift Certificate">
+                {{else}}
+                    <img class="account-product-image lazyload"
+                         data-sizes="auto"
+                         src="{{cdn 'img/loading.svg'}}"
+                         data-src="{{getImage image 'productthumb_size' (cdn ../../theme_settings.default_image_product)}}"
+                         alt="{{image.alt}}"
+                         title="{{image.alt}}">
+>>>>>>> develop
                 {{/if}}
                 {{#unless refunded}}
                     {{#if download_url}}

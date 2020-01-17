@@ -269,6 +269,7 @@ export default class ProductDetails {
 
     showProductImage(image) {
         if (_.isPlainObject(image)) {
+<<<<<<< HEAD
             const zoomImageUrl = utils.tools.imageSrcset.getSrcset(
                 image.data,
                 { '1x': this.context.themeSettings.zoom_size },
@@ -301,6 +302,21 @@ export default class ProductDetails {
                 mainImageUrl,
                 zoomImageUrl,
                 mainImageSrcset,
+=======
+            const zoomImageUrl = utils.tools.image.getSrc(
+                image.data,
+                this.context.themeSettings.zoom_size,
+            );
+
+            const mainImageUrl = utils.tools.image.getSrc(
+                image.data,
+                this.context.themeSettings.product_size,
+            );
+
+            this.imageGallery.setAlternateImage({
+                mainImageUrl,
+                zoomImageUrl,
+>>>>>>> develop
             });
         } else {
             this.imageGallery.restoreImage();

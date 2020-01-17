@@ -26,6 +26,7 @@ function updateCounterNav(counter, $link, urlContext) {
 }
 
 export default function (urlContext) {
+<<<<<<< HEAD
     let compareCounter = [];
 
     const $compareLink = $('a[data-compare-nav]');
@@ -38,6 +39,20 @@ export default function (urlContext) {
     });
 
     $('body').triggerHandler('compareReset');
+=======
+    let products;
+
+    const $checked = $('body').find('input[name="products\[\]"]:checked');
+    const $compareLink = $('a[data-compare-nav]');
+
+    if ($checked.length !== 0) {
+        products = _.map($checked, element => element.value);
+
+        updateCounterNav(products, $compareLink, urlContext);
+    }
+
+    const compareCounter = products || [];
+>>>>>>> develop
 
     $('body').on('click', '[data-compare-id]', event => {
         const product = event.currentTarget.value;

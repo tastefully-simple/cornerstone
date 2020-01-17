@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import '../../../theme/global/jquery-migrate';
+=======
+>>>>>>> develop
 import modalFactory, { ModalEvents } from '../../../theme/global/modal';
 import $ from 'jquery';
 

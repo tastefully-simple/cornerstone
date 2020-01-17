@@ -25,7 +25,10 @@ export default class ImageGallery {
             this.savedImage = {
                 mainImageUrl: this.$mainImage.find('img').attr('src'),
                 zoomImageUrl: this.$mainImage.attr('data-zoom-image'),
+<<<<<<< HEAD
                 mainImageSrcset: this.$mainImage.find('img').attr('srcset'),
+=======
+>>>>>>> develop
                 $selectedThumb: this.currentImage.$selectedThumb,
             };
         }
@@ -45,7 +48,10 @@ export default class ImageGallery {
         const imgObj = {
             mainImageUrl: $target.attr('data-image-gallery-new-image-url'),
             zoomImageUrl: $target.attr('data-image-gallery-zoom-image-url'),
+<<<<<<< HEAD
             mainImageSrcset: $target.attr('data-image-gallery-new-image-srcset'),
+=======
+>>>>>>> develop
             $selectedThumb: $target,
         };
 
@@ -60,11 +66,15 @@ export default class ImageGallery {
     }
 
     swapMainImage() {
+<<<<<<< HEAD
         this.easyzoom.data('easyZoom').swap(
             this.currentImage.mainImageUrl,
             this.currentImage.zoomImageUrl,
             this.currentImage.mainImageSrcset,
         );
+=======
+        this.easyzoom.data('easyZoom').swap(this.currentImage.mainImageUrl, this.currentImage.zoomImageUrl);
+>>>>>>> develop
 
         this.$mainImage.attr({
             'data-zoom-image': this.currentImage.zoomImageUrl,

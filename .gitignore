@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 node_modules/
+=======
+node_modules
+>>>>>>> develop
 .stencil
 .DS_Store
 assets/css-artifacts
@@ -9,3 +13,9 @@ vendor/bundle
 *.js.map
 *.zip
 .idea/
+<<<<<<< HEAD
+=======
+npm-debug.log
+*.sublime-workspace
+parsed/
+>>>>>>> develop

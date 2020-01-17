@@ -39,8 +39,11 @@ export default class Category extends CatalogPage {
             $productListingContainer.html(content.productListing);
             $facetedSearchContainer.html(content.sidebar);
 
+<<<<<<< HEAD
             $('body').triggerHandler('compareReset');
 
+=======
+>>>>>>> develop
             $('html, body').animate({
                 scrollTop: 0,
             }, 100);

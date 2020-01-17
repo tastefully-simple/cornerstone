@@ -130,7 +130,11 @@
         },
         "find_affiliate": {
             "modal_title": "Change independent consultant",
+<<<<<<< HEAD
             "button": "change"
+=======
+            "button": "change independent consultant"
+>>>>>>> develop
         }
     },
     "common": {
@@ -663,8 +667,12 @@
                 "from_name": "You must enter your name.",
                 "from_email": "You must enter a valid email.",
                 "cert_theme": "You must select a gift certificate theme.",
+<<<<<<< HEAD
                 "agree_terms": "You must agree to these terms.",
                 "amount": "You must enter a gift certificate amount."
+=======
+                "agree_terms": "You must agree to these terms."
+>>>>>>> develop
             },
             "payment_method": {
                 "credit_card_number": "You must enter a valid credit card number.",

@@ -6,6 +6,7 @@
         <div class="account-product">
             <div class="account-product-figure">
                 {{#if items.0.type '===' 'giftcertificate'}}
+<<<<<<< HEAD
                     <img src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
                 {{else}}
                     {{> components/common/responsive-img
@@ -15,6 +16,16 @@
                         lazyload=../../theme_settings.lazyload_mode
                         default_image=../../theme_settings.default_image_product
                     }}
+=======
+                    <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
+                {{else}}
+                    <img class="account-product-image lazyload"
+                         data-sizes="auto"
+                         src="{{cdn 'img/loading.svg'}}"
+                         data-src="{{getImage image 'productthumb_size' (cdn ../../theme_settings.default_image_product)}}"
+                         alt="{{image.alt}}"
+                         title="{{image.alt}}">
+>>>>>>> develop
                 {{/if}}
             </div>
             <div class="account-product-body">

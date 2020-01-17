@@ -62,6 +62,7 @@
             {{product.detail_messages}}
             <dl class="productView-info">
                 <dt class="productView-info-name sku-label"{{#unless product.sku}} style="display: none;"{{/unless}}>{{lang 'products.sku'}}</dt>
+<<<<<<< HEAD
                 <dd class="productView-info-value" data-product-sku{{#if schema}} itemprop="sku"{{/if}}>{{product.sku}}</dd>
                 <dt class="productView-info-name upc-label"{{#unless product.upc}} style="display: none;"{{/unless}}>{{lang 'products.upc'}}</dt>
                 <dd class="productView-info-value" data-product-upc>{{product.upc}}</dd>
@@ -69,6 +70,11 @@
                     {{#if product.mpn}}<meta itemprop="mpn" content="{{product.mpn}}" />{{/if}}
                     {{#if product.gtin}}<meta itemprop="gtin" content="{{product.gtin}}" />{{/if}}
                 {{/if}}
+=======
+                <dd class="productView-info-value" data-product-sku>{{product.sku}}</dd>
+                <dt class="productView-info-name upc-label"{{#unless product.upc}} style="display: none;"{{/unless}}>{{lang 'products.upc'}}</dt>
+                <dd class="productView-info-value" data-product-upc>{{product.upc}}</dd>
+>>>>>>> develop
                 {{#if product.condition}}
                     <dt class="productView-info-name">{{lang 'products.condition'}}</dt>
                     <dd class="productView-info-value">{{product.condition}}</dd>
@@ -154,6 +160,7 @@
     </section>
 
     <section class="productView-images" data-image-gallery>
+<<<<<<< HEAD
         {{!--
             Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
             for variant/rule image replacement
@@ -162,11 +169,18 @@
                 data-image-gallery-main
                 {{#if product.main_image}}
                 data-zoom-image="{{getImageSrcset product.main_image (cdn theme_settings.default_image_product) 1x=theme_settings.zoom_size }}"
+=======
+        <figure class="productView-image"
+                data-image-gallery-main
+                {{#if product.main_image}}
+                data-zoom-image="{{getImage product.main_image 'zoom_size' (cdn theme_settings.default_image_product)}}"
+>>>>>>> develop
                 {{/if}}
                 >
             <div class="productView-img-container">
                 {{!-- Remove the surrounding a-element if there is no main image. --}}
                 {{#if product.main_image}}
+<<<<<<< HEAD
                     <a href="{{getImageSrcset product.main_image (cdn theme_settings.default_image_product) 1x=theme_settings.zoom_size}}"
                         target="_blank"{{#if schema}} itemprop="image"{{/if}}>
                 {{/if}}
@@ -179,6 +193,17 @@
                     otherAttributes="data-main-image"
                 }}
                 {{!-- Remove the surrounding a-element if there is no main image. --}}
+=======
+                    <a href="{{getImage product.main_image 'zoom_size' (cdn theme_settings.default_image_product)}}">
+                {{/if}}
+
+                <img class="productView-image--default lazyload"
+                     data-sizes="auto"
+                     src="{{cdn 'img/loading.svg'}}"
+                     data-src="{{getImage product.main_image 'product_size' (cdn theme_settings.default_image_product)}}"
+                     alt="{{product.main_image.alt}}" title="{{product.main_image.alt}}" data-main-image>
+
+>>>>>>> develop
                 {{#if product.main_image}}
                     </a>
                 {{/if}}
@@ -194,6 +219,7 @@
                 <li class="productView-thumbnail">
                     <a
                         class="productView-thumbnail-link"
+<<<<<<< HEAD
                         href="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.zoom_size}}"
                         data-image-gallery-item
                         data-image-gallery-new-image-url="{{getImageSrcset this (cdn ../theme_settings.default_image_product) 1x=../theme_settings.product_size}}"
@@ -205,6 +231,13 @@
                         fallback_size=../theme_settings.productview_thumb_size
                         lazyload=../theme_settings.lazyload_mode
                     }}
+=======
+                        href="{{getImage this 'product_size' (cdn ../theme_settings.default_image_product)}}"
+                        data-image-gallery-item
+                        data-image-gallery-new-image-url="{{getImage this 'product_size' (cdn ../theme_settings.default_image_product)}}"
+                        data-image-gallery-zoom-image-url="{{getImage this 'zoom_size' (cdn ../theme_settings.default_image_product)}}">
+                        <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage this 'productview_thumb_size' (cdn ../theme_settings.default_image_product)}}" alt="{{this.alt}}" title="{{this.alt}}">
+>>>>>>> develop
                     </a>
                 </li>
             {{/each}}

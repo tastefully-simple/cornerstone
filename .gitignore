@@ -1,4 +1,4 @@
-node_modules
+node_modules/
 .stencil
 .DS_Store
 assets/css-artifacts
@@ -9,6 +9,3 @@ vendor/bundle
 *.js.map
 *.zip
 .idea/
-npm-debug.log
-*.sublime-workspace
-parsed/

@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - 10
+sudo: required
+dist: xenial
+install:
+  - bundle install --path vendor/bundle
+  - npm install
+script:
+  - npx grunt check
+  - npx stencil bundle

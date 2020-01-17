@@ -4,7 +4,6 @@
         "dots": true,
         "infinite": false,
         "mobileFirst": true,
-<<<<<<< HEAD
         "slidesToShow": 2,
         "slidesToScroll": 2,
         "responsive": [
@@ -23,19 +22,11 @@
                 }
             }
         ]
-=======
-        "slidesToShow": {{ columns }},
-        "slidesToScroll": 3
->>>>>>> develop
     }'
 >
     {{#each products}}
     <div class="productCarousel-slide">
-<<<<<<< HEAD
         {{> components/products/card settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
-=======
-            {{> components/products/card settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
->>>>>>> develop
     </div>
     {{/each}}
 </section>

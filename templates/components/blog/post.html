@@ -3,15 +3,11 @@
         {{#if post.thumbnail}}
             <figure class="blog-thumbnail">
                 <a href="{{post.url}}">
-<<<<<<< HEAD
                     {{> components/common/responsive-img
                         image=post.thumbnail
                         fallback_size=theme_settings.blog_size
                         lazyload=theme_settings.lazyload_mode
                     }}
-=======
-                    <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage post.thumbnail 'blog_size'}}" alt="{{post.thumbnail.alt}}" title="{{post.thumbnail.alt}}">
->>>>>>> develop
                 </a>
             </figure>
         {{/if}}

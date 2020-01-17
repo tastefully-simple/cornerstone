@@ -31,13 +31,10 @@
 
     img {
         @include lazy-loaded-img;
-<<<<<<< HEAD
         height: 100%;
         object-fit: contain;
         /* Object-fit polyfill */
         font-family: 'object-fit: contain;';
-=======
->>>>>>> develop
     }
 
     @include lazy-loaded-padding('product_size');

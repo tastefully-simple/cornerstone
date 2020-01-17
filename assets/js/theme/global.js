@@ -11,27 +11,14 @@ import cartPreview from './global/cart-preview';
 import privacyCookieNotification from './global/cookieNotification';
 import maintenanceMode from './global/maintenanceMode';
 import carousel from './common/carousel';
-<<<<<<< HEAD
 import loadingProgressBar from './global/loading-progress-bar';
 import svgInjector from './global/svg-injector';
 import objectFitImages from './global/object-fit-polyfill';
-=======
-import 'lazysizes';
-import svgInjector from './global/svg-injector';
->>>>>>> develop
 import affiliate from './global/affiliate';
 import associateAffiliate from './global/associate-affiliate';
 
 export default class Global extends PageManager {
     onReady() {
-<<<<<<< HEAD
-=======
-        // Only load visible elements until the onload event fires,
-        // after which preload nearby elements.
-        window.lazySizesConfig = window.lazySizesConfig || {};
-        window.lazySizesConfig.loadMode = 1;
-
->>>>>>> develop
         cartPreview(this.context.secureBaseUrl, this.context.cartId);
         quickSearch();
         currencySelector();
@@ -42,13 +29,9 @@ export default class Global extends PageManager {
         mobileMenuToggle();
         privacyCookieNotification();
         maintenanceMode(this.context.maintenanceMode);
-<<<<<<< HEAD
         loadingProgressBar();
         svgInjector();
         objectFitImages();
-=======
-        svgInjector();
->>>>>>> develop
         affiliate();
         associateAffiliate();
     }

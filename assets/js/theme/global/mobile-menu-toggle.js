@@ -91,15 +91,7 @@ export class MobileMenuToggle {
         this.$toggle
             .addClass('is-open')
             .attr('aria-expanded', true);
-
-<<<<<<< HEAD
         this.$menu.addClass('is-open');
-=======
-        this.$menu
-            .addClass('is-open')
-            .attr('aria-hidden', false);
->>>>>>> develop
-
         this.$header.addClass('is-open');
         this.$scrollView.scrollTop(0);
 
@@ -112,14 +104,7 @@ export class MobileMenuToggle {
         this.$toggle
             .removeClass('is-open')
             .attr('aria-expanded', false);
-
-<<<<<<< HEAD
         this.$menu.removeClass('is-open');
-=======
-        this.$menu
-            .removeClass('is-open')
-            .attr('aria-hidden', true);
->>>>>>> develop
 
         this.$header.removeClass('is-open');
 

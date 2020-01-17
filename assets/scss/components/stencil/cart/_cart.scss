@@ -124,11 +124,8 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 }
 
 .cart-item-image {
-<<<<<<< HEAD
     max-width: get-width(stencilString('productthumb_size'));
 
-=======
->>>>>>> develop
     @include lazy-loaded-img;
 
     @include breakpoint("medium") {
@@ -210,11 +207,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 }
 
 .cart-item-label {
-<<<<<<< HEAD
     color: stencilColor("color-textBase");
-=======
-    color: color("greys", "light");
->>>>>>> develop
     float: left;
     margin-bottom: spacing("quarter");
     text-align: right;
@@ -674,7 +667,6 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 // Cart affiliate info
 // -----------------------------------------------------------------------------
 
-<<<<<<< HEAD
 .cart-NoAffiliateInfo {
     text-align: center;
 }
@@ -684,13 +676,5 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 }
 
 #cart-affiliate-name, #cart-no-affiliate-name {
-=======
-.cart-affiliateInfo {
-    text-align: center;
-    display: none;
-}
-
-#cart-affiliate-name, #cart-no-affiliate-name, #cart-tastefully-simple-name {
->>>>>>> develop
     display: none;
 }

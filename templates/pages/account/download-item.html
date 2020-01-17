@@ -8,11 +8,7 @@
         <div class="account-body">
             <figure class="account-sidebar">
                 {{#each downloads.images}}
-<<<<<<< HEAD
                     <img src="{{getImage this}}" alt="{{../downloads.product_name}}" title="{{../downloads.product_name}}"/>
-=======
-                    <img class="lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage this}}" alt="{{../downloads.product_name}}" title="{{../downloads.product_name}}"/>
->>>>>>> develop
                     <figcaption>{{../downloads.product_name}}</figcaption>
                 {{/each}}
             </figure>

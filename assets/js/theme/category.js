@@ -38,12 +38,8 @@ export default class Category extends CatalogPage {
         this.facetedSearch = new FacetedSearch(requestOptions, (content) => {
             $productListingContainer.html(content.productListing);
             $facetedSearchContainer.html(content.sidebar);
-
-<<<<<<< HEAD
             $('body').triggerHandler('compareReset');
 
-=======
->>>>>>> develop
             $('html, body').animate({
                 scrollTop: 0,
             }, 100);

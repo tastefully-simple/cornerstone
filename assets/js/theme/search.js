@@ -212,12 +212,7 @@ export default class Search extends CatalogPage {
             $facetedSearchContainer.html(content.sidebar);
             $searchHeading.html(content.heading);
             $searchCount.html(content.productCount);
-
-<<<<<<< HEAD
             $('body').triggerHandler('compareReset');
-
-=======
->>>>>>> develop
             $('html, body').animate({
                 scrollTop: 0,
             }, 100);

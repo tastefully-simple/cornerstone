@@ -4,7 +4,7 @@
 
 .join {
 
-  .join-banner {
+  &__banner {
     display: flex;
     align-items: center;
     min-height: 300px;
@@ -40,7 +40,7 @@
       grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
     }
 
-    .join-form, .join-content {
+    .join__form, .join__content {
       padding: 0 2rem 2rem;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -51,7 +51,7 @@
     }
   }
 
-  .join-content {
+  &__content {
     background: $COLOR_GRAY_150;
   }
 
@@ -82,9 +82,9 @@
     cursor: pointer;
   }
 
-  .join-form {
+  &__form {
 
-    &__form-toggle {
+    &--toggle {
       display: flex;
       align-items: center;
 

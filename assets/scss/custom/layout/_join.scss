@@ -17,9 +17,8 @@
       padding: 2rem;
       text-align: center;
 
-      h1 {
+      .heading--1 {
         color: $COLOR_WHITE;
-        font-family: 'Neuton', serif;
       }
     }
   }
@@ -56,9 +55,13 @@
     background: $COLOR_GRAY_150;
   }
 
+  //added .heading--2 styles to h2 so that WYSIWYG H2's stay styled
   h2 {
-    font-size: 24px;
-    font-family: 'Neuton', serif;
+    @include heading();
+    font-size: $FONT_SIZE_LARGE;
+    font-weight: $FONT_WEIGHT_BOLD;
+    color: $COLOR_BLACK;
+    font-family: $FONT_FAMILY_SECONDARY;
 
     @include breakpoint($BREAKPOINT_MEDIUM) {
       font-size: 28px;
@@ -66,12 +69,12 @@
   }
 
   .hidden {
-    display: none;
+    @include visuallyHidden();
   }
 
   #learn-more {
     padding: .75rem 1.75rem;
-    background-color: $COLOR_LIME;
+    background-color: $COLOR_SECONDARY_100;
     color: $COLOR_WHITE;
     border-radius: 5px;
     font-weight: bold;
@@ -90,8 +93,8 @@
       }
 
       .active {
-        border-bottom: 1px solid $COLOR_LIME;
-        color: $COLOR_LIME;
+        border-bottom: 1px solid $COLOR_SECONDARY_100;
+        color: $COLOR_SECONDARY_100;
         font-weight: bold;
       }
 
@@ -139,11 +142,11 @@
       }
 
       input + .slider {
-        background-color: $COLOR_LIME;
+        background-color: $COLOR_SECONDARY_100;
       }
 
       input:focus + .slider {
-        box-shadow: 0 0 1px $COLOR_LIME;
+        box-shadow: 0 0 1px $COLOR_SECONDARY_100;
       }
 
       input:checked + .slider:before {
@@ -190,7 +193,7 @@
       width: auto;
       padding: .5rem 1.75rem;
       margin-top: 2rem;
-      background-color: $COLOR_TEAL;
+      background-color: $COLOR_PRIMARY_100;
       color: $COLOR_WHITE;
       border-radius: 5px;
       font-weight: bold;

@@ -394,3 +394,8 @@ $optimizedCheckout-input--error-boxShadow: 0 0 3px transparentize(stencilColor("
 form.guest-signup {
     display: none;
 }
+
+// Removes continue shopping button on order confirmation page
+.continueButtonContainer {
+    display: none;
+}

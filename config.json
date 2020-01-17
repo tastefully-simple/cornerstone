@@ -287,7 +287,7 @@
     "optimizedCheckout-formField-errorColor": "#d14343",
     "optimizedCheckout-formField-inputControlColor": "#476bef",
     "optimizedCheckout-step-borderColor": "#dddddd",
-    "optimizedCheckout-header-borderColor": "#dddddd",
+    "optimizedCheckout-header-borderColor": "#f5f5f5",
     "optimizedCheckout-header-textColor": "#333333",
     "optimizedCheckout-loadingToaster-backgroundColor": "#333333",
     "optimizedCheckout-loadingToaster-textColor": "#ffffff",

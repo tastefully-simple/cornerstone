@@ -1,0 +1,147 @@
+// =============================================================================
+// JOIN (CSS)
+// =============================================================================
+
+.join {
+
+  &__banner {
+    display: flex;
+    align-items: center;
+    min-height: 300px;
+    margin-top: -5rem;
+    background: url(../img/join-banner.png) no-repeat center center;
+    background-size: cover;
+  }
+
+  &__banner-title-wrapper {
+    margin: 0 auto;
+    padding: $SPACING_4;
+    text-align: center;
+
+    .heading--1 {
+      color: $COLOR_WHITE;
+    }
+  }
+
+  #form-id {
+    @include visuallyHidden();
+  }
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -1 * $SPACING_8;
+    padding: 0;
+    background:  $COLOR_WHITE;
+    border-radius: 5px;
+    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.13);
+
+    .join__form, .join__content {
+      padding: 0 2rem 2rem;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      width: 100%;
+
+      @include breakpoint($BREAKPOINT_MEDIUM) {
+        padding: 0 4rem 4rem;
+        width: 50%;
+      }
+    }
+  }
+
+  &__content {
+    background: $COLOR_GRAY_150;
+  }
+
+  //added .heading--2 styles to h2 so that WYSIWYG H2's stay styled
+  h2 {
+    @include heading();
+    font-size: $FONT_SIZE_LARGE;
+    font-weight: $FONT_WEIGHT_BOLD;
+    color: $COLOR_BLACK;
+    font-family: $FONT_FAMILY_SECONDARY;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      font-size: 28px;
+    }
+  }
+
+  .hidden {
+    @include visuallyHidden();
+  }
+
+  #learn-more {
+    padding: .75rem 1.75rem;
+    background-color: $COLOR_SECONDARY_100;
+    color: $COLOR_WHITE;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  &__container {
+    @include container();
+  }
+  
+  &__form {
+
+    &--toggle {
+      display: flex;
+      align-items: center;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      .active {
+        border-bottom: 1px solid $COLOR_SECONDARY_100;
+        color: $COLOR_SECONDARY_100;
+        font-weight: bold;
+      }
+
+
+
+    }
+  }
+
+  form {
+
+    label {
+      display: block;
+      width: 100%;
+      margin-bottom: .25rem;
+      margin-left: .25rem;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 80%;
+      height: $SPACING_5;
+      margin-bottom: $SPACING_5;
+      border-radius: 5px;
+      border: 1px solid $COLOR_GRAY_200;
+      box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    #submit {
+      display: flex;
+      align-items: center;
+      width: auto;
+      padding: .5rem 1.75rem;
+      background-color: $COLOR_PRIMARY_100;
+      color: $COLOR_WHITE;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+
+      svg {
+        height: 35px;
+        width: 35px;
+        fill: $COLOR_WHITE;
+      }
+    }
+  }
+}

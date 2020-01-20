@@ -9,10 +9,10 @@
 
 @mixin heading1() {
     @include heading();
-    font-size: $FONT_SIZE_LARGE;
-    text-transform: uppercase;
+    font-size: $FONT_SIZE_XLARGE;
     color: $COLOR_PRIMARY_100;
     font-weight: $FONT_WEIGHT_NORMAL;
+	font-family: $FONT_FAMILY_SECONDARY;
 }
 
 @mixin heading2() {
@@ -20,6 +20,11 @@
 	font-size: $FONT_SIZE_LARGE;
 	font-weight: $FONT_WEIGHT_BOLD;
 	color: $COLOR_BLACK;
+	font-family: $FONT_FAMILY_SECONDARY;
+
+	@include breakpoint($BREAKPOINT_MEDIUM) {
+		font-size: 28px;
+	}
 }
 
 @mixin heading3() {
@@ -89,12 +94,12 @@
     > * {
       display: inline-block;
     }
-  
+
     > * + * {
       margin-left: $spacing;
     }
   }
-  
+
 /**
 * VERTICAL RHYTHM
 * Include it in your properties with a spacing variable or pixel value and watch your dreams soar!

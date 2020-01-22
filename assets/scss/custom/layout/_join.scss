@@ -6,15 +6,22 @@
 
   &__banner {
     display: flex;
+    align-items: top;
+    min-height: 250px;
+    margin-top: -5rem;
+    background-color: $COLOR_PRIMARY_100;
+  }
+
+  &__login .join__banner {
     align-items: center;
     min-height: 300px;
-    margin-top: -5rem;
     background: url(../img/join-banner.png) no-repeat center center;
     background-size: cover;
   }
 
   &__banner-title-wrapper {
     margin: 0 auto;
+    margin-top: $SPACING_3;
     padding: $SPACING_4;
     text-align: center;
 
@@ -53,12 +60,16 @@
     background: $COLOR_GRAY_150;
   }
 
+  &__heading--teal.heading--4 {
+    color: $COLOR_PRIMARY_100;
+  }
+
   //added .heading--2 styles to h2 so that WYSIWYG H2's stay styled
   h2 {
     @include heading();
+    color: $COLOR_BLACK;
     font-size: $FONT_SIZE_LARGE;
     font-weight: $FONT_WEIGHT_BOLD;
-    color: $COLOR_BLACK;
     font-family: $FONT_FAMILY_SECONDARY;
 
     @include breakpoint($BREAKPOINT_MEDIUM) {
@@ -83,7 +94,12 @@
   &__container {
     @include container();
   }
-  
+
+  &__search-button {
+    @include tealButton();
+    padding: $SPACING_1 $SPACING_2;
+  }
+
   &__form {
 
     &--toggle {
@@ -99,49 +115,129 @@
         color: $COLOR_SECONDARY_100;
         font-weight: bold;
       }
-
-
-
     }
   }
 
+  //Form styling for join process
   form {
-
-    label {
-      display: block;
-      width: 100%;
-      margin-bottom: .25rem;
-      margin-left: .25rem;
-      font-size: 12px;
-      font-weight: bold;
+    .disabled {
+      @include disabledField();
     }
 
-    input {
-      width: 80%;
-      height: $SPACING_5;
-      margin-bottom: $SPACING_5;
-      border-radius: 5px;
-      border: 1px solid $COLOR_GRAY_200;
-      box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    label {
+      @include formLabel();
+    }
+
+    input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
+      @include formInput();
+    }
+
+    input[type=checkbox] {
+      @include checkbox();
+      position: relative;
+    }
+
+    .join__form--checkbox-label {
+      @include checkboxLabel();
+      width: auto;
+    }
+
+    fieldset {
+      margin: $SPACING_2 0;
+      padding: 0;
+      border: none;
+    }
+
+    #billingZIPField {
+      width: 50%;
+      input {
+        margin-bottom: $SPACING_1;
+      }
+    }
+
+    #cellPhoneField {
+      input {
+        margin-bottom: $SPACING_1;
+      }
+    }
+
+    .join__field--subtext {
+      margin-left: $SPACING_1;
+      margin-top: -1 * $SPACING_2;
+      color: $COLOR_GRAY_200;
+      font-size: 12px;
+    }
+
+    #SSNField {
+      position: relative;
+
+      img {
+        position: absolute;
+        right: 5px;
+        top: 28px;
+        max-width: 25px;
+
+      }
     }
 
     #submit {
       display: flex;
       align-items: center;
-      width: auto;
-      padding: .5rem 1.75rem;
-      background-color: $COLOR_PRIMARY_100;
-      color: $COLOR_WHITE;
-      border-radius: 5px;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
+      @include tealButton();
 
       svg {
         height: 35px;
         width: 35px;
         fill: $COLOR_WHITE;
       }
+    }
+  }
+
+
+  //Form styling specific to login form
+  &__login form {
+
+    input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
+      width: 80%;
+      margin-bottom: $SPACING_5;
+    }
+  }
+
+  //Terms box styling
+  form .join__terms {
+    padding: 0 $SPACING_4 0 $SPACING_8;
+    border: 1px solid $COLOR_GRAY_200;
+
+    label {
+      @include checkboxLabel();
+      padding-left: $SPACING_1;
+      font-size: 12px;
+
+      a {
+        color: $COLOR_SECONDARY_200;
+      }
+    }
+
+    input[type=checkbox] {
+      @include checkbox();
+      position: absolute;
+    }
+  }
+
+  //styling for checkout button
+  #checkout {
+    display: flex;
+    align-items: center;
+    margin-top: $SPACING_2;
+    float:right;
+
+    @include tealButton();
+    padding: .25rem $SPACING_2;
+
+    svg {
+      height: 35px;
+      width: 35px;
+      fill: $COLOR_WHITE;
     }
   }
 }

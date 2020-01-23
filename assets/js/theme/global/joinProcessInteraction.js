@@ -170,14 +170,15 @@ function triggerTermsApprove() {
  * Export join process front end functions.
  */
 export default function joinProcessInteraction() {
-    removeContainer();
 
     //call functions on join page
     if (loginPage) {
+        removeContainer();
         toggleStyles();
     }
     //call functions on tell us about yourself page
     if (personalInfoPage) {
+        removeContainer();
         styleSelectValue();
         togglePhoneConditionalField();
         toggleAddressConditionalFields();

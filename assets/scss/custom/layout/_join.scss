@@ -96,7 +96,6 @@
   }
 
   &__search-button {
-    @include tealButton();
     padding: $SPACING_1 $SPACING_2;
   }
 
@@ -183,7 +182,6 @@
     #submit {
       display: flex;
       align-items: center;
-      @include tealButton();
 
       svg {
         height: 35px;
@@ -195,7 +193,7 @@
 
 
   //Form styling specific to login form
-  &__login form {
+  &--login form {
 
     input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
       width: 80%;
@@ -231,7 +229,6 @@
     margin-top: $SPACING_2;
     float:right;
 
-    @include tealButton();
     padding: .25rem $SPACING_2;
 
     svg {

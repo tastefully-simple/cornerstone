@@ -1,5 +1,6 @@
 const loginPage         = document.getElementById('join-login');
-const personalInfoPage = document.getElementById('personal-info')
+const personalInfoPage = document.getElementById('personal-info');
+const kitPage = document.getElementById('kit');
 
 /**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
@@ -175,6 +176,10 @@ export default function joinProcessInteraction() {
     if (loginPage) {
         removeContainer();
         toggleStyles();
+    }
+    //call functions on kit page
+    if (kitPage) {
+        removeContainer();
     }
     //call functions on tell us about yourself page
     if (personalInfoPage) {

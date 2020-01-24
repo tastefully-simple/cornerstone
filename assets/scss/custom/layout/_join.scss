@@ -117,6 +117,168 @@
     }
   }
 
+  //Kit page styles
+  &--kit {
+
+    .productView-details {
+      @include visuallyHidden;
+    }
+  }
+
+  &__kit-content-wrapper {
+    width: 100%;
+
+    .productView-img-container {
+      margin: 0;
+      max-width: none;
+
+      img {
+        position: relative;
+        width: 100%;
+      }
+
+      &:after {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  &__kit-content {
+    position: relative;
+    padding: $SPACING_5;
+
+    .heading--1 {
+      margin-top: $SPACING_8;
+
+      @include breakpoint($BREAKPOINT_MEDIUM) {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &__kit-price-sticker {
+    position: absolute;
+    right: 60px;
+    top: -50px;
+    height: 104px;
+    width: 104px;
+    background-color: $COLOR_SECONDARY_200;
+    color: white;
+    border-radius: 100%;
+    text-align: center;
+
+    .sale-price {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      color: white;
+      text-decoration: line-through;
+      font-size: 14px;
+    }
+
+    .price {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      color: white;
+      font-size: 22px;
+    }
+  }
+
+  &__kit-price-table-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__kit-price-table {
+    width: 100%;
+    margin-bottom: $SPACING_4;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      width: 50%;
+    }
+
+    &-details {
+      display: flex;
+      width: 100%;
+      border-top: 1px solid $COLOR_PRIMARY_100;
+      border-bottom: 1px solid $COLOR_PRIMARY_100;
+    }
+
+    .price-table-details-left {
+      width: 100%;
+      align-self: flex-end;
+      margin-bottom: $SPACING_2;
+      margin-top: $SPACING_1;
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    .price-table-details-right {
+      width: 100%;
+      text-align: right;
+      align-self: flex-end;
+      margin-bottom: $SPACING_2;
+      margin-top: $SPACING_1;
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    .price-table-full-price {
+      text-decoration: line-through;
+      color: $COLOR_GRAY_50;
+      font-size: 14px;
+    }
+
+    .price-table-free {
+      color: $COLOR_GRAY_50;
+      font-style: italic;
+    }
+
+    &-total {
+      display: flex;
+    }
+
+    .price-table-total-title {
+      width: 100%;
+
+      .heading--3 {
+        margin-top: $SPACING_1;
+      }
+    }
+
+    .price-table-total-price {
+      width: 100%;
+      text-align: right;
+      margin-top: 0;
+
+      .heading--3 {
+        margin-top: $SPACING_1;
+      }
+    }
+  }
+
+  &__kit-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    #kit-page-next {
+      display: flex;
+      align-items: center;
+      padding: 0.25rem 16px;
+    }
+  }
+
+
   //Form styling for join process
   form {
     .disabled {
@@ -182,12 +344,6 @@
     #submit {
       display: flex;
       align-items: center;
-
-      svg {
-        height: 35px;
-        width: 35px;
-        fill: $COLOR_WHITE;
-      }
     }
   }
 
@@ -228,13 +384,6 @@
     align-items: center;
     margin-top: $SPACING_2;
     float:right;
-
     padding: .25rem $SPACING_2;
-
-    svg {
-      height: 35px;
-      width: 35px;
-      fill: $COLOR_WHITE;
-    }
   }
 }

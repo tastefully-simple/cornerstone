@@ -3,8 +3,8 @@
       color: $COLOR_SECONDARY_200;
     }
     .join__congrats-header {
-      text-align: center;
       margin-bottom: $SPACING_4;
+      text-align: center;
 
       .heading--1 {
         margin-top: 0;
@@ -24,23 +24,48 @@
 
   .join__congrats-lead-block {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
     padding: $SPACING_6 0;
     border-bottom: 1px solid $COLOR_GRAY_200;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      align-items: flex-start;
+    }
   }
 
   .join__congrats-lead-image {
-    width: 45%;
+    width: 100%;
+    text-align: center;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      width: 45%;
+    }
   }
 
   .join__congrats-lead-content {
-    width: 55%;
+    width: 100%;
     padding-left: $SPACING_4;
+    padding-right: $SPACING_4;
+    padding-top: $SPACING_4;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      width: 55%;
+      padding-top: 0;
+    }
 
     h4 {
       margin-top: 0;
       font-family: $FONT_FAMILY_SECONDARY;
       font-weight: bold;
+    }
+  }
+
+  .join__congrats-lead-share {
+    text-align: center;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      text-align: left;
     }
   }
 
@@ -54,7 +79,12 @@
 
   .congrats-share-icons-wrapper {
     display: flex;
+    justify-content: center;
     margin-top: $SPACING_2;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      justify-content: flex-start;
+    }
   }
 
   .congrats-share-icon {
@@ -63,9 +93,15 @@
     align-items: center;
     width: 24px;
     height: 24px;
-    margin-right: $SPACING_6;
+    margin-right: $SPACING_3;
+    margin-left: $SPACING_3;
     border: 1px solid $COLOR_PRIMARY_100;
     border-radius: 100%;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      margin-right: $SPACING_6;
+      margin-left: 0;
+    }
 
     svg {
       width: 14px;
@@ -143,7 +179,11 @@
 
   .join__steps-text {
     padding-top: $SPACING_4;
-    padding-bottom: $SPACING_6;
+    padding-bottom: $SPACING_4;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      padding-bottom: $SPACING_6;
+    }
 
     p {
       margin-bottom: $SPACING_2;
@@ -187,10 +227,14 @@
       margin-bottom: $SPACING_4;
 
       .contact-icon-wrapper {
-        width: 40%;
+        width: 20%;
         display: flex;
         align-items: center;
         justify-content: flex-end;
+
+        @include breakpoint($BREAKPOINT_SMALL) {
+          width: 40%;
+        }
 
         svg {
           margin-right: $SPACING_3;
@@ -200,7 +244,11 @@
       }
 
       .contact-text {
-        width: 60%;
+        width: 80%;
+
+        @include breakpoint($BREAKPOINT_SMALL) {
+          width: 60%;
+        }
 
         p {
           margin-bottom: 0;
@@ -213,5 +261,4 @@
       }
     }
   }
-
 }

@@ -14,7 +14,7 @@
 
   &--login .join__banner {
     align-items: center;
-    min-height: 300px;
+    min-height: 350px;
     background: url(../img/join-banner.png) no-repeat center center;
     background-size: cover;
   }
@@ -27,6 +27,8 @@
 
     .heading--1 {
       color: $COLOR_WHITE;
+      font-weight: bold;
+      margin-bottom: $SPACING_8;
     }
   }
 
@@ -62,19 +64,6 @@
 
   &__heading--teal.heading--4 {
     color: $COLOR_PRIMARY_100;
-  }
-
-  //added .heading--2 styles to h2 so that WYSIWYG H2's stay styled
-  h2 {
-    @include heading();
-    color: $COLOR_BLACK;
-    font-size: $FONT_SIZE_LARGE;
-    font-weight: $FONT_WEIGHT_BOLD;
-    font-family: $FONT_FAMILY_SECONDARY;
-
-    @include breakpoint($BREAKPOINT_MEDIUM) {
-      font-size: 28px;
-    }
   }
 
   .hidden {
@@ -193,6 +182,24 @@
 
 
   //Form styling specific to login form
+  &--login {
+
+    .heading--2 {
+      font-weight: bold;
+    }
+
+    h2 {
+      @include heading();
+      color: $COLOR_BLACK;
+      font-size: $FONT_SIZE_LARGE;
+      font-weight: bold;
+      font-family: $FONT_FAMILY_SECONDARY;
+
+      @include breakpoint($BREAKPOINT_MEDIUM) {
+        font-size: 28px;
+      }
+    }
+  }
   &--login form {
 
     input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {

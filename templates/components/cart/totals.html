@@ -49,7 +49,7 @@
             </div>
         </li>
     {{/if}}
-    {{#if cart.coupons}}
+    {{!-- #if cart.coupons}}
         {{#each cart.coupons}}
             <li class="cart-total">
                 <div class="cart-total-label">
@@ -71,6 +71,7 @@
             {{> components/cart/coupon-input}}
         </li>
     {{/if}}
+    --}}
     {{#if settings.gift_certificates_enabled}}
         {{#each cart.gift_certificates}}
             <li class="cart-total">

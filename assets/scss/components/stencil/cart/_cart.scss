@@ -678,3 +678,9 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 #cart-affiliate-name, #cart-no-affiliate-name {
     display: none;
 }
+
+// This will hide the Social Bug flyout
+
+.bg-info {
+    display: none;
+}

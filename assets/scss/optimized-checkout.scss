@@ -399,3 +399,8 @@ form.guest-signup {
 .continueButtonContainer {
     display: none;
 }
+
+// Removes coupon/gift certificate entry on checkout page
+.redeemable-label {
+    display: none;
+}

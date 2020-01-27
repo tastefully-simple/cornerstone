@@ -24,7 +24,7 @@ const joinNewUserInformation = {
     FirstName: null,
     LastName: null,
     SSN: null,
-    DateOfBirth: null,
+    DOB: null,
     PrimaryPhone: null,
     CellPhone: null,
     TsCashOption: null,
@@ -176,6 +176,7 @@ const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
     joinNewUserInformation.Id = $(event.target).closest('ul').attr('id');
+    $(event.target).closest('ul').css('border', '1px solid #00757D', 'padding', '20px');
 });
 
 /**

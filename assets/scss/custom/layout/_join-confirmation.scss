@@ -1,0 +1,217 @@
+.join--confirmation {
+    a {
+      color: $COLOR_SECONDARY_200;
+    }
+    .join__congrats-header {
+      text-align: center;
+      margin-bottom: $SPACING_4;
+
+      .heading--1 {
+        margin-top: 0;
+        font-weight: bold;
+      }
+
+      svg {
+        max-width: 100px;
+      }
+    }
+
+  .join__congrats-lead-wrapper {
+    padding-bottom: $SPACING_7;
+    width: 100%;
+    background-color: $COLOR_GRAY_150;
+  }
+
+  .join__congrats-lead-block {
+    display: flex;
+    align-items: flex-start;
+    padding: $SPACING_6 0;
+    border-bottom: 1px solid $COLOR_GRAY_200;
+  }
+
+  .join__congrats-lead-image {
+    width: 45%;
+  }
+
+  .join__congrats-lead-content {
+    width: 55%;
+    padding-left: $SPACING_4;
+
+    h4 {
+      margin-top: 0;
+      font-family: $FONT_FAMILY_SECONDARY;
+      font-weight: bold;
+    }
+  }
+
+  .congrats-share-text {
+    display: inline-block;
+    margin-top: 0;
+    color: $COLOR_PRIMARY_100;
+    font-weight: bold;
+    border-bottom: 1px solid;
+  }
+
+  .congrats-share-icons-wrapper {
+    display: flex;
+    margin-top: $SPACING_2;
+  }
+
+  .congrats-share-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    margin-right: $SPACING_6;
+    border: 1px solid $COLOR_PRIMARY_100;
+    border-radius: 100%;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      fill: $COLOR_PRIMARY_100;
+    }
+  }
+
+  .join__steps-lead {
+    margin-top: $SPACING_6;
+    margin-bottom: $SPACING_6;
+  }
+  .join__steps-lead-text-wrapper {
+    width: 80%;
+    margin: 0 auto;
+
+    .heading--2 {
+      text-align: center;
+      font-weight: bold;
+      color: $COLOR_PRIMARY_100;
+    }
+  }
+
+  .join__step-banner {
+    color: white;
+    display: flex;
+    padding: $SPACING_3;
+
+    .heading--2 {
+      color: $COLOR_WHITE;
+      font-weight: bold;
+    }
+    &.step--red {
+       background-color: $COLOR_SECONDARY_200;
+     }
+
+    &.step--lime {
+      background-color: $COLOR_SECONDARY_100;
+    }
+
+    &.step--teal {
+      background-color: $COLOR_PRIMARY_100;
+    }
+
+    .join__step-banner-text-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    .step-number {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      border: 2px solid $COLOR_WHITE;
+      border-radius: 100%;
+
+      .heading--1 {
+        margin: 0;
+        color: $COLOR_WHITE;
+        font-size: 40px;
+        font-weight: bold;
+      }
+    }
+
+    .heading--2 {
+      margin: 0;
+      margin-left: $SPACING_4;
+    }
+  }
+
+  .join__step-banner-container {
+    padding: 0;
+  }
+
+  .join__steps-text {
+    padding-top: $SPACING_4;
+    padding-bottom: $SPACING_6;
+
+    p {
+      margin-bottom: $SPACING_2;
+    }
+
+    .steps-social {
+      display: flex;
+    }
+
+    .social-icon-wrapper {
+      display: inline-block;
+      margin-left: $SPACING_4;
+    }
+  }
+
+  .trademark {
+    font-size: 12px;
+  }
+
+  .join__congrats-contact {
+    width: 80%;
+    border-top: 1px solid $COLOR_GRAY_200;
+    padding-top: $SPACING_2;
+
+    .contact-lead {
+      text-align: center;
+      margin-bottom: $SPACING_6;
+    }
+
+    .heading--1 {
+      color: $COLOR_BLACK;
+    }
+
+    .contact-details-wrapper {
+      margin: 0 auto;
+    }
+
+    .contact-phone, .contact-email {
+      display: flex;
+      align-items: center;
+      margin-bottom: $SPACING_4;
+
+      .contact-icon-wrapper {
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        svg {
+          margin-right: $SPACING_3;
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      .contact-text {
+        width: 60%;
+
+        p {
+          margin-bottom: 0;
+        }
+      }
+
+      .phone-number {
+        font-weight: bold;
+        color: $COLOR_PRIMARY_100;
+      }
+    }
+  }
+
+}

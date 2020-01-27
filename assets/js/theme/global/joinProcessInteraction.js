@@ -1,5 +1,6 @@
 const loginPage         = document.getElementById('join-login');
-const personalInfoPage = document.getElementById('personal-info')
+const personalInfoPage = document.getElementById('personal-info');
+const confirmationPage = document.getElementById('join-confirmation');
 
 /**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
@@ -187,5 +188,9 @@ export default function joinProcessInteraction() {
         closeTermsModal();
         triggerSubmit();
         triggerTermsApprove();
+    }
+
+    if (confirmationPage) {
+        removeContainer();
     }
 }

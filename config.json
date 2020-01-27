@@ -101,6 +101,7 @@
     "default_image_brand": "img/BrandDefault.gif",
     "default_image_product": "img/ProductDefault.gif",
     "default_image_gift_certificate": "img/GiftCertificate.png",
+    "consultant_image": "img/consultants.png",
     "body-font": "Google_Questrial_400",
     "headings-font": "Google_Questrial_400",
     "fontSize-root": 16,

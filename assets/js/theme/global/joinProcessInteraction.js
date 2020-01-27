@@ -81,15 +81,16 @@ function handleFormChange(event) {
  * This function handles input changes for the JoinLoginText Form
  */
 function handleJoinLoginTestFormChange(event) {
-    if (event.target.name !== 'OptInText'
-        && event.target.name !== 'MobilePhoneCheckbox'
-        && event.target.name !== 'AddressCheckbox') {
+    const target = event.target;
+    if (target.name !== 'OptInText'
+        && target.name !== 'MobilePhoneCheckbox'
+        && target.name !== 'AddressCheckbox') {
         if ((!$('#shipping-address').hasClass('hidden'))) {
-            joinNewUserInformation[event.target.name] = event.target.value;
+            joinNewUserInformation[target.name] = target.value;
         } else if ((!$('#primaryPhoneField').hasClass('disabled'))) {
-            joinNewUserInformation[event.target.name] = event.target.value;
+            joinNewUserInformation[target.name] = target.value;
         } else {
-            joinNewUserInformation[event.target.name] = event.target.value;
+            joinNewUserInformation[target.name] = target.value;
             joinNewUserInformation.PrimaryPhone = joinNewUserInformation.CellPhone;
             joinNewUserInformation.ShippingAddressLine1 = joinNewUserInformation.BillingAddressLine1;
             joinNewUserInformation.ShippingAddressLine2 = joinNewUserInformation.BillingAddressLine2;
@@ -120,28 +121,30 @@ function submitLoginInfo() {
  */
 function displayConsultantInformation(data) {
     $.each(data.Results, (i) => {
+        const results = data.Results[i];
         // TODO add blank profile image to files for when user photo is not provided
         let sponsorImage = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-        if (data.Results[i].Image) {
-            sponsorImage = data.Results[i].Image;
+        if (results.Image) {
+            sponsorImage = results.Image;
         }
-        const sponsorId = data.Results[i].ConsultantId;
-        const sponsorName = data.Results[i].Name;
-        const sponsorLevel = data.Results[i].Title;
-        const sponsorPhoneNumber = data.Results[i].PhoneNumber;
-        const sponsorEmail = data.Results[i].EmailAddress;
-        const sponsorLocation = data.Results[i].Location;
-        const sponsorUrl = data.Results[i].WebUrl;
+        const {
+            ConsultantId,
+            Name,
+            Title,
+            PhoneNumber,
+            EmailAddress,
+            Location,
+            WebUrl,
+        } = results;
         $('#sponsorSearchData').append(`
-            <ul id='${sponsorId}'>
+            <ul id='${ConsultantId}'>
                 <img src='${sponsorImage}'/>
-                <li>${sponsorName}</li>
-                <li>${sponsorLevel}</li>
-                <li>Phone: ${sponsorPhoneNumber}</li>
-                <li>Email: ${sponsorEmail}</li>
-                <li>${sponsorLocation}</li>
-                <a href='${sponsorUrl}' target='_blank'>View my TS page</a>
-                <li>${sponsorId}</li>
+                <li>${Name}</li>
+                <li>${Title}</li>
+                <li>Phone: ${PhoneNumber}</li>
+                <li>Email: ${EmailAddress}</li>
+                <li>${Location}</li>
+                <a href='${WebUrl}' target='_blank'>View my TS page</a>
             </ul>
         `);
     });
@@ -162,7 +165,7 @@ function displayErrorMessage(error) {
  * that is returned from Tastefully Simple's API.
  */
 
- //TODO update to jquery each
+ // TODO update to jquery each
 function selectSponsor(array, type, func) {
     for (let i = 0; i < array.length; i++) {
         $(array[i]).bind(type, func);

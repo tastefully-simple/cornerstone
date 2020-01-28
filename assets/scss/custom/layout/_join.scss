@@ -138,6 +138,7 @@
 
     .heading--1 {
       margin-top: $SPACING_8;
+      font-weight: bold;
 
       @include breakpoint($BREAKPOINT_MEDIUM) {
         margin-top: 0;
@@ -242,6 +243,7 @@
 
       .heading--3 {
         margin-top: $SPACING_1;
+        font-weight: bold;
       }
     }
 
@@ -252,6 +254,7 @@
 
       .heading--3 {
         margin-top: $SPACING_1;
+        font-weight: bold;
       }
     }
   }

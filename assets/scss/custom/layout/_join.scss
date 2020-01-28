@@ -118,8 +118,8 @@
     width: 100%;
 
     .productView-img-container {
-      margin: 0;
       max-width: none;
+      margin: 0;
 
       img {
         position: relative;
@@ -179,9 +179,9 @@
   }
 
   &__kit-price-table-wrapper {
-    width: 100%;
     display: flex;
     justify-content: flex-end;
+    width: 100%;
   }
 
   &__kit-price-table {
@@ -212,10 +212,10 @@
 
     .price-table-details-right {
       width: 100%;
-      text-align: right;
       align-self: flex-end;
       margin-bottom: $SPACING_2;
       margin-top: $SPACING_1;
+      text-align: right;
 
       p {
         margin-bottom: 0;
@@ -223,9 +223,9 @@
     }
 
     .price-table-full-price {
-      text-decoration: line-through;
       color: $COLOR_GRAY_50;
       font-size: 14px;
+      text-decoration: line-through;
     }
 
     .price-table-free {
@@ -247,8 +247,8 @@
 
     .price-table-total-price {
       width: 100%;
-      text-align: right;
       margin-top: 0;
+      text-align: right;
 
       .heading--3 {
         margin-top: $SPACING_1;

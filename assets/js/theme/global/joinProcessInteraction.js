@@ -384,6 +384,11 @@ function triggerSubmit() {
 
     checkoutButton.addEventListener('click', (e) => {
         e.preventDefault();
+        //format DOB
+        let DOB = new Date(document.getElementById('DOB').value);
+        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset()*60000));
+        DOB = ("0" + (DOB.getMonth() + 1)).slice(-2) + '-' + ("0" + DOB.getDate()).slice(-2) + '-' +  DOB.getFullYear();
+        joinNewUserInformation.DOB = DOB;
         console.log(joinNewUserInformation);
         // infoForm.submit();
     });

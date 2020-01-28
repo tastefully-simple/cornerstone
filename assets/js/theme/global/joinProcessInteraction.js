@@ -1,5 +1,6 @@
-const loginPage = document.getElementById('join-login');
+const loginPage         = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
+const confirmationPage = document.getElementById('join-confirmation');
 
 /**
  * This object will hold the user information for the join/login page.
@@ -239,7 +240,6 @@ $('#frmJoinPersonalInfoTest').on('change', () => handleJoinLoginTestFormChange(e
 // Consultant Search Event Listeners
 $('#consultantSearchForm').on('change', () => handleFormChange(event));
 
-
 /**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
  */
@@ -462,5 +462,9 @@ export default function joinProcessInteraction() {
         triggerSubmit();
         triggerTermsApprove();
         triggerTextOptIn();
+    }
+
+    if (confirmationPage) {
+        removeContainer();
     }
 }

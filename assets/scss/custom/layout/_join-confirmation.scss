@@ -1,8 +1,8 @@
-.join--confirmation {
+.confirmation {
     a {
       color: $COLOR_SECONDARY_200;
     }
-    .join__congrats-header {
+    .confirmation__congrats-header {
       margin-bottom: $SPACING_4;
       text-align: center;
 
@@ -16,13 +16,13 @@
       }
     }
 
-  .join__congrats-lead-wrapper {
+  .confirmation__congrats-lead-wrapper {
     padding-bottom: $SPACING_7;
     width: 100%;
     background-color: $COLOR_GRAY_150;
   }
 
-  .join__congrats-lead-block {
+  .confirmation__congrats-lead-block {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -34,7 +34,7 @@
     }
   }
 
-  .join__congrats-lead-image {
+  .confirmation__congrats-lead-image {
     width: 100%;
     text-align: center;
 
@@ -43,7 +43,7 @@
     }
   }
 
-  .join__congrats-lead-content {
+  .confirmation__congrats-lead-content {
     width: 100%;
     padding-left: $SPACING_4;
     padding-right: $SPACING_4;
@@ -61,60 +61,11 @@
     }
   }
 
-  .join__congrats-lead-share {
-    text-align: center;
-
-    @include breakpoint($BREAKPOINT_MEDIUM) {
-      text-align: left;
-    }
-  }
-
-  .congrats-share-text {
-    display: inline-block;
-    margin-top: 0;
-    color: $COLOR_PRIMARY_100;
-    font-weight: bold;
-    border-bottom: 1px solid;
-  }
-
-  .congrats-share-icons-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: $SPACING_2;
-
-    @include breakpoint($BREAKPOINT_MEDIUM) {
-      justify-content: flex-start;
-    }
-  }
-
-  .congrats-share-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    height: 24px;
-    margin-right: $SPACING_3;
-    margin-left: $SPACING_3;
-    border: 1px solid $COLOR_PRIMARY_100;
-    border-radius: 100%;
-
-    @include breakpoint($BREAKPOINT_MEDIUM) {
-      margin-right: $SPACING_6;
-      margin-left: 0;
-    }
-
-    svg {
-      width: 14px;
-      height: 14px;
-      fill: $COLOR_PRIMARY_100;
-    }
-  }
-
-  .join__steps-lead {
+  .confirmation__steps-lead {
     margin-top: $SPACING_6;
     margin-bottom: $SPACING_6;
   }
-  .join__steps-lead-text-wrapper {
+  .confirmation__steps-lead-text-wrapper {
     width: 80%;
     margin: 0 auto;
 
@@ -125,7 +76,7 @@
     }
   }
 
-  .join__step-banner {
+  .confirmation__step-banner {
     color: white;
     display: flex;
     padding: $SPACING_3;
@@ -146,7 +97,7 @@
       background-color: $COLOR_PRIMARY_100;
     }
 
-    .join__step-banner-text-wrapper {
+    .confirmation__step-banner-text-wrapper {
       display: flex;
       align-items: center;
     }
@@ -173,11 +124,11 @@
     }
   }
 
-  .join__step-banner-container {
+  .confirmation__step-banner-container {
     padding: 0;
   }
 
-  .join__steps-text {
+  .confirmation__steps-text {
     padding-top: $SPACING_4;
     padding-bottom: $SPACING_4;
 
@@ -203,7 +154,7 @@
     font-size: 12px;
   }
 
-  .join__congrats-contact {
+  .confirmation__congrats-contact {
     width: 80%;
     border-top: 1px solid $COLOR_GRAY_200;
     padding-top: $SPACING_2;

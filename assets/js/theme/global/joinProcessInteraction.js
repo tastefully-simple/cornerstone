@@ -1,6 +1,7 @@
-const loginPage = document.getElementById('join-login');
+const loginPage         = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
 const kitPage = document.getElementById('kit');
+const confirmationPage = document.getElementById('join-confirmation');
 
 
 /**
@@ -470,5 +471,9 @@ export default function joinProcessInteraction() {
         triggerSubmit();
         triggerTermsApprove();
         triggerTextOptIn();
+    }
+
+    if (confirmationPage) {
+        removeContainer();
     }
 }

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  * This value represents the actual query string we are checking for in the URL
  * on page load. It should have the affiliate ID as a value.
@@ -10,6 +12,26 @@ const afid = 'AFID';
  * it as the source of the iframe.
  */
 const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
+
+/**
+ * This function is responsible for grabbing the URL parameters before the BigCommerce cart
+ * redirect happens. We are then able to use the Tastefully Simple SCID to display the associated
+ * affiliate name from Social Bug on the screen.
+ */
+function getUrlVars() {
+    const vars = {};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
+        vars[key] = value;
+    });
+
+    if (vars.affiliate_action === 'add') {
+        axios.get(`/cart.php?action=add&sku=${vars.sku}&source=buy_button`)
+            .then(() => {
+                window.location = `https://tastefullysimpl.sb-affiliate.com/r66/${vars.SCID}`;
+            });
+    }
+}
+
 
 /**
  * This function is responsible for creating an iframe which in turn should
@@ -27,5 +49,6 @@ export default function () {
 
         document.body.appendChild(frame);
     }
+    getUrlVars();
 }
 

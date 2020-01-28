@@ -48,6 +48,12 @@
 	font-weight: bold;
 	font-size: 16px;
 	cursor: pointer;
+
+	svg {
+		height: 35px;
+		width: 35px;
+		fill: $COLOR_WHITE;
+	}
 }
 .button.isDisabled,
 .button[disabled] {

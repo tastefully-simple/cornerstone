@@ -1,6 +1,8 @@
 const loginPage         = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
+const kitPage = document.getElementById('kit');
 const confirmationPage = document.getElementById('join-confirmation');
+
 
 /**
  * This object will hold the user information for the join/login page.
@@ -357,6 +359,7 @@ function toggleTsCashConditionalField() {
 function openTermsModal() {
     const termsModal = personalInfoPage.querySelector('#terms-modal');
     const modalLink = personalInfoPage.querySelector('#openTermsModal');
+
     modalLink.addEventListener('click', () => {
         termsModal.classList.add('join__modal-overlay--active');
     });
@@ -396,6 +399,7 @@ function triggerSubmit() {
 function triggerTermsApprove() {
     const visibleCheckbox = personalInfoPage.querySelector('#TermsCheckboxVisible');
     const invisibleCheckbox = personalInfoPage.querySelector('#TermsCheckbox');
+
     // Grab current Tastefully Simple terms and conditions with version number
     $.ajax({
         type: 'GET',
@@ -416,6 +420,7 @@ function triggerTermsApprove() {
             // joinNewUserInformation.TermsConditionsVersionvalue to that version #
         },
     });
+
     visibleCheckbox.addEventListener('change', () => {
         if (visibleCheckbox.checked === true) {
             invisibleCheckbox.checked = true;
@@ -449,6 +454,10 @@ export default function joinProcessInteraction() {
     if (loginPage) {
         removeContainer();
         toggleStyles();
+    }
+    // call functions on kit page
+    if (kitPage) {
+        removeContainer();
     }
     // call functions on tell us about yourself page
     if (personalInfoPage) {

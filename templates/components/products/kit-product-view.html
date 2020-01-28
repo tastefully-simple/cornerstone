@@ -8,14 +8,14 @@
 {{/if}}
 {{/each}}
 
-    <main class="page join join--kit" id="kit">
+    <main class="page kit" id="kit">
         <div class="join__banner">
             <div class="join__banner-title-wrapper">
                 <h1 class="heading--1">What Comes in Your Kit</h1>
             </div>
         </div>
         <div class="join__container">
-            <div class="join__kit-content-wrapper">
+            <div class="kit-content-wrapper">
                 <div class="productView-img-container">
                     {{> components/common/responsive-img
                     image=product.main_image
@@ -26,16 +26,16 @@
                     otherAttributes="data-main-image"
                     }}
                 </div>
-                <div class="join__kit-content">
+                <div class="kit-content">
                     <h1 class="heading--1">What Comes in Your Kit?</h1>
                     <div>{{> components/products/kit-description}}</div>
-                    <div class="join__kit-price-sticker">
+                    <div class="kit-price-sticker">
                         <h4 class="heading--4 sale-price">{{product.price.non_sale_price_without_tax.formatted}}</h4>
                         <h2 class="heading--2 price">{{product.price.sale_price_without_tax.formatted}}</h2>
                     </div>
-                    <div class="join__kit-price-table-wrapper">
-                        <div class="join__kit-price-table">
-                            <div class="join__kit-price-table-details">
+                    <div class="kit-price-table-wrapper">
+                        <div class="kit-price-table">
+                            <div class="kit-price-table-details">
                                 <div class="price-table-details-left">
                                     <p>Sale Price</p>
                                     <p>Shipping</p>
@@ -46,7 +46,7 @@
                                     <p class="price-table-free">FREE</p>
                                 </div>
                             </div>
-                            <div class="join__kit-price-table-total">
+                            <div class="kit-price-table-total">
                                 <div class="price-table-total-title">
                                     <h3 class="heading--3">Total</h3>
                                 </div>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="join__kit-button-wrapper">
+                    <div class="kit-button-wrapper">
                         <button id="kit-page-next" class="button--secondary">next<svg><use xlink:href="#icon-chevron-right" /></svg></button>
                     </div>
                 </div>
@@ -65,41 +65,15 @@
 
 <!--        the below seems like it might be important for adding to cart and ordering -->
         <section class="productView-details">
-            <div class="productView-options">
-                {{#if product.release_date }}
-                <p>{{product.release_date}}</p>
-                {{/if}}
                 <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
                       data-cart-item-add>
-                    <input type="hidden" name="action" value="add">
-                    <input type="hidden" name="product_id" value="{{product.id}}"/>
                     <div data-product-option-change style="display:none;">
                         {{#each product.options}}
                         {{{dynamicComponent 'components/products/options'}}}
                         {{/each}}
                     </div>
-                    <div class="form-field form-field--stock{{#unless product.stock_level}} u-hiddenVisually{{/unless}}">
-                        <label class="form-label form-label--alternate">
-                            {{lang 'products.current_stock'}}
-                            <span data-product-stock>{{product.stock_level}}</span>
-                        </label>
-                    </div>
-                    {{#if product.can_purchase}}
-                    {{> components/products/add-to-cart}}
-                    {{/if}}
-                    {{#if product.out_of_stock}}
-                    {{#if product.out_of_stock_message}}
-                    {{> components/common/alert-error product.out_of_stock_message}}
-                    {{else}}
-                    {{> components/common/alert-error (lang 'products.sold_out')}}
-                    {{/if}}
-                    {{/if}}
                 </form>
-                {{#if settings.show_wishlist}}
-                {{> components/common/wishlist-dropdown}}
-                {{/if}}
             </div>
-            {{> components/common/share}}
         </section>
     </main>
 </div>

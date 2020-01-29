@@ -360,7 +360,8 @@ function openTermsModal() {
     const termsModal = personalInfoPage.querySelector('#terms-modal');
     const modalLink = personalInfoPage.querySelector('#openTermsModal');
 
-    modalLink.addEventListener('click', () => {
+    modalLink.addEventListener('click', (event) => {
+        event.preventDefault();
         termsModal.classList.add('join__modal-overlay--active');
     });
 }

@@ -52,7 +52,7 @@
       width: 100%;
 
       @include breakpoint($BREAKPOINT_MEDIUM) {
-        padding: 0 4rem 4rem;
+        padding: 0 2rem 2rem;
         width: 50%;
       }
     }
@@ -147,6 +147,10 @@
       input {
         margin-bottom: $SPACING_1;
       }
+    }
+
+    #ConsultantState {
+      width: 34%;
     }
 
     .join__field--subtext {

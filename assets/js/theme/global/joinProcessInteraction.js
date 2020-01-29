@@ -1,4 +1,4 @@
-const loginPage         = document.getElementById('join-login');
+const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
 const kitPage = document.getElementById('kit');
 const confirmationPage = document.getElementById('join-confirmation');
@@ -126,7 +126,7 @@ function displayConsultantInformation(data) {
     $.each(data.Results, (i) => {
         const results = data.Results[i];
         // TODO add blank profile image to files for when user photo is not provided
-        let sponsorImage = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+        let sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
         if (results.Image) {
             sponsorImage = results.Image;
         }
@@ -140,16 +140,35 @@ function displayConsultantInformation(data) {
             WebUrl,
         } = results;
         $('#sponsorSearchData').append(`
-            <ul id='${ConsultantId}'>
-                <img src='${sponsorImage}'/>
-                <li>${Name}</li>
-                <li>${Title}</li>
-                <li>Phone: ${PhoneNumber}</li>
-                <li>Email: ${EmailAddress}</li>
-                <li>${Location}</li>
-                <a href='${WebUrl}' target='_blank'>View my TS page</a>
-            </ul>
+             <div id='${ConsultantId}' class="sponsor-wrapper">
+               <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+                <ul>
+                    <li class="sponsor-name">${Name}</li>
+                    <li>${Title}</li>
+                    <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
+                    <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>${EmailAddress}</li>
+                    <li>${Location}</li>
+                    <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
+                </ul>
+                <div class="checkmark"></div>
+            </div>
+            <div class="sponsor-divider"></div>
         `);
+        if (data.Results.length < 3) {
+            $('#sponsorSearchData').addClass('no-scroll');
+        } else {
+            $('#sponsorSearchData').removeClass('no-scroll');
+        }
+        if (!PhoneNumber) {
+            $('.sponsor-phone').addClass('hidden');
+        }
+        if (!EmailAddress) {
+            $('.sponsor-email').addClass('hidden');
+        }
+        if (data.Results.length > 0) {
+            $('.sponsorSearchData-wrapper').addClass('active');
+            $('#sponsorSearchData').addClass('active');
+        }
     });
 }
 
@@ -178,8 +197,9 @@ function selectSponsor(array, type, func) {
 const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
+    $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
     joinNewUserInformation.Id = $(event.target).closest('ul').attr('id');
-    $(event.target).closest('ul').css('border', '1px solid #00757D', 'padding', '20px');
+    $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
 });
 
 /**

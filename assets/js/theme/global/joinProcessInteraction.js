@@ -125,7 +125,6 @@ function submitLoginInfo() {
 function displayConsultantInformation(data) {
     $.each(data.Results, (i) => {
         const results = data.Results[i];
-        // TODO add blank profile image to files for when user photo is not provided
         let sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
         if (results.Image) {
             sponsorImage = results.Image;

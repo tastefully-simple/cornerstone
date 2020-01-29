@@ -171,12 +171,6 @@
     #submit {
       display: flex;
       align-items: center;
-
-      svg {
-        height: 35px;
-        width: 35px;
-        fill: $COLOR_WHITE;
-      }
     }
   }
 
@@ -235,13 +229,6 @@
     align-items: center;
     margin-top: $SPACING_2;
     float:right;
-
     padding: .25rem $SPACING_2;
-
-    svg {
-      height: 35px;
-      width: 35px;
-      fill: $COLOR_WHITE;
-    }
   }
 }

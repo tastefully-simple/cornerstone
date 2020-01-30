@@ -167,8 +167,8 @@ function displayConsultantInformation(data) {
             WebUrl,
         } = results;
         $('#sponsorSearchData').append(`
-            <div id='${ConsultantId}' class="sponsor-wrapper">
-                <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+            <div class="sponsor-wrapper">
+                <div id='${ConsultantId}' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
                     <ul>
                         <li class="sponsor-name">${Name}</li>
                         <li>${Title}</li>
@@ -229,8 +229,7 @@ const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
-    // TODO update the joinNewUswerInformation to be associated with the div ID
-    joinNewUserInformation.SponsorId = $(event.target).closest('ul').attr('id');
+    joinNewUserInformation.SponsorId = $(event.target).closest('div').attr('id');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
 });
 
@@ -269,8 +268,8 @@ function getConsultantInfoByZip() {
         error: () => {
             const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
             $('#sponsorSearchData').append(`
-                <div id='0160785' class="sponsor-wrapper">
-                    <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+                <div class="sponsor-wrapper">
+                    <div id='0160785' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
                         <ul>
                             <li class="sponsor-name">Tastefully Simple</li>
                             <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>

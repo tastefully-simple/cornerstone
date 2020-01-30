@@ -372,6 +372,17 @@ $('#frmJoinPersonalInfoTest').on('change', () => handleJoinLoginTestFormChange(e
 // Consultant Search Event Listeners
 $('#consultantSearchForm').on('change', () => handleFormChange(event));
 
+// Kit Page Event Listeners
+$('#kit-page-next').on('click', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('id')) {
+        joinNewUserInformation.bigCommerceId = params.get('id');
+        location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=${joinNewUserInformation.bigCommerceId}`;
+    } else {
+        // TODO error handling for if and when there is not an id in the URL params
+    }
+});
+
 /**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
  */
@@ -638,7 +649,7 @@ export default function joinProcessInteraction() {
             lineItems: [
                 {
                     quantity: 1,
-                    productId: 134,
+                    productId: 153,
                 },
             ] }
         )

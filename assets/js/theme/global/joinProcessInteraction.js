@@ -1,5 +1,7 @@
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
+const kitPage = document.getElementById('kit');
+const confirmationPage = document.getElementById('join-confirmation');
 
 /**
  * This object will hold the user information for the join/login page.
@@ -13,12 +15,15 @@ const loginUserInformation = {
     Password2: null,
 };
 
+/** 
+ * This object will be used to indicate whether a user is on the log in or sign up form
+ */
 const toggleLoginSignUp = {
     logInForm: true,
     signUpForm: false,
 };
 
-
+// TODO: add functionality for SocialBug affiliation using these variables
 const afid = 'AFID';
 const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
 
@@ -80,23 +85,19 @@ function handleFormChange(event) {
         && toggleLoginSignUp.logInForm === false
         || toggleLoginSignUp.signUpForm === true) {
         loginUserInformation[target.name] = target.value;
-        console.log(loginUserInformation);
     } else if (event.srcElement.form.id === 'frmJoinLoginTest'
         && toggleLoginSignUp.logInForm === true
         || event.srcElement.form.id === 'frmJoinLoginTest'
         && toggleLoginSignUp.signUpForm === false) {
         loginUserInformation[target.name] = target.value;
         loginUserInformation.Password2 = loginUserInformation.Password;
-        console.log(loginUserInformation);
     } else if (event.srcElement.form.id === 'consultantSearchForm'
         && target.name !== 'ConsultantState'
         && target.name !== 'TermsCheckboxVisible'
         && target.name !== 'openTermsModal') {
         consultantSearchParams[target.name] = target.value;
-        console.log(consultantSearchParams);
     } else if (target.name === 'ConsultantState') {
         consultantState = target.value;
-        console.log(consultantSearchParams);
     }
 }
 
@@ -129,7 +130,6 @@ function handleJoinLoginTestFormChange(event) {
  * we determine which unique Id will be sent to the API in the loginUserInformation object.
 */
 function submitLoginInfo() {
-    console.log('submitLoginInfo running', loginUserInformation);
     $.ajax({
         type: 'POST',
         url: 'https://qa1-tsapi.tastefullysimple.com/join/login',
@@ -166,16 +166,32 @@ function displayConsultantInformation(data) {
             WebUrl,
         } = results;
         $('#sponsorSearchData').append(`
-            <ul id='${ConsultantId}'>
-                <img src='${sponsorImage}'/>
-                <li>${Name}</li>
-                <li>${Title}</li>
-                <li>Phone: ${PhoneNumber}</li>
-                <li>Email: ${EmailAddress}</li>
-                <li>${Location}</li>
-                <a href='${WebUrl}' target='_blank'>View my TS page</a>
-            </ul>
-        `);
+            <div id='${ConsultantId}' class="sponsor-wrapper">
+                <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+                    <ul>
+                        <li class="sponsor-name">${Name}</li>
+                        <li>${Title}</li>
+                        <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
+                        <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>${EmailAddress}</li>
+                        <li>${Location}</li>
+                        <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
+                    </ul>
+                <div class="checkmark"></div>
+            </div>
+            <div class="sponsor-divider"></div>
+    `);
+        if (data.Results.length < 3) {
+            $('#sponsorSearchData').addClass('no-scroll');
+        } else {
+            $('#sponsorSearchData').removeClass('no-scroll');
+        } if (!PhoneNumber) {
+            $('.sponsor-phone').addClass('hidden');
+        } if (!EmailAddress) {
+            $('.sponsor-email').addClass('hidden');
+        } if (data.Results.length > 0) {
+            $('.sponsorSearchData-wrapper').addClass('active');
+            $('#sponsorSearchData').addClass('active');
+        }
     });
 }
 
@@ -211,9 +227,10 @@ function selectSponsor(array, type, func) {
 const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
+    $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
+    // TODO update the joinNewUswerInformation to be associated with the div ID
     joinNewUserInformation.Id = $(event.target).closest('ul').attr('id');
-    // TODO update selection styling beyond what is below (placeholder to indicate person is being selected)
-    $(event.target).closest('ul').css('border', '1px solid #00757D', 'padding', '20px');
+    $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
 });
 
 /**
@@ -226,7 +243,6 @@ function getConsultantInfo() {
         url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
-                console.log(data);
                 displayConsultantInformation(data);
             }
         },
@@ -250,16 +266,20 @@ function getConsultantInfoByZip() {
             }
         },
         error: () => {
+            let sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
             $('#sponsorSearchData').append(`
-            <ul id='0160785'>
-                <img src='https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387'/>
-                <li>Tastefully Simple</li>
-                <li>Alexandria, MN</li>
-                <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank'>Shop With Me</a></li>
-                <li>Let's Connect</li>
-                <li>866.448.6446</li>
-                <li><a href='mailto:help@tastefullysimple.com'>help@tastefullysimple.com</a></li>
-            </ul>
+                <div id='0160785' class="sponsor-wrapper">
+                    <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+                        <ul>
+                            <li class="sponsor-name">Tastefully Simple</li>
+                            <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
+                            <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>help@tastefullysimple.com</li>
+                            <li>Alexandria, MN</li>
+                            <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
+                        </ul>
+                    <div class="checkmark"></div>
+                </div>
+                <div class="sponsor-divider"></div>
             `);
         },
     });
@@ -470,7 +490,8 @@ function openTermsModal() {
     const termsModal = personalInfoPage.querySelector('#terms-modal');
     const modalLink = personalInfoPage.querySelector('#openTermsModal');
 
-    modalLink.addEventListener('click', () => {
+    modalLink.addEventListener('click', (event) => {
+        event.preventDefault();
         termsModal.classList.add('join__modal-overlay--active');
     });
 }
@@ -481,6 +502,7 @@ function openTermsModal() {
 function closeTermsModal() {
     const termsModal = personalInfoPage.querySelector('#terms-modal');
     const closeIcons = personalInfoPage.querySelectorAll('.terms-close');
+
     closeIcons.forEach((closeIcon) => {
         closeIcon.addEventListener('click', () => {
             termsModal.classList.remove('join__modal-overlay--active');
@@ -496,7 +518,11 @@ function triggerSubmit() {
 
     checkoutButton.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(joinNewUserInformation);
+        //format DOB
+        let DOB = new Date(document.getElementById('DOB').value);
+        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset()*60000));
+        DOB = ("0" + (DOB.getMonth() + 1)).slice(-2) + '-' + ("0" + DOB.getDate()).slice(-2) + '-' +  DOB.getFullYear();
+        joinNewUserInformation.DOB = DOB;
         $.ajax({
             type: 'POST',
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
@@ -519,6 +545,8 @@ function triggerSubmit() {
  */
 function triggerTermsApprove() {
     const visibleCheckbox = personalInfoPage.querySelector('#TermsCheckboxVisible');
+    const invisibleCheckbox = personalInfoPage.querySelector('#TermsCheckbox');
+
     // Grab current Tastefully Simple terms and conditions with version number
     $.ajax({
         type: 'GET',
@@ -541,8 +569,10 @@ function triggerTermsApprove() {
     });
     visibleCheckbox.addEventListener('change', () => {
         if (visibleCheckbox.checked === true) {
+            invisibleCheckbox.checked = true;
             joinNewUserInformation.TermsConditionsOptIn = true;
         } else {
+            invisibleCheckbox.checked = false;
             joinNewUserInformation.TermsConditionsOptIn = false;
         }
     });
@@ -562,6 +592,12 @@ function triggerTextOptIn() {
     });
 }
 
+/** 
+* This function will be called on page load for /join. It will be used to make a call to BigCommerce's API
+* to add the consultant kit to the cart and associate the user who is joining with a unique ID
+* from BigCommerce.
+*/
+
 function postData(url = '', cartItems = {}) {
     return fetch(url, {
         method: 'POST',
@@ -571,20 +607,6 @@ function postData(url = '', cartItems = {}) {
         body: JSON.stringify(cartItems),
     })
     .then(response => response.json());
-}
-
-function associateSponsor() {
-    const params = new URLSearchParams(window.location.search);
-
-    if (params.has(afid)) {
-        const affiliate = params.get(afid);
-        const frame = document.createElement('iframe');
-
-        frame.style.display = 'none';
-        frame.src = `${src}${affiliate}`;
-        console.log('HERE!', frame.src);
-        document.body.appendChild(frame);
-    }
 }
 
 /**
@@ -620,6 +642,5 @@ export default function joinProcessInteraction() {
         triggerSubmit();
         triggerTermsApprove();
         triggerTextOptIn();
-        associateSponsor();
     }
 }

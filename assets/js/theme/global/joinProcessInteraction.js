@@ -31,7 +31,8 @@ const toggleLoginSignUp = {
  * This object will hold the user information for the Tell Us About Yourself page.
  */
 const joinNewUserInformation = {
-    Id: null,
+    Id: loginUserInformation.Id,
+    SponsorId: null,
     Prefix: null,
     PreferredName: null,
     FirstName: null,
@@ -229,7 +230,7 @@ const sponsorSearchData = $('#sponsorSearchData');
 selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
     // TODO update the joinNewUswerInformation to be associated with the div ID
-    joinNewUserInformation.Id = $(event.target).closest('ul').attr('id');
+    joinNewUserInformation.SponsorId = $(event.target).closest('ul').attr('id');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
 });
 
@@ -347,11 +348,19 @@ $('#submit').on('click', (e) => {
         e.preventDefault();
         console.log('please make sure inputs are filled in');
         // TODO add form error handling for user
-    } else if (toggleLoginSignUp.signUpForm === true
-        && ($('#frmJoinLoginTest').val()) === '') {
-        e.preventDefault();
-        console.log('please make sure inputs are filled in');
-        // TODO add form error handling for user
+    } else if (toggleLoginSignUp.signUpForm === true) {
+        if (($('#FirstName').val()) === ''
+            || ($('#LastName').val()) === ''
+            || ($('#EmailAddress').val()) === ''
+            || ($('#Password').val()) === ''
+            || ($('#Password2').val()) === '') {
+            e.preventDefault();
+            console.log('please make sure inputs are filled in');
+            // TODO add form error handling for user
+        } else {
+            e.preventDefault();
+            submitLoginInfo();
+        }
     } else {
         e.preventDefault();
         submitLoginInfo();

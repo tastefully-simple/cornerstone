@@ -15,7 +15,7 @@ const loginUserInformation = {
     Password2: null,
 };
 
-/** 
+/**
  * This object will be used to indicate whether a user is on the log in or sign up form
  */
 const toggleLoginSignUp = {
@@ -24,8 +24,8 @@ const toggleLoginSignUp = {
 };
 
 // TODO: add functionality for SocialBug affiliation using these variables
-const afid = 'AFID';
-const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
+// const afid = 'AFID';
+// const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
@@ -266,7 +266,7 @@ function getConsultantInfoByZip() {
             }
         },
         error: () => {
-            let sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
+            const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
             $('#sponsorSearchData').append(`
                 <div id='0160785' class="sponsor-wrapper">
                     <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
@@ -298,7 +298,6 @@ $('#btnConsIdSearch').on('click', (e) => {
         apiParams = `cid/${consultantSearchParams.consultantId}`;
         $('#txtConsultantName').val('');
         $('#txtZipCode').val('');
-        $('#ConsultantState').val('');
         getConsultantInfo();
     }
 });
@@ -334,7 +333,6 @@ $('#btnConsZipSearch').on('click', (e) => {
         apiParams = `zip/${consultantSearchParams.consultantZipCode}/200/1`;
         $('#txtConsultantID').val('');
         $('#txtConsultantName').val('');
-        $('#ConsultantState').val('');
         getConsultantInfoByZip();
     }
 });
@@ -517,10 +515,10 @@ function triggerSubmit() {
 
     checkoutButton.addEventListener('click', (e) => {
         e.preventDefault();
-        //format DOB
+        // format DOB
         let DOB = new Date(document.getElementById('DOB').value);
-        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset()*60000));
-        DOB = ("0" + (DOB.getMonth() + 1)).slice(-2) + '-' + ("0" + DOB.getDate()).slice(-2) + '-' +  DOB.getFullYear();
+        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
+        DOB = `0${(DOB.getMonth() + 1).slice(-2)}-0${DOB.getDate().slice(-2)}-${DOB.getFullYear()}`;
         joinNewUserInformation.DOB = DOB;
         $.ajax({
             type: 'POST',
@@ -592,7 +590,7 @@ function triggerTextOptIn() {
     });
 }
 
-/** 
+/**
 * This function will be called on page load for /join. It will be used to make a call to BigCommerce's API
 * to add the consultant kit to the cart and associate the user who is joining with a unique ID
 * from BigCommerce.

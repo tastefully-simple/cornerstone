@@ -240,7 +240,7 @@ function getConsultantInfo() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -259,7 +259,7 @@ function getConsultantInfoByZip() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -568,7 +568,7 @@ function triggerTermsApprove() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: 'https://tsapi.tastefullysimple.com/join/tc',
+        url: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
         success: (data) => {
             if (data !== null) {
                 joinNewUserInformation.TermsConditionsVersion = data.Version;

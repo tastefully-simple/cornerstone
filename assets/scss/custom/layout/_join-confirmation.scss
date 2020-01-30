@@ -170,6 +170,14 @@
 
     .contact-details-wrapper {
       margin: 0 auto;
+
+      .bold {
+        font-weight: bold;
+      }
+
+      .center {
+        text-align: center;
+      }
     }
 
     .contact-phone, .contact-email {

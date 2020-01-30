@@ -366,7 +366,6 @@ $('#frmJoinPersonalInfoTest').on('change', () => handleJoinLoginTestFormChange(e
 // Consultant Search Event Listeners
 $('#consultantSearchForm').on('change', () => handleFormChange(event));
 
-
 /**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
  */
@@ -567,6 +566,7 @@ function triggerTermsApprove() {
             // joinNewUserInformation.TermsConditionsVersionvalue to that version #
         },
     });
+
     visibleCheckbox.addEventListener('change', () => {
         if (visibleCheckbox.checked === true) {
             invisibleCheckbox.checked = true;
@@ -630,6 +630,10 @@ export default function joinProcessInteraction() {
         // TODO handle error actions
         console.error(error));
     }
+    // call functions on kit page
+    if (kitPage) {
+        removeContainer();
+    }
     // call functions on tell us about yourself page
     if (personalInfoPage) {
         removeContainer();
@@ -642,5 +646,9 @@ export default function joinProcessInteraction() {
         triggerSubmit();
         triggerTermsApprove();
         triggerTextOptIn();
+    }
+
+    if (confirmationPage) {
+        removeContainer();
     }
 }

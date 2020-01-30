@@ -52,7 +52,7 @@
       width: 100%;
 
       @include breakpoint($BREAKPOINT_MEDIUM) {
-        padding: 0 4rem 4rem;
+        padding: 0 2rem 2rem;
         width: 50%;
       }
     }
@@ -149,6 +149,10 @@
       }
     }
 
+    #ConsultantState {
+      width: 34%;
+    }
+
     .join__field--subtext {
       margin-left: $SPACING_1;
       margin-top: -1 * $SPACING_2;
@@ -171,12 +175,6 @@
     #submit {
       display: flex;
       align-items: center;
-
-      svg {
-        height: 35px;
-        width: 35px;
-        fill: $COLOR_WHITE;
-      }
     }
   }
 
@@ -235,13 +233,6 @@
     align-items: center;
     margin-top: $SPACING_2;
     float:right;
-
     padding: .25rem $SPACING_2;
-
-    svg {
-      height: 35px;
-      width: 35px;
-      fill: $COLOR_WHITE;
-    }
   }
 }

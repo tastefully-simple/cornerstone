@@ -1,0 +1,79 @@
+<div class="productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
+{{#each product.reviews.messages}}
+{{#if error}}
+{{> components/common/alert-error error}}
+{{/if}}
+{{#if success}}
+{{> components/common/alert-success success}}
+{{/if}}
+{{/each}}
+
+    <main class="page kit" id="kit">
+        <div class="join__banner">
+            <div class="join__banner-title-wrapper">
+                <h1 class="heading--1">What Comes in Your Kit</h1>
+            </div>
+        </div>
+        <div class="join__container">
+            <div class="kit-content-wrapper">
+                <div class="productView-img-container">
+                    {{> components/common/responsive-img
+                    image=product.main_image
+                    class="productView-image--default"
+                    fallback_size=theme_settings.product_size
+                    lazyload=theme_settings.lazyload_mode
+                    default_image=theme_settings.default_image_product
+                    otherAttributes="data-main-image"
+                    }}
+                </div>
+                <div class="kit-content">
+                    <h1 class="heading--1">What Comes in Your Kit?</h1>
+                    <div>{{> components/products/kit-description}}</div>
+                    <div class="kit-price-sticker">
+                        <h4 class="heading--4 sale-price">{{product.price.non_sale_price_without_tax.formatted}}</h4>
+                        <h2 class="heading--2 price">{{product.price.sale_price_without_tax.formatted}}</h2>
+                    </div>
+                    <div class="kit-price-table-wrapper">
+                        <div class="kit-price-table">
+                            <div class="kit-price-table-details">
+                                <div class="price-table-details-left">
+                                    <p>Sale Price</p>
+                                    <p>Shipping</p>
+                                </div>
+                                <div class="price-table-details-right">
+                                    <p class="price-table-full-price">{{product.price.non_sale_price_without_tax.formatted}}</p>
+                                    <p class="price-table-sale-price">{{product.price.sale_price_without_tax.formatted}}</p>
+                                    <p class="price-table-free">FREE</p>
+                                </div>
+                            </div>
+                            <div class="kit-price-table-total">
+                                <div class="price-table-total-title">
+                                    <h3 class="heading--3">Total</h3>
+                                </div>
+                                <div class="price-table-total-price">
+                                    <h3 class="heading--3 price">{{product.price.sale_price_without_tax.formatted}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kit-button-wrapper">
+                        <button id="kit-page-next" class="button--secondary">next<svg><use xlink:href="#icon-chevron-right" /></svg></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        the below seems like it might be important for adding to cart and ordering -->
+        <section class="productView-details">
+                <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
+                      data-cart-item-add>
+                    <div data-product-option-change style="display:none;">
+                        {{#each product.options}}
+                        {{{dynamicComponent 'components/products/options'}}}
+                        {{/each}}
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>

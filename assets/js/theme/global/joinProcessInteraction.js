@@ -137,7 +137,7 @@ function submitLoginInfo() {
         data: loginUserInformation,
         success: (data) => {
             console.log(data);
-            // TODO add navigation to the product page when a successful status is returned
+            location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=${loginUserInformation.Id}`;
         },
         error: (error) => {
             console.log(error);
@@ -632,7 +632,8 @@ export default function joinProcessInteraction() {
                 },
             ] }
         )
-        .then(data => (loginUserInformation.Id = (JSON.stringify(data.id))))
+        .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))));
+        console.log(joinNewUserInformation.Id)
         .catch(error =>
         // TODO handle error actions
         console.error(error));

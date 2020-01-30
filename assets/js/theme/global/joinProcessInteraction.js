@@ -137,7 +137,7 @@ function submitLoginInfo() {
         data: loginUserInformation,
         success: (data) => {
             console.log(data);
-            location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=${loginUserInformation.Id}`;
+            location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/what-comes-in-your-kit?id=${loginUserInformation.Id}`;
         },
         error: (error) => {
             console.log(error);

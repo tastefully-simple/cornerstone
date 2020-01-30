@@ -31,7 +31,7 @@ const toggleLoginSignUp = {
  * This object will hold the user information for the Tell Us About Yourself page.
  */
 const joinNewUserInformation = {
-    Id: loginUserInformation.Id,
+    bigCommerceId: null,
     SponsorId: null,
     Prefix: null,
     PreferredName: null,
@@ -523,6 +523,7 @@ function triggerSubmit() {
     const checkoutButton = personalInfoPage.querySelector('#checkout');
 
     checkoutButton.addEventListener('click', (e) => {
+        console.log(joinNewUserInformation);
         e.preventDefault();
         // format DOB
         let DOB = new Date(document.getElementById('DOB').value);
@@ -616,6 +617,16 @@ function postData(url = '', cartItems = {}) {
     .then(response => response.json());
 }
 
+function getUrlParams() {
+    console.log('getUrlParams running');
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('id')) {
+        joinNewUserInformation.bigCommerceId = params.get('id');
+    } else {
+        // TODO error handling for if and when there is not an id in the URL params
+    }
+}
+
 /**
  * Export join process front end functions.
  */
@@ -654,6 +665,7 @@ export default function joinProcessInteraction() {
         triggerSubmit();
         triggerTermsApprove();
         triggerTextOptIn();
+        getUrlParams();
     }
 
     if (confirmationPage) {

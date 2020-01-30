@@ -5,14 +5,22 @@ const personalInfoPage = document.getElementById('personal-info');
  * This object will hold the user information for the join/login page.
  */
 const loginUserInformation = {
-    // TODO determine secure, unique string to use in place of this hardcoded ID
-    Id: '0cd7112e-1600-4475-9a30-c8730b08c8a1',
+    Id: null,
     FirstName: null,
     LastName: null,
     EmailAddress: null,
     Password: null,
     Password2: null,
 };
+
+const toggleLoginSignUp = {
+    logInForm: true,
+    signUpForm: false,
+};
+
+
+const afid = 'AFID';
+const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
@@ -55,7 +63,7 @@ const consultantSearchParams = {
 };
 
 /**
- * This variable will hold the specific parameters for each GET call to
+ * This variables will hold parameters for GET calls to
  * Tastefully Simple's consultant search API
  */
 let apiParams = '';
@@ -67,13 +75,28 @@ let consultantState = '';
  * and the consultant search form in the join process
  */
 function handleFormChange(event) {
-    if (event.srcElement.form.id === 'frmJoinLoginTest') {
-        loginUserInformation[event.target.name] = event.target.value;
+    const target = event.target;
+    if (event.srcElement.form.id === 'frmJoinLoginTest'
+        && toggleLoginSignUp.logInForm === false
+        || toggleLoginSignUp.signUpForm === true) {
+        loginUserInformation[target.name] = target.value;
+        console.log(loginUserInformation);
+    } else if (event.srcElement.form.id === 'frmJoinLoginTest'
+        && toggleLoginSignUp.logInForm === true
+        || event.srcElement.form.id === 'frmJoinLoginTest'
+        && toggleLoginSignUp.signUpForm === false) {
+        loginUserInformation[target.name] = target.value;
+        loginUserInformation.Password2 = loginUserInformation.Password;
+        console.log(loginUserInformation);
     } else if (event.srcElement.form.id === 'consultantSearchForm'
-        && event.target.name !== 'ConsultantState') {
-        consultantSearchParams[event.target.name] = event.target.value;
-    } else if (event.target.name === 'ConsultantState') {
-        consultantState = event.target.value;
+        && target.name !== 'ConsultantState'
+        && target.name !== 'TermsCheckboxVisible'
+        && target.name !== 'openTermsModal') {
+        consultantSearchParams[target.name] = target.value;
+        console.log(consultantSearchParams);
+    } else if (target.name === 'ConsultantState') {
+        consultantState = target.value;
+        console.log(consultantSearchParams);
     }
 }
 
@@ -106,24 +129,30 @@ function handleJoinLoginTestFormChange(event) {
  * we determine which unique Id will be sent to the API in the loginUserInformation object.
 */
 function submitLoginInfo() {
-    console.log('submitLoginInfo running');
-//     axios.post('https://qa1-tsapi.tastefullysimple.com/join/login', loginUserInformation)
-//     .then((response) => {
-//         console.log(response);
-//     })
-//   .catch((error) => {
-//       console.log(error);
-//   });
+    console.log('submitLoginInfo running', loginUserInformation);
+    $.ajax({
+        type: 'POST',
+        url: 'https://qa1-tsapi.tastefullysimple.com/join/login',
+        data: loginUserInformation,
+        success: (data) => {
+            console.log(data);
+            // TODO add navigation to the product page when a successful status is returned
+        },
+        error: (error) => {
+            console.log(error);
+            // TODO add error handling for when login / sign up does not work
+        },
+    });
 }
 
 /**
- * Display consultant information returned from Tastefully Simple API
+ * Display consultant information returned from Tastefully Simple API when searching by ID or name
  */
 function displayConsultantInformation(data) {
+    // TODO need to add proximity when searching by consultant zip code
     $.each(data.Results, (i) => {
         const results = data.Results[i];
-        // TODO add blank profile image to files for when user photo is not provided
-        let sponsorImage = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+        let sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
         if (results.Image) {
             sponsorImage = results.Image;
         }
@@ -151,13 +180,20 @@ function displayConsultantInformation(data) {
 }
 
 /**
- * This function will take the error message returned from Tastefully Simple's API when
- * there is no consultant data available and append it on the dom
+ * This function displays an error message when there are no consultant
+ * results found when searching by ID or name. If an error
+ * message from Tastefully Simple's API exists, that will display.
  */
 function displayErrorMessage(error) {
-    $('#sponsorSearchData').append(`
-        <h4>${error.responseJSON}</h4>
-    `);
+    if (error) {
+        $('#sponsorSearchData').append(`
+            <h4>${error.responseJSON}</h4>
+        `);
+    } else {
+        $('#sponsorSearchData').append(`
+            <h4>No results found.</h4>
+        `);
+    }
 }
 
 /**
@@ -176,14 +212,34 @@ const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
     joinNewUserInformation.Id = $(event.target).closest('ul').attr('id');
+    // TODO update selection styling beyond what is below (placeholder to indicate person is being selected)
     $(event.target).closest('ul').css('border', '1px solid #00757D', 'padding', '20px');
 });
 
 /**
- * Get consultant information from Tastefully Simple's API by ID, name, or
- * zip code within a 200 mile radius.
+ * Get consultant information from Tastefully Simple's API by ID or name
  */
 function getConsultantInfo() {
+    $.ajax({
+        type: 'GET',
+        accepts: 'json',
+        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        success: (data) => {
+            if (data.Results !== null) {
+                console.log(data);
+                displayConsultantInformation(data);
+            }
+        },
+        error: (error) => {
+            displayErrorMessage(error);
+        },
+    });
+}
+/**
+ * Get consultant information from Tastefully Simple's API zip code.
+ * If no consultants are within a 200 mile radius, the Tastefully Simple generic consultant will display.
+ */
+function getConsultantInfoByZip() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
@@ -193,45 +249,96 @@ function getConsultantInfo() {
                 displayConsultantInformation(data);
             }
         },
-        error: (error) => {
-            displayErrorMessage(error);
+        error: () => {
+            $('#sponsorSearchData').append(`
+            <ul id='0160785'>
+                <img src='https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387'/>
+                <li>Tastefully Simple</li>
+                <li>Alexandria, MN</li>
+                <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank'>Shop With Me</a></li>
+                <li>Let's Connect</li>
+                <li>866.448.6446</li>
+                <li><a href='mailto:help@tastefullysimple.com'>help@tastefullysimple.com</a></li>
+            </ul>
+            `);
         },
     });
 }
 
 /** Search by consultant ID and display results on dom */
 $('#btnConsIdSearch').on('click', (e) => {
-    e.preventDefault();
-    apiParams = `cid/${consultantSearchParams.consultantId}`;
-    $('#sponsorSearchData').empty();
-    $('#txtConsultantName').val('');
-    $('#txtZipCode').val('');
-    getConsultantInfo();
+    if (($('#txtConsultantID').val()) === '') {
+        $('#sponsorSearchData').empty();
+        e.preventDefault();
+        // TODO edit placement of this error message to more closely align with where the error occurs
+        $('#sponsorSearchData').append('Please enter a valid ID in the text box.');
+    } else {
+        e.preventDefault();
+        $('#sponsorSearchData').empty();
+        apiParams = `cid/${consultantSearchParams.consultantId}`;
+        $('#txtConsultantName').val('');
+        $('#txtZipCode').val('');
+        $('#ConsultantState').val('');
+        getConsultantInfo();
+    }
 });
 
 /** Search by consultant name and display results on dom */
 $('#btnConsNameSearch').on('click', (e) => {
-    e.preventDefault();
-    apiParams = `name/${consultantSearchParams.consultantName}/${consultantState}/1`;
-    $('#sponsorSearchData').empty();
-    $('#txtConsultantID').val('');
-    $('#txtZipCode').val('');
-    getConsultantInfo();
+    if (($('#txtConsultantName').val()) === ''
+        || (($('#ConsultantState').val()) === '')) {
+        $('#sponsorSearchData').empty();
+        e.preventDefault();
+        // TODO edit placement of this error message to more closely align with where the error occurs
+        $('#sponsorSearchData').append('Please enter name in the text box and select a state');
+    } else {
+        e.preventDefault();
+        $('#sponsorSearchData').empty();
+        apiParams = `name/${consultantSearchParams.consultantName}/${consultantState}/1`;
+        $('#txtConsultantID').val('');
+        $('#txtZipCode').val('');
+        getConsultantInfo();
+    }
 });
 
 /** Search by consultant zip code and display results on dom */
 $('#btnConsZipSearch').on('click', (e) => {
-    e.preventDefault();
-    apiParams = `zip/${consultantSearchParams.consultantZipCode}/200/1`;
-    $('#sponsorSearchData').empty();
-    $('#txtConsultantID').val('');
-    $('#txtConsultantName').val('');
-    getConsultantInfo();
+    if (($('#txtZipCode').val()) === '') {
+        $('#sponsorSearchData').empty();
+        e.preventDefault();
+        // TODO edit placement of this error message to more closely align with where the error occurs
+        $('#sponsorSearchData').append('Please enter a zip code in the text box.');
+    } else {
+        e.preventDefault();
+        $('#sponsorSearchData').empty();
+        apiParams = `zip/${consultantSearchParams.consultantZipCode}/200/1`;
+        $('#txtConsultantID').val('');
+        $('#txtConsultantName').val('');
+        $('#ConsultantState').val('');
+        getConsultantInfoByZip();
+    }
 });
 
 // Join Page Event Listeners
 $('#frmJoinLoginTest').on('change', () => handleFormChange(event));
-$('#submit').on('click', submitLoginInfo);
+$('#submit').on('click', (e) => {
+    if (toggleLoginSignUp.logInForm === true
+        && ($('#EmailAddress').val()) === ''
+        || toggleLoginSignUp.logInForm === true
+        && ($('#Password').val()) === '') {
+        e.preventDefault();
+        console.log('please make sure inputs are filled in');
+        // TODO add form error handling for user
+    } else if (toggleLoginSignUp.signUpForm === true
+        && ($('#frmJoinLoginTest').val()) === '') {
+        e.preventDefault();
+        console.log('please make sure inputs are filled in');
+        // TODO add form error handling for user
+    } else {
+        e.preventDefault();
+        submitLoginInfo();
+    }
+});
 
 // Tell Us About Yourself Event Listeners
 $('#frmJoinPersonalInfoTest').on('change', () => handleJoinLoginTestFormChange(event));
@@ -260,12 +367,16 @@ function toggleStyles() {
 
     checkbox.addEventListener('change', (event) => {
         if (event.target.checked) {
+            toggleLoginSignUp.signUpForm = true;
+            toggleLoginSignUp.logInForm = false;
             login.classList.remove('active');
             signUp.classList.add('active');
             firstName.classList.remove('hidden');
             lastName.classList.remove('hidden');
             password2.classList.remove('hidden');
         } else {
+            toggleLoginSignUp.logInForm = true;
+            toggleLoginSignUp.signUpForm = false;
             signUp.classList.remove('active');
             login.classList.add('active');
             firstName.classList.add('hidden');
@@ -351,23 +462,25 @@ function toggleTsCashConditionalField() {
         }
     });
 }
+
 /**
  * This function will show modal on link click.
  */
 function openTermsModal() {
     const termsModal = personalInfoPage.querySelector('#terms-modal');
     const modalLink = personalInfoPage.querySelector('#openTermsModal');
+
     modalLink.addEventListener('click', () => {
         termsModal.classList.add('join__modal-overlay--active');
     });
 }
+
 /**
  * This function will close the terms modal on icon click.
  */
 function closeTermsModal() {
     const termsModal = personalInfoPage.querySelector('#terms-modal');
     const closeIcons = personalInfoPage.querySelectorAll('.terms-close');
-
     closeIcons.forEach((closeIcon) => {
         closeIcon.addEventListener('click', () => {
             termsModal.classList.remove('join__modal-overlay--active');
@@ -379,13 +492,24 @@ function closeTermsModal() {
  * Trigger submit on checkout button click.
  */
 function triggerSubmit() {
-    // const infoForm = personalInfoPage.querySelector('#frmJoinPersonalInfoTest');
     const checkoutButton = personalInfoPage.querySelector('#checkout');
 
     checkoutButton.addEventListener('click', (e) => {
         e.preventDefault();
         console.log(joinNewUserInformation);
-        // infoForm.submit();
+        $.ajax({
+            type: 'POST',
+            url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
+            data: joinNewUserInformation,
+            success: (data) => {
+                console.log(data);
+                // TODO add navigation to the confirmation page when a successful status is returned
+            },
+            error: (error) => {
+                console.log(error);
+                // TODO add error handling for when join/user up does not work
+            },
+        });
     });
 }
 
@@ -395,7 +519,6 @@ function triggerSubmit() {
  */
 function triggerTermsApprove() {
     const visibleCheckbox = personalInfoPage.querySelector('#TermsCheckboxVisible');
-    const invisibleCheckbox = personalInfoPage.querySelector('#TermsCheckbox');
     // Grab current Tastefully Simple terms and conditions with version number
     $.ajax({
         type: 'GET',
@@ -418,10 +541,8 @@ function triggerTermsApprove() {
     });
     visibleCheckbox.addEventListener('change', () => {
         if (visibleCheckbox.checked === true) {
-            invisibleCheckbox.checked = true;
             joinNewUserInformation.TermsConditionsOptIn = true;
         } else {
-            invisibleCheckbox.checked = false;
             joinNewUserInformation.TermsConditionsOptIn = false;
         }
     });
@@ -441,6 +562,31 @@ function triggerTextOptIn() {
     });
 }
 
+function postData(url = '', cartItems = {}) {
+    return fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json' },
+        body: JSON.stringify(cartItems),
+    })
+    .then(response => response.json());
+}
+
+function associateSponsor() {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has(afid)) {
+        const affiliate = params.get(afid);
+        const frame = document.createElement('iframe');
+
+        frame.style.display = 'none';
+        frame.src = `${src}${affiliate}`;
+        console.log('HERE!', frame.src);
+        document.body.appendChild(frame);
+    }
+}
+
 /**
  * Export join process front end functions.
  */
@@ -449,6 +595,18 @@ export default function joinProcessInteraction() {
     if (loginPage) {
         removeContainer();
         toggleStyles();
+        postData('/api/storefront/cart', {
+            lineItems: [
+                {
+                    quantity: 1,
+                    productId: 134,
+                },
+            ] }
+        )
+        .then(data => (loginUserInformation.Id = (JSON.stringify(data.id))))
+        .catch(error =>
+        // TODO handle error actions
+        console.error(error));
     }
     // call functions on tell us about yourself page
     if (personalInfoPage) {
@@ -462,5 +620,6 @@ export default function joinProcessInteraction() {
         triggerSubmit();
         triggerTermsApprove();
         triggerTextOptIn();
+        associateSponsor();
     }
 }

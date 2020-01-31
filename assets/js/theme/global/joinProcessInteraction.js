@@ -1,3 +1,5 @@
+import { confetti } from 'dom-confetti';
+
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
 const kitPage = document.getElementById('kit');
@@ -591,11 +593,20 @@ function triggerTextOptIn() {
 }
 
 /**
+ * Trigger confetti
+ */
+function triggerConfetti() {
+    const confettiRoots = document.querySelectorAll('[data-fun]');
+    confettiRoots.forEach(confettiRoot => {
+        confetti(confettiRoot);
+    });
+}
+
+/**
 * This function will be called on page load for /join. It will be used to make a call to BigCommerce's API
 * to add the consultant kit to the cart and associate the user who is joining with a unique ID
 * from BigCommerce.
 */
-
 function postData(url = '', cartItems = {}) {
     return fetch(url, {
         method: 'POST',
@@ -603,8 +614,7 @@ function postData(url = '', cartItems = {}) {
         headers: {
             'Content-Type': 'application/json' },
         body: JSON.stringify(cartItems),
-    })
-    .then(response => response.json());
+    }).then(response => response.json());
 }
 
 /**
@@ -648,5 +658,6 @@ export default function joinProcessInteraction() {
 
     if (confirmationPage) {
         removeContainer();
+        triggerConfetti();
     }
 }

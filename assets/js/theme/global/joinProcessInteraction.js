@@ -1,3 +1,5 @@
+import './confetti-library';
+
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
 const kitPage = document.getElementById('kit');
@@ -472,6 +474,68 @@ function triggerTextOptIn() {
 }
 
 /**
+ * Trigger confetti
+ */
+function triggerConfetti() {
+    const confettiColors = [
+        '#FFCE0A',
+        '#000000',
+    ];
+    const confettisConf = [
+        // 1
+        {
+            angle: 270,
+            spread: 45,
+            startVelocity: 20,
+            elementCount: 10,
+            decay: 0.7,
+            colors: confettiColors,
+        },
+        // 2
+        {
+            angle: 270,
+            spread: 90,
+            startVelocity: 30,
+            elementCount: 30,
+            decay: 0.73,
+            colors: confettiColors,
+        },
+        // 3
+        {
+            angle: 90,
+            spread: 180,
+            startVelocity: 40,
+            elementCount: 50,
+            decay: 0.75,
+            colors: confettiColors,
+        },
+        // 4
+        {
+            angle: 90,
+            spread: 360,
+            startVelocity: 100,
+            elementCount: 80,
+            decay: 0.77,
+            colors: confettiColors,
+        },
+        // 5
+        {
+            angle: 90,
+            spread: 360,
+            startVelocity: 60,
+            elementCount: 150,
+            decay: 0.82,
+            colors: confettiColors,
+        },
+    ];
+
+    const confettis = Array.from(document.querySelectorAll('[data-fun]'));
+    confettis.forEach(confetti => {
+        window.confetti(confetti, confettisConf[confetti.getAttribute('data-fun')]);
+    });
+}
+
+/**
  * Export join process front end functions.
  */
 export default function joinProcessInteraction() {
@@ -500,5 +564,6 @@ export default function joinProcessInteraction() {
 
     if (confirmationPage) {
         removeContainer();
+        triggerConfetti();
     }
 }

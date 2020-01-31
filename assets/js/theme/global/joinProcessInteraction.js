@@ -24,22 +24,22 @@ const toggleLoginSignUp = {
 };
 
 // TODO: add functionality for SocialBug affiliation using these variables
-// const afid = 'AFID';
-// const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
+const frame = document.createElement('iframe');
+const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
  */
 const joinNewUserInformation = {
-    bigCommerceId: null,
+    Id: null,
     SponsorId: null,
     Prefix: null,
     PreferredName: null,
     FirstName: null,
     LastName: null,
     SSN: null,
-    DOB: null,
-    PrimaryPhone: null,
+    DateOfBirth: null,
+    PrimayPhone: null,
     CellPhone: null,
     TsCashOption: null,
     TsCashOptionText: null,
@@ -75,6 +75,27 @@ const consultantSearchParams = {
 let apiParams = '';
 let consultantState = '';
 
+// Initialize Social Bug Functionality
+function initializeSocialBug(affiliateId) {
+    frame.style.display = 'none';
+    frame.src = `${src}${affiliateId}`;
+
+    document.body.appendChild(frame);
+}
+
+// Update Social Bug Functionality
+function associateSocialBugAffiliate(socialBugAfId) {
+    console.log('associating', socialBugAfId);
+    frame.src = `${src}${socialBugAfId}`;
+}
+
+function waitForSocialBug(callback) {
+    if ($('#affiliatediv').length) {
+        callback();
+    } else {
+        setTimeout(() => waitForSocialBug(callback), 500);
+    }
+}
 
 /**
  * This function handles input changes for the login form
@@ -116,7 +137,7 @@ function handleJoinLoginTestFormChange(event) {
             joinNewUserInformation[target.name] = target.value;
         } else {
             joinNewUserInformation[target.name] = target.value;
-            joinNewUserInformation.PrimaryPhone = joinNewUserInformation.CellPhone;
+            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
             joinNewUserInformation.ShippingAddressLine1 = joinNewUserInformation.BillingAddressLine1;
             joinNewUserInformation.ShippingAddressLine2 = joinNewUserInformation.BillingAddressLine2;
             joinNewUserInformation.ShippingCity = joinNewUserInformation.BillingCity;
@@ -137,7 +158,7 @@ function submitLoginInfo() {
         data: loginUserInformation,
         success: (data) => {
             console.log(data);
-            location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/what-comes-in-your-kit?id=${loginUserInformation.Id}`;
+            location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=${loginUserInformation.Id}`;
         },
         error: (error) => {
             console.log(error);
@@ -150,15 +171,14 @@ function submitLoginInfo() {
  * Display consultant information returned from Tastefully Simple API when searching by ID or name
  */
 function displayConsultantInformation(data) {
+    console.log(data.Results);
     // TODO need to add proximity when searching by consultant zip code
     $.each(data.Results, (i) => {
         const results = data.Results[i];
-        let sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
-        if (results.Image) {
-            sponsorImage = results.Image;
-        }
         const {
+            AfId,
             ConsultantId,
+            Image,
             Name,
             Title,
             PhoneNumber,
@@ -168,8 +188,9 @@ function displayConsultantInformation(data) {
         } = results;
         $('#sponsorSearchData').append(`
             <div class="sponsor-wrapper">
-                <div id='${ConsultantId}' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+                <div id='${ConsultantId}' data-afid='${AfId}' class="sponsor-img-wrapper" style="background-image: url(${Image})"></div>
                     <ul>
+                        <li class='hidden'>Shopping With</li>
                         <li class="sponsor-name">${Name}</li>
                         <li>${Title}</li>
                         <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
@@ -231,6 +252,9 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
     joinNewUserInformation.SponsorId = $(event.target).closest('div').attr('id');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
+
+    const socialBugAfId = ($(event.target).closest('div').data('afid'));
+    associateSocialBugAffiliate(socialBugAfId);
 });
 
 /**
@@ -266,6 +290,7 @@ function getConsultantInfoByZip() {
             }
         },
         error: () => {
+            // TODO: figure out what Tastefully Simple's SocialBug affiliate ID is and add it as a data attribute to these results. 
             const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
             $('#sponsorSearchData').append(`
                 <div class="sponsor-wrapper">
@@ -376,8 +401,8 @@ $('#consultantSearchForm').on('change', () => handleFormChange(event));
 $('#kit-page-next').on('click', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
-        joinNewUserInformation.bigCommerceId = params.get('id');
-        location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=${joinNewUserInformation.bigCommerceId}`;
+        joinNewUserInformation.Id = params.get('id');
+        location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=${joinNewUserInformation.Id}`;
     } else {
         // TODO error handling for if and when there is not an id in the URL params
     }
@@ -453,7 +478,7 @@ function togglePhoneConditionalField() {
             primaryPhoneDiv.classList.remove('disabled');
             primaryPhone.removeAttribute('disabled');
         } else {
-            joinNewUserInformation.PrimaryPhone = joinNewUserInformation.CellPhone;
+            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
             $(primaryPhone).val('');
             primaryPhoneDiv.classList.add('disabled');
             primaryPhone.setAttribute('disabled', 'disabled');
@@ -535,11 +560,12 @@ function triggerSubmit() {
     checkoutButton.addEventListener('click', (e) => {
         console.log(joinNewUserInformation);
         e.preventDefault();
-        // format DOB
-        let DOB = new Date(document.getElementById('DOB').value);
-        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
-        DOB = `0${(DOB.getMonth() + 1).slice(-2)}-0${DOB.getDate().slice(-2)}-${DOB.getFullYear()}`;
-        joinNewUserInformation.DOB = DOB;
+        // TODO fix formatting of birthdate and remove hardcoded DateOfBirth string.
+        // // format DateOfBirth
+        // let DateOfBirth = new Date(document.getElementById('DateOfBirth').value);
+        // DateOfBirth = new Date(DateOfBirth.getTime() + Math.abs(DateOfBirth.getTimezoneOffset() * 60000));
+        // DateOfBirth = `0${(DateOfBirth.getMonth() + 1).slice(-2)}-0${DateOfBirth.getDate().slice(-2)}-${DateOfBirth.getFullYear()}`;
+        joinNewUserInformation.DateOfBirth = '01-06-1989';
         $.ajax({
             type: 'POST',
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
@@ -547,6 +573,7 @@ function triggerSubmit() {
             success: (data) => {
                 console.log(data);
                 // TODO add navigation to the confirmation page when a successful status is returned
+                // location.href = 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout';
             },
             error: (error) => {
                 console.log(error);
@@ -631,7 +658,7 @@ function getUrlParams() {
     console.log('getUrlParams running');
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
-        joinNewUserInformation.bigCommerceId = params.get('id');
+        joinNewUserInformation.Id = params.get('id');
     } else {
         // TODO error handling for if and when there is not an id in the URL params
     }
@@ -649,7 +676,7 @@ export default function joinProcessInteraction() {
             lineItems: [
                 {
                     quantity: 1,
-                    productId: 153,
+                    productId: 133,
                 },
             ] }
         )
@@ -676,6 +703,10 @@ export default function joinProcessInteraction() {
         triggerTermsApprove();
         triggerTextOptIn();
         getUrlParams();
+        waitForSocialBug(() => {
+            const affiliateId = $('#affiliatediv').data('affiliateid');
+            initializeSocialBug(affiliateId);
+        });
     }
 
     if (confirmationPage) {

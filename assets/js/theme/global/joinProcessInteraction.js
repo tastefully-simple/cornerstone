@@ -236,9 +236,9 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
 });
 
 /**
- * Get consultant information from Tastefully Simple's API by ID or name
+ * Get consultant information from Tastefully Simple's API by name.
  */
-function getConsultantInfo() {
+function getConsultantInfoByName() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
@@ -250,6 +250,30 @@ function getConsultantInfo() {
         },
         error: (error) => {
             displayErrorMessage(error);
+        },
+    });
+}
+
+/**
+ * Get consultant information from Tastefully Simple's API by ID.
+ */
+function getConsultantInfoByID() {
+    $.ajax({
+        type: 'GET',
+        accepts: 'json',
+        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        success: (data) => {
+            if (data.Results !== null) {
+                displayConsultantInformation(data);
+            }
+        },
+        error: () => {
+            $('#sponsorSearchData').append(`
+           <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
+           <ul class="sponsor-result--error">
+            <li>Contact your consultant</li>
+            <li>Contact HQ at 1.866.448.6446 or <a href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a></li>
+           </ul>`);
         },
     });
 }
@@ -300,7 +324,7 @@ $('#btnConsIdSearch').on('click', (e) => {
         apiParams = `cid/${consultantSearchParams.consultantId}`;
         $('#txtConsultantName').val('');
         $('#txtZipCode').val('');
-        getConsultantInfo();
+        getConsultantInfoByID();
     }
 });
 
@@ -318,7 +342,7 @@ $('#btnConsNameSearch').on('click', (e) => {
         apiParams = `name/${consultantSearchParams.consultantName}/${consultantState}/1`;
         $('#txtConsultantID').val('');
         $('#txtZipCode').val('');
-        getConsultantInfo();
+        getConsultantInfoByName();
     }
 });
 

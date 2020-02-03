@@ -365,13 +365,13 @@ $('#btnConsZipSearch').on('click', (e) => {
 // Join Page Event Listeners
 $('#frmJoinLoginTest').on('change', () => handleFormChange(event));
 $('#submit').on('click', (e) => {
+    $('#loginErrors').empty();
     if (toggleLoginSignUp.logInForm === true
         && ($('#EmailAddress').val()) === ''
         || toggleLoginSignUp.logInForm === true
         && ($('#Password').val()) === '') {
         e.preventDefault();
-        console.log('please make sure inputs are filled in');
-        // TODO add form error handling for user
+        $('#loginErrors').append(`<h5>Please make sure all inputs are filled in.</h5>`);
     } else if (toggleLoginSignUp.signUpForm === true) {
         if (($('#FirstName').val()) === ''
             || ($('#LastName').val()) === ''
@@ -379,8 +379,7 @@ $('#submit').on('click', (e) => {
             || ($('#Password').val()) === ''
             || ($('#Password2').val()) === '') {
             e.preventDefault();
-            console.log('please make sure inputs are filled in');
-            // TODO add form error handling for user
+            $('#loginErrors').append(`<h5>Please make sure all inputs are filled in.</h5>`);
         } else {
             e.preventDefault();
             submitLoginInfo();

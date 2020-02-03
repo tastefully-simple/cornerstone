@@ -75,7 +75,7 @@
   li {
     font-size: 14px;
   }
-  
+
   .sponsor-img-wrapper {
     height: 140px;
     width: 140px;
@@ -103,5 +103,9 @@
   .sponsor-link {
     font-weight: bold;
     color: $COLOR_PRIMARY_100;
+  }
+
+  .sponsor-result--error {
+    list-style: auto;
   }
 }

@@ -28,7 +28,15 @@
     .heading--1 {
       color: $COLOR_WHITE;
       font-weight: bold;
+    }
+
+    .progress-bar {
       margin-bottom: $SPACING_8;
+      max-width: 250px;
+
+      @include breakpoint($BREAKPOINT_MEDIUM) {
+        max-width: 325px;
+      }
     }
   }
 

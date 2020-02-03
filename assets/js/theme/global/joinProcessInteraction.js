@@ -687,6 +687,10 @@ function postData(url = '', cartItems = {}) {
     }).then(response => response.json());
 }
 
+/**
+ * This function will grab the BigCommerce unique ID that is passed from the join/login page
+ * and use it to validate the form submission to Tastefully Simple's endpoint.
+ */
 function getUrlParams() {
     console.log('getUrlParams running');
     const params = new URLSearchParams(window.location.search);

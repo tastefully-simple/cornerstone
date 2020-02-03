@@ -173,7 +173,6 @@ function submitLoginInfo() {
  * Display consultant information returned from Tastefully Simple API when searching by ID or name
  */
 function displayConsultantInformation(data) {
-    console.log(data.Results);
     // TODO need to add proximity when searching by consultant zip code
     $.each(data.Results, (i) => {
         const results = data.Results[i];
@@ -189,10 +188,9 @@ function displayConsultantInformation(data) {
             WebUrl,
         } = results;
         $('#sponsorSearchData').append(`
-            <div class="sponsor-wrapper">
-                <div id='${ConsultantId}' data-afid='${AfId}' class="sponsor-img-wrapper" style="background-image: url(${Image})"></div>
+            <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
+                <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-img-wrapper" style="background-image: url(${Image})"></div>
                     <ul>
-                        <li class='hidden'>Shopping With</li>
                         <li class="sponsor-name">${Name}</li>
                         <li>${Title}</li>
                         <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
@@ -252,9 +250,9 @@ const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
-    joinNewUserInformation.SponsorId = $(event.target).closest('div').attr('id');
+    joinNewUserInformation.SponsorId = $(event.target).closest('div').data('consid');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
-
+    console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
     const socialBugAfId = ($(event.target).closest('div').data('afid'));
     associateSocialBugAffiliate(socialBugAfId);
 });
@@ -285,7 +283,7 @@ function getConsultantInfoByID() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -309,18 +307,17 @@ function getConsultantInfoByZip() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
             }
         },
         error: () => {
-            // TODO: figure out what Tastefully Simple's SocialBug affiliate ID is and add it as a data attribute to these results.
             const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
             $('#sponsorSearchData').append(`
-                <div class="sponsor-wrapper">
-                    <div id='0160785' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+                <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
+                    <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
                         <ul>
                             <li class="sponsor-name">Tastefully Simple</li>
                             <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
@@ -692,7 +689,6 @@ function postData(url = '', cartItems = {}) {
  * and use it to validate the form submission to Tastefully Simple's endpoint.
  */
 function getUrlParams() {
-    console.log('getUrlParams running');
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
         joinNewUserInformation.Id = params.get('id');

@@ -1,3 +1,5 @@
+import { confetti } from 'dom-confetti';
+
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
 const kitPage = document.getElementById('kit');
@@ -258,9 +260,9 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
 });
 
 /**
- * Get consultant information from Tastefully Simple's API by ID or name
+ * Get consultant information from Tastefully Simple's API by name.
  */
-function getConsultantInfo() {
+function getConsultantInfoByName() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
@@ -272,6 +274,30 @@ function getConsultantInfo() {
         },
         error: (error) => {
             displayErrorMessage(error);
+        },
+    });
+}
+
+/**
+ * Get consultant information from Tastefully Simple's API by ID.
+ */
+function getConsultantInfoByID() {
+    $.ajax({
+        type: 'GET',
+        accepts: 'json',
+        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        success: (data) => {
+            if (data.Results !== null) {
+                displayConsultantInformation(data);
+            }
+        },
+        error: () => {
+            $('#sponsorSearchData').append(`
+           <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
+           <ul class="sponsor-result--error">
+            <li>Contact your consultant</li>
+            <li>Contact HQ at 1.866.448.6446 or <a href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a></li>
+           </ul>`);
         },
     });
 }
@@ -323,7 +349,7 @@ $('#btnConsIdSearch').on('click', (e) => {
         apiParams = `cid/${consultantSearchParams.consultantId}`;
         $('#txtConsultantName').val('');
         $('#txtZipCode').val('');
-        getConsultantInfo();
+        getConsultantInfoByID();
     }
 });
 
@@ -341,7 +367,7 @@ $('#btnConsNameSearch').on('click', (e) => {
         apiParams = `name/${consultantSearchParams.consultantName}/${consultantState}/1`;
         $('#txtConsultantID').val('');
         $('#txtZipCode').val('');
-        getConsultantInfo();
+        getConsultantInfoByName();
     }
 });
 
@@ -637,11 +663,20 @@ function triggerTextOptIn() {
 }
 
 /**
+ * Trigger confetti
+ */
+function triggerConfetti() {
+    const confettiRoots = document.querySelectorAll('[data-fun]');
+    confettiRoots.forEach(confettiRoot => {
+        confetti(confettiRoot);
+    });
+}
+
+/**
 * This function will be called on page load for /join. It will be used to make a call to BigCommerce's API
 * to add the consultant kit to the cart and associate the user who is joining with a unique ID
 * from BigCommerce.
 */
-
 function postData(url = '', cartItems = {}) {
     return fetch(url, {
         method: 'POST',
@@ -649,8 +684,7 @@ function postData(url = '', cartItems = {}) {
         headers: {
             'Content-Type': 'application/json' },
         body: JSON.stringify(cartItems),
-    })
-    .then(response => response.json());
+    }).then(response => response.json());
 }
 
 function getUrlParams() {
@@ -710,5 +744,6 @@ export default function joinProcessInteraction() {
 
     if (confirmationPage) {
         removeContainer();
+        triggerConfetti();
     }
 }

@@ -12,6 +12,11 @@
         <div class="join__banner">
             <div class="join__banner-title-wrapper">
                 <h1 class="heading--1">What Comes in Your Kit</h1>
+                    {{> components/common/responsive-img
+                    image=image
+                    class="progress-bar"
+                    default_image=theme_settings.progress_bar_2
+                    }}
             </div>
         </div>
         <div class="join__container">
@@ -30,8 +35,8 @@
                     <h1 class="heading--1">What Comes in Your Kit?</h1>
                     <div>{{> components/products/kit-description}}</div>
                     <div class="kit-price-sticker">
-                        <h4 class="heading--4 sale-price">{{product.price.non_sale_price_without_tax.formatted}}</h4>
-                        <h2 class="heading--2 price">{{product.price.sale_price_without_tax.formatted}}</h2>
+                        <h4 class="heading--4 price">{{product.price.non_sale_price_without_tax.formatted}}</h4>
+                        <h2 class="heading--2 sale-price">{{product.price.sale_price_without_tax.formatted}}</h2>
                     </div>
                     <div class="kit-price-table-wrapper">
                         <div class="kit-price-table">

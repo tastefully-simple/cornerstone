@@ -544,7 +544,10 @@ function triggerSubmit() {
         // format DOB
         let DOB = new Date(document.getElementById('DOB').value);
         DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
-        DOB = `0${(DOB.getMonth() + 1).slice(-2)}-0${DOB.getDate().slice(-2)}-${DOB.getFullYear()}`;
+        const month = (String(DOB.getMonth() + 1)).length > 1 ? (DOB.getMonth() + 1) : `0${(DOB.getMonth() + 1)}`;
+        const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
+        const year = DOB.getFullYear();
+        DOB = `${month}-${day}-${year}`;
         joinNewUserInformation.DOB = DOB;
         $.ajax({
             type: 'POST',

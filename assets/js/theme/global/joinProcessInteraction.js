@@ -316,7 +316,7 @@ function getConsultantInfoByZip() {
             }
         },
         error: () => {
-            // TODO: figure out what Tastefully Simple's SocialBug affiliate ID is and add it as a data attribute to these results. 
+            // TODO: figure out what Tastefully Simple's SocialBug affiliate ID is and add it as a data attribute to these results.
             const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
             $('#sponsorSearchData').append(`
                 <div class="sponsor-wrapper">
@@ -397,7 +397,7 @@ $('#submit').on('click', (e) => {
         || toggleLoginSignUp.logInForm === true
         && ($('#Password').val()) === '') {
         e.preventDefault();
-        $('#loginErrors').append(`<h5>Please make sure all inputs are filled in.</h5>`);
+        $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
     } else if (toggleLoginSignUp.signUpForm === true) {
         if (($('#FirstName').val()) === ''
             || ($('#LastName').val()) === ''
@@ -405,7 +405,7 @@ $('#submit').on('click', (e) => {
             || ($('#Password').val()) === ''
             || ($('#Password2').val()) === '') {
             e.preventDefault();
-            $('#loginErrors').append(`<h5>Please make sure all inputs are filled in.</h5>`);
+            $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
         } else {
             e.preventDefault();
             submitLoginInfo();

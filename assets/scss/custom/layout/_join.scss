@@ -15,7 +15,7 @@
   &--login .join__banner {
     align-items: center;
     min-height: 350px;
-    background: url(../img/join-banner.png) no-repeat center center;
+    background: url(../img/join-baner.png) no-repeat center center;
     background-size: cover;
   }
 
@@ -222,6 +222,11 @@
     label {
       @include checkboxLabel();
       padding-left: $SPACING_1;
+    }
+
+    p {
+      margin-top: -$SPACING_2;
+      margin-left: $SPACING_1;
       font-size: 12px;
 
       a {

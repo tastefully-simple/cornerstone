@@ -76,6 +76,7 @@ const consultantSearchParams = {
  */
 let apiParams = '';
 let consultantState = '';
+let locationDisplay = '';
 
 // Initialize Social Bug Functionality
 function initializeSocialBug(affiliateId) {
@@ -186,7 +187,13 @@ function displayConsultantInformation(data) {
             EmailAddress,
             Location,
             WebUrl,
+            Distance,
         } = results;
+        if (Distance !== 0) {
+            locationDisplay = `${Location} (${Distance} mi)`;
+        } else {
+            locationDisplay = Location;
+        }
         $('#sponsorSearchData').append(`
             <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
                 <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-img-wrapper" style="background-image: url(${Image})"></div>
@@ -195,7 +202,7 @@ function displayConsultantInformation(data) {
                         <li>${Title}</li>
                         <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
                         <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>${EmailAddress}</li>
-                        <li>${Location}</li>
+                        <li>${locationDisplay}</li>
                         <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
                     </ul>
                 <div class="checkmark"></div>

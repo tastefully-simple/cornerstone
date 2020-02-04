@@ -435,10 +435,12 @@ $('#submit').on('click', (e) => {
             $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
         } else {
             e.preventDefault();
+            localStorage.setItem('isJoin', true);
             submitLoginInfo();
         }
     } else {
         e.preventDefault();
+        localStorage.setItem('isJoin', true);
         // TODO remove console.log
         console.log('submitting into', loginUserInformation);
         submitLoginInfo();

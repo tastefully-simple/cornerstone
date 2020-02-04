@@ -338,7 +338,6 @@ $('#btnConsIdSearch').on('click', (e) => {
     if (($('#txtConsultantID').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
-        // TODO edit placement of this error message to more closely align with where the error occurs
         $('#sponsorSearchData').append('Please enter a valid ID in the text box.');
     } else {
         e.preventDefault();
@@ -356,8 +355,7 @@ $('#btnConsNameSearch').on('click', (e) => {
         || (($('#ConsultantState').val()) === '')) {
         $('#sponsorSearchData').empty();
         e.preventDefault();
-        // TODO edit placement of this error message to more closely align with where the error occurs
-        $('#sponsorSearchData').append('Please enter name in the text box and select a state');
+        $('#sponsorSearchData').append('Please enter a name in the text box and select a state');
     } else {
         e.preventDefault();
         $('#sponsorSearchData').empty();
@@ -373,7 +371,6 @@ $('#btnConsZipSearch').on('click', (e) => {
     if (($('#txtZipCode').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
-        // TODO edit placement of this error message to more closely align with where the error occurs
         $('#sponsorSearchData').append('Please enter a zip code in the text box.');
     } else {
         e.preventDefault();

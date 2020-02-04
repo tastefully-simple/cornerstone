@@ -78,6 +78,13 @@ let apiParams = '';
 let consultantState = '';
 let locationDisplay = '';
 
+/** API URLs used throughout the join process */
+const API_URLS = {
+    BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
+    TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
+    CHECKOUT: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout',
+};
+
 // Initialize Social Bug Functionality
 function initializeSocialBug(affiliateId) {
     frame.style.display = 'none';
@@ -163,7 +170,7 @@ function submitLoginInfo() {
         success: (data) => {
             // TODO remove console.log
             console.log(data);
-            location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=${loginUserInformation.Id}`;
+            location.href = `${API_URLS.BLAST_OFF}${loginUserInformation.Id}`;
         },
         error: (error) => {
             console.log(error);
@@ -433,7 +440,7 @@ $('#kit-page-next').on('click', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
         joinNewUserInformation.Id = params.get('id');
-        location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=${joinNewUserInformation.Id}`;
+        location.href = `${API_URLS.TELL_US}${joinNewUserInformation.Id}`;
     } else {
         // TODO error handling for if and when there is not an id in the URL params
     }
@@ -605,7 +612,7 @@ function triggerSubmit() {
             success: (data) => {
                 // TODO remove console.log
                 console.log(data);
-                location.href = 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout';
+                location.href = `${API_URLS.CHECKOUT}`;
             },
             error: (error) => {
             // TODO finalize error handling for when join/user does not work and remove console.log

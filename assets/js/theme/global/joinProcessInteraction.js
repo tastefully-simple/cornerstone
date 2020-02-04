@@ -25,7 +25,7 @@ const toggleLoginSignUp = {
     signUpForm: false,
 };
 
-// TODO: add functionality for SocialBug affiliation using these variables
+/** Variables used to associate sponsor selected with SocialBug and create hidden iframe */
 const frame = document.createElement('iframe');
 const src = 'https://tastefullysimpl.sb-affiliate.com/web/';
 

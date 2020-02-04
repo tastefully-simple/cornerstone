@@ -89,7 +89,7 @@ const API_URLS = {
 // Initialize Social Bug Functionality
 function initializeSocialBug(affiliateId) {
     frame.style.display = 'none';
-    frame.src = `${src}${affiliateId}?PID=172`;
+    frame.src = `${src}${affiliateId}`;
 
     document.body.appendChild(frame);
 }
@@ -98,7 +98,7 @@ function initializeSocialBug(affiliateId) {
 function associateSocialBugAffiliate(socialBugAfId) {
     // TODO remove console.log
     console.log('associating', socialBugAfId);
-    frame.src = `${src}${socialBugAfId}?PID=172`;
+    frame.src = `${src}${socialBugAfId}`;
 }
 
 function waitForSocialBug(callback) {
@@ -286,8 +286,9 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
     // TODO remove console.log
     console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
-    // const socialBugAfId = ($(event.target).closest('div').data('afid'));
-    associateSocialBugAffiliate(joinNewUserInformation.SponsorId);
+    const socialBugAfId = ($(event.target).closest('div').data('afid'));
+    // associateSocialBugAffiliate(joinNewUserInformation.SponsorId);
+    associateSocialBugAffiliate(socialBugAfId);
 });
 
 /**
@@ -734,7 +735,7 @@ function getUrlParams() {
  */
 export default function joinProcessInteraction() {
     // call functions on join page
-    if (loginPage) {
+    if (loginPage && joinNewUserInformation.Id === null) {
         removeContainer();
         toggleStyles();
         postData('/api/storefront/cart', {

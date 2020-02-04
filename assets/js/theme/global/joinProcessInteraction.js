@@ -27,7 +27,7 @@ const toggleLoginSignUp = {
 
 /** Variables used to associate sponsor selected with SocialBug and create hidden iframe */
 const frame = document.createElement('iframe');
-const src = 'https://tastefullysimpl.sb-affiliate.com/web/';
+const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
@@ -82,14 +82,14 @@ let locationDisplay = '';
 const API_URLS = {
     BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
     TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
-    CHECKOUT: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout',
+    CHECKOUT: 'https://tastefullysimpl.sb-affiliate.com/r66/',
     JOIN_TC: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
 };
 
 // Initialize Social Bug Functionality
 function initializeSocialBug(affiliateId) {
     frame.style.display = 'none';
-    frame.src = `${src}${affiliateId}`;
+    frame.src = `${src}${affiliateId}?PID=172`;
 
     document.body.appendChild(frame);
 }
@@ -98,7 +98,7 @@ function initializeSocialBug(affiliateId) {
 function associateSocialBugAffiliate(socialBugAfId) {
     // TODO remove console.log
     console.log('associating', socialBugAfId);
-    frame.src = `${src}${socialBugAfId}`;
+    frame.src = `${src}${socialBugAfId}?PID=172`;
 }
 
 function waitForSocialBug(callback) {
@@ -252,7 +252,7 @@ function displayErrorMessage(error) {
             `);
         });
         $('#formErrorMessages').append(`
-        <li>If you continue to experience issues, please contact the 
+        <h5>If you continue to experience issues, please contact the 
         Consultant Order Services team at 866.448.6446 or 320.763.1571.</li>
     `);
     } else if (error) {
@@ -286,8 +286,8 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
     // TODO remove console.log
     console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
-    const socialBugAfId = ($(event.target).closest('div').data('afid'));
-    associateSocialBugAffiliate(socialBugAfId);
+    // const socialBugAfId = ($(event.target).closest('div').data('afid'));
+    associateSocialBugAffiliate(joinNewUserInformation.SponsorId);
 });
 
 /**
@@ -628,7 +628,7 @@ function triggerSubmit() {
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
             data: joinNewUserInformation,
             success: () => {
-                location.href = `${API_URLS.CHECKOUT}`;
+                location.href = `${API_URLS.CHECKOUT}${joinNewUserInformation.SponsorId}?PID=172`;
             },
             error: (error) => {
                 displayErrorMessage(error);

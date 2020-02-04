@@ -240,8 +240,23 @@ function displayConsultantInformation(data) {
  * message from Tastefully Simple's API exists, that will display.
  */
 function displayErrorMessage(error) {
-    if (error) {
-        $('#sponsorSearchData').append(`
+    if (error.responseJSON.errors) {
+        $.each(error.responseJSON.errors, (i) => {
+            const errors = error.responseJSON.errors[i];
+            const {
+                id,
+                message,
+            } = errors;
+            $('#formErrorMessages').append(`
+                <li data-errorid='${id}'>${message}</li>
+            `);
+        });
+        $('#formErrorMessages').append(`
+        <li>If you continue to experience issues, please contact the 
+        Consultant Order Services team at 866.448.6446 or 320.763.1571.</li>
+    `);
+    } else if (error) {
+        $('#formErrorMessages').append(`
             <h4>${error.responseJSON}</h4>
         `);
     } else {
@@ -607,21 +622,16 @@ function triggerSubmit() {
         const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
         const year = DOB.getFullYear();
         DOB = `${month}-${day}-${year}`;
-        joinNewUserInformation.DOB = DOB;
+        joinNewUserInformation.DateOfBirth = DOB;
         $.ajax({
             type: 'POST',
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
             data: joinNewUserInformation,
-            success: (data) => {
-                // TODO remove console.log
-                console.log(data);
+            success: () => {
                 location.href = `${API_URLS.CHECKOUT}`;
             },
             error: (error) => {
-            // TODO finalize error handling for when join/user does not work and remove console.log
-                console.log(error);
-                console.log(error.responseJSON.message);
-                $('#sponsorSearchData').append(`<h5>${error.responseJSON.message}</h5>`);
+                displayErrorMessage(error);
             },
         });
     });

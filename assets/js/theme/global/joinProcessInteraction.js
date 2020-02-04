@@ -599,12 +599,14 @@ function triggerSubmit() {
     checkoutButton.addEventListener('click', (e) => {
         console.log(joinNewUserInformation);
         e.preventDefault();
-        // TODO fix formatting of birthdate and remove hardcoded DateOfBirth string.
-        // // format DateOfBirth
-        // let DateOfBirth = new Date(document.getElementById('DateOfBirth').value);
-        // DateOfBirth = new Date(DateOfBirth.getTime() + Math.abs(DateOfBirth.getTimezoneOffset() * 60000));
-        // DateOfBirth = `0${(DateOfBirth.getMonth() + 1).slice(-2)}-0${DateOfBirth.getDate().slice(-2)}-${DateOfBirth.getFullYear()}`;
-        joinNewUserInformation.DateOfBirth = '01-06-1989';
+        // format DOB
+        let DOB = new Date(document.getElementById('DOB').value);
+        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
+        const month = (String(DOB.getMonth() + 1)).length > 1 ? (DOB.getMonth() + 1) : `0${(DOB.getMonth() + 1)}`;
+        const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
+        const year = DOB.getFullYear();
+        DOB = `${month}-${day}-${year}`;
+        joinNewUserInformation.DOB = DOB;
         $.ajax({
             type: 'POST',
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',

@@ -25,22 +25,23 @@ const toggleLoginSignUp = {
     signUpForm: false,
 };
 
-// TODO: add functionality for SocialBug affiliation using these variables
-// const afid = 'AFID';
-// const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
+/** Variables used to associate sponsor selected with SocialBug and create hidden iframe */
+const frame = document.createElement('iframe');
+const src = 'https://tastefullysimpl.sb-affiliate.com/web/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
  */
 const joinNewUserInformation = {
     Id: null,
+    SponsorId: null,
     Prefix: null,
     PreferredName: null,
     FirstName: null,
     LastName: null,
     SSN: null,
-    DOB: null,
-    PrimaryPhone: null,
+    DateOfBirth: null,
+    PrimayPhone: null,
     CellPhone: null,
     TsCashOption: null,
     TsCashOptionText: null,
@@ -75,7 +76,38 @@ const consultantSearchParams = {
  */
 let apiParams = '';
 let consultantState = '';
+let locationDisplay = '';
 
+/** API URLs used throughout the join process */
+const API_URLS = {
+    BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
+    TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
+    CHECKOUT: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout',
+    JOIN_TC: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
+};
+
+// Initialize Social Bug Functionality
+function initializeSocialBug(affiliateId) {
+    frame.style.display = 'none';
+    frame.src = `${src}${affiliateId}`;
+
+    document.body.appendChild(frame);
+}
+
+// Update Social Bug Functionality
+function associateSocialBugAffiliate(socialBugAfId) {
+    // TODO remove console.log
+    console.log('associating', socialBugAfId);
+    frame.src = `${src}${socialBugAfId}`;
+}
+
+function waitForSocialBug(callback) {
+    if ($('#affiliatediv').length) {
+        callback();
+    } else {
+        setTimeout(() => waitForSocialBug(callback), 500);
+    }
+}
 
 /**
  * This function handles input changes for the login form
@@ -117,7 +149,7 @@ function handleJoinLoginTestFormChange(event) {
             joinNewUserInformation[target.name] = target.value;
         } else {
             joinNewUserInformation[target.name] = target.value;
-            joinNewUserInformation.PrimaryPhone = joinNewUserInformation.CellPhone;
+            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
             joinNewUserInformation.ShippingAddressLine1 = joinNewUserInformation.BillingAddressLine1;
             joinNewUserInformation.ShippingAddressLine2 = joinNewUserInformation.BillingAddressLine2;
             joinNewUserInformation.ShippingCity = joinNewUserInformation.BillingCity;
@@ -137,12 +169,13 @@ function submitLoginInfo() {
         url: 'https://qa1-tsapi.tastefullysimple.com/join/login',
         data: loginUserInformation,
         success: (data) => {
+            // TODO remove console.log
             console.log(data);
-            // TODO add navigation to the product page when a successful status is returned
+            location.href = `${API_URLS.BLAST_OFF}${loginUserInformation.Id}`;
         },
         error: (error) => {
             console.log(error);
-            // TODO add error handling for when login / sign up does not work
+            // TODO add error handling for when login / sign up does not work and remove console.log
         },
     });
 }
@@ -154,28 +187,32 @@ function displayConsultantInformation(data) {
     // TODO need to add proximity when searching by consultant zip code
     $.each(data.Results, (i) => {
         const results = data.Results[i];
-        let sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
-        if (results.Image) {
-            sponsorImage = results.Image;
-        }
         const {
+            AfId,
             ConsultantId,
+            Image,
             Name,
             Title,
             PhoneNumber,
             EmailAddress,
             Location,
             WebUrl,
+            Distance,
         } = results;
+        if (Distance !== 0) {
+            locationDisplay = `${Location} (${Distance} mi)`;
+        } else {
+            locationDisplay = Location;
+        }
         $('#sponsorSearchData').append(`
-            <div id='${ConsultantId}' class="sponsor-wrapper">
-                <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+            <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
+                <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-img-wrapper" style="background-image: url(${Image})"></div>
                     <ul>
                         <li class="sponsor-name">${Name}</li>
                         <li>${Title}</li>
                         <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
                         <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>${EmailAddress}</li>
-                        <li>${Location}</li>
+                        <li>${locationDisplay}</li>
                         <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
                     </ul>
                 <div class="checkmark"></div>
@@ -230,9 +267,12 @@ const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
-    // TODO update the joinNewUswerInformation to be associated with the div ID
-    joinNewUserInformation.Id = $(event.target).closest('ul').attr('id');
+    joinNewUserInformation.SponsorId = $(event.target).closest('div').data('consid');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
+    // TODO remove console.log
+    console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
+    const socialBugAfId = ($(event.target).closest('div').data('afid'));
+    associateSocialBugAffiliate(socialBugAfId);
 });
 
 /**
@@ -242,7 +282,7 @@ function getConsultantInfoByName() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -261,7 +301,7 @@ function getConsultantInfoByID() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -294,8 +334,8 @@ function getConsultantInfoByZip() {
         error: () => {
             const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
             $('#sponsorSearchData').append(`
-                <div id='0160785' class="sponsor-wrapper">
-                    <div class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+                <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
+                    <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
                         <ul>
                             <li class="sponsor-name">Tastefully Simple</li>
                             <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
@@ -316,7 +356,6 @@ $('#btnConsIdSearch').on('click', (e) => {
     if (($('#txtConsultantID').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
-        // TODO edit placement of this error message to more closely align with where the error occurs
         $('#sponsorSearchData').append('Please enter a valid ID in the text box.');
     } else {
         e.preventDefault();
@@ -334,8 +373,7 @@ $('#btnConsNameSearch').on('click', (e) => {
         || (($('#ConsultantState').val()) === '')) {
         $('#sponsorSearchData').empty();
         e.preventDefault();
-        // TODO edit placement of this error message to more closely align with where the error occurs
-        $('#sponsorSearchData').append('Please enter name in the text box and select a state');
+        $('#sponsorSearchData').append('Please enter a name in the text box and select a state');
     } else {
         e.preventDefault();
         $('#sponsorSearchData').empty();
@@ -351,7 +389,6 @@ $('#btnConsZipSearch').on('click', (e) => {
     if (($('#txtZipCode').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
-        // TODO edit placement of this error message to more closely align with where the error occurs
         $('#sponsorSearchData').append('Please enter a zip code in the text box.');
     } else {
         e.preventDefault();
@@ -389,6 +426,7 @@ $('#submit').on('click', (e) => {
     } else {
         e.preventDefault();
         localStorage.setItem('isJoin', true);
+        // TODO remove console.log
         console.log('submitting into', loginUserInformation);
         submitLoginInfo();
     }
@@ -399,6 +437,17 @@ $('#frmJoinPersonalInfoTest').on('change', () => handleJoinLoginTestFormChange(e
 
 // Consultant Search Event Listeners
 $('#consultantSearchForm').on('change', () => handleFormChange(event));
+
+// Kit Page Event Listeners
+$('#kit-page-next').on('click', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('id')) {
+        joinNewUserInformation.Id = params.get('id');
+        location.href = `${API_URLS.TELL_US}${joinNewUserInformation.Id}`;
+    } else {
+        // TODO error handling for if and when there is not an id in the URL params
+    }
+});
 
 /**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
@@ -419,6 +468,7 @@ function toggleStyles() {
     const password2 = loginPage.querySelector('#password2Field');
 
     checkbox.addEventListener('change', (event) => {
+        $('#loginErrors').empty();
         if (event.target.checked) {
             toggleLoginSignUp.signUpForm = true;
             toggleLoginSignUp.logInForm = false;
@@ -470,7 +520,7 @@ function togglePhoneConditionalField() {
             primaryPhoneDiv.classList.remove('disabled');
             primaryPhone.removeAttribute('disabled');
         } else {
-            joinNewUserInformation.PrimaryPhone = joinNewUserInformation.CellPhone;
+            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
             $(primaryPhone).val('');
             primaryPhoneDiv.classList.add('disabled');
             primaryPhone.setAttribute('disabled', 'disabled');
@@ -550,6 +600,7 @@ function triggerSubmit() {
     const checkoutButton = personalInfoPage.querySelector('#checkout');
 
     checkoutButton.addEventListener('click', (e) => {
+        console.log(joinNewUserInformation);
         e.preventDefault();
         // format DOB
         let DOB = new Date(document.getElementById('DOB').value);
@@ -564,12 +615,15 @@ function triggerSubmit() {
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
             data: joinNewUserInformation,
             success: (data) => {
+                // TODO remove console.log
                 console.log(data);
-                // TODO add navigation to the confirmation page when a successful status is returned
+                location.href = `${API_URLS.CHECKOUT}`;
             },
             error: (error) => {
+            // TODO finalize error handling for when join/user does not work and remove console.log
                 console.log(error);
-                // TODO add error handling for when join/user up does not work
+                console.log(error.responseJSON.message);
+                $('#sponsorSearchData').append(`<h5>${error.responseJSON.message}</h5>`);
             },
         });
     });
@@ -587,7 +641,7 @@ function triggerTermsApprove() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: 'https://tsapi.tastefullysimple.com/join/tc',
+        url: `${API_URLS.JOIN_TC}`,
         success: (data) => {
             if (data !== null) {
                 joinNewUserInformation.TermsConditionsVersion = data.Version;
@@ -598,9 +652,7 @@ function triggerTermsApprove() {
         },
         error: (error) => {
             console.log(error);
-            // TODO Determine how to handle this if terms and conditions route doesn't work
-            // Option: Add hardcoded version of terms and conditions and set
-            // joinNewUserInformation.TermsConditionsVersionvalue to that version #
+            // TODO Add hardcoded terms & conditions and remove console.log
         },
     });
 
@@ -655,6 +707,19 @@ function postData(url = '', cartItems = {}) {
 }
 
 /**
+ * This function will grab the BigCommerce unique ID that is passed from the join/login page
+ * and use it to validate the form submission to Tastefully Simple's endpoint.
+ */
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('id')) {
+        joinNewUserInformation.Id = params.get('id');
+    } else {
+        // TODO error handling for if and when there is not an id in the URL params
+    }
+}
+
+/**
  * Export join process front end functions.
  */
 export default function joinProcessInteraction() {
@@ -666,13 +731,13 @@ export default function joinProcessInteraction() {
             lineItems: [
                 {
                     quantity: 1,
-                    productId: 134,
+                    productId: 133,
                 },
             ] }
         )
-        .then(data => (loginUserInformation.Id = (JSON.stringify(data.id))))
+        .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))))
         .catch(error =>
-        // TODO handle error actions
+        // TODO handle error actions & remove console.log
         console.error(error));
     }
     // call functions on kit page
@@ -691,6 +756,11 @@ export default function joinProcessInteraction() {
         triggerSubmit();
         triggerTermsApprove();
         triggerTextOptIn();
+        getUrlParams();
+        waitForSocialBug(() => {
+            const affiliateId = $('#affiliatediv').data('affiliateid');
+            initializeSocialBug(affiliateId);
+        });
     }
 
     if (confirmationPage) {

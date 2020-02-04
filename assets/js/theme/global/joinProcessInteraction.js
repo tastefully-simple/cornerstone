@@ -27,7 +27,7 @@ const toggleLoginSignUp = {
 
 // TODO: add functionality for SocialBug affiliation using these variables
 const frame = document.createElement('iframe');
-const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
+const src = 'https://tastefullysimpl.sb-affiliate.com/web/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
@@ -88,6 +88,7 @@ function initializeSocialBug(affiliateId) {
 
 // Update Social Bug Functionality
 function associateSocialBugAffiliate(socialBugAfId) {
+    // TODO remove console.log
     console.log('associating', socialBugAfId);
     frame.src = `${src}${socialBugAfId}`;
 }
@@ -160,12 +161,13 @@ function submitLoginInfo() {
         url: 'https://qa1-tsapi.tastefullysimple.com/join/login',
         data: loginUserInformation,
         success: (data) => {
+            // TODO remove console.log
             console.log(data);
             location.href = `https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=${loginUserInformation.Id}`;
         },
         error: (error) => {
             console.log(error);
-            // TODO add error handling for when login / sign up does not work
+            // TODO add error handling for when login / sign up does not work and remove console.log
         },
     });
 }
@@ -259,6 +261,7 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
     joinNewUserInformation.SponsorId = $(event.target).closest('div').data('consid');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
+    // TODO remove console.log
     console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
     const socialBugAfId = ($(event.target).closest('div').data('afid'));
     associateSocialBugAffiliate(socialBugAfId);
@@ -413,6 +416,7 @@ $('#submit').on('click', (e) => {
         }
     } else {
         e.preventDefault();
+        // TODO remove console.log
         console.log('submitting into', loginUserInformation);
         submitLoginInfo();
     }
@@ -599,13 +603,15 @@ function triggerSubmit() {
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
             data: joinNewUserInformation,
             success: (data) => {
+                // TODO remove console.log
                 console.log(data);
-                // TODO add navigation to the confirmation page when a successful status is returned
-                // location.href = 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout';
+                location.href = 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout';
             },
             error: (error) => {
+            // TODO finalize error handling for when join/user does not work and remove console.log
                 console.log(error);
-                // TODO add error handling for when join/user up does not work
+                console.log(error.responseJSON.message);
+                $('#sponsorSearchData').append(`<h5>${error.responseJSON.message}</h5>`);
             },
         });
     });
@@ -634,9 +640,7 @@ function triggerTermsApprove() {
         },
         error: (error) => {
             console.log(error);
-            // TODO Determine how to handle this if terms and conditions route doesn't work
-            // Option: Add hardcoded version of terms and conditions and set
-            // joinNewUserInformation.TermsConditionsVersionvalue to that version #
+            // TODO Add hardcoded terms & conditions and remove console.log
         },
     });
 
@@ -721,7 +725,7 @@ export default function joinProcessInteraction() {
         )
         .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))))
         .catch(error =>
-        // TODO handle error actions
+        // TODO handle error actions & remove console.log
         console.error(error));
     }
     // call functions on kit page

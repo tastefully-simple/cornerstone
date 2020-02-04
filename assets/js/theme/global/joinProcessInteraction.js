@@ -83,6 +83,7 @@ const API_URLS = {
     BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
     TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
     CHECKOUT: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout',
+    JOIN_TC: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
 };
 
 // Initialize Social Bug Functionality
@@ -638,7 +639,7 @@ function triggerTermsApprove() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
+        url: `${API_URLS.JOIN_TC}`,
         success: (data) => {
             if (data !== null) {
                 joinNewUserInformation.TermsConditionsVersion = data.Version;

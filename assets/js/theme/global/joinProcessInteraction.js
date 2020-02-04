@@ -413,6 +413,7 @@ $('#submit').on('click', (e) => {
         }
     } else {
         e.preventDefault();
+        console.log('submitting into', loginUserInformation);
         submitLoginInfo();
     }
 });
@@ -453,6 +454,7 @@ function toggleStyles() {
     const password2 = loginPage.querySelector('#password2Field');
 
     checkbox.addEventListener('change', (event) => {
+        $('#loginErrors').empty();
         if (event.target.checked) {
             toggleLoginSignUp.signUpForm = true;
             toggleLoginSignUp.logInForm = false;
@@ -717,8 +719,7 @@ export default function joinProcessInteraction() {
                 },
             ] }
         )
-        .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))));
-        console.log(joinNewUserInformation.Id)
+        .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))))
         .catch(error =>
         // TODO handle error actions
         console.error(error));

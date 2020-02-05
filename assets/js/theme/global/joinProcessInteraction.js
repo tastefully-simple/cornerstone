@@ -287,7 +287,6 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
     // TODO remove console.log
     console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
     const socialBugAfId = ($(event.target).closest('div').data('afid'));
-    // associateSocialBugAffiliate(joinNewUserInformation.SponsorId);
     associateSocialBugAffiliate(socialBugAfId);
 });
 

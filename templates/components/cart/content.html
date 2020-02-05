@@ -27,7 +27,7 @@
                     {{#if brand.name}}
                         <p class="cart-item-brand">{{brand.name}}</p>
                     {{/if}}
-                    <h4 class="cart-item-name"><a href="{{url}}">{{name}}</a></h4>
+                    <h4 class="cart-item-name"><span>{{name}}</span></h4>
                     {{#if release_date}}
                         <p>({{release_date}})</p>
                     {{/if}}
@@ -115,7 +115,7 @@
                 <td class="cart-item-block cart-item-info">
                     <span class="cart-item-label">{{lang 'cart.checkout.total'}}</span>
                     {{#or ../customer (if ../theme_settings.restrict_to_login '!==' true)}}
-                        <strong class="cart-item-value {{#if total_discounted}}price--discounted{{/if}}">{{total.formatted}}</strong>
+                        <span class="cart-item-value {{#if total_discounted}}price--discounted{{/if}}">{{total.formatted}}</span>
                         {{#if total_discounted}}
                             <strong class="cart-item-value">{{total_discounted.formatted}}</strong>
                         {{/if}}

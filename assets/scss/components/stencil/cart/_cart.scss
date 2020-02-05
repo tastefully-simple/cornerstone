@@ -667,11 +667,20 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 // Cart affiliate info
 // -----------------------------------------------------------------------------
 
+.cart-NoAffiliateInfo {
+    text-align: center;
+}
+
 .cart-affiliateInfo {
     text-align: center;
+}
+
+#cart-affiliate-name, #cart-no-affiliate-name {
     display: none;
 }
 
-#cart-affiliate-name, #cart-no-affiliate-name, #cart-tastefully-simple-name {
+// This will hide the Social Bug flyout
+
+.bg-info {
     display: none;
 }

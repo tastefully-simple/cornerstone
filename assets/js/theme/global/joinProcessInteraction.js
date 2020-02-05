@@ -660,9 +660,8 @@ function triggerTermsApprove() {
                 `);
             }
         },
-        error: (error) => {
-            console.log(error);
-            // TODO Add hardcoded terms & conditions and remove console.log
+        error: () => {
+            $('#terms-conditions-backup').removeClass('hidden');
         },
     });
 

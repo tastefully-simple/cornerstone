@@ -73,5 +73,12 @@
         font-family: $FONT_FAMILY_SECONDARY;
       }
     }
+
+    #terms-conditions {
+
+      &.hidden {
+        @include visuallyHidden();
+      }
+    }
   }
 }

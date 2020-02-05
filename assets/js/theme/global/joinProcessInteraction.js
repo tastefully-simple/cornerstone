@@ -27,7 +27,6 @@ const toggleLoginSignUp = {
 
 /** Variables used to associate sponsor selected with SocialBug and create hidden iframe */
 const frame = document.createElement('iframe');
-const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
@@ -84,21 +83,20 @@ const API_URLS = {
     TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
     CHECKOUT: 'https://tastefullysimpl.sb-affiliate.com/r66/',
     JOIN_TC: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
+    SOCIAL_BUG: 'https://tastefullysimpl.sb-affiliate.com/r66/',
 };
 
 // Initialize Social Bug Functionality
 function initializeSocialBug(affiliateId) {
     frame.style.display = 'none';
-    frame.src = `${src}${affiliateId}`;
+    frame.src = `${API_URLS.SOCIAL_BUG}${affiliateId}`;
 
     document.body.appendChild(frame);
 }
 
 // Update Social Bug Functionality
 function associateSocialBugAffiliate(socialBugAfId) {
-    // TODO remove console.log
-    console.log('associating', socialBugAfId);
-    frame.src = `${src}${socialBugAfId}`;
+    frame.src = `${API_URLS.SOCIAL_BUG}${socialBugAfId}`;
 }
 
 function waitForSocialBug(callback) {

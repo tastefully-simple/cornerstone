@@ -27,7 +27,7 @@ const toggleLoginSignUp = {
 
 /** Variables used to associate sponsor selected with SocialBug and create hidden iframe */
 const frame = document.createElement('iframe');
-const src = 'https://tastefullysimpl.sb-affiliate.com/web/';
+const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
 
 /**
  * This object will hold the user information for the Tell Us About Yourself page.
@@ -82,7 +82,7 @@ let locationDisplay = '';
 const API_URLS = {
     BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
     TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
-    CHECKOUT: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/checkout',
+    CHECKOUT: 'https://tastefullysimpl.sb-affiliate.com/r66/',
     JOIN_TC: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
 };
 
@@ -240,8 +240,23 @@ function displayConsultantInformation(data) {
  * message from Tastefully Simple's API exists, that will display.
  */
 function displayErrorMessage(error) {
-    if (error) {
-        $('#sponsorSearchData').append(`
+    if (error.responseJSON.errors) {
+        $.each(error.responseJSON.errors, (i) => {
+            const errors = error.responseJSON.errors[i];
+            const {
+                id,
+                message,
+            } = errors;
+            $('#formErrorMessages').append(`
+                <li data-errorid='${id}'>${message}</li>
+            `);
+        });
+        $('#formErrorMessages').append(`
+        <h5>If you continue to experience issues, please contact the 
+        Consultant Order Services team at 866.448.6446 or 320.763.1571.</li>
+    `);
+    } else if (error) {
+        $('#formErrorMessages').append(`
             <h4>${error.responseJSON}</h4>
         `);
     } else {
@@ -445,7 +460,7 @@ $('#kit-page-next').on('click', () => {
         joinNewUserInformation.Id = params.get('id');
         location.href = `${API_URLS.TELL_US}${joinNewUserInformation.Id}`;
     } else {
-        // TODO error handling for if and when there is not an id in the URL params
+        location.href = API_URLS.TELL_US;
     }
 });
 
@@ -609,21 +624,16 @@ function triggerSubmit() {
         const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
         const year = DOB.getFullYear();
         DOB = `${month}-${day}-${year}`;
-        joinNewUserInformation.DOB = DOB;
+        joinNewUserInformation.DateOfBirth = DOB;
         $.ajax({
             type: 'POST',
             url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
             data: joinNewUserInformation,
-            success: (data) => {
-                // TODO remove console.log
-                console.log(data);
-                location.href = `${API_URLS.CHECKOUT}`;
+            success: () => {
+                location.href = `${API_URLS.CHECKOUT}${joinNewUserInformation.SponsorId}?PID=172`;
             },
             error: (error) => {
-            // TODO finalize error handling for when join/user does not work and remove console.log
-                console.log(error);
-                console.log(error.responseJSON.message);
-                $('#sponsorSearchData').append(`<h5>${error.responseJSON.message}</h5>`);
+                displayErrorMessage(error);
             },
         });
     });

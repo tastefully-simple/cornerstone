@@ -461,7 +461,7 @@ $('#kit-page-next').on('click', () => {
         joinNewUserInformation.Id = params.get('id');
         location.href = `${API_URLS.TELL_US}${joinNewUserInformation.Id}`;
     } else {
-        // TODO error handling for if and when there is not an id in the URL params
+        location.href = API_URLS.TELL_US;
     }
 });
 
@@ -735,7 +735,7 @@ function getUrlParams() {
  */
 export default function joinProcessInteraction() {
     // call functions on join page
-    if (loginPage && joinNewUserInformation.Id === null) {
+    if (loginPage) {
         removeContainer();
         toggleStyles();
         postData('/api/storefront/cart', {

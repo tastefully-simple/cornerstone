@@ -3,6 +3,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
       LodashPlugin = require('lodash-webpack-plugin'),
       path = require('path'),
       webpack = require('webpack');
+      Dotenv = require('dotenv-webpack');
 
 // Common configuration, with extensions in webpack.dev.js and webpack.prod.js.
 module.exports = {
@@ -63,6 +64,7 @@ module.exports = {
             analyzerMode: 'static',
             openAnalyzer: false,
         }),
+        new Dotenv(), 
     ],
     resolve: {
         alias: {

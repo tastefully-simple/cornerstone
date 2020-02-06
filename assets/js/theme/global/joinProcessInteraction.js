@@ -715,9 +715,20 @@ function postData(url = '', cartItems = {}) {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json' },
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(cartItems),
-    }).then(response => response.json());
+    });
+}
+
+function getData(url = '') {
+    return fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 }
 
 /**
@@ -729,10 +740,31 @@ function getUrlParams() {
     if (params.has('id')) {
         joinNewUserInformation.Id = params.get('id');
     } else {
-        // TODO error handling for if and when there is not an id in the URL params
+        location.href = '/join';
     }
 }
 
+function setFormId(formIdValue = '') {
+    $('#frmJoinLoginTest > #Id').val(formIdValue);
+    loginUserInformation.Id = formIdValue;
+}
+
+function createCart() {
+    console.log('No cart create one');
+    postData('/api/storefront/cart', {
+        lineItems: [
+            {
+                quantity: 1,
+                productId: 133,
+            },
+        ],
+    })
+        .then(data => {
+            console.log(`Cart created ${JSON.stringify(data)}`);
+            setFormId((JSON.stringify(data.id)).replace(/['"]+/g, ''));
+        })
+        .catch(error => console.log(error));
+}
 /**
  * Export join process front end functions.
  */
@@ -741,18 +773,19 @@ export default function joinProcessInteraction() {
     if (loginPage) {
         removeContainer();
         toggleStyles();
-        postData('/api/storefront/cart', {
-            lineItems: [
-                {
-                    quantity: 1,
-                    productId: 133,
-                },
-            ] }
-        )
-            .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))))
-            .catch(error =>
-                // TODO handle error actions & remove console.log
-                console.error(error));
+        $(document).ready(() => {
+            console.log('Log Cart');
+            getData('/api/storefront/cart')
+                .then(response => response.json())
+                .then(myJson => {
+                    if (myJson.length > 0) {
+                        console.log('Cart found');
+                        setFormId(myJson[0].id);
+                    } else {
+                        createCart();
+                    }
+                });
+        });
     }
     // call functions on kit page
     if (kitPage) {

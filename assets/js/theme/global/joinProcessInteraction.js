@@ -82,7 +82,7 @@ const API_URLS = {
     BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
     TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
     CHECKOUT: 'https://tastefullysimpl.sb-affiliate.com/r66/',
-    JOIN_TC: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
+    JOIN_TC: 'https://tsapi.tastefullysimple.com/join/tc',
     SOCIAL_BUG: 'https://tastefullysimpl.sb-affiliate.com/r66/',
 };
 
@@ -164,7 +164,7 @@ function handleJoinLoginTestFormChange(event) {
 function submitLoginInfo() {
     $.ajax({
         type: 'POST',
-        url: 'https://qa1-tsapi.tastefullysimple.com/join/login',
+        url: 'https://tsapi.tastefullysimple.com/join/login',
         data: loginUserInformation,
         success: (data) => {
             // TODO remove console.log
@@ -251,7 +251,7 @@ function displayErrorMessage(error) {
         });
         $('#formErrorMessages').append(`
         <h5>If you continue to experience issues, please contact the 
-        Consultant Order Services team at 866.448.6446 or 320.763.1571.</li>
+        Customer Services team at 866.448.6446.</li>
     `);
     } else if (error) {
         $('#formErrorMessages').append(`
@@ -295,7 +295,7 @@ function getConsultantInfoByName() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -314,7 +314,7 @@ function getConsultantInfoByID() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -625,7 +625,7 @@ function triggerSubmit() {
         joinNewUserInformation.DateOfBirth = DOB;
         $.ajax({
             type: 'POST',
-            url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
+            url: 'https://tsapi.tastefullysimple.com/join/user',
             data: joinNewUserInformation,
             success: () => {
                 location.href = `${API_URLS.CHECKOUT}${joinNewUserInformation.SponsorId}?PID=172`;
@@ -742,10 +742,10 @@ export default function joinProcessInteraction() {
                 },
             ] }
         )
-        .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))))
-        .catch(error =>
-        // TODO handle error actions & remove console.log
-        console.error(error));
+            .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))))
+            .catch(error =>
+                // TODO handle error actions & remove console.log
+                console.error(error));
     }
     // call functions on kit page
     if (kitPage) {

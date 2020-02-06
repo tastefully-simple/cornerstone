@@ -264,12 +264,17 @@ function displayErrorMessage(error) {
     }
 }
 
+function clearErrorMessages() {
+    $('#formErrorMessages').html('');
+    $('#loginErrors').html('');
+}
+
 /**
  * These two functions will allow us to select a sponsor from the data
  * that is returned from Tastefully Simple's API.
  */
 
- // TODO update to jquery each
+// TODO update to jquery each
 function selectSponsor(array, type, func) {
     for (let i = 0; i < array.length; i++) {
         $(array[i]).bind(type, func);
@@ -382,6 +387,7 @@ $('#btnConsIdSearch').on('click', (e) => {
 
 /** Search by consultant name and display results on dom */
 $('#btnConsNameSearch').on('click', (e) => {
+    clearErrorMessages();
     if (($('#txtConsultantName').val()) === ''
         || (($('#ConsultantState').val()) === '')) {
         $('#sponsorSearchData').empty();
@@ -399,6 +405,7 @@ $('#btnConsNameSearch').on('click', (e) => {
 
 /** Search by consultant zip code and display results on dom */
 $('#btnConsZipSearch').on('click', (e) => {
+    clearErrorMessages();
     if (($('#txtZipCode').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
@@ -416,7 +423,7 @@ $('#btnConsZipSearch').on('click', (e) => {
 // Join Page Event Listeners
 $('#frmJoinLoginTest').on('change', () => handleFormChange(event));
 $('#submit').on('click', (e) => {
-    $('#loginErrors').empty();
+    clearErrorMessages();
     if (toggleLoginSignUp.logInForm === true
         && ($('#EmailAddress').val()) === ''
         || toggleLoginSignUp.logInForm === true
@@ -481,7 +488,7 @@ function toggleStyles() {
     const password2 = loginPage.querySelector('#password2Field');
 
     checkbox.addEventListener('change', (event) => {
-        $('#loginErrors').empty();
+        clearErrorMessages();
         if (event.target.checked) {
             toggleLoginSignUp.signUpForm = true;
             toggleLoginSignUp.logInForm = false;
@@ -613,7 +620,7 @@ function triggerSubmit() {
     const checkoutButton = personalInfoPage.querySelector('#checkout');
 
     checkoutButton.addEventListener('click', (e) => {
-        console.log(joinNewUserInformation);
+        clearErrorMessages();
         e.preventDefault();
         // format DOB
         let DOB = new Date(document.getElementById('DOB').value);

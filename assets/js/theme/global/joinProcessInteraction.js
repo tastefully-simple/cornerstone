@@ -69,6 +69,22 @@ const consultantSearchParams = {
     consultantZipCode: null,
 };
 
+const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
+const defaultConsultantSearchMarkup = `
+    <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
+        <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+            <ul>
+                <li class="sponsor-name">Tastefully Simple</li>
+                <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
+                <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>help@tastefullysimple.com</li>
+                <li>Alexandria, MN</li>
+                <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
+            </ul>
+        <div class="checkmark"></div>
+    </div>
+    <div class="sponsor-divider"></div>
+`;
+
 /**
  * This variables will hold parameters for GET calls to
  * Tastefully Simple's consultant search API
@@ -104,6 +120,46 @@ function waitForSocialBug(callback) {
         callback();
     } else {
         setTimeout(() => waitForSocialBug(callback), 500);
+    }
+}
+
+/**
+ * This function displays an error message when there are no consultant
+ * results found when searching by ID or name. If an error
+ * message from Tastefully Simple's API exists, that will display.
+ */
+function displayErrorMessage(error) {
+    if (error.responseJSON.errors) {
+        $.each(error.responseJSON.errors, (i) => {
+            const errors = error.responseJSON.errors[i];
+            const {
+                id,
+                message,
+            } = errors;
+            $('#formErrorMessages').append(`
+                <li data-errorid='${id}'>${message}</li>
+            `);
+        });
+        $('#formErrorMessages').append(`
+        <h5>If you continue to experience issues, please contact the 
+        Customer Services team at 866.448.6446.</li>
+    `);
+    } else if (error) {
+        $('#formErrorMessages').append(`
+            <h4>${error.responseJSON}</h4>
+        `);
+    } else {
+        $('#sponsorSearchData').append(`
+            <h4>No results found.</h4>
+        `);
+    }
+}
+
+function clearErrorMessages() {
+    $('#formErrorMessages').html('');
+    $('#loginErrors').html('');
+    if (document.getElementById('divTsConsFound')) {
+        document.getElementById('divTsConsFound').style.display = 'none';
     }
 }
 
@@ -166,14 +222,11 @@ function submitLoginInfo() {
         type: 'POST',
         url: 'https://tsapi.tastefullysimple.com/join/login',
         data: loginUserInformation,
-        success: (data) => {
-            // TODO remove console.log
-            console.log(data);
+        success: () => {
             location.href = `${API_URLS.BLAST_OFF}${loginUserInformation.Id}`;
         },
         error: (error) => {
-            console.log(error);
-            // TODO add error handling for when login / sign up does not work and remove console.log
+            displayErrorMessage(error);
         },
     });
 }
@@ -233,43 +286,6 @@ function displayConsultantInformation(data) {
 }
 
 /**
- * This function displays an error message when there are no consultant
- * results found when searching by ID or name. If an error
- * message from Tastefully Simple's API exists, that will display.
- */
-function displayErrorMessage(error) {
-    if (error.responseJSON.errors) {
-        $.each(error.responseJSON.errors, (i) => {
-            const errors = error.responseJSON.errors[i];
-            const {
-                id,
-                message,
-            } = errors;
-            $('#formErrorMessages').append(`
-                <li data-errorid='${id}'>${message}</li>
-            `);
-        });
-        $('#formErrorMessages').append(`
-        <h5>If you continue to experience issues, please contact the 
-        Customer Services team at 866.448.6446.</li>
-    `);
-    } else if (error) {
-        $('#formErrorMessages').append(`
-            <h4>${error.responseJSON}</h4>
-        `);
-    } else {
-        $('#sponsorSearchData').append(`
-            <h4>No results found.</h4>
-        `);
-    }
-}
-
-function clearErrorMessages() {
-    $('#formErrorMessages').html('');
-    $('#loginErrors').html('');
-}
-
-/**
  * These two functions will allow us to select a sponsor from the data
  * that is returned from Tastefully Simple's API.
  */
@@ -306,8 +322,13 @@ function getConsultantInfoByName() {
                 displayConsultantInformation(data);
             }
         },
-        error: (error) => {
-            displayErrorMessage(error);
+        error: () => {
+            $('#sponsorSearchData').append(`
+           <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
+           <ul class="sponsor-result--error">
+            <li>Contact your consultant</li>
+            <li>Contact HQ at 1.866.448.6446 or <a href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a></li>
+           </ul>`);
         },
     });
 }
@@ -335,6 +356,7 @@ function getConsultantInfoByID() {
         },
     });
 }
+
 /**
  * Get consultant information from Tastefully Simple's API zip code.
  * If no consultants are within a 200 mile radius, the Tastefully Simple generic consultant will display.
@@ -350,21 +372,8 @@ function getConsultantInfoByZip() {
             }
         },
         error: () => {
-            const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
-            $('#sponsorSearchData').append(`
-                <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
-                    <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
-                        <ul>
-                            <li class="sponsor-name">Tastefully Simple</li>
-                            <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
-                            <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>help@tastefullysimple.com</li>
-                            <li>Alexandria, MN</li>
-                            <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
-                        </ul>
-                    <div class="checkmark"></div>
-                </div>
-                <div class="sponsor-divider"></div>
-            `);
+            document.getElementById('divTsConsFound').style.display = 'block';
+            $('#sponsorSearchData').append(defaultConsultantSearchMarkup);
         },
     });
 }
@@ -759,9 +768,9 @@ function createCart() {
             },
         ],
     })
+        .then(response => response.json())
         .then(data => {
-            console.log(`Cart created ${JSON.stringify(data)}`);
-            setFormId((JSON.stringify(data.id)).replace(/['"]+/g, ''));
+            setFormId(data.id);
         })
         .catch(error => console.log(error));
 }

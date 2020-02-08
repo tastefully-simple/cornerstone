@@ -535,7 +535,8 @@ function toggleAddressConditionalFields() {
         if (!event.target.checked) {
             shippingFieldset.classList.remove('hidden');
         } else {
-            $(shippingFieldset).empty();
+            $('#shipping-address input').val('');
+            $('#ShippingState option:first').attr('selected', true);
             shippingFieldset.classList.add('hidden');
         }
     });

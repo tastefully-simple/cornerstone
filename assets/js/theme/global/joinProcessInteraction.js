@@ -29,37 +29,6 @@ const toggleLoginSignUp = {
 const frame = document.createElement('iframe');
 
 /**
- * This object will hold the user information for the Tell Us About Yourself page.
- */
-const joinNewUserInformation = {
-    Id: null,
-    SponsorId: null,
-    Prefix: null,
-    PreferredName: null,
-    FirstName: null,
-    LastName: null,
-    SSN: null,
-    DateOfBirth: null,
-    PrimayPhone: null,
-    CellPhone: null,
-    TsCashOption: null,
-    TsCashOptionText: null,
-    TermsConditionsOptIn: false,
-    OptInText: true,
-    TermsConditionsVersion: null,
-    BillingAddressLine1: null,
-    BillingAddressLine2: null,
-    BillingCity: null,
-    BillingState: null,
-    BillingZip: null,
-    ShippingAddressLine1: null,
-    ShippingAddressLine2: null,
-    ShippingCity: null,
-    ShippingState: null,
-    ShippingZip: null,
-};
-
-/**
  * This object will hold the consultant search information
  * on the Tell Us About Yourself page
  */
@@ -120,6 +89,37 @@ function waitForSocialBug(callback) {
         callback();
     } else {
         setTimeout(() => waitForSocialBug(callback), 500);
+    }
+}
+
+function setLoginFormId(formIdValue = '') {
+    $('#frmJoinLoginTest > #Id').val(formIdValue);
+}
+function setInfoFormId(formIdValue = '') {
+    $('#frmJoinPersonalInfo > #Id').val(formIdValue);
+}
+
+/**
+ * This function displays an error message on the login form.
+ * results found when searching by ID or name. If an error
+ * message from Tastefully Simple's API exists, that will display.
+ */
+function displayLoginErrorMessage(error) {
+    if (error.responseJSON.errors) {
+        $.each(error.responseJSON.errors, (i) => {
+            const errors = error.responseJSON.errors[i];
+            const {
+                id,
+                message,
+            } = errors;
+            $('#loginErrors').append(`
+                <li data-errorid='${id}'>${message}</li>
+            `);
+        });
+    } else if (error) {
+        $('#loginErrors').append(`
+            <h4>${error.responseJSON}</h4>
+        `);
     }
 }
 
@@ -189,29 +189,6 @@ function handleFormChange(event) {
     }
 }
 
-/**
- * This function handles input changes for the JoinLoginText Form
- */
-function handleJoinLoginTestFormChange(event) {
-    const target = event.target;
-    if (target.name !== 'OptInText'
-        && target.name !== 'MobilePhoneCheckbox'
-        && target.name !== 'AddressCheckbox') {
-        if ((!$('#shipping-address').hasClass('hidden'))) {
-            joinNewUserInformation[target.name] = target.value;
-        } else if ((!$('#primaryPhoneField').hasClass('disabled'))) {
-            joinNewUserInformation[target.name] = target.value;
-        } else {
-            joinNewUserInformation[target.name] = target.value;
-            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
-            joinNewUserInformation.ShippingAddressLine1 = joinNewUserInformation.BillingAddressLine1;
-            joinNewUserInformation.ShippingAddressLine2 = joinNewUserInformation.BillingAddressLine2;
-            joinNewUserInformation.ShippingCity = joinNewUserInformation.BillingCity;
-            joinNewUserInformation.ShippingState = joinNewUserInformation.BillingState;
-            joinNewUserInformation.ShippingZip = joinNewUserInformation.BillingZip;
-        }
-    }
-}
 
 /** This function will submit the login information
  * on the join/login page. This is still in development until
@@ -220,13 +197,15 @@ function handleJoinLoginTestFormChange(event) {
 function submitLoginInfo() {
     $.ajax({
         type: 'POST',
+        accepts: 'json',
         url: 'https://tsapi.tastefullysimple.com/join/login',
-        data: loginUserInformation,
-        success: () => {
-            location.href = `${API_URLS.BLAST_OFF}${loginUserInformation.Id}`;
+        data: $('#frmJoinLoginTest').serialize(),
+        cache: false,
+        success: (data) => {
+            location.href = `${API_URLS.BLAST_OFF}${data.Id}`;
         },
         error: (error) => {
-            displayErrorMessage(error);
+            displayLoginErrorMessage(error);
         },
     });
 }
@@ -301,10 +280,9 @@ const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
-    joinNewUserInformation.SponsorId = $(event.target).closest('div').data('consid');
+    document.getElementById('SponsorId').value = $(event.target).closest('div').data('consid');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
-    // TODO remove console.log
-    console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
+
     const socialBugAfId = ($(event.target).closest('div').data('afid'));
     associateSocialBugAffiliate(socialBugAfId);
 });
@@ -430,14 +408,13 @@ $('#btnConsZipSearch').on('click', (e) => {
 });
 
 // Join Page Event Listeners
-$('#frmJoinLoginTest').on('change', () => handleFormChange(event));
-$('#submit').on('click', (e) => {
+$('#frmJoinLoginTest').submit((e) => {
+    e.preventDefault();
     clearErrorMessages();
     if (toggleLoginSignUp.logInForm === true
         && ($('#EmailAddress').val()) === ''
         || toggleLoginSignUp.logInForm === true
         && ($('#Password').val()) === '') {
-        e.preventDefault();
         $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
     } else if (toggleLoginSignUp.signUpForm === true) {
         if (($('#FirstName').val()) === ''
@@ -445,24 +422,16 @@ $('#submit').on('click', (e) => {
             || ($('#EmailAddress').val()) === ''
             || ($('#Password').val()) === ''
             || ($('#Password2').val()) === '') {
-            e.preventDefault();
             $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
         } else {
-            e.preventDefault();
             localStorage.setItem('isJoin', true);
             submitLoginInfo();
         }
     } else {
-        e.preventDefault();
         localStorage.setItem('isJoin', true);
-        // TODO remove console.log
-        console.log('submitting into', loginUserInformation);
         submitLoginInfo();
     }
 });
-
-// Tell Us About Yourself Event Listeners
-$('#frmJoinPersonalInfoTest').on('change', () => handleJoinLoginTestFormChange(event));
 
 // Consultant Search Event Listeners
 $('#consultantSearchForm').on('change', () => handleFormChange(event));
@@ -471,10 +440,10 @@ $('#consultantSearchForm').on('change', () => handleFormChange(event));
 $('#kit-page-next').on('click', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
-        joinNewUserInformation.Id = params.get('id');
-        location.href = `${API_URLS.TELL_US}${joinNewUserInformation.Id}`;
+        const szFormId = params.get('id');
+        location.href = `${API_URLS.TELL_US}${szFormId}`;
     } else {
-        location.href = API_URLS.TELL_US;
+        location.href = '/join';
     }
 });
 
@@ -549,7 +518,6 @@ function togglePhoneConditionalField() {
             primaryPhoneDiv.classList.remove('disabled');
             primaryPhone.removeAttribute('disabled');
         } else {
-            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
             $(primaryPhone).val('');
             primaryPhoneDiv.classList.add('disabled');
             primaryPhone.setAttribute('disabled', 'disabled');
@@ -565,11 +533,6 @@ function toggleAddressConditionalFields() {
     const shippingFieldset = personalInfoPage.querySelector('#shipping-address');
     addressCheckbox.addEventListener('change', (event) => {
         if (!event.target.checked) {
-            joinNewUserInformation.ShippingAddressLine1 = null;
-            joinNewUserInformation.ShippingAddressLine2 = null;
-            joinNewUserInformation.ShippingCity = null;
-            joinNewUserInformation.ShippingState = null;
-            joinNewUserInformation.ShippingZip = null;
             shippingFieldset.classList.remove('hidden');
         } else {
             $(shippingFieldset).empty();
@@ -622,6 +585,46 @@ function closeTermsModal() {
     });
 }
 
+function setSubmissionDefaults() {
+    if (document.getElementById('MobilePhoneCheckbox').checked) {
+        if (document.getElementById('CellPhone').value) {
+            document.getElementById('PrimaryPhone').value = document.getElementById('CellPhone').value;
+        }
+    }
+
+    if (document.getElementById('AddressCheckbox').checked === true) {
+        if (document.getElementById('BillingAddressLine1').value) {
+            document.getElementById('ShippingAddressLine1').value = document.getElementById('BillingAddressLine1').value;
+        }
+        if (document.getElementById('BillingAddressLine2').value) {
+            document.getElementById('ShippingAddressLine2').value = document.getElementById('BillingAddressLine2').value;
+        }
+        if (document.getElementById('BillingCity').value) {
+            document.getElementById('ShippingCity').value = document.getElementById('BillingCity').value;
+        }
+        if (document.getElementById('BillingState').value) {
+            document.getElementById('ShippingState').value = document.getElementById('BillingState').value;
+        }
+        if (document.getElementById('BillingZip').value) {
+            document.getElementById('ShippingZip').value = document.getElementById('BillingZip').value;
+        }
+    }
+
+    try {
+        if (document.getElementById('BirthDate').value) {
+            let DOB = new Date(document.getElementById('BirthDate').value);
+            DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
+            const month = (String(DOB.getMonth() + 1)).length > 1 ? (DOB.getMonth() + 1) : `0${(DOB.getMonth() + 1)}`;
+            const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
+            const year = DOB.getFullYear();
+            DOB = `${month}/${day}/${year}`;
+            document.getElementById('DateOfBirth').value = DOB;
+        }
+    } catch (err) {
+        document.getElementById('DateOfBirth').value = '';
+    }
+}
+
 /**
  * Trigger submit on checkout button click.
  */
@@ -629,22 +632,21 @@ function triggerSubmit() {
     const checkoutButton = personalInfoPage.querySelector('#checkout');
 
     checkoutButton.addEventListener('click', (e) => {
-        clearErrorMessages();
         e.preventDefault();
-        // format DOB
-        let DOB = new Date(document.getElementById('DOB').value);
-        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
-        const month = (String(DOB.getMonth() + 1)).length > 1 ? (DOB.getMonth() + 1) : `0${(DOB.getMonth() + 1)}`;
-        const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
-        const year = DOB.getFullYear();
-        DOB = `${month}-${day}-${year}`;
-        joinNewUserInformation.DateOfBirth = DOB;
+        setSubmissionDefaults();
+        clearErrorMessages();
+        const oForm = $('#frmJoinPersonalInfo');
+        const disabled = oForm.find(':input:disabled').removeAttr('disabled');
+        const serialized = oForm.serialize();
+        disabled.attr('disabled', 'disabled');
+        const iSponsorID = document.getElementById('SponsorId').value;
         $.ajax({
             type: 'POST',
             url: 'https://tsapi.tastefullysimple.com/join/user',
-            data: joinNewUserInformation,
+            data: serialized,
+            cache: true,
             success: () => {
-                location.href = `${API_URLS.CHECKOUT}${joinNewUserInformation.SponsorId}?PID=172`;
+                location.href = `${API_URLS.CHECKOUT}${iSponsorID}?PID=172`;
             },
             error: (error) => {
                 displayErrorMessage(error);
@@ -659,7 +661,6 @@ function triggerSubmit() {
  */
 function triggerTermsApprove() {
     const visibleCheckbox = personalInfoPage.querySelector('#TermsCheckboxVisible');
-    const invisibleCheckbox = personalInfoPage.querySelector('#TermsCheckbox');
 
     // Grab current Tastefully Simple terms and conditions with version number
     $.ajax({
@@ -668,7 +669,7 @@ function triggerTermsApprove() {
         url: `${API_URLS.JOIN_TC}`,
         success: (data) => {
             if (data !== null) {
-                joinNewUserInformation.TermsConditionsVersion = data.Version;
+                document.getElementById('TermsConditionsVersion').value = data.Version;
                 $('#terms-conditions').append(`
                     <div>${data.HtmlMarkup}</div>
                 `);
@@ -681,11 +682,9 @@ function triggerTermsApprove() {
 
     visibleCheckbox.addEventListener('change', () => {
         if (visibleCheckbox.checked === true) {
-            invisibleCheckbox.checked = true;
-            joinNewUserInformation.TermsConditionsOptIn = true;
+            document.getElementById('TermsConditionsOptIn').checked = true;
         } else {
-            invisibleCheckbox.checked = false;
-            joinNewUserInformation.TermsConditionsOptIn = false;
+            document.getElementById('TermsConditionsOptIn').checked = false;
         }
     });
 }
@@ -697,9 +696,9 @@ function triggerTextOptIn() {
     const OptInText = personalInfoPage.querySelector('#OptInText');
     OptInText.addEventListener('change', () => {
         if (OptInText.checked === true) {
-            joinNewUserInformation.OptInText = true;
+            document.getElementById('OptInText').checked = true;
         } else {
-            joinNewUserInformation.OptInText = false;
+            document.getElementById('OptInText').checked = false;
         }
     });
 }
@@ -747,15 +746,10 @@ function getData(url = '') {
 function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
-        joinNewUserInformation.Id = params.get('id');
+        setInfoFormId(params.get('id'));
     } else {
         location.href = '/join';
     }
-}
-
-function setFormId(formIdValue = '') {
-    $('#frmJoinLoginTest > #Id').val(formIdValue);
-    loginUserInformation.Id = formIdValue;
 }
 
 function createCart() {
@@ -770,7 +764,7 @@ function createCart() {
     })
         .then(response => response.json())
         .then(data => {
-            setFormId(data.id);
+            setLoginFormId(data.id);
         })
         .catch(error => console.log(error));
 }
@@ -789,7 +783,7 @@ export default function joinProcessInteraction() {
                 .then(myJson => {
                     if (myJson.length > 0) {
                         console.log('Cart found');
-                        setFormId(myJson[0].id);
+                        setLoginFormId(myJson[0].id);
                     } else {
                         createCart();
                     }

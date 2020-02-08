@@ -126,7 +126,7 @@ const formatToSSN = (event) => {
     const middle = input.substring(3, 5);
     const last = input.substring(5, 9);
 
-    if (input.length > 6) {
+    if (input.length > 5) {
         target.value = `${zip}-${middle}-${last}`;
     } else if (input.length > 3) {
         target.value = `${zip}-${middle}`;

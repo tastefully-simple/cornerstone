@@ -69,6 +69,7 @@ const API_URLS = {
     CHECKOUT: 'https://tastefullysimpl.sb-affiliate.com/r66/',
     JOIN_TC: 'https://tsapi.tastefullysimple.com/join/tc',
     SOCIAL_BUG: 'https://tastefullysimpl.sb-affiliate.com/r66/',
+    CHECKOUT_REDIRECT_PID: '172',
 };
 
 const isNumericInput = (event) => {
@@ -711,7 +712,7 @@ function triggerSubmit() {
             data: serialized,
             cache: true,
             success: () => {
-                location.href = `${API_URLS.CHECKOUT}${iSponsorID}?PID=172`;
+                location.href = `${API_URLS.CHECKOUT}${iSponsorID}?PID=${API_URLS.CHECKOUT_REDIRECT_PID}`;
             },
             error: (error) => {
                 displayErrorMessage(error);

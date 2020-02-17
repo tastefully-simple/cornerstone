@@ -34,8 +34,8 @@ export default class Global extends PageManager {
         loadingProgressBar();
         svgInjector();
         objectFitImages();
-        affiliate();
-        associateAffiliate();
-        joinProcessInteraction();
+        affiliate(this.context.themeSettings);
+        associateAffiliate(this.context.themeSettings);
+        joinProcessInteraction(this.context.themeSettings);
     }
 }

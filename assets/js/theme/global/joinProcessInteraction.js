@@ -64,12 +64,13 @@ let locationDisplay = '';
 
 /** API URLs used throughout the join process */
 const API_URLS = {
-    BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
-    TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
-    CHECKOUT: 'https://tastefullysimpl.sb-affiliate.com/r66/',
-    JOIN_TC: 'https://tsapi.tastefullysimple.com/join/tc',
-    SOCIAL_BUG: 'https://tastefullysimpl.sb-affiliate.com/r66/',
-    CHECKOUT_REDIRECT_PID: '172',
+    BLAST_OFF: '',
+    TELL_US: '',
+    CHECKOUT: '',
+    TSAPI_BASE: '',
+    SOCIAL_BUG: '',
+    CHECKOUT_REDIRECT_PID: 0,
+    JOIN_SS_PRODUCT_ID: 0,
 };
 
 const isNumericInput = (event) => {
@@ -263,7 +264,7 @@ function submitLoginInfo() {
     $.ajax({
         type: 'POST',
         accepts: 'json',
-        url: 'https://tsapi.tastefullysimple.com/join/login',
+        url: `${API_URLS.TSAPI_BASE}/join/login`,
         data: $('#frmJoinLoginTest').serialize(),
         cache: false,
         success: (data) => {
@@ -359,7 +360,7 @@ function getConsultantInfoByName() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `${API_URLS.TSAPI_BASE}/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -383,7 +384,7 @@ function getConsultantInfoByID() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `${API_URLS.TSAPI_BASE}/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -408,7 +409,7 @@ function getConsultantInfoByZip() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `${API_URLS.TSAPI_BASE}/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -708,11 +709,11 @@ function triggerSubmit() {
         const iSponsorID = document.getElementById('SponsorId').value;
         $.ajax({
             type: 'POST',
-            url: 'https://tsapi.tastefullysimple.com/join/user',
+            url: `${API_URLS.TSAPI_BASE}/join/user`,
             data: serialized,
             cache: true,
             success: () => {
-                location.href = `${API_URLS.CHECKOUT}${iSponsorID}?PID=${API_URLS.CHECKOUT_REDIRECT_PID}`;
+                location.href = `${API_URLS.SOCIAL_BUG}${iSponsorID}?PID=${API_URLS.CHECKOUT_REDIRECT_PID}`;
             },
             error: (error) => {
                 displayErrorMessage(error);
@@ -732,7 +733,7 @@ function triggerTermsApprove() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `${API_URLS.JOIN_TC}`,
+        url: `${API_URLS.TSAPI_BASE}/join/tc`,
         success: (data) => {
             if (data !== null) {
                 document.getElementById('TermsConditionsVersion').value = data.Version;
@@ -824,7 +825,7 @@ function createCart() {
         lineItems: [
             {
                 quantity: 1,
-                productId: 133,
+                productId: API_URLS.JOIN_SS_PRODUCT_ID,
             },
         ],
     })
@@ -837,18 +838,23 @@ function createCart() {
 /**
  * Export join process front end functions.
  */
-export default function joinProcessInteraction() {
+export default function joinProcessInteraction(themeSettings) {
+    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/?id=`;
+    API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself?id=`;
+    API_URLS.TSAPI_BASE = themeSettings.ts_tsapi_base_url;
+    API_URLS.SOCIAL_BUG = `${themeSettings.social_bug_affiliate_url}`;
+    API_URLS.CHECKOUT_REDIRECT_PID = `${themeSettings.social_bug_redirect_to_checkout_product_id}`;
+    API_URLS.JOIN_SS_PRODUCT_ID = `${themeSettings.ts_join_ss_product_id}`;
+
     // call functions on join page
     if (loginPage) {
         removeContainer();
         toggleStyles();
         $(document).ready(() => {
-            console.log('Log Cart');
             getData('/api/storefront/cart')
                 .then(response => response.json())
                 .then(myJson => {
                     if (myJson.length > 0) {
-                        console.log('Cart found');
                         setLoginFormId(myJson[0].id);
                     } else {
                         createCart();

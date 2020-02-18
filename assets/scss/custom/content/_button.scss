@@ -38,6 +38,23 @@
 		}
 	}
 }
+
+.button--secondary {
+	width: auto;
+	padding: .5rem 1.75rem;
+	background-color: $COLOR_PRIMARY_100;
+	color: $COLOR_WHITE;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 16px;
+	cursor: pointer;
+
+	svg {
+		height: 35px;
+		width: 35px;
+		fill: $COLOR_WHITE;
+	}
+}
 .button.isDisabled,
 .button[disabled] {
 	cursor: not-allowed;

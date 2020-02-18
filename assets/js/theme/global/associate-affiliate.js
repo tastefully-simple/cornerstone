@@ -11,7 +11,7 @@ const afid = 'AFID';
  * longer URL. We will append the AFID value from above to this URL and set
  * it as the source of the iframe.
  */
-const src = 'https://tastefullysimpl.sb-affiliate.com/r66/';
+let TSAPI_URL = '';
 
 /**
  * This function is responsible for grabbing the URL parameters before the BigCommerce cart
@@ -27,7 +27,7 @@ function getUrlVars() {
     if (vars.affiliate_action === 'add') {
         axios.get(`/cart.php?action=add&sku=${vars.sku}&source=buy_button`)
             .then(() => {
-                window.location = `https://tastefullysimpl.sb-affiliate.com/r66/${vars.SCID}`;
+                window.location = `${TSAPI_URL}${vars.SCID}`;
             });
     }
 }
@@ -37,15 +37,15 @@ function getUrlVars() {
  * This function is responsible for creating an iframe which in turn should
  * set the appropriate Social Bug affiliate cookie for the current user.
  */
-export default function () {
+export default function (themeSettings) {
     const params = new URLSearchParams(window.location.search);
-
+    TSAPI_URL = themeSettings.social_bug_affiliate_url;
     if (params.has(afid)) {
         const affiliate = params.get(afid);
         const frame = document.createElement('iframe');
 
         frame.style.display = 'none';
-        frame.src = `${src}${affiliate}`;
+        frame.src = `${TSAPI_URL}${affiliate}`;
 
         document.body.appendChild(frame);
     }

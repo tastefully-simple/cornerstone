@@ -29,37 +29,6 @@ const toggleLoginSignUp = {
 const frame = document.createElement('iframe');
 
 /**
- * This object will hold the user information for the Tell Us About Yourself page.
- */
-const joinNewUserInformation = {
-    Id: null,
-    SponsorId: null,
-    Prefix: null,
-    PreferredName: null,
-    FirstName: null,
-    LastName: null,
-    SSN: null,
-    DateOfBirth: null,
-    PrimayPhone: null,
-    CellPhone: null,
-    TsCashOption: null,
-    TsCashOptionText: null,
-    TermsConditionsOptIn: false,
-    OptInText: true,
-    TermsConditionsVersion: null,
-    BillingAddressLine1: null,
-    BillingAddressLine2: null,
-    BillingCity: null,
-    BillingState: null,
-    BillingZip: null,
-    ShippingAddressLine1: null,
-    ShippingAddressLine2: null,
-    ShippingCity: null,
-    ShippingState: null,
-    ShippingZip: null,
-};
-
-/**
  * This object will hold the consultant search information
  * on the Tell Us About Yourself page
  */
@@ -68,6 +37,22 @@ const consultantSearchParams = {
     consultantName: null,
     consultantZipCode: null,
 };
+
+const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
+const defaultConsultantSearchMarkup = `
+    <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
+        <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+            <ul>
+                <li class="sponsor-name">Tastefully Simple</li>
+                <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
+                <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>help@tastefullysimple.com</li>
+                <li>Alexandria, MN</li>
+                <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
+            </ul>
+        <div class="checkmark"></div>
+    </div>
+    <div class="sponsor-divider"></div>
+`;
 
 /**
  * This variables will hold parameters for GET calls to
@@ -79,11 +64,77 @@ let locationDisplay = '';
 
 /** API URLs used throughout the join process */
 const API_URLS = {
-    BLAST_OFF: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/business-blast-off-kit-ss2020/?id=',
-    TELL_US: 'https://tastefully-simple-sandbox-2.mybigcommerce.com/tell-us-about-yourself?id=',
-    CHECKOUT: 'https://tastefullysimpl.sb-affiliate.com/r66/',
-    JOIN_TC: 'https://qa1-tsapi.tastefullysimple.com/join/tc',
-    SOCIAL_BUG: 'https://tastefullysimpl.sb-affiliate.com/r66/',
+    BLAST_OFF: '',
+    TELL_US: '',
+    CHECKOUT: '',
+    TSAPI_BASE: '',
+    SOCIAL_BUG: '',
+    CHECKOUT_REDIRECT_PID: 0,
+    JOIN_SS_PRODUCT_ID: 0,
+};
+
+const isNumericInput = (event) => {
+    const key = event.keyCode;
+    return ((key >= 48 && key <= 57) || // Allow number line
+        (key >= 96 && key <= 105) // Allow number pad
+    );
+};
+
+const isModifierKey = (event) => {
+    const key = event.keyCode;
+    return (event.shiftKey === true || key === 35 || key === 36) || // Allow Shift, Home, End
+        (key === 8 || key === 9 || key === 13 || key === 46) || // Allow Backspace, Tab, Enter, Delete
+        (key > 36 && key < 41) || // Allow left, up, right, down
+        (
+            // Allow Ctrl/Command + A,C,V,X,Z
+            (event.ctrlKey === true || event.metaKey === true) &&
+            (key === 65 || key === 67 || key === 86 || key === 88 || key === 90)
+        );
+};
+
+const enforceFormat = (event) => {
+    // Input must be of a valid number format or a modifier key, and not longer than ten digits
+    if (!isNumericInput(event) && !isModifierKey(event)) {
+        event.preventDefault();
+    }
+};
+
+const formatToPhone = (event) => {
+    if (isModifierKey(event)) { return; }
+
+    // I am lazy and don't like to type things more than once
+    const target = event.target;
+    const input = target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+    const zip = input.substring(0, 3);
+    const middle = input.substring(3, 6);
+    const last = input.substring(6, 10);
+
+    if (input.length > 6) {
+        target.value = `${zip}-${middle}-${last}`;
+    } else if (input.length > 3) {
+        target.value = `${zip}-${middle}`;
+    } else if (input.length > 0) {
+        target.value = `${zip}`;
+    }
+};
+
+const formatToSSN = (event) => {
+    if (isModifierKey(event)) { return; }
+
+    // I am lazy and don't like to type things more than once
+    const target = event.target;
+    const input = target.value.replace(/\D/g, '').substring(0, 9); // First ten digits of input only
+    const zip = input.substring(0, 3);
+    const middle = input.substring(3, 5);
+    const last = input.substring(5, 9);
+
+    if (input.length > 5) {
+        target.value = `${zip}-${middle}-${last}`;
+    } else if (input.length > 3) {
+        target.value = `${zip}-${middle}`;
+    } else if (input.length > 0) {
+        target.value = `${zip}`;
+    }
 };
 
 // Initialize Social Bug Functionality
@@ -104,6 +155,77 @@ function waitForSocialBug(callback) {
         callback();
     } else {
         setTimeout(() => waitForSocialBug(callback), 500);
+    }
+}
+
+function setLoginFormId(formIdValue = '') {
+    $('#frmJoinLoginTest > #Id').val(formIdValue);
+}
+function setInfoFormId(formIdValue = '') {
+    $('#frmJoinPersonalInfo > #Id').val(formIdValue);
+}
+
+/**
+ * This function displays an error message on the login form.
+ * results found when searching by ID or name. If an error
+ * message from Tastefully Simple's API exists, that will display.
+ */
+function displayLoginErrorMessage(error) {
+    if (error.responseJSON.errors) {
+        $.each(error.responseJSON.errors, (i) => {
+            const errors = error.responseJSON.errors[i];
+            const {
+                id,
+                message,
+            } = errors;
+            $('#loginErrors').append(`
+                <li data-errorid='${id}'>${message}</li>
+            `);
+        });
+    } else if (error) {
+        $('#loginErrors').append(`
+            <h4>${error.responseJSON}</h4>
+        `);
+    }
+}
+
+/**
+ * This function displays an error message when there are no consultant
+ * results found when searching by ID or name. If an error
+ * message from Tastefully Simple's API exists, that will display.
+ */
+function displayErrorMessage(error) {
+    if (error.responseJSON.errors) {
+        $.each(error.responseJSON.errors, (i) => {
+            const errors = error.responseJSON.errors[i];
+            const {
+                id,
+                message,
+            } = errors;
+            $('#formErrorMessages').append(`
+                <li data-errorid='${id}'>${message}</li>
+            `);
+        });
+        $('#formErrorMessages').append(`
+        <h5>If you continue to experience issues, please contact the 
+        Customer Services team at 866.448.6446.</li>
+    `);
+    } else if (error) {
+        $('#formErrorMessages').append(`
+            <h4>${error.responseJSON}</h4>
+        `);
+    } else {
+        $('#sponsorSearchData').append(`
+            <h4>No results found.</h4>
+        `);
+    }
+}
+
+function clearErrorMessages() {
+    $('#formErrorMessages').html('');
+    $('#loginErrors').html('');
+    if (document.getElementById('divTsConsFound')) {
+        document.getElementById('divTsConsFound').style.display = 'none';
     }
 }
 
@@ -133,29 +255,6 @@ function handleFormChange(event) {
     }
 }
 
-/**
- * This function handles input changes for the JoinLoginText Form
- */
-function handleJoinLoginTestFormChange(event) {
-    const target = event.target;
-    if (target.name !== 'OptInText'
-        && target.name !== 'MobilePhoneCheckbox'
-        && target.name !== 'AddressCheckbox') {
-        if ((!$('#shipping-address').hasClass('hidden'))) {
-            joinNewUserInformation[target.name] = target.value;
-        } else if ((!$('#primaryPhoneField').hasClass('disabled'))) {
-            joinNewUserInformation[target.name] = target.value;
-        } else {
-            joinNewUserInformation[target.name] = target.value;
-            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
-            joinNewUserInformation.ShippingAddressLine1 = joinNewUserInformation.BillingAddressLine1;
-            joinNewUserInformation.ShippingAddressLine2 = joinNewUserInformation.BillingAddressLine2;
-            joinNewUserInformation.ShippingCity = joinNewUserInformation.BillingCity;
-            joinNewUserInformation.ShippingState = joinNewUserInformation.BillingState;
-            joinNewUserInformation.ShippingZip = joinNewUserInformation.BillingZip;
-        }
-    }
-}
 
 /** This function will submit the login information
  * on the join/login page. This is still in development until
@@ -164,16 +263,15 @@ function handleJoinLoginTestFormChange(event) {
 function submitLoginInfo() {
     $.ajax({
         type: 'POST',
-        url: 'https://qa1-tsapi.tastefullysimple.com/join/login',
-        data: loginUserInformation,
+        accepts: 'json',
+        url: `${API_URLS.TSAPI_BASE}/join/login`,
+        data: $('#frmJoinLoginTest').serialize(),
+        cache: false,
         success: (data) => {
-            // TODO remove console.log
-            console.log(data);
-            location.href = `${API_URLS.BLAST_OFF}${loginUserInformation.Id}`;
+            location.href = `${API_URLS.BLAST_OFF}${data.Id}`;
         },
         error: (error) => {
-            console.log(error);
-            // TODO add error handling for when login / sign up does not work and remove console.log
+            displayLoginErrorMessage(error);
         },
     });
 }
@@ -233,43 +331,11 @@ function displayConsultantInformation(data) {
 }
 
 /**
- * This function displays an error message when there are no consultant
- * results found when searching by ID or name. If an error
- * message from Tastefully Simple's API exists, that will display.
- */
-function displayErrorMessage(error) {
-    if (error.responseJSON.errors) {
-        $.each(error.responseJSON.errors, (i) => {
-            const errors = error.responseJSON.errors[i];
-            const {
-                id,
-                message,
-            } = errors;
-            $('#formErrorMessages').append(`
-                <li data-errorid='${id}'>${message}</li>
-            `);
-        });
-        $('#formErrorMessages').append(`
-        <h5>If you continue to experience issues, please contact the 
-        Consultant Order Services team at 866.448.6446 or 320.763.1571.</li>
-    `);
-    } else if (error) {
-        $('#formErrorMessages').append(`
-            <h4>${error.responseJSON}</h4>
-        `);
-    } else {
-        $('#sponsorSearchData').append(`
-            <h4>No results found.</h4>
-        `);
-    }
-}
-
-/**
  * These two functions will allow us to select a sponsor from the data
  * that is returned from Tastefully Simple's API.
  */
 
- // TODO update to jquery each
+// TODO update to jquery each
 function selectSponsor(array, type, func) {
     for (let i = 0; i < array.length; i++) {
         $(array[i]).bind(type, func);
@@ -280,10 +346,9 @@ const sponsorSearchData = $('#sponsorSearchData');
 
 selectSponsor(sponsorSearchData, 'click', (event) => {
     $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
-    joinNewUserInformation.SponsorId = $(event.target).closest('div').data('consid');
+    document.getElementById('SponsorId').value = $(event.target).closest('div').data('consid');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
-    // TODO remove console.log
-    console.log('selecting this sponsor:', joinNewUserInformation.SponsorId);
+
     const socialBugAfId = ($(event.target).closest('div').data('afid'));
     associateSocialBugAffiliate(socialBugAfId);
 });
@@ -295,26 +360,7 @@ function getConsultantInfoByName() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
-        success: (data) => {
-            if (data.Results !== null) {
-                displayConsultantInformation(data);
-            }
-        },
-        error: (error) => {
-            displayErrorMessage(error);
-        },
-    });
-}
-
-/**
- * Get consultant information from Tastefully Simple's API by ID.
- */
-function getConsultantInfoByID() {
-    $.ajax({
-        type: 'GET',
-        accepts: 'json',
-        url: `https://qa1-tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `${API_URLS.TSAPI_BASE}/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
@@ -330,6 +376,31 @@ function getConsultantInfoByID() {
         },
     });
 }
+
+/**
+ * Get consultant information from Tastefully Simple's API by ID.
+ */
+function getConsultantInfoByID() {
+    $.ajax({
+        type: 'GET',
+        accepts: 'json',
+        url: `${API_URLS.TSAPI_BASE}/search/join/${apiParams}`,
+        success: (data) => {
+            if (data.Results !== null) {
+                displayConsultantInformation(data);
+            }
+        },
+        error: () => {
+            $('#sponsorSearchData').append(`
+           <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
+           <ul class="sponsor-result--error">
+            <li>Contact your consultant</li>
+            <li>Contact HQ at 1.866.448.6446 or <a href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a></li>
+           </ul>`);
+        },
+    });
+}
+
 /**
  * Get consultant information from Tastefully Simple's API zip code.
  * If no consultants are within a 200 mile radius, the Tastefully Simple generic consultant will display.
@@ -338,28 +409,15 @@ function getConsultantInfoByZip() {
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `https://tsapi.tastefullysimple.com/search/join/${apiParams}`,
+        url: `${API_URLS.TSAPI_BASE}/search/join/${apiParams}`,
         success: (data) => {
             if (data.Results !== null) {
                 displayConsultantInformation(data);
             }
         },
         error: () => {
-            const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
-            $('#sponsorSearchData').append(`
-                <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
-                    <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
-                        <ul>
-                            <li class="sponsor-name">Tastefully Simple</li>
-                            <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
-                            <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>help@tastefullysimple.com</li>
-                            <li>Alexandria, MN</li>
-                            <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
-                        </ul>
-                    <div class="checkmark"></div>
-                </div>
-                <div class="sponsor-divider"></div>
-            `);
+            document.getElementById('divTsConsFound').style.display = 'block';
+            $('#sponsorSearchData').append(defaultConsultantSearchMarkup);
         },
     });
 }
@@ -382,6 +440,7 @@ $('#btnConsIdSearch').on('click', (e) => {
 
 /** Search by consultant name and display results on dom */
 $('#btnConsNameSearch').on('click', (e) => {
+    clearErrorMessages();
     if (($('#txtConsultantName').val()) === ''
         || (($('#ConsultantState').val()) === '')) {
         $('#sponsorSearchData').empty();
@@ -399,6 +458,7 @@ $('#btnConsNameSearch').on('click', (e) => {
 
 /** Search by consultant zip code and display results on dom */
 $('#btnConsZipSearch').on('click', (e) => {
+    clearErrorMessages();
     if (($('#txtZipCode').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
@@ -414,14 +474,13 @@ $('#btnConsZipSearch').on('click', (e) => {
 });
 
 // Join Page Event Listeners
-$('#frmJoinLoginTest').on('change', () => handleFormChange(event));
-$('#submit').on('click', (e) => {
-    $('#loginErrors').empty();
+$('#frmJoinLoginTest').submit((e) => {
+    e.preventDefault();
+    clearErrorMessages();
     if (toggleLoginSignUp.logInForm === true
         && ($('#EmailAddress').val()) === ''
         || toggleLoginSignUp.logInForm === true
         && ($('#Password').val()) === '') {
-        e.preventDefault();
         $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
     } else if (toggleLoginSignUp.signUpForm === true) {
         if (($('#FirstName').val()) === ''
@@ -429,24 +488,16 @@ $('#submit').on('click', (e) => {
             || ($('#EmailAddress').val()) === ''
             || ($('#Password').val()) === ''
             || ($('#Password2').val()) === '') {
-            e.preventDefault();
             $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
         } else {
-            e.preventDefault();
             localStorage.setItem('isJoin', true);
             submitLoginInfo();
         }
     } else {
-        e.preventDefault();
         localStorage.setItem('isJoin', true);
-        // TODO remove console.log
-        console.log('submitting into', loginUserInformation);
         submitLoginInfo();
     }
 });
-
-// Tell Us About Yourself Event Listeners
-$('#frmJoinPersonalInfoTest').on('change', () => handleJoinLoginTestFormChange(event));
 
 // Consultant Search Event Listeners
 $('#consultantSearchForm').on('change', () => handleFormChange(event));
@@ -455,10 +506,10 @@ $('#consultantSearchForm').on('change', () => handleFormChange(event));
 $('#kit-page-next').on('click', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
-        joinNewUserInformation.Id = params.get('id');
-        location.href = `${API_URLS.TELL_US}${joinNewUserInformation.Id}`;
+        const szFormId = params.get('id');
+        location.href = `${API_URLS.TELL_US}${szFormId}`;
     } else {
-        location.href = API_URLS.TELL_US;
+        location.href = '/join';
     }
 });
 
@@ -481,7 +532,7 @@ function toggleStyles() {
     const password2 = loginPage.querySelector('#password2Field');
 
     checkbox.addEventListener('change', (event) => {
-        $('#loginErrors').empty();
+        clearErrorMessages();
         if (event.target.checked) {
             toggleLoginSignUp.signUpForm = true;
             toggleLoginSignUp.logInForm = false;
@@ -533,7 +584,6 @@ function togglePhoneConditionalField() {
             primaryPhoneDiv.classList.remove('disabled');
             primaryPhone.removeAttribute('disabled');
         } else {
-            joinNewUserInformation.PrimayPhone = joinNewUserInformation.CellPhone;
             $(primaryPhone).val('');
             primaryPhoneDiv.classList.add('disabled');
             primaryPhone.setAttribute('disabled', 'disabled');
@@ -549,14 +599,10 @@ function toggleAddressConditionalFields() {
     const shippingFieldset = personalInfoPage.querySelector('#shipping-address');
     addressCheckbox.addEventListener('change', (event) => {
         if (!event.target.checked) {
-            joinNewUserInformation.ShippingAddressLine1 = null;
-            joinNewUserInformation.ShippingAddressLine2 = null;
-            joinNewUserInformation.ShippingCity = null;
-            joinNewUserInformation.ShippingState = null;
-            joinNewUserInformation.ShippingZip = null;
             shippingFieldset.classList.remove('hidden');
         } else {
-            $(shippingFieldset).empty();
+            $('#shipping-address input').val('');
+            $('#ShippingState option:first').attr('selected', true);
             shippingFieldset.classList.add('hidden');
         }
     });
@@ -606,6 +652,46 @@ function closeTermsModal() {
     });
 }
 
+function setSubmissionDefaults() {
+    if (document.getElementById('MobilePhoneCheckbox').checked) {
+        if (document.getElementById('CellPhone').value) {
+            document.getElementById('PrimaryPhone').value = document.getElementById('CellPhone').value;
+        }
+    }
+
+    if (document.getElementById('AddressCheckbox').checked === true) {
+        if (document.getElementById('BillingAddressLine1').value) {
+            document.getElementById('ShippingAddressLine1').value = document.getElementById('BillingAddressLine1').value;
+        }
+        if (document.getElementById('BillingAddressLine2').value) {
+            document.getElementById('ShippingAddressLine2').value = document.getElementById('BillingAddressLine2').value;
+        }
+        if (document.getElementById('BillingCity').value) {
+            document.getElementById('ShippingCity').value = document.getElementById('BillingCity').value;
+        }
+        if (document.getElementById('BillingState').value) {
+            document.getElementById('ShippingState').value = document.getElementById('BillingState').value;
+        }
+        if (document.getElementById('BillingZip').value) {
+            document.getElementById('ShippingZip').value = document.getElementById('BillingZip').value;
+        }
+    }
+
+    try {
+        if (document.getElementById('BirthDate').value) {
+            let DOB = new Date(document.getElementById('BirthDate').value);
+            DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
+            const month = (String(DOB.getMonth() + 1)).length > 1 ? (DOB.getMonth() + 1) : `0${(DOB.getMonth() + 1)}`;
+            const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
+            const year = DOB.getFullYear();
+            DOB = `${month}/${day}/${year}`;
+            document.getElementById('DateOfBirth').value = DOB;
+        }
+    } catch (err) {
+        document.getElementById('DateOfBirth').value = '';
+    }
+}
+
 /**
  * Trigger submit on checkout button click.
  */
@@ -613,22 +699,21 @@ function triggerSubmit() {
     const checkoutButton = personalInfoPage.querySelector('#checkout');
 
     checkoutButton.addEventListener('click', (e) => {
-        console.log(joinNewUserInformation);
         e.preventDefault();
-        // format DOB
-        let DOB = new Date(document.getElementById('DOB').value);
-        DOB = new Date(DOB.getTime() + Math.abs(DOB.getTimezoneOffset() * 60000));
-        const month = (String(DOB.getMonth() + 1)).length > 1 ? (DOB.getMonth() + 1) : `0${(DOB.getMonth() + 1)}`;
-        const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
-        const year = DOB.getFullYear();
-        DOB = `${month}-${day}-${year}`;
-        joinNewUserInformation.DateOfBirth = DOB;
+        setSubmissionDefaults();
+        clearErrorMessages();
+        const oForm = $('#frmJoinPersonalInfo');
+        const disabled = oForm.find(':input:disabled').removeAttr('disabled');
+        const serialized = oForm.serialize();
+        disabled.attr('disabled', 'disabled');
+        const iSponsorID = document.getElementById('SponsorId').value;
         $.ajax({
             type: 'POST',
-            url: 'https://qa1-tsapi.tastefullysimple.com/join/user',
-            data: joinNewUserInformation,
+            url: `${API_URLS.TSAPI_BASE}/join/user`,
+            data: serialized,
+            cache: true,
             success: () => {
-                location.href = `${API_URLS.CHECKOUT}${joinNewUserInformation.SponsorId}?PID=172`;
+                location.href = `${API_URLS.SOCIAL_BUG}${iSponsorID}?PID=${API_URLS.CHECKOUT_REDIRECT_PID}`;
             },
             error: (error) => {
                 displayErrorMessage(error);
@@ -643,16 +728,15 @@ function triggerSubmit() {
  */
 function triggerTermsApprove() {
     const visibleCheckbox = personalInfoPage.querySelector('#TermsCheckboxVisible');
-    const invisibleCheckbox = personalInfoPage.querySelector('#TermsCheckbox');
 
     // Grab current Tastefully Simple terms and conditions with version number
     $.ajax({
         type: 'GET',
         accepts: 'json',
-        url: `${API_URLS.JOIN_TC}`,
+        url: `${API_URLS.TSAPI_BASE}/join/tc`,
         success: (data) => {
             if (data !== null) {
-                joinNewUserInformation.TermsConditionsVersion = data.Version;
+                document.getElementById('TermsConditionsVersion').value = data.Version;
                 $('#terms-conditions').append(`
                     <div>${data.HtmlMarkup}</div>
                 `);
@@ -665,11 +749,9 @@ function triggerTermsApprove() {
 
     visibleCheckbox.addEventListener('change', () => {
         if (visibleCheckbox.checked === true) {
-            invisibleCheckbox.checked = true;
-            joinNewUserInformation.TermsConditionsOptIn = true;
+            document.getElementById('TermsConditionsOptIn').checked = true;
         } else {
-            invisibleCheckbox.checked = false;
-            joinNewUserInformation.TermsConditionsOptIn = false;
+            document.getElementById('TermsConditionsOptIn').checked = false;
         }
     });
 }
@@ -681,9 +763,9 @@ function triggerTextOptIn() {
     const OptInText = personalInfoPage.querySelector('#OptInText');
     OptInText.addEventListener('change', () => {
         if (OptInText.checked === true) {
-            joinNewUserInformation.OptInText = true;
+            document.getElementById('OptInText').checked = true;
         } else {
-            joinNewUserInformation.OptInText = false;
+            document.getElementById('OptInText').checked = false;
         }
     });
 }
@@ -708,9 +790,20 @@ function postData(url = '', cartItems = {}) {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json' },
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(cartItems),
-    }).then(response => response.json());
+    });
+}
+
+function getData(url = '') {
+    return fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 }
 
 /**
@@ -720,32 +813,54 @@ function postData(url = '', cartItems = {}) {
 function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
-        joinNewUserInformation.Id = params.get('id');
+        setInfoFormId(params.get('id'));
     } else {
-        // TODO error handling for if and when there is not an id in the URL params
+        location.href = '/join';
     }
 }
 
+function createCart() {
+    console.log('No cart create one');
+    postData('/api/storefront/cart', {
+        lineItems: [
+            {
+                quantity: 1,
+                productId: API_URLS.JOIN_SS_PRODUCT_ID,
+            },
+        ],
+    })
+        .then(response => response.json())
+        .then(data => {
+            setLoginFormId(data.id);
+        })
+        .catch(error => console.log(error));
+}
 /**
  * Export join process front end functions.
  */
-export default function joinProcessInteraction() {
+export default function joinProcessInteraction(themeSettings) {
+    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/?id=`;
+    API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself?id=`;
+    API_URLS.TSAPI_BASE = themeSettings.ts_tsapi_base_url;
+    API_URLS.SOCIAL_BUG = `${themeSettings.social_bug_affiliate_url}`;
+    API_URLS.CHECKOUT_REDIRECT_PID = `${themeSettings.social_bug_redirect_to_checkout_product_id}`;
+    API_URLS.JOIN_SS_PRODUCT_ID = `${themeSettings.ts_join_ss_product_id}`;
+
     // call functions on join page
     if (loginPage) {
         removeContainer();
         toggleStyles();
-        postData('/api/storefront/cart', {
-            lineItems: [
-                {
-                    quantity: 1,
-                    productId: 133,
-                },
-            ] }
-        )
-        .then(data => (loginUserInformation.Id = ((JSON.stringify(data.id)).replace(/['"]+/g, ''))))
-        .catch(error =>
-        // TODO handle error actions & remove console.log
-        console.error(error));
+        $(document).ready(() => {
+            getData('/api/storefront/cart')
+                .then(response => response.json())
+                .then(myJson => {
+                    if (myJson.length > 0) {
+                        setLoginFormId(myJson[0].id);
+                    } else {
+                        createCart();
+                    }
+                });
+        });
     }
     // call functions on kit page
     if (kitPage) {
@@ -774,4 +889,18 @@ export default function joinProcessInteraction() {
         removeContainer();
         triggerConfetti();
     }
+
+    $(document).ready(() => {
+        const inputElement = document.getElementById('CellPhone');
+        inputElement.addEventListener('keydown', enforceFormat);
+        inputElement.addEventListener('keyup', formatToPhone);
+
+        const inputElement1 = document.getElementById('PrimaryPhone');
+        inputElement1.addEventListener('keydown', enforceFormat);
+        inputElement1.addEventListener('keyup', formatToPhone);
+
+        const inputElement2 = document.getElementById('SSN');
+        inputElement2.addEventListener('keydown', enforceFormat);
+        inputElement2.addEventListener('keyup', formatToSSN);
+    });
 }

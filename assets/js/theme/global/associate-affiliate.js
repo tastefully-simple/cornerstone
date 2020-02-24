@@ -25,6 +25,12 @@ function getUrlVars() {
     });
 
     if (vars.affiliate_action === 'add') {
+        $(() => {
+            const docHeight = $(document).height();
+            $('body').append("<div id='overlay' class='body-overlay'></div>");
+            $('#overlay').height(docHeight);
+        });
+
         axios.get(`/cart.php?action=add&sku=${vars.sku}&source=buy_button`)
             .then(() => {
                 window.location = `${TSAPI_URL}${vars.SCID}`;

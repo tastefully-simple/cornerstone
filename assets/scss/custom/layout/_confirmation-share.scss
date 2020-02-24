@@ -1,0 +1,48 @@
+.confirmation__congrats-lead-share {
+  text-align: center;
+
+  @include breakpoint($BREAKPOINT_MEDIUM) {
+    text-align: left;
+  }
+}
+
+.congrats-share-text.heading--2 {
+  display: inline-block;
+  margin-top: 0;
+  color: $COLOR_PRIMARY_100;
+  font-weight: bold;
+  border-bottom: 1px solid;
+}
+
+.congrats-share-icons-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: $SPACING_2;
+
+  @include breakpoint($BREAKPOINT_MEDIUM) {
+    justify-content: flex-start;
+  }
+}
+
+.congrats-share-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  margin-right: $SPACING_3;
+  margin-left: $SPACING_3;
+  border: 1px solid $COLOR_PRIMARY_100;
+  border-radius: 100%;
+
+  @include breakpoint($BREAKPOINT_MEDIUM) {
+    margin-right: $SPACING_6;
+    margin-left: 0;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: $COLOR_PRIMARY_100;
+  }
+}

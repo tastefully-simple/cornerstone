@@ -16,6 +16,8 @@ import svgInjector from './global/svg-injector';
 import objectFitImages from './global/object-fit-polyfill';
 import affiliate from './global/affiliate';
 import associateAffiliate from './global/associate-affiliate';
+import joinProcessInteraction from './global/joinProcessInteraction';
+
 
 export default class Global extends PageManager {
     onReady() {
@@ -32,7 +34,8 @@ export default class Global extends PageManager {
         loadingProgressBar();
         svgInjector();
         objectFitImages();
-        affiliate();
-        associateAffiliate();
+        affiliate(this.context.themeSettings);
+        associateAffiliate(this.context.themeSettings);
+        joinProcessInteraction(this.context.themeSettings);
     }
 }

@@ -9,3 +9,5 @@ vendor/bundle
 *.js.map
 *.zip
 .idea/
+*.env
+/.vs

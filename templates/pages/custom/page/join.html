@@ -1,0 +1,57 @@
+{{#partial "page"}}
+
+<main class="join join--login" id="join-login">
+    <div class="join__banner">
+        <div class="join__banner-title-wrapper">
+            &nbsp;
+        </div>
+    </div>
+    <div class="join__container">
+        <div class="join__form">
+            <h2 class="heading--2">Ready to Join?</h2>
+            <p>Joining is super easy! Just input your preferred email address and password to get started.</p>
+            <div class="join__form--toggle">
+                <p id="login" class="active">Log in</p>
+                <label class="switch">
+                    <input type="checkbox" id="form-toggle">
+                    <span class="switch__slider switch__slider--round"></span>
+                </label>
+                <p id="sign-up">Sign up</p>
+            </div>
+            <form id="frmJoinLoginTest" style="" runat="server" method="post" action="#">
+                <input type="hidden" id="Id" name="Id" value="1cc"><br>
+                <div id="firstNameField" class="hidden">
+                    <label for="FirstName">First Name</label>
+                    <input type="text" id="FirstName" name="FirstName" value=""><br>
+                </div>
+                <div id="lastNameField" class="hidden">
+                    <label for="LastName">Last Name</label>
+                    <input type="text" id="LastName" name="LastName" value=""><br>
+                </div>
+                <div id="emailAddressField">
+                    <label for="EmailAddress">Email Address</label>
+                    <input type="email" id="EmailAddress" name="EmailAddress" value=""><br>
+                </div>
+                <div id="passwordField">
+                    <label for="Password">Password</label>
+                    <input type="password" id="Password" name="Password" value=""><br>
+                </div>
+                <div id="password2Field" class="hidden">
+                    <label for="Password2">Retype Password</label>
+                    <input type="password" id="Password2" name="Password2" value=""><br>
+                </div>
+                <button id="submit" type="submit" value="select my starting kit" class="button--secondary">next<svg><use xlink:href="#icon-chevron-right" /></svg></button>
+            </form>
+            <br />
+            <div id="loginErrors"></div>
+        </div>
+        <div class="join__content">
+            <p>{{{page.content}}}</p>
+            <a href="/content/JoinBrochure.pdf" target="_blank"><button id="learn-more" class="button--tertiary">Learn More</button></a>
+        </div>
+    </div>
+</main>
+
+{{/partial}}
+
+{{> layout/base}}

@@ -20,12 +20,12 @@ function waitForSocialBug(callback) {
  * current consultant's full name so we can set that near the bottom of
  * the cart page.
  */
-function setAffiliateNameById(affiliateId) {
+function setAffiliateNameById(affiliateId, apiUrl) {
     if (document.getElementById('affiliate-name') === null) {
         return;
     }
 
-    axios.get(`https://tsapi.tastefullysimple.com/sb/id/${affiliateId}`)
+    axios.get(`${apiUrl}/sb/id/${affiliateId}`)
         .then(response => {
             document.getElementById('cart-tastefully-simple-name').style.display = 'none';
             document.getElementById('cart-affiliate-info').style.display = 'inherit';
@@ -51,13 +51,13 @@ function setAffiliateNameById(affiliateId) {
  * This function grabs the affiliate id from the Social Bug <div> tag once it's
  * loaded and appends it to the "Shop more" button.
  */
-export default function () {
+export default function (themeSettings) {
     waitForSocialBug(() => {
         const affiliateId = $('#affiliatediv').data('affiliateid');
         const affiliateParam = affiliateId !== undefined ? `&afid=${affiliateId}` : '';
 
         $('#shop-more-btn').attr('href', (i, href) => href + affiliateParam);
 
-        setAffiliateNameById(affiliateId);
+        setAffiliateNameById(affiliateId, themeSettings.ts_tsapi_base_url);
     });
 }

@@ -1,0 +1,41 @@
+#shipping-modal {
+  text-align: left;
+
+  .dataTable th {
+    padding: 7px 13px;
+  }
+
+  th {
+    font-weight: bold;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: $COLOR_GRAY_25;
+  }
+
+  .dataTable td {
+    padding: 10px 13px;
+  }
+
+  .dataTable .mix-dataTable_right {
+    text-align: right;
+  }
+
+  .dataTable td+td, .dataTable th+th {
+    border-left: 2px solid #fff;
+  }
+
+  .dataTable_fancy-hdg {
+    background: $COLOR_SECONDARY_200;
+    color: $COLOR_WHITE;
+  }
+
+  .dataTable .mix-dataTable_textNote {
+    display: inline-block;
+    border-top: 2px dotted #e4dcd1;
+    margin-top: 5px;
+    padding-top: 5px;
+  }
+  ul {
+    list-style: disc;
+  }
+}

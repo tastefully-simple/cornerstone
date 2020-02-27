@@ -28,7 +28,7 @@ function closeShippingModal() {
 }
 
 
-export default function shippingModalInteraction(themeSettings) {
+export default function shippingModalInteraction() {
     closeShippingModal();
     openShippingModal();
 }

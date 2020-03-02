@@ -27,6 +27,7 @@
                 <strong>{{lang 'cart.checkout.shipping'}}:</strong>
             </div>
             {{> components/cart/shipping-estimator cart.shipping_handling}}
+            <a id="openShippingModal">Shipping Table</a>
         </li>
     {{/if}}
     {{#each cart.taxes}}
@@ -81,7 +82,7 @@
                         {{remaining.formatted}} | <a href="{{remove_url}}">{{lang 'cart.gift_certificates.remove'}}</a>
                     </span>
                 </div>
-                <div class="cart-total-value">
+                <div class="cart-total-value">f
                     {{used.formatted}}
                 </div>
             </li>
@@ -105,4 +106,5 @@
             {{/or}}
         </div>
     </li>
+    {{> components/common/shipping-modal}}
 </ul>

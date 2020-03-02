@@ -634,7 +634,7 @@ function openTermsModal() {
 
     modalLink.addEventListener('click', (event) => {
         event.preventDefault();
-        termsModal.classList.add('join__modal-overlay--active');
+        termsModal.classList.add('modal-overlay--active');
     });
 }
 
@@ -647,7 +647,7 @@ function closeTermsModal() {
 
     closeIcons.forEach((closeIcon) => {
         closeIcon.addEventListener('click', () => {
-            termsModal.classList.remove('join__modal-overlay--active');
+            termsModal.classList.remove('modal-overlay--active');
         });
     });
 }

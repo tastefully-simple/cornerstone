@@ -1,10 +1,8 @@
 // =============================================================================
-// MODAL OVERLAY JOIN TERMS (CSS)
+// MODAL OVERLAY (CSS)
 // =============================================================================
 
-.join {
-  //Terms modal overlay styling
-  &__modal-overlay {
+.modal-overlay {
     position: fixed;
     left: 0;
     right: 0;
@@ -22,7 +20,7 @@
       visibility: visible;
     }
 
-    &-terms {
+    &-content-wrapper {
       position: relative;
       width: 80%;
       max-width: 1000px;
@@ -80,5 +78,5 @@
         @include visuallyHidden();
       }
     }
-  }
 }
+

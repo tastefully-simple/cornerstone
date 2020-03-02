@@ -1,19 +1,47 @@
 #shipping-modal {
   text-align: left;
 
+  .modal-overlay-content-wrapper {
+    width: 100%;
+    padding-top: 4rem;
+    padding-left: 0;
+    padding-right: 0;
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      width: 80%;
+      padding: 4rem;
+    }
+
+    @include breakpoint($BREAKPOINT_SMALL) {
+      padding-top: 4rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
   .dataTable th {
     padding: 7px 13px;
+    font-size: 12px;
+    @include breakpoint($BREAKPOINT_SMALL) {
+      font-size: 16px;
+    }
   }
 
   th {
     font-weight: bold;
   }
+
   tbody tr:nth-child(odd) {
     background-color: $COLOR_GRAY_25;
   }
 
   .dataTable td {
-    padding: 10px 13px;
+    padding: 5px 5px;
+    font-size: 12px;
+    @include breakpoint($BREAKPOINT_SMALL) {
+        font-size: 16px;
+      padding: 10px 13px;
+    }
   }
 
   .dataTable .mix-dataTable_right {
@@ -37,5 +65,22 @@
   }
   ul {
     list-style: disc;
+    li {
+      font-size: 12px;
+      @include breakpoint($BREAKPOINT_MEDIUM) {
+      font-size: 16px;
+      }
+    }
+  }
+
+  p {
+    font-size: 12px;
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+      font-size: 16px;
+    }
+  }
+
+  .userContent, #content p {
+    padding: 1rem;
   }
 }

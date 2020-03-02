@@ -60,3 +60,17 @@
 	cursor: not-allowed;
 	pointer-events: none;
 }
+
+.cart-actions {
+	.button--primary {
+		background-color: $COLOR_SECONDARY_200;
+		border: solid 1px $COLOR_SECONDARY_200;
+		&:hover {
+			background-color: #721c42;
+		}
+	}
+	.button--tertiary {
+		border: solid 1px $COLOR_SECONDARY_200;
+	}
+}
+

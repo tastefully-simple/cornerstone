@@ -97,15 +97,14 @@ body {
 // -----------------------------------------------------------------------------
 
 .optimizedCheckout-buttonPrimary {
-    background-color: stencilColor("optimizedCheckout-buttonPrimary-backgroundColor");
-    border-color: stencilColor("optimizedCheckout-buttonPrimary-borderColor");
-    color: stencilColor("optimizedCheckout-buttonPrimary-color");
+    background-color: #610B31;
+    border: solid 1px #610B31;
     font-family: stencilFontFamily("optimizedCheckout-buttonPrimary-font"), Arial, Helvetica, sans-serif;
     font-weight: stencilFontWeight("optimizedCheckout-buttonPrimary-font");
 
     &:focus,
     &:hover {
-        background-color: stencilColor("optimizedCheckout-buttonPrimary-backgroundColorHover");
+        background-color: #721c42;
         border-color: stencilColor("optimizedCheckout-buttonPrimary-borderColorHover");
         color: stencilColor("optimizedCheckout-buttonPrimary-colorHover");
     }

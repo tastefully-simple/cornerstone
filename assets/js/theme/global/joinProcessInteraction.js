@@ -150,21 +150,6 @@ function associateSocialBugAffiliate(socialBugAfId) {
     frame.src = `${API_URLS.SOCIAL_BUG}${socialBugAfId}`;
 }
 
-function waitForSocialBug(callback) {
-    if ($('#affiliatediv').length) {
-        callback();
-    } else {
-        setTimeout(() => waitForSocialBug(callback), 500);
-    }
-}
-
-function setLoginFormId(formIdValue = '') {
-    $('#frmJoinLoginTest > #Id').val(formIdValue);
-}
-function setInfoFormId(formIdValue = '') {
-    $('#frmJoinPersonalInfo > #Id').val(formIdValue);
-}
-
 /**
  * This function displays an error message on the login form.
  * results found when searching by ID or name. If an error
@@ -221,6 +206,93 @@ function displayErrorMessage(error) {
     }
 }
 
+function populateFormFields(data) {
+    if (data) {
+        document.getElementById('PreferredName').value = data.PreferredName;
+        document.getElementById('FirstName').value = data.FirstName;
+        document.getElementById('LastName').value = data.LastName;
+        document.getElementById('CellPhone').value = data.CellPhone;
+        if (data.CellPhone === data.PrimaryPhone) {
+            document.getElementById('MobilePhoneCheckbox').checked = true;
+        } else {
+            document.getElementById('PrimaryPhone').value = data.PrimaryPhone;
+        }
+
+        document.getElementById('BillingAddressLine1').value = data.BillingAddressLine1;
+        document.getElementById('BillingAddressLine2').value = data.BillingAddressLine2;
+        document.getElementById('BillingCity').value = data.BillingCity;
+        document.getElementById('BillingState').value = data.BillingState; // TODO fix drop down list
+        document.getElementById('BillingZip').value = data.BillingZip;
+
+        document.getElementById('ShippingAddressLine1').value = data.ShippingAddressLine1;
+        document.getElementById('ShippingAddressLine2').value = data.ShippingAddressLine2;
+        document.getElementById('ShippingCity').value = data.ShippingCity;
+        document.getElementById('ShippingState').value = data.ShippingState; // TODO fix drop down list
+        document.getElementById('ShippingZip').value = data.ShippingZip;
+    }
+}
+
+function waitForSocialBug(callback) {
+    if ($('#affiliatediv').length) {
+        callback();
+    } else {
+        setTimeout(() => waitForSocialBug(callback), 500);
+    }
+}
+
+/**
+* This function checks the URL for a link id from sitecore-tso
+* If the link is valid redirect the user to the kit selection page.
+*/
+function checkLinkId(formIdValue = '') {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('xfid')) {
+        const szLinkId = encodeURIComponent(params.get('xfid'));
+        $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: `${API_URLS.TSAPI_BASE}/users/scauth/check/?id=${szLinkId}`,
+            cache: true,
+            success: () => {
+                location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
+            },
+        });
+    }
+}
+
+/**
+* This function checks the URL for a link id from sitecore-tso
+* If the link is valid the form field are loaded.
+*/
+function loadLinkId(formIdValue = '') {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('xfid')) {
+        const szLinkId = encodeURIComponent(params.get('xfid'));
+        $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: `${API_URLS.TSAPI_BASE}/users/scauth/load/?id=${szLinkId}&cid=${formIdValue}`,
+            cache: true,
+            success: (data) => {
+                populateFormFields(data);
+            },
+            error: (error) => {
+                displayLoginErrorMessage(error);
+            },
+        });
+    }
+}
+
+function setLoginFormId(formIdValue = '') {
+    $('#frmJoinLoginTest > #Id').val(formIdValue);
+    checkLinkId(formIdValue);
+}
+
+function setInfoFormId(formIdValue = '') {
+    $('#frmJoinPersonalInfo > #Id').val(formIdValue);
+    loadLinkId(formIdValue);
+}
+
 function clearErrorMessages() {
     $('#formErrorMessages').html('');
     $('#loginErrors').html('');
@@ -257,8 +329,7 @@ function handleFormChange(event) {
 
 
 /** This function will submit the login information
- * on the join/login page. This is still in development until
- * we determine which unique Id will be sent to the API in the loginUserInformation object.
+*   on the join/login page.
 */
 function submitLoginInfo() {
     $.ajax({
@@ -268,7 +339,7 @@ function submitLoginInfo() {
         data: $('#frmJoinLoginTest').serialize(),
         cache: false,
         success: (data) => {
-            location.href = `${API_URLS.BLAST_OFF}${data.Id}`;
+            location.href = `${API_URLS.BLAST_OFF}?id=${data.Id}`;
         },
         error: (error) => {
             displayLoginErrorMessage(error);
@@ -280,7 +351,6 @@ function submitLoginInfo() {
  * Display consultant information returned from Tastefully Simple API when searching by ID or name
  */
 function displayConsultantInformation(data) {
-    // TODO need to add proximity when searching by consultant zip code
     $.each(data.Results, (i) => {
         const results = data.Results[i];
         const {
@@ -331,11 +401,9 @@ function displayConsultantInformation(data) {
 }
 
 /**
- * These two functions will allow us to select a sponsor from the data
+ * This function will allow us to select a sponsor from the data
  * that is returned from Tastefully Simple's API.
  */
-
-// TODO update to jquery each
 function selectSponsor(array, type, func) {
     for (let i = 0; i < array.length; i++) {
         $(array[i]).bind(type, func);
@@ -507,7 +575,14 @@ $('#kit-page-next').on('click', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
         const szFormId = params.get('id');
-        location.href = `${API_URLS.TELL_US}${szFormId}`;
+        let szUrl = `${API_URLS.TELL_US}?id=${szFormId}`;
+
+        // if we are here with a link id, we should have passed through step 1 which creates a cart.
+        if (params.has('xfid')) {
+            const szLinkId = encodeURIComponent(params.get('xfid'));
+            szUrl = `${szUrl}&xfid=${szLinkId}`;
+        }
+        location.href = szUrl;
     } else {
         location.href = '/join';
     }
@@ -820,7 +895,6 @@ function getUrlParams() {
 }
 
 function createCart() {
-    console.log('No cart create one');
     postData('/api/storefront/cart', {
         lineItems: [
             {
@@ -839,8 +913,8 @@ function createCart() {
  * Export join process front end functions.
  */
 export default function joinProcessInteraction(themeSettings) {
-    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/?id=`;
-    API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself?id=`;
+    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/`;
+    API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself`;
     API_URLS.TSAPI_BASE = themeSettings.ts_tsapi_base_url;
     API_URLS.SOCIAL_BUG = `${themeSettings.social_bug_affiliate_url}`;
     API_URLS.CHECKOUT_REDIRECT_PID = `${themeSettings.social_bug_redirect_to_checkout_product_id}`;

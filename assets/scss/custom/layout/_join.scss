@@ -4,258 +4,254 @@
 
 .join {
 
-  &__banner {
-    display: flex;
-    align-items: top;
-    min-height: 250px;
-    margin-top: -5rem;
-    background-color: $COLOR_PRIMARY_100;
-  }
-
-  &--login .join__banner {
-    align-items: center;
-    min-height: 350px;
-    background: url(../img/join-cheers.jpg) no-repeat top center;
-    background-size: cover;
-  }
-
-  &__banner-title-wrapper {
-    margin: 0 auto;
-    margin-top: $SPACING_3;
-    padding: $SPACING_4;
-    text-align: center;
-
-    .heading--1 {
-      color: $COLOR_WHITE;
-      font-weight: bold;
+    &__banner {
+        display: flex;
+        align-items: top;
+        min-height: 250px;
+        margin-top: -5rem;
+        background-color: $COLOR_PRIMARY_100;
     }
 
-    .progress-bar {
-      margin-bottom: $SPACING_8;
-      max-width: 250px;
-
-      @include breakpoint($BREAKPOINT_MEDIUM) {
-        max-width: 325px;
-      }
+    &--login .join__banner {
+        align-items: center;
+        min-height: 350px;
+        background: url(../img/join-cheers.jpg) no-repeat top center;
+        background-size: cover;
     }
-  }
 
-  #form-id {
-    @include visuallyHidden();
-  }
+    &__banner-title-wrapper {
+        margin: 0 auto;
+        margin-top: $SPACING_3;
+        padding: $SPACING_4;
+        text-align: center;
 
-  &__container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: -1 * $SPACING_8;
-    padding: 0;
-    background:  $COLOR_WHITE;
-    border-radius: 5px;
-    box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.13);
+        .heading--1 {
+            color: $COLOR_WHITE;
+            font-weight: bold;
+        }
 
-    .join__form, .join__content {
-      padding: 0 2rem 2rem;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-      width: 100%;
+        .progress-bar {
+            margin-bottom: $SPACING_8;
+            max-width: 250px;
 
-      @include breakpoint($BREAKPOINT_MEDIUM) {
-        padding: 0 2rem 2rem;
-        width: 50%;
-      }
+            @include breakpoint($BREAKPOINT_MEDIUM) {
+                max-width: 325px;
+            }
+        }
     }
-  }
 
-  &__content {
-    background: $COLOR_GRAY_150;
-  }
+    #form-id {
+        @include visuallyHidden();
+    }
 
-  &__heading--teal.heading--4 {
-    color: $COLOR_PRIMARY_100;
-  }
+    &__container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: -1 * $SPACING_8;
+        padding: 0;
+        background: $COLOR_WHITE;
+        border-radius: 5px;
+        box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.13);
 
-  .hidden {
-    @include visuallyHidden();
-  }
+        .join__form, .join__content {
+            padding: 0 2rem 2rem;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            width: 100%;
 
-  #learn-more {
-    padding: .75rem 1.75rem;
-    background-color: $COLOR_PRIMARY_100;
-    color: $COLOR_WHITE;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-  }
+            @include breakpoint($BREAKPOINT_MEDIUM) {
+                padding: 0 2rem 2rem;
+                width: 50%;
+            }
+        }
+    }
 
-  &__container {
-    @include container();
-  }
+    &__content {
+        background: $COLOR_GRAY_150;
+    }
 
-  &__search-button {
-    padding: $SPACING_1 $SPACING_2;
-  }
+    &__heading--teal.heading--4 {
+        color: $COLOR_PRIMARY_100;
+    }
 
-  &__form {
+    .hidden {
+        @include visuallyHidden();
+    }
 
-    &--toggle {
-      display: flex;
-      align-items: center;
-
-      p {
-        margin-bottom: 0;
-      }
-
-      .active {
-        border-bottom: 1px solid $COLOR_SECONDARY_100;
-        color: $COLOR_SECONDARY_100;
+    #learn-more {
+        padding: .75rem 1.75rem;
+        background-color: $COLOR_PRIMARY_100;
+        color: $COLOR_WHITE;
+        border-radius: 5px;
         font-weight: bold;
-      }
-    }
-  }
-
-  //Form styling for join process
-  form {
-    .disabled {
-      @include disabledField();
+        font-size: 16px;
+        cursor: pointer;
     }
 
-    label {
-      @include formLabel();
+    &__container {
+        @include container();
     }
 
-    input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
-      @include formInput();
+    &__search-button {
+        padding: $SPACING_1 $SPACING_2;
     }
 
-    input[type=checkbox] {
-      @include checkbox();
-      position: relative;
+    &__form {
+
+        &--toggle {
+            display: flex;
+            align-items: center;
+
+            p {
+                margin-bottom: 0;
+            }
+
+            .active {
+                border-bottom: 1px solid $COLOR_SECONDARY_100;
+                color: $COLOR_SECONDARY_100;
+                font-weight: bold;
+            }
+        }
+    }
+    //Form styling for join process
+    form {
+        .disabled {
+            @include disabledField();
+        }
+
+        label {
+            @include formLabel();
+        }
+
+        input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
+            @include formInput();
+        }
+
+        input[type=checkbox] {
+            @include checkbox();
+            position: relative;
+        }
+
+        .join__form--checkbox-label {
+            @include checkboxLabel();
+            width: auto;
+        }
+
+        fieldset {
+            margin: $SPACING_2 0;
+            padding: 0;
+            border: none;
+        }
+
+        #billingZIPField {
+            width: 50%;
+
+            input {
+                margin-bottom: $SPACING_1;
+            }
+        }
+
+        #cellPhoneField {
+            input {
+                margin-bottom: $SPACING_1;
+            }
+        }
+
+        #ConsultantState {
+            width: 34%;
+        }
+
+        .join__field--subtext {
+            margin-left: $SPACING_1;
+            margin-top: -1 * $SPACING_2;
+            color: $COLOR_GRAY_200;
+            font-size: 12px;
+        }
+
+        #SSNField {
+            position: relative;
+
+            img {
+                position: absolute;
+                right: 5px;
+                top: 28px;
+                max-width: 25px;
+            }
+        }
+
+        #submit {
+            display: flex;
+            align-items: center;
+        }
+    }
+    //Form styling specific to login form
+    &--login {
+
+        .heading--2 {
+            font-weight: bold;
+        }
+
+        h2 {
+            @include heading();
+            color: $COLOR_BLACK;
+            font-size: $FONT_SIZE_LARGE;
+            font-weight: bold;
+            font-family: $FONT_FAMILY_SECONDARY;
+
+            @include breakpoint($BREAKPOINT_MEDIUM) {
+                font-size: 28px;
+            }
+        }
     }
 
-    .join__form--checkbox-label {
-      @include checkboxLabel();
-      width: auto;
+    &--login form {
+
+        input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
+            width: 80%;
+            margin-bottom: $SPACING_5;
+        }
+    }
+    //Terms box styling
+    form .join__terms {
+        padding: 0 $SPACING_4 0 $SPACING_8;
+        border: 1px solid $COLOR_GRAY_200;
+
+        label {
+            @include checkboxLabel();
+            padding-left: $SPACING_1;
+        }
+
+        p {
+            margin-top: -$SPACING_2;
+            margin-left: $SPACING_1;
+            font-size: 12px;
+
+            a {
+                color: $COLOR_SECONDARY_200;
+            }
+        }
+
+        input[type=checkbox] {
+            @include checkbox();
+            position: absolute;
+        }
+    }
+    //styling for checkout button
+    #checkout {
+        display: flex;
+        align-items: center;
+        margin-top: $SPACING_2;
+        float: right;
+        padding: .25rem $SPACING_2;
     }
 
-    fieldset {
-      margin: $SPACING_2 0;
-      padding: 0;
-      border: none;
-    }
-
-    #billingZIPField {
-      width: 50%;
-      input {
-        margin-bottom: $SPACING_1;
-      }
-    }
-
-    #cellPhoneField {
-      input {
-        margin-bottom: $SPACING_1;
-      }
-    }
-
-    #ConsultantState {
-      width: 34%;
-    }
-
-    .join__field--subtext {
-      margin-left: $SPACING_1;
-      margin-top: -1 * $SPACING_2;
-      color: $COLOR_GRAY_200;
-      font-size: 12px;
-    }
-
-    #SSNField {
-      position: relative;
-
-      img {
-        position: absolute;
-        right: 5px;
-        top: 28px;
-        max-width: 25px;
-
-      }
-    }
-
-    #submit {
-      display: flex;
-      align-items: center;
-    }
-  }
-
-
-  //Form styling specific to login form
-  &--login {
-
-    .heading--2 {
-      font-weight: bold;
-    }
-
-    h2 {
-      @include heading();
-      color: $COLOR_BLACK;
-      font-size: $FONT_SIZE_LARGE;
-      font-weight: bold;
-      font-family: $FONT_FAMILY_SECONDARY;
-
-      @include breakpoint($BREAKPOINT_MEDIUM) {
-        font-size: 28px;
-      }
-    }
-  }
-  &--login form {
-
-    input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
-      width: 80%;
-      margin-bottom: $SPACING_5;
-    }
-  }
-
-  //Terms box styling
-  form .join__terms {
-    padding: 0 $SPACING_4 0 $SPACING_8;
-    border: 1px solid $COLOR_GRAY_200;
-
-    label {
-      @include checkboxLabel();
-      padding-left: $SPACING_1;
-    }
-
-    p {
-      margin-top: -$SPACING_2;
-      margin-left: $SPACING_1;
-      font-size: 12px;
-
-      a {
-        color: $COLOR_SECONDARY_200;
-      }
-    }
-
-    input[type=checkbox] {
-      @include checkbox();
-      position: absolute;
-    }
-  }
-
-  //styling for checkout button
-  #checkout {
-    display: flex;
-    align-items: center;
-    margin-top: $SPACING_2;
-    float:right;
-    padding: .25rem $SPACING_2;
-  }
-
-    @include breakpoint($BREAKPOINT_MEDIUM) {
-        .join-mobile-100{
+    @media (max-width: 768px) {
+        &__mobile-100 {
             width: 100% !important;
         }
 
-        .join-mobile-70{
-            width: 70% !important;
+        &__mobile-60 {
+            width: 60% !important;
         }
     }
 }

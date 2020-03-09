@@ -41,7 +41,9 @@ const consultantSearchParams = {
 const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
 const defaultConsultantSearchMarkup = `
     <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
-        <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+        <div data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-one'>
+            <img src='${sponsorImage}' class="sponsor-img-wrapper"/>
+        </div><div class='display-inline-block sponsor-cell-two'>
             <ul>
                 <li class="sponsor-name">Tastefully Simple</li>
                 <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
@@ -49,7 +51,8 @@ const defaultConsultantSearchMarkup = `
                 <li>Alexandria, MN</li>
                 <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
             </ul>
-        <div class="checkmark"></div>
+            <div class="checkmark"></div>
+        <div>
     </div>
     <div class="sponsor-divider"></div>
 `;
@@ -302,7 +305,9 @@ function displayConsultantInformation(data) {
         }
         $('#sponsorSearchData').append(`
             <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
-                <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-img-wrapper" style="background-image: url(${Image})"></div>
+                <div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-one'>
+                    <img src='${Image}' class='sponsor-img-wrapper'/>
+                </div><div class='display-inline-block sponsor-cell-two'>
                     <ul>
                         <li class="sponsor-name">${Name}</li>
                         <li>${Title}</li>
@@ -311,7 +316,8 @@ function displayConsultantInformation(data) {
                         <li>${locationDisplay}</li>
                         <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
                     </ul>
-                <div class="checkmark"></div>
+                    <div class="checkmark"></div>
+                </div>
             </div>
             <div class="sponsor-divider"></div>
     `);

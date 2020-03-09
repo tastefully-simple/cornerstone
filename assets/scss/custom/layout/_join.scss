@@ -248,4 +248,14 @@
     float:right;
     padding: .25rem $SPACING_2;
   }
+
+    @include breakpoint($BREAKPOINT_MEDIUM) {
+        .join-mobile-100{
+            width: 100% !important;
+        }
+
+        .join-mobile-70{
+            width: 70% !important;
+        }
+    }
 }

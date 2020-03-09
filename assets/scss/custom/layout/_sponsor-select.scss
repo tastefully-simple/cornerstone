@@ -108,4 +108,10 @@
   .sponsor-result--error {
     list-style: auto;
   }
+
+  @include breakpoint($BREAKPOINT_MEDIUM) {
+      .sponsor-img-wrapper{
+        width: 100% !important;
+      }
+  }
 }

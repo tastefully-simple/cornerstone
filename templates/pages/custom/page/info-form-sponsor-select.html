@@ -54,7 +54,7 @@
                     <label for="CellPhone">Mobile Phone Number</label>
                     <input type="tel" id="CellPhone" name="CellPhone" value=""><br>
                 </div>
-                <div id="mobilePhoneCheckboxField" class="">
+                <div id="mobilePhoneCheckboxField" class="" style="margin-bottom:16px;">
                     <input type="checkbox" id="MobilePhoneCheckbox" name="MobilePhoneCheckbox" value="true" checked>
                     <label for="MobilePhoneCheckbox" class="join__form--checkbox-label">My mobile number is my primary</label>
                 </div>
@@ -62,7 +62,7 @@
                     <label for="PrimaryPhone">Primary Phone</label>
                     <input type="tel" id="PrimaryPhone" name="PrimaryPhone" value="" disabled><br>
                 </div>
-                <div id="textingCheckboxField" class="">
+                <div id="textingCheckboxField" class="" style="margin-bottom:16px;">
                     <input type="checkbox" id="OptInText" name="OptInText" value="true" checked>
                     <label for="OptInText" class="join__form--checkbox-label">Text message opt-in</label>
                 </div>
@@ -146,7 +146,7 @@
                         <label for="BillingZip">ZIP</label>
                         <input type="text" id="BillingZip" name="BillingZip" value=""><br>
                     </div>
-                    <div id="addressCheckboxField" class="">
+                    <div id="addressCheckboxField" class="" style="margin-bottom:16px;">
                         <input type="checkbox" id="AddressCheckbox" name="AddressCheckbox" value="true" checked>
                         <label for="AddressCheckbox" class="join__form--checkbox-label">Shipping Address Same As Billing</label>
                     </div>
@@ -275,8 +275,8 @@
                     <div>
                         <h4 class="heading--4">Search by Consultant Name</h4>
                         <label for="txtConsultantName">Consultant Name</label>
-                        <input type="text" id="txtConsultantName" class="short" value="" name="consultantName">
-                        <select type="select" id="ConsultantState" name="ConsultantState" value="">
+                        <input type="text" id="txtConsultantName" class="short join__mobile-100" value="" name="consultantName">
+                        <select type="select" id="ConsultantState" name="ConsultantState" class="join__mobile-60" value="">
                             <option value="AL">Select State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -355,10 +355,16 @@
                     </div>
                     <div class="join__terms">
                         <h4 class="heading--4">Independent Consultant Agreement</h4>
-                        <div id="termsCheckboxField" class="">
-                            <input type="checkbox" id="TermsCheckboxVisible" name="TermsCheckboxVisible" value="">
-                            <label for="TermsCheckboxVisible" class=""></label><p>I understand and accept the terms and conditions of the <a id="openTermsModal">Tastefully Simple independent consultant agreement</a></p>
-                        </div>
+                        <table style="width:100%; margin-bottom: 10px;">
+                            <tr>
+                                <td valign="middle" style="width:5%;"><input type="checkbox" id="TermsCheckboxVisible" name="TermsCheckboxVisible" value=""></td>
+                                <td>
+                                    <label for="TermsCheckboxVisible" style="font-size: 12px;">
+                                        I understand and accept the terms and conditions of the <a id="openTermsModal">Tastefully Simple independent consultant agreement</a>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>     
                     </div>
                     <button id="checkout" value="checkout" class="button--secondary">checkout<svg><use xlink:href="#icon-chevron-right" /></svg></button>
                 </form>

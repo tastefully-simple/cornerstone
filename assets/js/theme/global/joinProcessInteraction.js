@@ -43,7 +43,7 @@ const defaultConsultantSearchMarkup = `
     <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
         <div data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-one'>
             <img src='${sponsorImage}' class="sponsor-img-wrapper"/>
-        </div><div class='display-inline-block sponsor-cell-two'>
+        </div><div  data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-two'>
             <ul>
                 <li class="sponsor-name">Tastefully Simple</li>
                 <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
@@ -377,7 +377,7 @@ function displayConsultantInformation(data) {
             <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
                 <div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-one'>
                     <img src='${Image}' class='sponsor-img-wrapper'/>
-                </div><div class='display-inline-block sponsor-cell-two'>
+                </div><div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-two'>
                     <ul>
                         <li class="sponsor-name">${Name}</li>
                         <li>${Title}</li>

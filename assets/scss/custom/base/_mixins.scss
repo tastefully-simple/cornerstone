@@ -228,55 +228,12 @@
 	width: 14px;
 	height: 14px;
 	margin-left: $SPACING_2;
-	appearance: none;
-
-	&:focus {
-		outline: 0;
-	}
-
-	& + label:after {
-		content: none;
-	}
-
-	&:checked + label::after {
-		content: "";
-	}
-
 }
 
 @mixin checkboxLabel () {
-	display: inline-block;
-	position: relative;
-	margin: 0;
-	margin-bottom: $SPACING_2;
 	font-size: 16px;
-	font-weight: normal;
-
-	&:before {
-		content: '';
-		position: absolute;
-		top: 3px;
-		left: -20px;
-		width: 16px;
-		height: 16px;
-		border-radius: 3px;
-		border: 1px solid $COLOR_GRAY_200;
-		box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-		color: $COLOR_BLACK;
-		font-size: 14px;
-	}
-	&:after {
-		content: "";
-		display: inline-block;
-		position: absolute;
-		height: 5px;
-		width: 10px;
-		left: -17px;
-		top: 8px;
-		border-left: 2px solid;
-		border-bottom: 2px solid;
-		transform: rotate(-45deg);
-	}
+	font-weight: normal;	
+	display: inline-block;
 }
 
 @mixin checkmark () {

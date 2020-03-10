@@ -213,29 +213,23 @@
     }
     //Terms box styling
     form .join__terms {
-        padding: 0 $SPACING_4 0 $SPACING_8;
+        padding: 0 $SPACING_3 0 $SPACING_3;
         border: 1px solid $COLOR_GRAY_200;
 
         label {
             @include checkboxLabel();
             padding-left: $SPACING_1;
-        }
-
-        p {
-            margin-top: -$SPACING_2;
-            margin-left: $SPACING_1;
-            font-size: 12px;
 
             a {
                 color: $COLOR_SECONDARY_200;
             }
         }
 
-        input[type=checkbox] {
-            @include checkbox();
-            position: absolute;
+        .heading--4 {
+            text-align: center;
         }
-    }
+    }   
+
     //styling for checkout button
     #checkout {
         display: flex;

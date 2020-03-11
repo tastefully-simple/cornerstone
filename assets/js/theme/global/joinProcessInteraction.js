@@ -102,23 +102,29 @@ const enforceFormat = (event) => {
     }
 };
 
+function formatToPhoneSub(txtValue) {
+    const input = txtValue.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+    const zip = input.substring(0, 3);
+    const middle = input.substring(3, 6);
+    const last = input.substring(6, 10);
+
+    if (input.length > 6) {
+        return `${zip}-${middle}-${last}`;
+    } else if (input.length > 3) {
+        return `${zip}-${middle}`;
+    } else if (input.length > 0) {
+        return `${zip}`;
+    }
+    return txtValue;
+}
+
 const formatToPhone = (event) => {
     if (isModifierKey(event)) { return; }
 
     // I am lazy and don't like to type things more than once
     const target = event.target;
     const input = target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
-    const zip = input.substring(0, 3);
-    const middle = input.substring(3, 6);
-    const last = input.substring(6, 10);
-
-    if (input.length > 6) {
-        target.value = `${zip}-${middle}-${last}`;
-    } else if (input.length > 3) {
-        target.value = `${zip}-${middle}`;
-    } else if (input.length > 0) {
-        target.value = `${zip}`;
-    }
+    target.value = formatToPhoneSub(input);
 };
 
 const formatToSSN = (event) => {
@@ -220,6 +226,12 @@ function populateFormFields(data) {
         } else {
             document.getElementById('PrimaryPhone').value = data.PrimaryPhone;
         }
+        if (document.getElementById('CellPhone').value) {
+            document.getElementById('CellPhone').value = formatToPhoneSub(document.getElementById('CellPhone').value);
+        }
+        if (document.getElementById('PrimaryPhone').value) {
+            document.getElementById('PrimaryPhone').value = formatToPhoneSub(document.getElementById('PrimaryPhone').value);
+        }
 
         document.getElementById('BillingAddressLine1').value = data.BillingAddressLine1;
         document.getElementById('BillingAddressLine2').value = data.BillingAddressLine2;
@@ -251,15 +263,25 @@ function checkLinkId(formIdValue = '') {
     const params = new URLSearchParams(window.location.search);
     if (params.has('xfid')) {
         const szLinkId = encodeURIComponent(params.get('xfid'));
-        $.ajax({
-            type: 'GET',
-            accepts: 'json',
-            url: `${API_URLS.TSAPI_BASE}/users/scauth/check/?id=${szLinkId}`,
-            cache: true,
-            success: () => {
-                location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
-            },
-        });
+        if (szLinkId) {
+            const docHeight = $(document).height();
+            $('body').append("<div id='divOverlayLinkLookup' class='body-overlay'></div>");
+            $('#divOverlayLinkLookup').height(docHeight);
+
+            $.ajax({
+                type: 'GET',
+                accepts: 'json',
+                url: `${API_URLS.TSAPI_BASE}/users/scauth/check/?id=${szLinkId}`,
+                cache: true,
+                success: () => {
+                    location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
+                    document.getElementById('divOverlayLinkLookup').remove();
+                },
+                error: () => {
+                    document.getElementById('divOverlayLinkLookup').remove();
+                },
+            });
+        }
     }
 }
 
@@ -271,18 +293,25 @@ function loadLinkId(formIdValue = '') {
     const params = new URLSearchParams(window.location.search);
     if (params.has('xfid')) {
         const szLinkId = encodeURIComponent(params.get('xfid'));
-        $.ajax({
-            type: 'GET',
-            accepts: 'json',
-            url: `${API_URLS.TSAPI_BASE}/users/scauth/load/?id=${szLinkId}&cid=${formIdValue}`,
-            cache: true,
-            success: (data) => {
-                populateFormFields(data);
-            },
-            error: (error) => {
-                displayLoginErrorMessage(error);
-            },
-        });
+        if (szLinkId) {
+            const docHeight = $(document).height();
+            $('body').append("<div id='divOverlayLinkLookup' class='body-overlay'></div>");
+            $('#divOverlayLinkLookup').height(docHeight);
+            $.ajax({
+                type: 'GET',
+                accepts: 'json',
+                url: `${API_URLS.TSAPI_BASE}/users/scauth/load/?id=${szLinkId}&cid=${formIdValue}`,
+                cache: true,
+                success: (data) => {
+                    populateFormFields(data);
+                    document.getElementById('divOverlayLinkLookup').remove();
+                },
+                error: (error) => {
+                    displayLoginErrorMessage(error);
+                    document.getElementById('divOverlayLinkLookup').remove();
+                },
+            });
+        }
     }
 }
 

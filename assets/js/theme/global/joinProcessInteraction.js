@@ -236,14 +236,33 @@ function populateFormFields(data) {
         document.getElementById('BillingAddressLine1').value = data.BillingAddressLine1;
         document.getElementById('BillingAddressLine2').value = data.BillingAddressLine2;
         document.getElementById('BillingCity').value = data.BillingCity;
-        document.getElementById('BillingState').value = data.BillingState; // TODO fix drop down list
+        document.getElementById('BillingState').value = data.BillingState;
         document.getElementById('BillingZip').value = data.BillingZip;
 
         document.getElementById('ShippingAddressLine1').value = data.ShippingAddressLine1;
         document.getElementById('ShippingAddressLine2').value = data.ShippingAddressLine2;
         document.getElementById('ShippingCity').value = data.ShippingCity;
-        document.getElementById('ShippingState').value = data.ShippingState; // TODO fix drop down list
+        document.getElementById('ShippingState').value = data.ShippingState;
         document.getElementById('ShippingZip').value = data.ShippingZip;
+
+        if (data.BillingAddressLine1 && data.BillingCity && data.BillingState && data.BillingZip &&
+            data.ShippingAddressLine1 && data.ShippingCity && data.ShippingState && data.ShippingZip) {
+            let bAddressesMatch = false;
+            if (data.BillingAddressLine1 === data.ShippingAddressLine1 &&
+                data.BillingCity === data.ShippingCity &&
+                data.BillingState === data.ShippingState &&
+                data.BillingZip === data.ShippingZip) {
+                bAddressesMatch = true;
+            }
+            if (bAddressesMatch && data.BillingAddressLine2 && data.ShippingAddressLine2) {
+                if (data.BillingAddressLine2 !== data.ShippingAddressLine2) {
+                    bAddressesMatch = false;
+                }
+            }
+            if (bAddressesMatch) {
+                document.getElementById('AddressCheckbox').checked = true;
+            }
+        }
     }
 }
 

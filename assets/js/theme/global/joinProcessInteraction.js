@@ -216,54 +216,69 @@ function displayErrorMessage(error) {
 }
 
 function populateFormFields(data) {
-    if (data) {
-        document.getElementById('PreferredName').value = data.PreferredName;
-        document.getElementById('FirstName').value = data.FirstName;
-        document.getElementById('LastName').value = data.LastName;
-        document.getElementById('CellPhone').value = data.CellPhone;
-        if (data.CellPhone === data.PrimaryPhone) {
-            document.getElementById('MobilePhoneCheckbox').checked = true;
-        } else {
-            document.getElementById('PrimaryPhone').value = data.PrimaryPhone;
-        }
-        if (document.getElementById('CellPhone').value) {
-            document.getElementById('CellPhone').value = formatToPhoneSub(document.getElementById('CellPhone').value);
-        }
-        if (document.getElementById('PrimaryPhone').value) {
-            document.getElementById('PrimaryPhone').value = formatToPhoneSub(document.getElementById('PrimaryPhone').value);
-        }
-
-        document.getElementById('BillingAddressLine1').value = data.BillingAddressLine1;
-        document.getElementById('BillingAddressLine2').value = data.BillingAddressLine2;
-        document.getElementById('BillingCity').value = data.BillingCity;
-        document.getElementById('BillingState').value = data.BillingState;
-        document.getElementById('BillingZip').value = data.BillingZip;
-
-        document.getElementById('ShippingAddressLine1').value = data.ShippingAddressLine1;
-        document.getElementById('ShippingAddressLine2').value = data.ShippingAddressLine2;
-        document.getElementById('ShippingCity').value = data.ShippingCity;
-        document.getElementById('ShippingState').value = data.ShippingState;
-        document.getElementById('ShippingZip').value = data.ShippingZip;
-
-        if (data.BillingAddressLine1 && data.BillingCity && data.BillingState && data.BillingZip &&
-            data.ShippingAddressLine1 && data.ShippingCity && data.ShippingState && data.ShippingZip) {
-            let bAddressesMatch = false;
-            if (data.BillingAddressLine1 === data.ShippingAddressLine1 &&
-                data.BillingCity === data.ShippingCity &&
-                data.BillingState === data.ShippingState &&
-                data.BillingZip === data.ShippingZip) {
-                bAddressesMatch = true;
+    $(document).ready(() => {
+        if (data) {
+            document.getElementById('PreferredName').value = data.PreferredName;
+            document.getElementById('FirstName').value = data.FirstName;
+            document.getElementById('LastName').value = data.LastName;
+            document.getElementById('CellPhone').value = data.CellPhone;
+            if (data.CellPhone === data.PrimaryPhone) {
+                document.getElementById('MobilePhoneCheckbox').checked = true;
+            } else {
+                document.getElementById('PrimaryPhone').value = data.PrimaryPhone;
             }
-            if (bAddressesMatch && data.BillingAddressLine2 && data.ShippingAddressLine2) {
-                if (data.BillingAddressLine2 !== data.ShippingAddressLine2) {
+            if (document.getElementById('CellPhone').value) {
+                document.getElementById('CellPhone').value = formatToPhoneSub(document.getElementById('CellPhone').value);
+            }
+            if (document.getElementById('PrimaryPhone').value) {
+                document.getElementById('PrimaryPhone').value = formatToPhoneSub(document.getElementById('PrimaryPhone').value);
+            }
+
+            document.getElementById('BillingAddressLine1').value = data.BillingAddressLine1;
+            document.getElementById('BillingAddressLine2').value = data.BillingAddressLine2;
+            document.getElementById('BillingCity').value = data.BillingCity;
+            document.getElementById('BillingState').value = data.BillingState;
+            document.getElementById('BillingZip').value = data.BillingZip;
+
+            document.getElementById('ShippingAddressLine1').value = data.ShippingAddressLine1;
+            document.getElementById('ShippingAddressLine2').value = data.ShippingAddressLine2;
+            document.getElementById('ShippingCity').value = data.ShippingCity;
+            document.getElementById('ShippingState').value = data.ShippingState;
+            document.getElementById('ShippingZip').value = data.ShippingZip;
+
+            let bAddressesMatch = false;
+            if (data.BillingAddressLine1 && data.BillingCity && data.BillingState && data.BillingZip &&
+                data.ShippingAddressLine1 && data.ShippingCity && data.ShippingState && data.ShippingZip) {
+                if (data.BillingAddressLine1 === data.ShippingAddressLine1 &&
+                    data.BillingCity === data.ShippingCity &&
+                    data.BillingState === data.ShippingState &&
+                    data.BillingZip === data.ShippingZip) {
+                    bAddressesMatch = true;
+                }
+                if (bAddressesMatch && data.BillingAddressLine2 && data.ShippingAddressLine2) {
+                    if (data.BillingAddressLine2 !== data.ShippingAddressLine2) {
+                        bAddressesMatch = false;
+                    }
+                }
+                if (bAddressesMatch && data.BillingAddressLine2 && !data.ShippingAddressLine2) {
+                    bAddressesMatch = false;
+                } else if (bAddressesMatch && data.BillingAddressLine2 && !data.ShippingAddressLine2) {
+                    bAddressesMatch = false;
+                } else if (bAddressesMatch && !data.BillingAddressLine2 && data.ShippingAddressLine2) {
                     bAddressesMatch = false;
                 }
             }
-            if (bAddressesMatch) {
-                document.getElementById('AddressCheckbox').checked = true;
+
+            if (!data.ShippingAddressLine1 || data.ShippingAddressLine1.length === 0) {
+                bAddressesMatch = true;
+            }
+
+            document.getElementById('AddressCheckbox').checked = bAddressesMatch;
+            if (!bAddressesMatch) {
+                document.getElementById('shipping-address').classList.remove('hidden');
             }
         }
-    }
+    });
 }
 
 function waitForSocialBug(callback) {
@@ -294,7 +309,7 @@ function checkLinkId(formIdValue = '') {
                 cache: true,
                 success: () => {
                     location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
-                    document.getElementById('divOverlayLinkLookup').remove();
+                    setTimeout(() => { document.getElementById('divOverlayLinkLookup').remove(); }, 3000);
                 },
                 error: () => {
                     document.getElementById('divOverlayLinkLookup').remove();
@@ -323,7 +338,7 @@ function loadLinkId(formIdValue = '') {
                 cache: true,
                 success: (data) => {
                     populateFormFields(data);
-                    document.getElementById('divOverlayLinkLookup').remove();
+                    setTimeout(() => { document.getElementById('divOverlayLinkLookup').remove(); }, 3000);
                 },
                 error: (error) => {
                     displayLoginErrorMessage(error);
@@ -782,7 +797,7 @@ function closeTermsModal() {
 }
 
 function setSubmissionDefaults() {
-    if (document.getElementById('MobilePhoneCheckbox').checked) {
+    if (document.getElementById('MobilePhoneCheckbox').checked === true) {
         if (document.getElementById('CellPhone').value) {
             document.getElementById('PrimaryPhone').value = document.getElementById('CellPhone').value;
         }
@@ -1011,24 +1026,24 @@ export default function joinProcessInteraction(themeSettings) {
             const affiliateId = $('#affiliatediv').data('affiliateid');
             initializeSocialBug(affiliateId);
         });
+
+        $(document).ready(() => {
+            const inputElement = document.getElementById('CellPhone');
+            inputElement.addEventListener('keydown', enforceFormat);
+            inputElement.addEventListener('keyup', formatToPhone);
+
+            const inputElement1 = document.getElementById('PrimaryPhone');
+            inputElement1.addEventListener('keydown', enforceFormat);
+            inputElement1.addEventListener('keyup', formatToPhone);
+
+            const inputElement2 = document.getElementById('SSN');
+            inputElement2.addEventListener('keydown', enforceFormat);
+            inputElement2.addEventListener('keyup', formatToSSN);
+        });
     }
 
     if (confirmationPage) {
         removeContainer();
         triggerConfetti();
     }
-
-    $(document).ready(() => {
-        const inputElement = document.getElementById('CellPhone');
-        inputElement.addEventListener('keydown', enforceFormat);
-        inputElement.addEventListener('keyup', formatToPhone);
-
-        const inputElement1 = document.getElementById('PrimaryPhone');
-        inputElement1.addEventListener('keydown', enforceFormat);
-        inputElement1.addEventListener('keyup', formatToPhone);
-
-        const inputElement2 = document.getElementById('SSN');
-        inputElement2.addEventListener('keydown', enforceFormat);
-        inputElement2.addEventListener('keyup', formatToSSN);
-    });
 }

@@ -29,6 +29,10 @@ function closeShippingModal() {
 
 
 export default function shippingModalInteraction() {
-    closeShippingModal();
-    openShippingModal();
+    if (cartPage) {
+        $(document).ready(() => {
+            closeShippingModal();
+            openShippingModal();
+        });
+    }
 }

@@ -41,7 +41,9 @@ const consultantSearchParams = {
 const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
 const defaultConsultantSearchMarkup = `
     <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
-        <div data-consid='0160785' data-afid='1' class="sponsor-img-wrapper" style="background-image: url(${sponsorImage})"></div>
+        <div data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-one'>
+            <img src='${sponsorImage}' class="sponsor-img-wrapper"/>
+        </div><div  data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-two'>
             <ul>
                 <li class="sponsor-name">Tastefully Simple</li>
                 <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
@@ -49,7 +51,8 @@ const defaultConsultantSearchMarkup = `
                 <li>Alexandria, MN</li>
                 <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
             </ul>
-        <div class="checkmark"></div>
+            <div class="checkmark"></div>
+        <div>
     </div>
     <div class="sponsor-divider"></div>
 `;
@@ -99,23 +102,29 @@ const enforceFormat = (event) => {
     }
 };
 
+function formatToPhoneSub(txtValue) {
+    const input = txtValue.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+    const zip = input.substring(0, 3);
+    const middle = input.substring(3, 6);
+    const last = input.substring(6, 10);
+
+    if (input.length > 6) {
+        return `${zip}-${middle}-${last}`;
+    } else if (input.length > 3) {
+        return `${zip}-${middle}`;
+    } else if (input.length > 0) {
+        return `${zip}`;
+    }
+    return txtValue;
+}
+
 const formatToPhone = (event) => {
     if (isModifierKey(event)) { return; }
 
     // I am lazy and don't like to type things more than once
     const target = event.target;
     const input = target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
-    const zip = input.substring(0, 3);
-    const middle = input.substring(3, 6);
-    const last = input.substring(6, 10);
-
-    if (input.length > 6) {
-        target.value = `${zip}-${middle}-${last}`;
-    } else if (input.length > 3) {
-        target.value = `${zip}-${middle}`;
-    } else if (input.length > 0) {
-        target.value = `${zip}`;
-    }
+    target.value = formatToPhoneSub(input);
 };
 
 const formatToSSN = (event) => {
@@ -148,21 +157,6 @@ function initializeSocialBug(affiliateId) {
 // Update Social Bug Functionality
 function associateSocialBugAffiliate(socialBugAfId) {
     frame.src = `${API_URLS.SOCIAL_BUG}${socialBugAfId}`;
-}
-
-function waitForSocialBug(callback) {
-    if ($('#affiliatediv').length) {
-        callback();
-    } else {
-        setTimeout(() => waitForSocialBug(callback), 500);
-    }
-}
-
-function setLoginFormId(formIdValue = '') {
-    $('#frmJoinLoginTest > #Id').val(formIdValue);
-}
-function setInfoFormId(formIdValue = '') {
-    $('#frmJoinPersonalInfo > #Id').val(formIdValue);
 }
 
 /**
@@ -221,6 +215,150 @@ function displayErrorMessage(error) {
     }
 }
 
+function populateFormFields(data) {
+    $(document).ready(() => {
+        if (data) {
+            document.getElementById('PreferredName').value = data.PreferredName;
+            document.getElementById('FirstName').value = data.FirstName;
+            document.getElementById('LastName').value = data.LastName;
+            document.getElementById('CellPhone').value = data.CellPhone;
+            if (data.CellPhone === data.PrimaryPhone) {
+                document.getElementById('MobilePhoneCheckbox').checked = true;
+            } else {
+                document.getElementById('PrimaryPhone').value = data.PrimaryPhone;
+            }
+            if (document.getElementById('CellPhone').value) {
+                document.getElementById('CellPhone').value = formatToPhoneSub(document.getElementById('CellPhone').value);
+            }
+            if (document.getElementById('PrimaryPhone').value) {
+                document.getElementById('PrimaryPhone').value = formatToPhoneSub(document.getElementById('PrimaryPhone').value);
+            }
+
+            document.getElementById('BillingAddressLine1').value = data.BillingAddressLine1;
+            document.getElementById('BillingAddressLine2').value = data.BillingAddressLine2;
+            document.getElementById('BillingCity').value = data.BillingCity;
+            document.getElementById('BillingState').value = data.BillingState;
+            document.getElementById('BillingZip').value = data.BillingZip;
+
+            document.getElementById('ShippingAddressLine1').value = data.ShippingAddressLine1;
+            document.getElementById('ShippingAddressLine2').value = data.ShippingAddressLine2;
+            document.getElementById('ShippingCity').value = data.ShippingCity;
+            document.getElementById('ShippingState').value = data.ShippingState;
+            document.getElementById('ShippingZip').value = data.ShippingZip;
+
+            let bAddressesMatch = false;
+            if (data.BillingAddressLine1 && data.BillingCity && data.BillingState && data.BillingZip &&
+                data.ShippingAddressLine1 && data.ShippingCity && data.ShippingState && data.ShippingZip) {
+                if (data.BillingAddressLine1 === data.ShippingAddressLine1 &&
+                    data.BillingCity === data.ShippingCity &&
+                    data.BillingState === data.ShippingState &&
+                    data.BillingZip === data.ShippingZip) {
+                    bAddressesMatch = true;
+                }
+                if (bAddressesMatch && data.BillingAddressLine2 && data.ShippingAddressLine2) {
+                    if (data.BillingAddressLine2 !== data.ShippingAddressLine2) {
+                        bAddressesMatch = false;
+                    }
+                }
+                if (bAddressesMatch && data.BillingAddressLine2 && !data.ShippingAddressLine2) {
+                    bAddressesMatch = false;
+                } else if (bAddressesMatch && data.BillingAddressLine2 && !data.ShippingAddressLine2) {
+                    bAddressesMatch = false;
+                } else if (bAddressesMatch && !data.BillingAddressLine2 && data.ShippingAddressLine2) {
+                    bAddressesMatch = false;
+                }
+            }
+
+            if (!data.ShippingAddressLine1 || data.ShippingAddressLine1.length === 0) {
+                bAddressesMatch = true;
+            }
+
+            document.getElementById('AddressCheckbox').checked = bAddressesMatch;
+            if (!bAddressesMatch) {
+                document.getElementById('shipping-address').classList.remove('hidden');
+            }
+        }
+    });
+}
+
+function waitForSocialBug(callback) {
+    if ($('#affiliatediv').length) {
+        callback();
+    } else {
+        setTimeout(() => waitForSocialBug(callback), 500);
+    }
+}
+
+/**
+* This function checks the URL for a link id from sitecore-tso
+* If the link is valid redirect the user to the kit selection page.
+*/
+function checkLinkId(formIdValue = '') {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('xfid')) {
+        const szLinkId = encodeURIComponent(params.get('xfid'));
+        if (szLinkId) {
+            const docHeight = $(document).height();
+            $('body').append("<div id='divOverlayLinkLookup' class='body-overlay'></div>");
+            $('#divOverlayLinkLookup').height(docHeight);
+
+            $.ajax({
+                type: 'GET',
+                accepts: 'json',
+                url: `${API_URLS.TSAPI_BASE}/users/scauth/check/?id=${szLinkId}`,
+                cache: true,
+                success: () => {
+                    location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
+                    setTimeout(() => { document.getElementById('divOverlayLinkLookup').remove(); }, 3000);
+                },
+                error: () => {
+                    document.getElementById('divOverlayLinkLookup').remove();
+                },
+            });
+        }
+    }
+}
+
+/**
+* This function checks the URL for a link id from sitecore-tso
+* If the link is valid the form field are loaded.
+*/
+function loadLinkId(formIdValue = '') {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('xfid')) {
+        const szLinkId = encodeURIComponent(params.get('xfid'));
+        if (szLinkId) {
+            const docHeight = $(document).height();
+            $('body').append("<div id='divOverlayLinkLookup' class='body-overlay'></div>");
+            $('#divOverlayLinkLookup').height(docHeight);
+            $.ajax({
+                type: 'GET',
+                accepts: 'json',
+                url: `${API_URLS.TSAPI_BASE}/users/scauth/load/?id=${szLinkId}&cid=${formIdValue}`,
+                cache: true,
+                success: (data) => {
+                    populateFormFields(data);
+                    setTimeout(() => { document.getElementById('divOverlayLinkLookup').remove(); }, 3000);
+                },
+                error: (error) => {
+                    displayLoginErrorMessage(error);
+                    document.getElementById('divOverlayLinkLookup').remove();
+                },
+            });
+        }
+    }
+}
+
+function setLoginFormId(formIdValue = '') {
+    $('#frmJoinLoginTest > #Id').val(formIdValue);
+    checkLinkId(formIdValue);
+}
+
+function setInfoFormId(formIdValue = '') {
+    $('#frmJoinPersonalInfo > #Id').val(formIdValue);
+    loadLinkId(formIdValue);
+}
+
 function clearErrorMessages() {
     $('#formErrorMessages').html('');
     $('#loginErrors').html('');
@@ -257,8 +395,7 @@ function handleFormChange(event) {
 
 
 /** This function will submit the login information
- * on the join/login page. This is still in development until
- * we determine which unique Id will be sent to the API in the loginUserInformation object.
+*   on the join/login page.
 */
 function submitLoginInfo() {
     $.ajax({
@@ -268,7 +405,7 @@ function submitLoginInfo() {
         data: $('#frmJoinLoginTest').serialize(),
         cache: false,
         success: (data) => {
-            location.href = `${API_URLS.BLAST_OFF}${data.Id}`;
+            location.href = `${API_URLS.BLAST_OFF}?id=${data.Id}`;
         },
         error: (error) => {
             displayLoginErrorMessage(error);
@@ -280,7 +417,6 @@ function submitLoginInfo() {
  * Display consultant information returned from Tastefully Simple API when searching by ID or name
  */
 function displayConsultantInformation(data) {
-    // TODO need to add proximity when searching by consultant zip code
     $.each(data.Results, (i) => {
         const results = data.Results[i];
         const {
@@ -302,7 +438,9 @@ function displayConsultantInformation(data) {
         }
         $('#sponsorSearchData').append(`
             <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
-                <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-img-wrapper" style="background-image: url(${Image})"></div>
+                <div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-one'>
+                    <img src='${Image}' class='sponsor-img-wrapper'/>
+                </div><div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-two'>
                     <ul>
                         <li class="sponsor-name">${Name}</li>
                         <li>${Title}</li>
@@ -311,7 +449,8 @@ function displayConsultantInformation(data) {
                         <li>${locationDisplay}</li>
                         <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
                     </ul>
-                <div class="checkmark"></div>
+                    <div class="checkmark"></div>
+                </div>
             </div>
             <div class="sponsor-divider"></div>
     `);
@@ -331,11 +470,9 @@ function displayConsultantInformation(data) {
 }
 
 /**
- * These two functions will allow us to select a sponsor from the data
+ * This function will allow us to select a sponsor from the data
  * that is returned from Tastefully Simple's API.
  */
-
-// TODO update to jquery each
 function selectSponsor(array, type, func) {
     for (let i = 0; i < array.length; i++) {
         $(array[i]).bind(type, func);
@@ -507,7 +644,14 @@ $('#kit-page-next').on('click', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.has('id')) {
         const szFormId = params.get('id');
-        location.href = `${API_URLS.TELL_US}${szFormId}`;
+        let szUrl = `${API_URLS.TELL_US}?id=${szFormId}`;
+
+        // if we are here with a link id, we should have passed through step 1 which creates a cart.
+        if (params.has('xfid')) {
+            const szLinkId = encodeURIComponent(params.get('xfid'));
+            szUrl = `${szUrl}&xfid=${szLinkId}`;
+        }
+        location.href = szUrl;
     } else {
         location.href = '/join';
     }
@@ -634,7 +778,7 @@ function openTermsModal() {
 
     modalLink.addEventListener('click', (event) => {
         event.preventDefault();
-        termsModal.classList.add('join__modal-overlay--active');
+        termsModal.classList.add('modal-overlay--active');
     });
 }
 
@@ -647,13 +791,13 @@ function closeTermsModal() {
 
     closeIcons.forEach((closeIcon) => {
         closeIcon.addEventListener('click', () => {
-            termsModal.classList.remove('join__modal-overlay--active');
+            termsModal.classList.remove('modal-overlay--active');
         });
     });
 }
 
 function setSubmissionDefaults() {
-    if (document.getElementById('MobilePhoneCheckbox').checked) {
+    if (document.getElementById('MobilePhoneCheckbox').checked === true) {
         if (document.getElementById('CellPhone').value) {
             document.getElementById('PrimaryPhone').value = document.getElementById('CellPhone').value;
         }
@@ -820,7 +964,6 @@ function getUrlParams() {
 }
 
 function createCart() {
-    console.log('No cart create one');
     postData('/api/storefront/cart', {
         lineItems: [
             {
@@ -839,8 +982,8 @@ function createCart() {
  * Export join process front end functions.
  */
 export default function joinProcessInteraction(themeSettings) {
-    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/?id=`;
-    API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself?id=`;
+    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/`;
+    API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself`;
     API_URLS.TSAPI_BASE = themeSettings.ts_tsapi_base_url;
     API_URLS.SOCIAL_BUG = `${themeSettings.social_bug_affiliate_url}`;
     API_URLS.CHECKOUT_REDIRECT_PID = `${themeSettings.social_bug_redirect_to_checkout_product_id}`;
@@ -883,24 +1026,24 @@ export default function joinProcessInteraction(themeSettings) {
             const affiliateId = $('#affiliatediv').data('affiliateid');
             initializeSocialBug(affiliateId);
         });
+
+        $(document).ready(() => {
+            const inputElement = document.getElementById('CellPhone');
+            inputElement.addEventListener('keydown', enforceFormat);
+            inputElement.addEventListener('keyup', formatToPhone);
+
+            const inputElement1 = document.getElementById('PrimaryPhone');
+            inputElement1.addEventListener('keydown', enforceFormat);
+            inputElement1.addEventListener('keyup', formatToPhone);
+
+            const inputElement2 = document.getElementById('SSN');
+            inputElement2.addEventListener('keydown', enforceFormat);
+            inputElement2.addEventListener('keyup', formatToSSN);
+        });
     }
 
     if (confirmationPage) {
         removeContainer();
         triggerConfetti();
     }
-
-    $(document).ready(() => {
-        const inputElement = document.getElementById('CellPhone');
-        inputElement.addEventListener('keydown', enforceFormat);
-        inputElement.addEventListener('keyup', formatToPhone);
-
-        const inputElement1 = document.getElementById('PrimaryPhone');
-        inputElement1.addEventListener('keydown', enforceFormat);
-        inputElement1.addEventListener('keyup', formatToPhone);
-
-        const inputElement2 = document.getElementById('SSN');
-        inputElement2.addEventListener('keydown', enforceFormat);
-        inputElement2.addEventListener('keyup', formatToSSN);
-    });
 }

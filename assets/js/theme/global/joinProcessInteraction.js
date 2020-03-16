@@ -846,6 +846,7 @@ function triggerSubmit() {
         e.preventDefault();
         setSubmissionDefaults();
         clearErrorMessages();
+        localStorage.setItem('isJoin', true);
         const oForm = $('#frmJoinPersonalInfo');
         const disabled = oForm.find(':input:disabled').removeAttr('disabled');
         const serialized = oForm.serialize();

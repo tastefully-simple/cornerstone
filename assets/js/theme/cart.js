@@ -423,7 +423,7 @@ export default class Cart extends PageManager {
 
             modal.pending = true;
 
-            frame.src = 'https://tastefullysimpl.sb-affiliate.com/iframe/activeaffiliates';
+            frame.src = 'https://shoptastefullys.sb-affiliate.com/iframe/activeaffiliates';
             frame.width = '100%';
             frame.height = '650';
             frame.style.border = '0';

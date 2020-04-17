@@ -197,20 +197,23 @@ function displayErrorMessage(error) {
                 message,
             } = errors;
             $('#formErrorMessages').append(`
-                <li data-errorid='${id}'>${message}</li>
+                <li class="join__error" data-errorid='${id}'>${message}</li>
             `);
+            if (id === 'SponsorId' && $('#sponsorSearchData').children.length > 0) {
+                document.getElementById('sponsorSearchData').style.border = '1px solid #D0021B';
+            }
         });
         $('#formErrorMessages').append(`
-        <h5>If you continue to experience issues, please contact the 
+        <h5 class="join__error" >If you continue to experience issues, please contact the 
         Customer Services team at 866.448.6446.</li>
     `);
     } else if (error) {
         $('#formErrorMessages').append(`
-            <h4>${error.responseJSON}</h4>
+            <h4 class="join__error">${error.responseJSON}</h4>
         `);
     } else {
         $('#sponsorSearchData').append(`
-            <h4>No results found.</h4>
+            <h4  class="join__error">No results found.</h4>
         `);
     }
 }
@@ -365,6 +368,7 @@ function clearErrorMessages() {
     if (document.getElementById('divTsConsFound')) {
         document.getElementById('divTsConsFound').style.display = 'none';
     }
+    document.getElementById('sponsorSearchData').style.border = '';
 }
 
 /**

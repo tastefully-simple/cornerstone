@@ -368,7 +368,9 @@ function clearErrorMessages() {
     if (document.getElementById('divTsConsFound')) {
         document.getElementById('divTsConsFound').style.display = 'none';
     }
-    document.getElementById('sponsorSearchData').style.border = '';
+    if (document.getElementById('sponsorSearchData')) {
+        document.getElementById('sponsorSearchData').style.border = '';
+    }
 }
 
 /**

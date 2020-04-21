@@ -3,6 +3,9 @@
 // =============================================================================
 
 .join {
+    &__error {
+        color: #D0021B;
+    }
 
     &__banner {
         display: flex;
@@ -228,8 +231,7 @@
         .heading--4 {
             text-align: center;
         }
-    }   
-
+    }
     //styling for checkout button
     #checkout {
         display: flex;

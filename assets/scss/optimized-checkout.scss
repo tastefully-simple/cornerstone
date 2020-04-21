@@ -380,27 +380,7 @@ $optimizedCheckout-input--error-boxShadow: 0 0 3px transparentize(stencilColor("
     color: stencilColor("optimizedCheckout-loadingToaster-textColor");
 }
 
-//
-// Tastefully Simple
-// Custom Checkout Overrides
-// -----------------------------------------------------------------------------
-
-// Removes "Already have an account? Sign in now"
-#checkout-customer-guest > fieldset > div > p:nth-child(3) {
-    display: none;
-}
-
-// Removes account creation on order confirmation page
-form.guest-signup {
-    display: none;
-}
-
 // Removes continue shopping button on order confirmation page
 .continueButtonContainer {
-    display: none;
-}
-
-// Removes coupon/gift certificate entry on checkout page
-.redeemable-label {
     display: none;
 }

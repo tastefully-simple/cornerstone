@@ -36,20 +36,11 @@
         {{~inject 'cartId' cart_id}}
         {{~inject 'template' template}}
 
-            {{!-- @razoyo: add fontawesome --}}
-            <script src="https://kit.fontawesome.com/2ac3125738.js" crossorigin="anonymous"></script>
+        {{!-- @razoyo: add fontawesome --}}
+        <script src="https://kit.fontawesome.com/2ac3125738.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
-
-        {{~#and settings.privacy_cookie settings.is_eu_ip_address}}
-            {{> components/common/cookie}}
-        {{/and}}
-
-        {{> components/common/header }}
-        {{> components/common/body }}
-        {{> components/common/footer }}
-
+        {{#block "page"}}{{/block}}
 
         <script>window.__webpack_public_path__ = "{{cdn 'assets/dist/'}}";</script>
         <script src="{{cdn 'assets/dist/theme-bundle.main.js'}}"></script>

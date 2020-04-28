@@ -83,22 +83,13 @@
                 {{#if settings.show_newsletter_box}}
                     {{> components/common/subscription-form}}
                 {{/if}}
-                {{> components/common/payment-icons}}
+                {{!-- {{> components/common/payment-icons}} --}}
             </article>
         </section>
-        {{#if theme_settings.geotrust_ssl_common_name}}
-            <div class="footer-geotrust-ssl-seal">
-                {{> components/common/geotrust-ssl-seal}}
-            </div>
-        {{/if}}
-        {{#if theme_settings.show_powered_by}}
-            <div class="footer-copyright">
-                <p class="powered-by">Powered by <a href="https://www.bigcommerce.com?utm_source=merchant&amp;utm_medium=poweredbyBC" rel="nofollow">BigCommerce</a></p>
-            </div>
-        {{/if}}
         {{#if theme_settings.show_copyright_footer}}
             <div class="footer-copyright">
-                <p class="powered-by">&copy; {{moment format="YYYY"}} {{settings.store_name}} </p>
+                <p class="powered-by">&copy; 1998-{{moment format="YYYY"}}, Tastefully Simple, Inc. </p>
+                <p class="powered-by">Serving suggestions throughout the website.</p>
             </div>
         {{/if}}
     </div>

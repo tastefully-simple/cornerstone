@@ -17,6 +17,7 @@
     .styleguide-main{
         margin:auto;
         max-width:1760px;
+        padding:0 40px;
     }
     .style-item{
         .styleitem-content{
@@ -253,6 +254,14 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@media only screen and (min-width:1800px){
+    .tsi-styleguide{
+        .styleguide-main{
+            padding:0;
         }
     }
 }

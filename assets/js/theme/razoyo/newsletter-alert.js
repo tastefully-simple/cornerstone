@@ -1,21 +1,17 @@
 import $ from 'jquery';
 
 function checkEmail(email) {
-    // Mock server
-    // response: boolean
-    // eligible email: subscriber1@example.com
-    const url = 'https://whos-listening.herokuapp.com/email-check';
+    const url = 'https://qa1-tsapi.tastefullysimple.com/users/welcome/check';
 
     return fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            "emailAddress": email
-        })
+        body: JSON.stringify({'email': email})
     })
-    .then(response => response.json());
+    .then(response => response.text())
+    .catch(err => console.log('checkEmail Error', err));
 }
 
 export default function (e) {
@@ -39,25 +35,26 @@ export default function (e) {
             const url = window.location.origin + '/subscribe.php?result=';
 
             checkEmail($inputEmail.value)
-            .then(isEligible => {
-                if (isEligible) {
+            .then(res => {
+                if (resUrl === `${url}success` && res === '"OK"') {
                     $message.innerHTML = '';
                     $message.innerHTML = `Success! You successfully subscribed. 
                       Use promo code: 000000 for 10% off on your $60 purchase.`;
+                } else if (resUrl === `${url}already_subscribed` || res === '"OK"') {
+                    $message.innerHTML = '';
+                    $message.innerHTML = 'You have already subscribed';
+                } else if (res === '"Please send the email address to check"') {
+                    $message.innerHTML = '';
+                    $message.innerHTML = 'Error! Blank email';
+                } else if (resUrl === `${url}success`) {
+                    $message.innerHTML = '';
+                    $message.innerHTML = 'Success! You have been subscribed';
                 } else {
-                    if (resUrl === `${url}success`) {
-                        $message.innerHTML = '';
-                        $message.innerHTML = 'Success! You successfully subscribed';
-                    } else if (resUrl === `${url}already_subscribed`) {
-                        $message.innerHTML = '';
-                        $message.innerHTML = 'Error! You have already subscribed';
-                    } else {
-                        $message.innerHTML = '';
-                        $message.innerHTML = 'Error! Blank email';
-                    }
+                    $message.inner = '';
+                    $message.innerHTML = 'Error!';
                 }
-            })
-        })
+            });
+        });
     });
 }
 

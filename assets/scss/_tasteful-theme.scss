@@ -159,15 +159,95 @@ $utility-blue: #3473da;
     font-weight:300;
     font-size:12px;
 }
+a,
 .global-link{
     font-size:14px;
+}
+.frametext{
+    font:400 16px stencilFontFamily("body-font"); 
+}
+.frametext-black{
+    font:900 16px stencilFontFamily("body-font"); 
+}
+.frametext-bold{
+    font:700 16px stencilFontFamily("body-font"); 
+}
+.frametext-semibold{
+    font:600 16px stencilFontFamily("body-font"); 
+}
+.frameheading-1{
+    @extend .frametext-black;
+}
+.frameheading-2{
+    @extend .frametext-bold;
+}
+.frameheading-3{
+    @extend .frametext-semibold;
+}
+.frameheading-4{
+    font-size:14px;
+    @extend .frametext-bold;
+}
+.frameheading-5{
+    font-size:14px;
+    text-transform:unset;
+    @extend .frametext-semibold;
+}
+.framelink-xl{
+    @extend .frametext-black;
+}
+.framelink-lg{
+    font-size:14px;
+    @extend .frametext-black;
+}
+.framelink-md{
+    font-size:13px;
+    @extend .frametext-black;
+}
+.framelink-sm{
+    font-size:12px;
+    @extend .frametext-black;
+}
+.frame-caption{
+    font-size:12px;
+    @extend .frametext;
+}
+.framecaption-sm{
+    font-size:9px;
+    @extend .frametext;
+}
+header,
+footer,
+.alertbox,
+.modal-general{
+    h1{
+        @extend .frameheading-1;
+    }
+    h2{
+        @extend .frameheading-2;
+    }
+    h3{
+        @extend .frameheading-3;
+    }
+    h4{
+        @extend .frameheading-4;
+    }
+    h5{
+        @extend .frameheading-5;
+    }
+}
+footer{
+    *{
+        @extend .frame-caption;
+    }
 }
 
 // Buttons
 // -----------------------------------------------------------------------------
+.button{
+    @extend .frametext-semibold;
+}
 .button-primary{
-    font-family: stencilFontFamily("body-font")!important;
-    font-weight: 700!important;
     padding:10px 15px;
     @extend .button--primary;
     @extend .button;
@@ -488,10 +568,10 @@ textarea{
     position:relative;
 }
 .tooltip-inner{
-    font-size:12px;
     position:absolute;
     padding:10px;
     @extend .tooltip-dropshadow;
+    @extend .frame-caption;
 }
 .tooltip-arrow{
     &::before{

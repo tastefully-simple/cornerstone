@@ -70,12 +70,12 @@
             .styleitem-content{
                 flex-direction:column;
                 .typography-headers{
+                    margin-bottom:0;
                     li{
                         align-items:center;
                         display:flex;
                         margin:1rem 0;
-                        span{
-                            color:$silver;
+                        &>span{
                             margin-left:-40px;
                             padding-right:20px;
                         }

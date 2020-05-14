@@ -19,78 +19,114 @@
 
 {{/if}}
 <footer class="footer" role="contentinfo">
-    <div class="container">
-        {{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}
-            <article class="footer-info-col
-                footer-info-col--social
-                footer-info-col--{{#if theme_settings.social_icon_placement_bottom '===' 'bottom_left'}}left{{else}}right{{/if}}"
-                data-section-type="footer-webPages">
-                    <h5 class="footer-info-heading">{{lang 'social.connect'}}</h5>
-                    {{> components/common/social-links}}
-            </article>
-        {{/if}}
-        <section class="footer-info">
-            <article class="footer-info-col footer-info-col--small" data-section-type="footer-webPages">
-                <h5 class="footer-info-heading">{{lang 'footer.navigate'}}</h5>
+    <div class="footer-loveit">
+        <a href="/guarantee" title="Love it Guarantee">
+            <picture>
+                <source
+                    media="(max-width:600px)"
+                    srcset="{{cdn 'assets/img/loveitguaranteebanner-600px.jpg'}}">
+                <source
+                    media="(max-width:960px)"
+                    srcset="{{cdn 'assets/img/loveitguaranteebanner-960px.jpg'}}">
+                <source
+                    media="(min-width:960px)"
+                    srcset="{{cdn 'assets/img/loveitguaranteebanner-1920px.jpg'}}">
+                <img src="{{cdn 'assets/img/loveitguaranteebanner-600px.jpg'}}"
+                     alt="Backed by Our Love it Guarantee. Shop Now text on a background showing cooking preparation"/>
+            </picture>
+        </a>
+    </div>
+    <section class="footer-info">
+        <div class="container">
+            <nav class="footer-info-col footer-info-col--small" data-section-type="footer-shop">
+                <h5 class="footer-info-heading">shop</h5>
                 <ul class="footer-info-list">
-                    {{#each pages}}
-                        <li>
-                            <a href="{{url}}">{{name}}</a>
-                        </li>
-                    {{/each}}
                     <li>
-                        <a href="{{urls.sitemap}}">{{lang 'sitemap.page_title'}}</a>
+                        <a href="/shop">shop products</a>
+                    </li>
+                    <li>
+                        <a href="/recipes">recipes</a>
+                    </li>
+                    <li>
+                        <a href="/special-offers">special offers</a>
                     </li>
                 </ul>
-            </article>
-
-            <article class="footer-info-col footer-info-col--small" data-section-type="footer-categories">
-                <h5 class="footer-info-heading">{{lang 'footer.categories'}}</h5>
+            </nav>
+            <nav class="footer-info-col footer-info-col--small" data-section-type="footer-about">
+                <h5 class="footer-info-heading">about us</h5>
                 <ul class="footer-info-list">
-                    {{#each categories}}
-                        <li>
-                            <a href="{{url}}">{{name}}</a>
-                        </li>
-                    {{/each}}
+                    <li>
+                        <a href="/about-us">about us</a>
+                    </li>
+                    <li>
+                        <a href="/contact-us">contact us</a>
+                    </li>
+                    <li>
+                        <a href="/corporatecareers">corporate careers</a>
+                    </li>
                 </ul>
-            </article>
-
-            {{#and theme_settings.shop_by_brand_show_footer shop_by_brand.length}}
-            <article class="footer-info-col footer-info-col--small" data-section-type="footer-brands">
-                <h5 class="footer-info-heading">{{lang 'footer.brands'}}</h5>
+            </nav>
+            <nav class="footer-info-col footer-info-col--small" data-section-type="footer-support">
+                <h5 class="footer-info-heading">support</h5>
                 <ul class="footer-info-list">
-                    {{#each shop_by_brand}}
-                        <li>
-                            <a href="{{url}}">{{name}}</a>
-                        </li>
-                    {{/each}}
-                    <li><a href="{{urls.brands}}">{{lang 'common.view_all'}}</a></li>
+                    <li>
+                        <a href="/faq">faq</a>
+                    </li>
+                    <li>
+                        <a href="/whats-for-dinner">monthly delivery</a>
+                    </li>
+                    <li>
+                        <a href="/guarantee">love it guarantee</a>
+                    </li>
                 </ul>
-            </article>
-            {{/and}}
-
-            {{#if settings.address}}
-            <article class="footer-info-col footer-info-col--small" data-section-type="storeInfo">
-                <h5 class="footer-info-heading">{{lang 'footer.info'}}</h5>
-                <address>{{nl2br settings.address}}</address>
-                {{#if settings.phone_number}}
-                    <strong>{{lang 'footer.call_us' phone_number=settings.phone_number}}</strong>
-                {{/if}}
-            </article>
-            {{/if}}
-
-            <article class="footer-info-col" data-section-type="newsletterSubscription">
+            </nav>
+            <nav class="footer-info-col footer-info-col--small" data-section-type="footer-consultants">
+                <h5 class="footer-info-heading">consultants</h5>
+                <ul class="footer-info-list">
+                    <li>
+                        <a href="https://myhq.tastefullysimple.com/myhq/LoginConsultant.aspx">consultant login</a>
+                    </li>
+                    <li>
+                        <a href="/consultant-spotlight">consultant spotlight</a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="footer-info-col footer-newsletter" data-section-type="newsletterSubscription">
                 {{#if settings.show_newsletter_box}}
                     {{> components/common/subscription-form}}
                 {{/if}}
                 {{!-- {{> components/common/payment-icons}} --}}
-            </article>
-        </section>
-        {{#if theme_settings.show_copyright_footer}}
-            <div class="footer-copyright">
-                <p class="powered-by">&copy; 1998-{{moment format="YYYY"}}, Tastefully Simple, Inc. </p>
-                <p class="powered-by">Serving suggestions throughout the website.</p>
+                {{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}
+                    <nav class="footer-info-col footer-info-col--social footer-social" data-section-type="footer-social">
+                            {{> components/common/social-links}}
+                    </nav>
+                {{/if}}
+            </nav>
+        </div>
+    </section>
+    <section class="footer-bottom">
+        <div class="container">
+            <div class="copyright-logos">
+                {{#if theme_settings.show_copyright_footer}}
+                    <div class="footer-copyright">
+                        <p class="powered-by">&copy; 1998-{{moment format="YYYY"}}, Tastefully Simple, Inc. </p>
+                        <p class="powered-by">Serving suggestions throughout the website.</p>
+                    </div>
+                {{/if}}
+                <div class="footer-logos">
+                    <a href="https://www.dsa.org/" title="DSA">
+                        <img src="{{cdn 'assets/img/dsa.png'}}" alt="DSA Logo"/>
+                    </a>
+                    <a href="https://www.bbb.org/us/mn/alexandria/profile/home-accessories-online/tastefully-simple-inc-0704-96001360/#sealclick" title="BBB Accredited Business">
+                        <img src="{{cdn 'assets/img/bbb.png'}}" alt="BBB Accredited Business"/>
+                    </a>
+                </div>
             </div>
-        {{/if}}
-    </div>
+            <div class="footer-use-links">
+                <p>
+                    <a href="/terms-of-use">terms of use</a> <span>and</span> <a href="/dsa-code-of-ethics">code of ethics</a>
+                </p>
+            </div>
+        </div>
+    </section>
 </footer>

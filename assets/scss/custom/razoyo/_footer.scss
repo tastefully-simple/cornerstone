@@ -10,6 +10,9 @@
         *{
             color:#fff;
         }
+        a:hover{
+            color:#fff;
+        }
     }
     // end color override
     &>.footer-info{
@@ -21,6 +24,10 @@
             padding:0;
             .footer-info-heading{
                 @extend .framelink-lg;
+                &:not(.acc-head){
+                    margin-top:1rem;
+                    text-align:left;
+                }
             }
             .footer-newsletter{
                 margin:auto;
@@ -118,6 +125,20 @@
                 flex-flow:row;
             }
         }
+        &>.footer-info{
+            max-width:100%;
+            margin:0;
+            padding-top:30px;
+            .container{
+                font-size:0;
+                padding:0;
+                .footer-info-heading{
+                    &:not(.acc-head){
+                        margin-top:initial;
+                    }
+                }
+            }
+        }
     }
 }
 @media only screen and (min-width:820px) and (max-width:900px){
@@ -138,6 +159,62 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+/* Desktop-first media query for mobile accordion to avoid unsetting transitions */
+@media only screen and (max-width:800px){
+    .footer-info-col--small{
+        margin-bottom:1rem;
+        .footer-info-heading{
+            cursor:pointer;
+            &::after{
+                color:$green-apple;
+                padding-left:.5rem;
+            }
+        }
+        .footer-info-list{
+            li{
+                padding:.2rem 0;
+            }
+        }
+        &.close{ 
+            margin-bottom:0;
+            transition:margin 0.4s ease-out;
+            .footer-info-heading{
+                &::after{
+                    color:$green-apple;
+                    content:'\f0d7';
+                    font:700 15px 'Font Awesome 5 Free';
+                }
+            }
+            .footer-info-list{
+                height:0px;
+                transition:height 1s ease-out;
+                transform: scaleY(0);
+            }
+        }
+        &.open{ 
+            .footer-info-heading{
+                &::after{
+                    content:'\f0d8';
+                    font:700 15px 'Font Awesome 5 Free';
+                }
+            }
+            &:not(:last-of-type){
+                margin-bottom:5rem;
+            }
+            &:last-of-type{
+                margin-bottom:4rem;
+            }
+            transition:margin 0.4s ease;
+            .footer-info-list{
+                margin: 0px 0px 10px 0px;
+                transform: scaleY(1);
+                transform-origin: top;
+                transition: transform 0.4s ease;
             }
         }
     }

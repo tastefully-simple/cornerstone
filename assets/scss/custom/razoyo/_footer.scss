@@ -5,13 +5,16 @@
 .footer {
     padding: 0;
     // Set all colors to white as the footer uses a generic config value that we cannot re-define
-    *[class^='footer-info-'],
-    .footer-bottom {
-        * {
+    .footer-info-col,
+    .footer-bottom{
+        a,
+        a:hover{
             color:#fff;
         }
-        a:hover {
-            color:#fff;
+        .footer-copyright{
+            &>.powered-by{
+                color: #fff;
+            }
         }
     }
     // end color override
@@ -98,9 +101,6 @@
                     .footer-copyright {
                         padding:0 1rem;
                         text-align:left;
-                        &>.powered-by{
-                            color: #fff;
-                        }
                     }
                     .footer-logos {
                         display:flex;

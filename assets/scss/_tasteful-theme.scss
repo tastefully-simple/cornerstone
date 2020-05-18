@@ -52,6 +52,9 @@ $utility-blue: #3473da;
 .cream-text{
     color: $cream;
 }
+.gainsboro-text{
+    color: $gainsboro;
+}
 .grape-text{
     color: $grape;
 }
@@ -70,11 +73,20 @@ $utility-blue: #3473da;
 .orange-text{
     color: $orange;
 }
+.shadylady-text{
+    color: $shady-lady;
+}
+.silver-text{
+    color: $silver;
+}
 .teal-text{
     color: $teal;
 }
 .tealhover-text{
     color: $teal-hover;
+}
+.textgray-text{
+    color: $text-gray;
 }
 .utilityblue-text{
     color: $utility-blue;
@@ -84,6 +96,9 @@ $utility-blue: #3473da;
 }
 .utilityred-text{
     color: $utility-red;
+}
+.wanwhite-text{
+    color: $wan-white;
 }
 
 // Background Color Classes
@@ -107,6 +122,9 @@ $utility-blue: #3473da;
 .cream-background{
     background-color: $cream;
 }
+.gainsboro-background{
+    background-color: $gainsboro;
+}
 .grape-background{
     background-color: $grape;
 }
@@ -125,11 +143,20 @@ $utility-blue: #3473da;
 .orange-background{
     background-color: $orange;
 }
+.shadylady-background{
+    background-color: $shady-lady;
+}
+.silver-background{
+    background-color: $silver;
+}
 .teal-background{
     background-color: $teal;
 }
 .tealhover-background{
     background-color: $teal-hover;
+}
+.textgray-background{
+    background-color: $text-gray;
 }
 .utilityblue-background{
     background-color: $utility-blue;

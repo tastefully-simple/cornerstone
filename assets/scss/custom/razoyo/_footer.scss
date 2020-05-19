@@ -22,6 +22,10 @@
         .container {
             font-size:0;
             padding:0;
+            .footer-info-content{
+                display:flex;
+                flex-direction:column;
+            }
             .footer-info-heading {
                 @extend .framelink-lg;
                 &:not(.tst-accordion-title) {
@@ -140,8 +144,11 @@
             .container {
                 font-size:0;
                 padding:0;
+                .footer-info-content{
+                    flex-direction:row;
+                }
                 .footer-info-heading {
-                    &:not(.acc-head){
+                    &:not(.tst-accordion-item){
                         margin-top:initial;
                     }
                 }

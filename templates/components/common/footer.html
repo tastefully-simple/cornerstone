@@ -38,7 +38,7 @@
     </div>
     <section class="footer-info">
         <div class="container">
-            <div class="tst-accordion">
+            <div class="tst-accordion footer-info-content">
                 <nav class="footer-info-col footer-info-col--small tst-accordion-item" data-section-type="footer-shop">
                     <h5 class="footer-info-heading tst-accordion-title">shop</h5>
                     <ul class="footer-info-list tst-accordion-body">
@@ -92,17 +92,17 @@
                         </li>
                     </ul>
                 </nav>
-            </div>
-            <div class="footer-info-col footer-newsletter" data-section-type="newsletterSubscription">
-                {{#if settings.show_newsletter_box}}
-                    {{> components/common/subscription-form}}
-                {{/if}}
-                {{!-- {{> components/common/payment-icons}} --}}
-                {{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}
-                    <div class="footer-info-col footer-info-col--social footer-social" data-section-type="footer-social">
-                            {{> components/common/social-links}}
-                    </div>
-                {{/if}}
+                <div class="footer-info-col footer-newsletter" data-section-type="newsletterSubscription">
+                    {{#if settings.show_newsletter_box}}
+                        {{> components/common/subscription-form}}
+                    {{/if}}
+                    {{!-- {{> components/common/payment-icons}} --}}
+                    {{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}
+                        <div class="footer-info-col footer-info-col--social footer-social" data-section-type="footer-social">
+                                {{> components/common/social-links}}
+                        </div>
+                    {{/if}}
+                </div>
             </div>
         </div>
     </section>

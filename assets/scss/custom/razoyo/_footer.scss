@@ -24,9 +24,17 @@
             padding:0;
             .footer-info-heading {
                 @extend .framelink-lg;
-                &:not(.acc-head) {
+                &:not(.tst-accordion-title) {
                     margin-top:1rem;
                     text-align:left;
+                }
+                &::after {
+                    color:$green-apple;
+                }
+            }
+            .footer-info-list{
+                li{
+                    padding:.2rem 0;
                 }
             }
             .footer-newsletter {
@@ -159,49 +167,6 @@
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
-/* Desktop-first media query for mobile accordion to avoid unsetting transitions */
-@media only screen and (max-width:800px) {
-    .footer-info-col--small {
-        margin-bottom:1rem;
-        .footer-info-heading {
-            cursor:pointer;
-            &::after {
-                color:$green-apple;
-                padding-left:.5rem;
-            }
-        }
-        .footer-info-list {
-            li{
-                padding:.2rem 0;
-            }
-        }
-        .footer-info-heading {
-            &::after {
-                color:$green-apple;
-                content:'\f0d7';
-                font:700 15px 'Font Awesome 5 Free';
-            }
-        }
-        &.open{ 
-            .footer-info-heading {
-                &::after{
-                    content:'\f0d8';
-                    font:700 15px 'Font Awesome 5 Free';
-                }
-            }
-            &:not(:last-of-type) {
-                margin-bottom:5rem;
-            }
-            &:last-of-type {
-                margin-bottom:4rem;
-            }
-            .footer-info-list {
-                margin: 0px 0px 10px 0px;
             }
         }
     }

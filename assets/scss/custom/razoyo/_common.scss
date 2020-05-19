@@ -1,22 +1,44 @@
 // =============================================================================
 // Tastefully Simple Common Styles
 // =============================================================================
+@media only screen and (max-width:800px) {
+    .tst-accordion {
+        transition:margin 0.4s ease-out;
+        margin-bottom:1rem;
+        .tst-accordion-body {
+            height:0px;
+            transition:height 1s ease-out;
+            transform: scaleY(0);
+        }
+        .tst-accordion-title {
+            cursor:pointer;
+            &::after {
+                content:'\f0d7';
+                font:700 15px 'Font Awesome 5 Free';
+                padding-left:.5rem;
+            }
+        }
 
-.tst-accordian {
-    transition:margin 0.4s ease-out;
-
-    .tst-accordian-body {
-        height:0px;
-        transition:height 1s ease-out;
-        transform: scaleY(0);
-    }
-
-    &.open { 
-        transition:margin 0.4s ease;
-        .tst-accordian-body {
-            transform: scaleY(1);
-            transform-origin: top;
-            transition: transform 0.4s ease;
+        &.open { 
+            transition:margin 0.4s ease;
+            &:not(:last-of-type) {
+                margin-bottom:5rem;
+            }
+            &:last-of-type {
+                margin-bottom:4rem;
+            }
+            .tst-accordion-title{
+                &::after{
+                    content:'\f0d8';
+                    font:700 15px 'Font Awesome 5 Free';
+                }
+            }
+            .tst-accordion-body {
+                margin: 0px 0px 10px 0px;
+                transform: scaleY(1);
+                transform-origin: top;
+                transition: transform 0.4s ease;
+            }
         }
     }
 }

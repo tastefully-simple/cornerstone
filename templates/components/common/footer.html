@@ -38,9 +38,9 @@
     </div>
     <section class="footer-info">
         <div class="container">
-            <nav class="footer-info-col footer-info-col--small close" data-section-type="footer-shop">
-                <h5 class="footer-info-heading acc-head">shop</h5>
-                <ul class="footer-info-list">
+            <nav class="footer-info-col footer-info-col--small tst-accordian" data-section-type="footer-shop">
+                <h5 class="footer-info-heading tst-accordian-title">shop</h5>
+                <ul class="footer-info-list tst-accordian-body">
                     <li>
                         <a href="/shop">shop products</a>
                     </li>
@@ -52,9 +52,9 @@
                     </li>
                 </ul>
             </nav>
-            <nav class="footer-info-col footer-info-col--small close" data-section-type="footer-about">
-                <h5 class="footer-info-heading acc-head">about us</h5>
-                <ul class="footer-info-list">
+            <nav class="footer-info-col footer-info-col--small tst-accordian" data-section-type="footer-about">
+                <h5 class="footer-info-heading tst-accordian-title">about us</h5>
+                <ul class="footer-info-list tst-accordian-body">
                     <li>
                         <a href="/about-us">about us</a>
                     </li>
@@ -66,9 +66,9 @@
                     </li>
                 </ul>
             </nav>
-            <nav class="footer-info-col footer-info-col--small close" data-section-type="footer-support">
-                <h5 class="footer-info-heading acc-head">support</h5>
-                <ul class="footer-info-list">
+            <nav class="footer-info-col footer-info-col--small tst-accordian" data-section-type="footer-support">
+                <h5 class="footer-info-heading tst-accordian-title">support</h5>
+                <ul class="footer-info-list tst-accordian-body">
                     <li>
                         <a href="/faq">faq</a>
                     </li>
@@ -80,9 +80,9 @@
                     </li>
                 </ul>
             </nav>
-            <nav class="footer-info-col footer-info-col--small close" data-section-type="footer-consultants">
-                <h5 class="footer-info-heading acc-head">consultants</h5>
-                <ul class="footer-info-list">
+            <nav class="footer-info-col footer-info-col--small tst-accordian" data-section-type="footer-consultants">
+                <h5 class="footer-info-heading tst-accordian-title">consultants</h5>
+                <ul class="footer-info-list tst-accordian-body">
                     <li>
                         <a href="https://myhq.tastefullysimple.com/myhq/LoginConsultant.aspx">consultant login</a>
                     </li>
@@ -130,20 +130,3 @@
         </div>
     </section>
 </footer>
-
-<script>
-    var accItem = document.getElementsByClassName('footer-info-col--small');
-    var accHD = document.getElementsByClassName('footer-info-heading acc-head');
-    for (i = 0; i < accHD.length; i++) {
-        accHD[i].addEventListener('click', toggleItem, false);
-    }
-    function toggleItem() {
-        var itemClass = this.parentNode.className;
-        for (i = 0; i < accItem.length; i++) {
-            accItem[i].className = 'footer-info-col footer-info-col--small close';
-        }
-        if (itemClass == 'footer-info-col footer-info-col--small close') {
-            this.parentNode.classList.add('open').classList.remove('close');
-        }
-    }
-</script>

@@ -1,0 +1,22 @@
+// =============================================================================
+// Tastefully Simple Common Styles
+// =============================================================================
+
+.tst-accordian {
+    transition:margin 0.4s ease-out;
+
+    .tst-accordian-body {
+        height:0px;
+        transition:height 1s ease-out;
+        transform: scaleY(0);
+    }
+
+    &.open { 
+        transition:margin 0.4s ease;
+        .tst-accordian-body {
+            transform: scaleY(1);
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+    }
+}

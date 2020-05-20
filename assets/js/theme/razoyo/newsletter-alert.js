@@ -1,117 +1,139 @@
-function checkEmail(email) {
-    const url = 'https://qa1-tsapi.tastefullysimple.com/users/welcome/check';
-
-    return fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({'email': email})
-    })
-    .then(response => response.text())
-    .catch(err => console.log('checkEmail Error', err));
+export default function (e) {
+    let signup = new NewsletterSignup(
+        document.querySelector('.footer-newsletter > form')
+    );
 }
 
-function addAlertBox(status, title, message) {
-    const $alertBox = document.createElement('div');
-    $alertBox.className = `alertbox-${status}`;
-
-    const $alertTitle = document.createElement('h2');
-    $alertTitle.classList.add('alert-title');
-    $alertTitle.innerHTML = title;
-
-    const $alertMessage = document.createElement('p');
-    const $alertMessageSpan = document.createElement('span');
-    $alertMessage.classList.add('alert-message');
-    $alertMessageSpan.innerHTML = message;
-    $alertMessage.appendChild($alertMessageSpan);
-
-    $alertBox.appendChild($alertTitle);
-    $alertBox.appendChild($alertMessage);
-
-    if (status === 'error') {
-        const $retry = document.createElement('a');
-        $retry.classList.add('retry-btn');
-        $retry.classList.add('framelink-md');
-        $retry.innerHTML = 'retry';
-        $alertBox.appendChild($retry);
+class NewsletterSignup {
+    constructor($form) {
+        this.$form = $form;
+        this.$input = $form.querySelector('input');
+        this.$alert = this.initAlert();
+        $form.appendChild(this.$alert);
+        $form.addEventListener('submit', (e) => this.onSubmit(e));
     }
 
-    return $alertBox;
-}
+    initAlert() {
+        let alert = document.createElement('div');
+        alert.style.display = 'none';
+        alert.classList.add('alertbox-container');
+        return alert;
+    }
 
-export default function (e) {
-    const $form = document.querySelector('footer div[data-section-type="newsletterSubscription"] form');
-    const $alertBoxContainer = document.createElement('div');
-    $alertBoxContainer.classList.add('alertbox-container');
+    onSubmit(e) {
+        e.preventDefault(); // Prevent from navigating off the page to original BC action
 
-    $form.addEventListener('submit', function(e) {
-        e.preventDefault();
+        // Capture form data about to be submitted
+        let formData = new FormData(this);
 
-        const self = this; // this = form element
-        const formData = new FormData(self);
-        const $inputEmail = document.querySelector('footer #nl_email');
+        // Validate API call succeeds
+        let onValidateResponse = (res) => {
+            switch (res.status) {
+                // Email has not used coupon
+                case 200:
+                    this.ajaxSubscribe(formData, true);
+                    break;
 
+                // Email has used coupon
+                case 400:
+                    this.ajaxSubscribe(formData, false);
+                    break;
+
+                // Invalid response
+                default:
+                    this.generalError();
+                    break;
+            }
+        };
+
+        // Validate API call fails
+        let onValidateFail = (err) => {
+            console.warn('Email validation error', err);
+        };
+
+        // Validate email against TST's API endpoint
+        this.validateEmail(formData.get('nl_email'))
+            .then(onValidateResponse)
+            .catch(onValidateFail);
+    }
+
+    validateEmail(email) {
+        let welcomeUrl = window.theme_settings.tst_api_url + '/users/welcome/check';
+        return fetch(welcomeUrl, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({'email': email})
+        });
+    }
+
+    ajaxSubscribe(formData, showPromo) {
         fetch('/subscribe.php?action=subscribe', {
           method: 'POST',
           body: formData
-        })
-        .then(res => res.url)
-        .then(resUrl => {
-            const url = window.location.origin + '/subscribe.php?result=';
+        }).then(res => this.handleSubscribe(res, showPromo))
+          .catch(err => this.generalError())
+        ;
+    }
 
-            checkEmail($inputEmail.value)
-            .then(res => {
-                let $alertBox;
-                if (resUrl === `${url}success` && res === '"OK"') {
-                    const title = 'Good things are coming your way!';
-                    const message = 'Use promo code: 00000 for 10% off on your $60 purchase.';
-                    $alertBox = addAlertBox('success', title, message);
-                    $alertBoxContainer.innerHTML = '';
-                    $alertBoxContainer.appendChild($alertBox);
-                } else if (resUrl === `${url}already_subscribed`) {
-                    $alertBox = addAlertBox('error', 'Error', 'You have already been subscribed.');
-                    $alertBoxContainer.innerHTML = '';
-                    $alertBoxContainer.appendChild($alertBox);
-                } else if (res === '"Please send the email address to check"') {
-                    $alertBox = addAlertBox('error', 'Error', 'Please enter a valid email address.');
-                    $alertBoxContainer.innerHTML = '';
-                    $alertBoxContainer.appendChild($alertBox);
-                } else if (resUrl === `${url}success`) {
-                    $alertBox = addAlertBox('success', 'Success', 'You have been subscribed.');
-                    $alertBoxContainer.innerHTML = '';
-                    $alertBoxContainer.appendChild($alertBox);
-                } else {
-                    $alertBox = addAlertBox('error', 'Error', 'Something went wrong');
-                    $alertBoxContainer.innerHTML = '';
-                    $alertBoxContainer.appendChild($alertBox);
-                }
+    handleSubscribe(res, showPromo) {
+        // BigCommerce subscribe success
+        if (res.url.includes('success')) {
+            if (showPromo) {
+                this.successMessage(
+                    'Good things are coming your way!',
+                    'Use promo code: 00000 for 10% off on your $60 purchase.'
+                );
+            } else {
+                this.successMessage('Success!', 'You have been subscribed.');
+            }
+        }
+        // BigCommerce says already subscribed
+        else if (res.url.includes('already_subscribed')) {
+            this.errorMessage('Error', 'You have already been subscribed.');
+        } 
+        // Unknown BigCommerce response
+        else {
+            this.generalError();
+        }
+    }
 
-                // Prevents the inner element ($alertBox) being clicked when $alertBoxContainer is clicked
-                $alertBox.addEventListener('click', (e) => e.stopPropagation());
-                self.appendChild($alertBoxContainer);
+    successMessage(title, message) {
+        this.alertMessage('success', title, message);
+    }
 
-                const $retry = document.querySelector('.alertbox-container a');
-                if ($retry) {
-                    const $input = document.querySelector('form .newsletter-inputs input');
-                    $retry.addEventListener('click', function() {
-                        $input.focus();
-                        self.removeChild($alertBoxContainer);
-                    });
-                }
-            });
-        });
-    });
+    errorMessage(title, message) {
+        this.alertMessage('error', title, message);
+    }
 
-    // Closes the alertbox when the outside of alertbox is clicked
-    $alertBoxContainer.addEventListener('click', function(e) {
-        const $retry = document.querySelector('.alertbox-container a');
+    generalError() {
+        this.errorMessage('Error', 'Something went wrong.');
+    }
 
-        if ($retry) {
-            const $input = document.querySelector('form .newsletter-inputs input');
-            $input.focus();
+    alertMessage(status, title, message) {
+        let retryHtml;
+        if (status == 'error') {
+            retryHtml = '<a class="retry-btn framelink-md">retry</a>';
+        } else {
+            retryHtml = '';
         }
 
-        $form.removeChild(this);
-    });
+        let alertBox = 
+            ```
+            <div class="alertbox-${status}">
+                <h2 class="alert-title">${title}</h2>
+                <p class="alert-message">${message}</p>
+                ${retryHtml}
+            </div>
+            ```
+        
+        this.$alert.innerHTML = alertBox;
+        this.$alert.style.display = 'block';
+
+        if (retryHtml != '') {
+            this.$alert.querySelector('.retry-btn').addEventListener('click', () => {
+                this.$input.focus();
+                this.$alert.style.display = 'none';
+            });
+        }
+    }
 }

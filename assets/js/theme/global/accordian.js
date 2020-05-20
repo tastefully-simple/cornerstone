@@ -47,14 +47,12 @@ class AccordianItem {
     }
 
     open() {
-        //console.log('opening...', this.$item);
         this.$item.classList.add('open');
         this.isOpen = true;
         this.accordion.itemOpened(this);
     }
 
     close() {
-        //console.log('closing...', this.$item);
         this.$item.classList.remove('open');
         this.isOpen = false;
     }

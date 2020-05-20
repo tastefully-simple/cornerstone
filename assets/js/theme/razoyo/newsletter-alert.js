@@ -24,7 +24,7 @@ class NewsletterSignup {
         e.preventDefault(); // Prevent from navigating off the page to original BC action
 
         // Capture form data about to be submitted
-        let formData = new FormData(this);
+        let formData = new FormData(e.target);
 
         // Validate API call succeeds
         let onValidateResponse = (res) => {
@@ -114,24 +114,28 @@ class NewsletterSignup {
         if (status == 'error') {
             retryHtml = '<a class="retry-btn framelink-md">retry</a>';
         } else {
-            retryHtml = '';
+            retryHtml = '<a class="ok-btn framelink-md">ok</a>';
         }
 
         let alertBox = 
-            ```
+            `
             <div class="alertbox-${status}">
                 <h2 class="alert-title">${title}</h2>
                 <p class="alert-message">${message}</p>
                 ${retryHtml}
             </div>
-            ```
+            `
         
         this.$alert.innerHTML = alertBox;
         this.$alert.style.display = 'block';
 
-        if (retryHtml != '') {
+        if (retryHtml.includes('retry')) {
             this.$alert.querySelector('.retry-btn').addEventListener('click', () => {
                 this.$input.focus();
+                this.$alert.style.display = 'none';
+            });
+        } else {
+            this.$alert.querySelector('.ok-btn').addEventListener('click', () => {
                 this.$alert.style.display = 'none';
             });
         }

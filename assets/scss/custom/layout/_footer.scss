@@ -77,14 +77,22 @@
                         div[class^='alertbox-']{
                             top: 40%;
 
-                            h2.alert-title {
+                            h2.alert-title{
                                 text-align: left;
                             }
 
-                            a.retry-btn {
+                            a.retry-btn,
+                            a.ok-btn{
                                 display: block;
                                 text-align: right;
-                                color: #D0021B;
+                            }
+
+                            a.retry-btn{
+                                color: $utility-red;
+                            }
+
+                            a.ok-btn{
+                                color: $utility-green;
                             }
                         }
                     }

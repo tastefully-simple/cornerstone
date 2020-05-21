@@ -84,7 +84,9 @@
 
 @import "vendor/jstree/style";
 
-// Tastefully Simple SCSS Files
+// Razoyo's Tastefully Simple SCSS Files
 // -----------------------------------------------------------------------------
 @import "_tasteful-theme";
-@import "_styleguide.scss";
+@import "_styleguide";
+@import "custom/base/_common";
+@import "custom/layout/_footer";

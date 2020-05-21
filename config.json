@@ -332,7 +332,9 @@
       "mastercard",
       "visa"
     ],
-    "lazyload_mode": "lazyload+lqip"
+    "lazyload_mode": "lazyload+lqip",
+    "tst_api_url": "https://qa1-tsapi.tastefullysimple.com"
+
   },
   "read_only_files": [
     "/assets/scss/components/citadel",

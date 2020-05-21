@@ -18,6 +18,8 @@ import affiliate from './global/affiliate';
 import associateAffiliate from './global/associate-affiliate';
 import joinProcessInteraction from './global/joinProcessInteraction';
 import shippingModalInteraction from './global/shippingModalInteraction';
+import accordian from './global/accordian';
+import newsletterAlert from './razoyo/newsletter-alert';
 
 
 export default class Global extends PageManager {
@@ -39,5 +41,7 @@ export default class Global extends PageManager {
         associateAffiliate(this.context.themeSettings);
         joinProcessInteraction(this.context.themeSettings);
         shippingModalInteraction(this.context.themeSettings);
+        accordian();
+        newsletterAlert();
     }
 }

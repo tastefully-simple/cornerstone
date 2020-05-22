@@ -2,7 +2,7 @@
     <div class="navPages-quickSearch">
         {{> components/common/quick-search}}
     </div>
-    <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
+    <ul class="navPages-list navPages-list-main{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
         <li class="navPages-item">
             <a class="navPages-action burgundy-text" href="/shop">shop</a>
         </li>
@@ -12,10 +12,10 @@
         <li class="navPages-item">
             <a class="navPages-action greenapple-text" href="/host">host</a>
         </li>
-        <li class="navPages-item">
+        <li class="navPages-item frame-text">
             <a class="navPages-action" href="/recipes">recipes</a>
         </li>
-        <li class="navPages-item">
+        <li class="navPages-item frame-text">
             <a class="navPages-action" href="/blog">blog</a>
         </li>
     </ul>

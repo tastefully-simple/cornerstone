@@ -1,29 +1,100 @@
-/**
-Overrides header file 
-**/
- 
-@media all {
-    .header {
-        border-bottom: none !important;
+// =============================================================================
+// Tastefully Simple Header Styles
+// =============================================================================
+
+@media only screen and (min-width:820px){
+    .header{
+        max-width:1920px;
+        .header-top{
+            color:#fff;
+            display:flex;
+            justify-content:space-between;
+            &>div{
+                flex:2 2 50%;
+                &.header-top-links{
+                    align-items:center;
+                    display:flex;
+                    justify-content:flex-end;
+                }
+            }
+        }
+        .header-main{
+            align-items:center;
+            display:flex;
+            justify-content:space-between;
+            margin:0 2.5rem;
+            .header-logo{
+                margin:2.5rem 0;
+                .header-logo-image-container{
+                    .header-logo-image{
+                        position:relative;
+                    }
+                    &::after{
+                        padding:0;
+                    }
+                }
+            }
+            .navPages-container{
+                margin-left:auto;
+                .navPages-list{
+                    &navPages-list-main{
+                        display:flex;
+                        justify-content:flex-end;
+                    }
+                    .navPages-item{
+                        .navPages-action{
+                            padding:0 1.125rem;
+                            text-transform:unset;
+                            @extend .framelink-xl;
+                        }
+                        &.frame-text{
+                            .navPages-action{
+                                font-weight:400;
+                            }
+                        }
+                    }
+                }
+            }
+            .nav-search{
+                .form{
+                    margin:0;
+                    .form-field{
+                        margin:0;
+                        .form-prefixPostfix{
+                            align-items:center;
+                            .form-input{
+                                border-radius:0;
+                                height:25px;
+                                padding:0 1rem;
+                                margin:0;
+                            }
+                            .button--search{
+                                max-height:25px;
+                                padding:0;
+                                .icon-system-search-teal{
+                                    margin-top:-3px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
-@media (min-width: 801px) {
-    .header-logo--collapsed {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-    }
-}
-
-@media (max-width: 800px) {
-    .header-logo-image-container {
-        margin-top: .85rem;
-        margin-bottom: .5rem;
-    }
-
-    .header-logo-image {
-        top: 80% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%);
+@media only screen and (min-width:819px) and (max-width:962px){
+    .header{
+        .header-main{
+            .navPages-container{
+                .navPages-list{
+                    .navPages-item{
+                        .navPages-action{
+                            padding:0 .5rem;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,28 @@
 // =============================================================================
 // Tastefully Simple Common Styles
 // =============================================================================
+
+@media only screen and (min-width:800px){
+    .container{
+        margin:auto;
+        max-width:1920px;
+        padding:1rem;
+    }
+    .slick-next{
+        right:0;
+    }
+    .slick-prev{
+        left:0;
+    }
+}
+
+@media only screen and (min-width:960px){
+    .container{
+        padding:1rem 2rem;
+    }
+}
+
+// Accordion styles (desktop first to avoid unsetting transitions)
 @media only screen and (max-width:800px) {
     .tst-accordion {
         .tst-accordion-item {

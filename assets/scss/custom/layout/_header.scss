@@ -2,77 +2,98 @@
 // Tastefully Simple Header Styles
 // =============================================================================
 
-@media only screen and (min-width:820px){
+@media only screen and (min-width:800px){
     .header{
-        max-width:1920px;
         .header-top{
-            color:#fff;
-            display:flex;
-            justify-content:space-between;
-            &>div{
-                flex:2 2 50%;
-                &.header-top-links{
-                    align-items:center;
-                    display:flex;
-                    justify-content:flex-end;
+            .container{
+                color:#fff;
+                display:flex;
+                justify-content:space-between;
+                padding:0;
+                &>div{
+                    flex:2 2 50%;
+                    &.header-top-links{
+                        align-items:center;
+                        display:flex;
+                        justify-content:flex-end;
+                        &>div{
+                            align-items:center;
+                            display:flex;
+                            .icon-system-marker{
+                                margin-right:.25rem;
+                            }
+                            .navUser{
+                                padding:0;
+                                .navUser-action{
+                                    padding:0 1rem;
+                                }
+                            }
+                        }
+                        .dropdown-menu{
+                            color: $text-gray;
+                            &#cart-preview-dropdown{
+                                min-width:350px;
+                            }
+                        }
+                    }
                 }
             }
         }
         .header-main{
-            align-items:center;
-            display:flex;
-            justify-content:space-between;
-            margin:0 2.5rem;
-            .header-logo{
-                margin:2.5rem 0;
-                .header-logo-image-container{
-                    .header-logo-image{
-                        position:relative;
-                    }
-                    &::after{
-                        padding:0;
+            .container{
+                align-items:center;
+                display:flex;
+                justify-content:space-between;
+                padding-bottom:0;
+                padding-top:0;
+                .header-logo{
+                    margin:2rem 0;
+                    .header-logo-image-container{
+                        .header-logo-image{
+                            position:relative;
+                        }
+                        &::after{
+                            padding:0;
+                        }
                     }
                 }
-            }
-            .navPages-container{
-                margin-left:auto;
-                .navPages-list{
-                    &navPages-list-main{
-                        display:flex;
-                        justify-content:flex-end;
-                    }
-                    .navPages-item{
-                        .navPages-action{
-                            padding:0 1.125rem;
-                            text-transform:unset;
-                            @extend .framelink-xl;
+                .navPages-container{
+                    margin-left:auto;
+                    .navPages-list{
+                        &navPages-list-main{
+                            display:flex;
+                            justify-content:flex-end;
                         }
-                        &.frame-text{
+                        .navPages-item{
                             .navPages-action{
-                                font-weight:400;
+                                padding:0 1.125rem;
+                                text-transform:unset;
+                                @extend .framelink-xl;
+                            }
+                            &.frame-text{
+                                .navPages-action{
+                                    font-weight:400;
+                                }
                             }
                         }
                     }
                 }
-            }
-            .nav-search{
-                .form{
-                    margin:0;
-                    .form-field{
+                .nav-search{
+                    .form{
                         margin:0;
-                        .form-prefixPostfix{
-                            align-items:center;
-                            .form-input{
-                                border-radius:0;
-                                height:25px;
-                                padding:0 1rem;
-                                margin:0;
-                            }
-                            .button--search{
-                                max-height:25px;
-                                padding:0;
-                                .icon-system-search-teal{
-                                    margin-top:-3px;
+                        .form-field{
+                            margin:0;
+                            .form-prefixPostfix{
+                                align-items:center;
+                                .form-input{
+                                    border-radius:0;
+                                    height:25px;
+                                    padding:0 1rem;
+                                    margin:0;
+                                }
+                                .button--search{
+                                    max-height:25px;
+                                    padding:0;
                                 }
                             }
                         }
@@ -83,17 +104,29 @@
     }
 }
 
-@media only screen and (min-width:819px) and (max-width:962px){
+@media only screen and (min-width:800px) and (max-width:962px){
     .header{
         .header-main{
-            .navPages-container{
-                .navPages-list{
-                    .navPages-item{
-                        .navPages-action{
-                            padding:0 .5rem;
+            .container{
+                .navPages-container{
+                    .navPages-list{
+                        .navPages-item{
+                            .navPages-action{
+                                padding:0 .5rem;
+                            }
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:1920px){
+    .header{
+        .header-main{
+            .container{
+                margin:0 auto;
             }
         }
     }

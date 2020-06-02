@@ -58,7 +58,7 @@ class NewsletterSignup {
     }
 
     validateEmail(email) {
-        let welcomeUrl = window.theme_settings.tst_api_url + '/users/welcome/check';
+        let welcomeUrl = window.theme_settings.ts_tsapi_base_url + '/users/welcome/check';
         return fetch(welcomeUrl, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

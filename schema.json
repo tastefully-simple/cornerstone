@@ -2857,15 +2857,5 @@
         ]
       }
     ]
-  },
-  {
-    "name": "Integrations",
-    "settings": [
-      {
-        "type": "text",
-        "label": "Tastefully Simple API",
-        "id": "tst_api_url"
-      }
-    ]
   }
 ]

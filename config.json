@@ -46,7 +46,7 @@
   "settings": {
     "ts_current_store_base_url": "https://tastefully-simple-sandbox-2.mybigcommerce.com",
     "ts_shop_more_url": "https://www.tastefullysimple.com/shop-more/",
-    "ts_tsapi_base_url": "https://tsapi.tastefullysimple.com",
+    "ts_tsapi_base_url": "https://qa1-tsapi.tastefullysimple.com",
     "ts_join_ss_product_id": 133,
     "social_bug_affiliate_url": "https://tastefullysimpl.sb-affiliate.com/r66/",
     "social_bug_redirect_to_checkout_product_id": 172,
@@ -332,9 +332,7 @@
       "mastercard",
       "visa"
     ],
-    "lazyload_mode": "lazyload+lqip",
-    "tst_api_url": "https://qa1-tsapi.tastefullysimple.com"
-
+    "lazyload_mode": "lazyload+lqip"
   },
   "read_only_files": [
     "/assets/scss/components/citadel",
@@ -355,7 +353,7 @@
   },
   "variations": [
     {
-      "name": "Tech-Sandbox",
+      "name": "Local",
       "id": "light",
       "meta": {
         "desktop_screenshot": "desktop_light.png",
@@ -374,6 +372,30 @@
       },
       "images": {},
       "settings": {
+        "ts_tsapi_base_url": "https://qa1-tsapi.tastefullysimple.com"
+      }
+    },
+    {
+      "name": "Tech-Sandbox",
+      "id": "light1",
+      "meta": {
+        "desktop_screenshot": "desktop_light.png",
+        "mobile_screenshot": "mobile_light.png",
+        "description": "Ideal for a wide range of businesses and brands, this design is fully responsive, simple, and ready for you to add your branding, logo, and products. It comes ready to build a clean looking and beautiful store with features such as homepage carousel, social media icons, featured and top selling products, and faceted search (which is available on select BigCommerce plans). Fully express your brand by using our Theme Editor to quickly and easily style your site's fonts and colors, all without the need to write code.",
+        "demo_url": "https://cornerstone-light-demo.mybigcommerce.com",
+        "optimized_for": [
+          "multi_purpose",
+          "mobile_tablet_desktop",
+          "sales_discounts",
+          "large_catalog"
+        ],
+        "industries": [
+          "food_beverage"
+        ]
+      },
+      "images": {},
+      "settings": {
+        "ts_tsapi_base_url": "https://tsapi.tastefullysimple.com"
       }
     },
     {

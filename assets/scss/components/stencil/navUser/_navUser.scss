@@ -234,6 +234,40 @@
 
     .navUser-action {
         display: inline-block;
+        text-transform: none;
+        font-weight: 100;
+    }
+
+    .dropdown-menu {
+        // override Foundation's inline style on left and top properties
+        left: 53px !important;
+        top: 30px !important;
+        max-width: remCalc(128px);
+        border-color: $gainsboro;
+        padding: 0rem 1rem;
+        padding-bottom: 0.5rem;
+        background-color: $gainsboro;
+        box-shadow: 4px 5px 7px rgba(0, 0, 0, 0.2);
+
+        &.is-open {
+            &:before,
+            &:after {
+                left: auto;
+            }
+
+            &:before {
+                right: 3.19rem;
+            }
+
+            &:after {
+                right: 3.29rem;
+                border-color: transparent transparent $gainsboro transparent;
+            }
+        }
+
+        ul > li > a {
+          text-decoration: none;
+        }
     }
 }
 

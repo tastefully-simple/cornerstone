@@ -102,6 +102,13 @@
             }
         }
     }
+    // Makes the main header sticky when scrolling
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: $header-bg;
+    }
 }
 
 @media only screen and (min-width:800px) and (max-width:962px){
@@ -131,3 +138,4 @@
         }
     }
 }
+

@@ -21,6 +21,7 @@ import shippingModalInteraction from './global/shippingModalInteraction';
 import accordian from './global/accordian';
 import newsletterAlert from './global/newsletter-alert';
 import stickyHeader from './global/sticky-header';
+import findConsultant from './global/find-consultant';
 
 
 export default class Global extends PageManager {
@@ -45,5 +46,6 @@ export default class Global extends PageManager {
         accordian();
         newsletterAlert();
         stickyHeader();
+        findConsultant();
     }
 }

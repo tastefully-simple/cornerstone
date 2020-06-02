@@ -2,9 +2,97 @@
     <div class="navPages-quickSearch">
         {{> components/common/quick-search}}
     </div>
-    <ul class="navPages-list navPages-list-main{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
+    <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
         <li class="navPages-item">
-            <a class="navPages-action burgundy-text" href="/shop">shop</a>
+            <a
+                class="navPages-action had-subMenu burgundy-text"
+                href="/shop"
+                data-collapsible="navPages-catShop"
+                aria-controls="navPages-catShop"
+                aria-expanded="false"
+            >Shop</a>
+            <div class="navPage-subMenu" id="navPages-catShop" tabindex="-1">
+                <ul class="navPage-subMenu-list">
+                    <li class="navPage-subMenu-item">
+                        <a 
+                            class="navPage-subMenu-action navPages-action has-subMenu"
+                            href=""
+                            data-collapsible="navPages-catShopByProd"
+                            aria-controls="navPages-catShopByProd"
+                            aria-expanded="false"
+                        >Shop Products</a>
+                        <ul class="navPage-childList" id="navPages-catShopByProd">
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Beverages</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Breads &amp; Muffins</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Desserts</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Dips</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Kitchen Essentials</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Oils, Vinegars, &amp; Dressings</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Product Assortments</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Sauces, Salads, &amp; Spreads</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Seaonsings</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Snacks</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Soups</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Sales &amp; Specials</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">What's New</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="navPage-subMenu-item">
+                        <a 
+                            class="navPage-subMenu-action navPages-action has-subMenu"
+                            href=""
+                            data-collapsible="navPages-catShopByNutrition"
+                            data-collapsible-disabled-state="open"
+                            data-collapsible-enabled-state="closed"
+                            aria-controls="navPages-catShopByNutrition"
+                            aria-expanded="false"
+                        >Shop by Nutrition</a>
+                        <ul class="navPage-childList" id="navPages-catShopByNutrition">
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Carb Cutting</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Kosher</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">No Gluten Ingredients</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">TS EatWell</a>
+                            </li>
+                            <li class="navPage-childList-item">
+                                <a class="navPage-childList-action navPages-action" href="">Vegetarian</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </li>
         <li class="navPages-item">
             <a class="navPages-action teal-text" href="/join">join</a>

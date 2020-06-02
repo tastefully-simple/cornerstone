@@ -2,36 +2,36 @@
 // Tastefully Simple Header Styles
 // =============================================================================
 
-@media only screen and (min-width:800px){
-    .header{
-        .header-top{
-            .container{
-                color:#fff;
+@media only screen and (min-width:800px) {
+    .header {
+        .header-top {
+            .container {
+                color:$white;
                 display:flex;
                 justify-content:space-between;
                 padding:0;
-                &>div{
+                &>div {
                     flex:2 2 50%;
-                    &.header-top-links{
+                    &.header-top-links {
                         align-items:center;
                         display:flex;
                         justify-content:flex-end;
-                        &>div{
+                        &>div {
                             align-items:center;
                             display:flex;
-                            .icon-system-marker{
+                            .icon-system-marker {
                                 margin-right:.25rem;
                             }
-                            .navUser{
+                            .navUser {
                                 padding:0;
-                                .navUser-action{
+                                .navUser-action {
                                     padding:0 1rem;
                                 }
                             }
                         }
-                        .dropdown-menu{
+                        .dropdown-menu {
                             color: $text-gray;
-                            &#cart-preview-dropdown{
+                            &#cart-preview-dropdown {
                                 min-width:350px;
                             }
                         }
@@ -39,59 +39,116 @@
                 }
             }
         }
-        .header-main{
-            .container{
+        .header-main {
+            .container {
                 align-items:center;
                 display:flex;
                 justify-content:space-between;
                 padding-bottom:0;
                 padding-top:0;
-                .header-logo{
+                .header-logo {
+                    flex:2 33%;
                     margin:2rem 0;
-                    .header-logo-image-container{
-                        .header-logo-image{
+                    .header-logo-image-container {
+                        .header-logo-image {
                             position:relative;
                         }
-                        &::after{
+                        &::after {
                             padding:0;
                         }
                     }
                 }
-                .navPages-container{
-                    margin-left:auto;
-                    .navPages-list{
-                        &navPages-list-main{
+                .navPages-container {
+                    width:100%;
+                    .navPages-list {
+                        &:not(.navPages-list--user) {
+                            display:flex;
+                            justify-content:flex-end;
+                            text-transform:lowercase;
+                        }
+                        &navPages-list-main {
                             display:flex;
                             justify-content:flex-end;
                         }
-                        .navPages-item{
-                            .navPages-action{
+                        .navPages-item {
+                            position:relative;
+                            .navPages-action {
+                                border:none;
+                                font-size:fontSize("base");
                                 padding:0 1.125rem;
                                 text-transform:unset;
-                                @extend .framelink-xl;
+                                &:not(.navPage-childList-action) {
+                                    @extend .framelink-xl;
+                                }
+                                &.is-open {
+                                    background-color:$white;
+                                }
                             }
-                            &.frame-text{
-                                .navPages-action{
+                            &.frame-text {
+                                .navPages-action {
                                     font-weight:400;
+                                }
+                            }
+                        }
+                        .navPage-subMenu {
+                            &::before {
+                                border-left: 5px solid transparent;
+                                border-right: 5px solid transparent;
+                                border-bottom: 5px solid $gainsboro;
+                                content:'';
+                                height: 0px;
+                                left:55%;
+                                position:absolute;
+                                top:-5px;
+                                transform:translateX(-50%);
+                                width: 0px;
+                                z-index:99;
+                            }
+                            &.is-open {
+                                min-width:600px;
+                                max-width:960px;
+                                top:30px;
+                                transform:translateX(-50%);
+                                width:900%;
+                            }
+                            .navPage-subMenu-item {
+                                float:none;
+                                width:35%;
+                                &:first-of-type {
+                                    width:65%;
+                                }
+                                &>.navPage-subMenu-action {
+                                    margin-bottom:.2rem;
+                                }
+                            }
+                            .navPage-subMenu-list {
+                                display:flex;
+                                .navPage-childList {
+                                    &#navPages-catShopByProd {
+                                        columns:2 auto;
+                                    }
+                                    .navPage-childList-item {
+                                        margin:.5rem 0;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                .nav-search{
-                    .form{
+                .nav-search {
+                    .form {
                         margin:0;
-                        .form-field{
+                        .form-field {
                             margin:0;
-                            .form-prefixPostfix{
+                            .form-prefixPostfix {
                                 align-items:center;
-                                .form-input{
+                                .form-input {
                                     border-radius:0;
                                     height:25px;
                                     padding:0 1rem;
                                     margin:0;
                                 }
-                                .button--search{
+                                .button--search {
                                     max-height:25px;
                                     padding:0;
                                 }
@@ -111,14 +168,14 @@
     }
 }
 
-@media only screen and (min-width:800px) and (max-width:962px){
-    .header{
-        .header-main{
-            .container{
-                .navPages-container{
-                    .navPages-list{
-                        .navPages-item{
-                            .navPages-action{
+@media only screen and (min-width:800px) and (max-width:962px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPages-item {
+                            .navPages-action {
                                 padding:0 .5rem;
                             }
                         }
@@ -129,10 +186,10 @@
     }
 }
 
-@media only screen and (min-width:1920px){
-    .header{
-        .header-main{
-            .container{
+@media only screen and (min-width:1920px) {
+    .header {
+        .header-main {
+            .container {
                 margin:0 auto;
             }
         }

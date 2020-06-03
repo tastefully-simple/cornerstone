@@ -20,6 +20,7 @@ import joinProcessInteraction from './global/joinProcessInteraction';
 import shippingModalInteraction from './global/shippingModalInteraction';
 import accordian from './global/accordian';
 import newsletterAlert from './global/newsletter-alert';
+import stickyHeader from './global/sticky-header';
 
 
 export default class Global extends PageManager {
@@ -43,5 +44,6 @@ export default class Global extends PageManager {
         shippingModalInteraction(this.context.themeSettings);
         accordian();
         newsletterAlert();
+        stickyHeader();
     }
 }

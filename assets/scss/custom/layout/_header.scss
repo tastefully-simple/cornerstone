@@ -2,7 +2,7 @@
 // Tastefully Simple Header Styles
 // =============================================================================
 
-@media only screen and (min-width:800px) {
+@media only screen and (min-width:801px) {
     .header {
         .header-top {
             .container {
@@ -59,7 +59,6 @@
                     }
                 }
                 .navPages-container {
-                    width:100%;
                     .navPages-list {
                         &:not(.navPages-list--user) {
                             display:flex;
@@ -76,7 +75,9 @@
                                 border:none;
                                 font-size:fontSize("base");
                                 padding:0 1.125rem;
-                                text-transform:unset;
+                                &:not(.title-case){
+                                    text-transform:lowercase;
+                                }
                                 &:not(.navPage-childList-action) {
                                     @extend .framelink-xl;
                                 }
@@ -91,31 +92,33 @@
                             }
                         }
                         .navPage-subMenu {
-                            &::before {
-                                border-left: 5px solid transparent;
-                                border-right: 5px solid transparent;
-                                border-bottom: 5px solid $gainsboro;
-                                content:'';
-                                height: 0px;
-                                left:55%;
-                                position:absolute;
-                                top:-5px;
-                                transform:translateX(-50%);
-                                width: 0px;
-                                z-index:99;
-                            }
                             &.is-open {
-                                min-width:600px;
+                                left:50%;
+                                min-width:700px;
                                 max-width:960px;
                                 top:30px;
                                 transform:translateX(-50%);
                                 width:900%;
+                                &::before {
+                                    border-left: 5px solid transparent;
+                                    border-right: 5px solid transparent;
+                                    border-bottom: 5px solid $gainsboro;
+                                    content:'';
+                                    height: 0px;
+                                    left:50%;
+                                    position:absolute;
+                                    top:-5px;
+                                    transform:translateX(-50%);
+                                    width: 0px;
+                                    z-index:99;
+                                }
                             }
                             .navPage-subMenu-item {
                                 float:none;
-                                width:35%;
+                                padding:0 !important; //!important required to override !important
+                                width:30%;
                                 &:first-of-type {
-                                    width:65%;
+                                    width:70%;
                                 }
                                 &>.navPage-subMenu-action {
                                     margin-bottom:.2rem;
@@ -168,7 +171,28 @@
     }
 }
 
-@media only screen and (min-width:800px) and (max-width:962px) {
+@media only screen and (min-width:801px) and (max-width:860px){
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                left:150%;
+                                &::before{
+                                    left:42%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:801px) and (max-width:962px) {
     .header {
         .header-main {
             .container {

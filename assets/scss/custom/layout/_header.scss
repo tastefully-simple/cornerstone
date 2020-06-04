@@ -200,6 +200,7 @@
             // Override Foundation's inline style on left and top properties
             left: 53px !important;
             top: 30px !important;
+            transform: translateX(-50%);
             max-width: remCalc(128px);
             border-color: $gainsboro;
             padding: 0rem 1rem;
@@ -235,6 +236,35 @@
       top: 0;
       width: 100%;
       background-color: $header-bg;
+
+      .headertoplinks-consult-text,
+        .navUser-action--account-text,
+        .fa-caret-down {
+            display: none;
+        }
+        .header-top-links {
+            display: flex;
+            justify-content: flex-end;
+            max-width: 150px;
+            width: 100%;
+            color: $text-gray;
+            .headertoplinks-consult > span {
+                padding: 1rem 0.5rem;
+                width: auto;
+            }
+            .navUser {
+                padding: 0;
+                .navUser-action {
+                    color: $text-gray;
+                    padding: 1rem 0.5rem;
+                }
+                .navUser-item--account > .dropdown-menu {
+                    top: 45px !important;
+                    width: 128px;
+                    transform: translateX(-80%);
+                }
+            }
+        }
     }
 }
 

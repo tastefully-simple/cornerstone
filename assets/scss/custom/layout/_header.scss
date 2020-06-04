@@ -2,6 +2,14 @@
 // Tastefully Simple Header Styles
 // =============================================================================
 
+.header{
+    .header-main{
+        .container{
+            position:unset;
+        }
+    }
+}
+
 @media only screen and (min-width:801px) {
     .header {
         .header-top {

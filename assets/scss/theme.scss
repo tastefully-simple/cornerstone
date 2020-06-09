@@ -1,8 +1,6 @@
 // =============================================================================
 // STENCIL
 // =============================================================================
-//Irish Titan custom importer
-//@import './custom/custom.scss';
 
 // Tools
 // -----------------------------------------------------------------------------
@@ -84,6 +82,17 @@
 @import "layouts/layouts"; // 1
 
 @import "vendor/jstree/style";
+
+// Irish Titan's SCSS Files
+// -----------------------------------------------------------------------------
+@import "custom/theme/_colors";
+@import "custom/theme/_spacing";
+@import "custom/theme/_typography";
+@import "custom/base/_breakpoints";
+@import "custom/base/_mixins";
+@import "custom/layout/_switch";
+@import "custom/layout/_join";
+@import "custom/layout/_join-confirmation";
 
 // Razoyo's Tastefully Simple SCSS Files
 // -----------------------------------------------------------------------------

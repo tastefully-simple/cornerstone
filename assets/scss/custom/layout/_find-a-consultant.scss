@@ -1,3 +1,4 @@
+/* General Modal/Find A Consultant Styles  */
 #modal {
     width: 100%;
     height: 475px;
@@ -11,6 +12,11 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
+        }
+        .vertical-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .genmodal-header {
             border-radius: unset;
@@ -85,6 +91,69 @@
                     .card-form {
                         .input-label {
                             min-width: 102px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/* Choose A Consultant Styles  */
+#modal {
+    #consultant-search-results {
+        .frameheading-5 {
+            font-family: "PT Serif", Arial, Helvetica, sans-serif;
+        }
+        overflow-x: auto;
+        .buy-wide-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .return-search {
+                margin: 10px 0;
+                display: flex;
+                .icon-system-left-caret {
+                    height: 12px;
+                    width: 12px;
+                    margin-right: 5px;
+                }
+            }
+            #consultants-qty {
+                margin: 10px 0;
+            }
+            .consultant-card {
+                display: flex;
+                padding: 10px 0;
+                border-bottom: 2px solid #BBB;
+                width: 100%;
+                .consultant-image {
+                    margin-right: 10px;
+                    img {
+                        max-height: 135px;  
+                    }
+                }
+                .consultant-info {
+                    display: flex;
+                    flex-direction: column;
+                    h5 {
+                        margin: 0;
+                    }
+                    .consultant-phone {
+                        display: flex;
+                        .icon-system-phone {
+                            margin-right: 5px; 
+                        }
+                    }
+                    .consultant-email {
+                        display: flex;
+                        .icon-system-envelope {
+                            margin-right: 5px; 
+                        }
+                    }
+                    .ts-page-link {
+                        display: flex;
+                        .icon-system-download {
+                            margin: 0 10px;
                         }
                     }
                 }

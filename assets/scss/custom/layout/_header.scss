@@ -263,6 +263,9 @@
                     width: 128px;
                     transform: translateX(-80%);
                 }
+                .navUser-item--cart > .dropdown-menu {
+                    min-width: 350px;
+                }
             }
         }
     }

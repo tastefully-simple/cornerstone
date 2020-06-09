@@ -1,0 +1,125 @@
+#modal {
+    width: 100%;
+    height: 475px;
+    border-radius: 5px;
+    .modal-close {
+        display: none;
+    }
+    .modal-content {
+        background-color: #6e7a06;
+        .vertical-bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .genmodal-header {
+            border-radius: unset;
+            height: 45px;
+            h2 {
+                margin-left: 5px;
+            }
+            .modal-close {
+                display: block;
+                .close-modal-alternate {
+                    background-color: transparent;
+                    right: -8px;
+                    top: -18px;
+                }
+            }
+        }
+        .genmodal-body {
+            padding: 15px 10px 0 10px;
+            .buy-wide-card {
+                display: flex;
+                flex-wrap: wrap;
+                background-color: #fff;
+                margin: 0;
+                padding: 0 20px 20px;
+                margin-bottom: 13px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                .form-title {
+                    margin: 15px 0;
+                }
+                .frame-text {
+                    flex-basis: 100%;
+                }
+                .card-form {
+                    display: flex;
+                    flex-basis: 100%;
+                    justify-content: flex-start;
+                    & > * {
+                        margin-right: 15px;
+                    }
+                    span {
+                        font-size: 12px;
+                        font-weight: 400;
+                    }   
+                    .input-label {
+                        max-width: unset;
+                        flex-basis: 28.5%;
+                        input {
+                            width: 100%;
+                            height: 35px;
+                            border-radius: 3px;
+                        }
+                    }
+                    .simple-dropdown {
+                        flex-basis: 28.5%;
+                        label {
+                            min-width: 80px;
+                        }
+                        select {
+                            width: 100%;
+                            height: 35px;
+                            background-color: #F1F0EE;
+                            border-radius: 3px;
+                        }
+                    }
+                    .button-alternate {
+                        margin: 0;
+                    }
+                }
+                &:nth-child(2) {
+                    .card-form {
+                        .input-label {
+                            min-width: 102px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (min-width:801px) {
+    #modal {
+        width: 550px;
+        .modal-content {
+            .genmodal-body {
+                .buy-wide-card {
+                    .card-form {
+                        .input-label {
+                            flex-basis: unset;
+                            input {
+                                width: 160px;
+                            }
+                        }
+                        .simple-dropdown {
+                            flex-basis: unset;
+                            select {
+                                width: 160px;
+                                height: 35px;
+                                background-color: #F1F0EE;
+                                border-radius: 3px;
+                            }
+                        }
+                        .button-alternate {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,6 @@
-
+a{
+    margin-bottom: 0;
+}
   
 .logo {
     // padding-top: 20px;
@@ -14,7 +16,7 @@
     width: 800px;
     margin: auto;
     display: grid;
-    grid-template-columns: 100px 1fr 1fr 1fr;
+    grid-template-columns: 60px 1fr 1fr 1fr;
     grid-template-rows: 150px 150px 150px 150px;
     gap: 1px 1px;
     grid-template-areas: "img-1 content-1 content-1 content-1" "img-2 content-2 content-2 content-2" "img-3 content-3 content-3 content-3" "img-4 content-4 content-4 content-4";

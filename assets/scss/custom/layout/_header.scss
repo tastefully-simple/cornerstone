@@ -126,7 +126,7 @@
                         .navPage-subMenu {
                             &.is-open {
                                 left:50%;
-                                min-width:700px;
+                                min-width:760px;
                                 max-width:960px;
                                 top:30px;
                                 transform:translateX(-50%);
@@ -149,21 +149,25 @@
                                 float:none;
                                 padding:0 !important; //!important required to override !important
                                 width:30%;
-                                &:first-of-type {
-                                    width:70%;
+                                &:nth-child(5){
+                                    width:12%;
+                                }
+                                &:nth-child(1){
+                                    margin-left:0.25rem;
                                 }
                                 &>.navPage-subMenu-action {
                                     margin-bottom:.2rem;
+                                    padding:0;
                                 }
                             }
                             .navPage-subMenu-list {
                                 display:flex;
                                 .navPage-childList {
-                                    &#navPages-catShopByProd {
-                                        columns:2 auto;
-                                    }
                                     .navPage-childList-item {
                                         margin:.5rem 0;
+                                        .navPage-childList-action{
+                                            padding:0;
+                                        }
                                     }
                                 }
                             }
@@ -275,7 +279,7 @@
     }
 }
 
-@media only screen and (min-width:801px) and (max-width:860px){
+@media only screen and (min-width:801px) and (max-width:920px){
     .header {
         .header-main {
             .container {
@@ -283,7 +287,7 @@
                     .navPages-list {
                         .navPage-subMenu {
                             &.is-open{
-                                left:150%;
+                                left:245%;
                                 &::before{
                                     left:42%;
                                 }
@@ -305,6 +309,24 @@
                         .navPages-item {
                             .navPages-action {
                                 padding:0 .5rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:1020px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                min-width:920px;
                             }
                         }
                     }

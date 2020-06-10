@@ -1,0 +1,101 @@
+
+  
+.logo {
+    // padding-top: 20px;
+    padding-bottom: 20px; }
+  
+.hero {
+    height: 300px;
+    background-image: url("../img/HERO.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; }
+  
+.grid-container {
+    width: 800px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 1fr;
+    grid-template-rows: 150px 150px 150px 150px;
+    gap: 1px 1px;
+    grid-template-areas: "img-1 content-1 content-1 content-1" "img-2 content-2 content-2 content-2" "img-3 content-3 content-3 content-3" "img-4 content-4 content-4 content-4";
+    margin-bottom: 20px; 
+}
+
+.icon-positioned{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: top;
+    align-content: stretch;
+}
+.icon-sized{
+    @extend .all-icons;
+    height: 55px;
+    width: 55px;
+}
+
+.img-1 {
+    grid-area: img-1;
+    @extend .icon-positioned
+    }
+  
+.content-1 {
+    grid-area: content-1; 
+}
+  
+.content-2 {
+    grid-area: content-2; 
+}
+  
+.img-2 {
+    grid-area: img-2;
+    @extend .icon-positioned 
+}
+  
+.img-3 {
+    grid-area: img-3;
+    @extend .icon-positioned
+}
+  
+.content-3 {
+    grid-area: content-3; 
+}
+  
+.img-4 {
+    grid-area: img-4;
+    @extend .icon-positioned
+}
+  
+.content-4 {
+    grid-area: content-4; 
+}
+  
+.img-1, .content-1, .img-2, .content-2, .img-3, .content-3, .img-4, .content-4 {
+    margin-top: 20px; 
+}
+
+.book-mark{
+    background-image: url('../img/icons/BookmarkIcon.jpg');
+    @extend .all-icons;
+    float: right;
+    height: 55px;
+    width: 55px;
+
+}
+.view-special-offers-icon{
+    background-image: url('../img/icons/ViewSpecialOffersIcon.jpg');
+    @extend .icon-sized;
+}
+.phone-icon{
+    background-image: url('../img/icons/PhoneIcon.jpg');
+    @extend .icon-sized;
+}
+.house-icon{
+    background-image: url('../img/icons/HouseIcon.jpg');
+    @extend .icon-sized;
+}
+  /* For presentation only, no need to copy the code below */
+.grid-container * {
+    border: 1px solid red; 
+}

@@ -52,8 +52,12 @@
                             }
                             .navUser {
                                 padding:0;
-                                .navUser-action {
-                                    padding:0 1rem;
+                                .navUser-section {
+                                    align-items:center;
+                                    display:flex;
+                                    .navUser-action {
+                                        padding:0 1rem;
+                                    }
                                 }
                             }
                         }

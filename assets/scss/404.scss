@@ -1,15 +1,25 @@
 
+section{
+    margin-top: 10px;
+}
 a,p{
     font-size: 22px;
     margin: 0;
     line-height: 1.1em;
 }
 
-.logo {
-    padding-bottom: 20px; 
+.link-404{
+    font-weight: 700;
+}
+
+#logo{
+    width: 45%;
+    float: left;
+    padding-bottom: 10px;
+    padding-left: 20px;
 }
   
-img.404-hero{
+img#404-hero{
     height: auto;
     width: 100%;
 }
@@ -17,13 +27,13 @@ img.404-hero{
 //--- Grid ----------------------------------------
 .grid-container {
     padding-top: 10px;
-    width: 850px;
+    width: 60%;
     margin: auto;
     display: grid;
-    grid-template-columns: 65px 1fr 1fr 1fr;
-    grid-template-rows: 100px 100px 100px 100px;
-    gap: 1px 1px;
-    grid-template-areas: "img-1 row-1 row-1 row-1" "img-2 row-2 row-2 row-2" "img-3 row-3 row-3 row-3" "img-4 row-4 row-4 row-4";
+    grid-template-columns: .4fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 5px 1px;
+    grid-template-areas: "row-1 col-1 col-1 col-1" "row-2 col-2 col-2 col-2" "row-3 col-3 col-3 col-3" "row-4 col-4 col-4 col-4";
 }
 //--- Icons ----------------------------------------
 .icon-positioned{
@@ -33,12 +43,12 @@ img.404-hero{
     justify-content: flex-end;
     align-items: top;
     align-content: stretch;
-    padding: 10px 10px 0 0;
+    padding: 5px 10px 0 0;
 }
 
 .icon-sized{
     @extend .all-icons;
-    height: 50px;
+    height: 55px;
     width: 55px;
 }
 
@@ -64,41 +74,64 @@ img.404-hero{
 }
 
 .img-1 {
-    grid-area: img-1;
+    grid-area: row-1;
     @extend .icon-positioned
     }
   
 .row-1 {
-    grid-area: row-1; 
+    grid-area: col-1; 
 }
   
 .row-2 {
-    grid-area: row-2; 
+    grid-area: col-2; 
 }
 
 .img-2 {
-    grid-area: img-2;
+    grid-area: row-2;
     @extend .icon-positioned 
 }
 
 .img-3 {
-    grid-area: img-3;
+    grid-area: row-3;
     @extend .icon-positioned
 }
 
 .row-3 {
-    grid-area: row-3; 
+    grid-area: col-3; 
 }
 
 .img-4 {
-    grid-area: img-4;
+    grid-area: row-4;
     @extend .icon-positioned
 }
 
 .row-4 {
-    grid-area: row-4; 
+    grid-area: col-4; 
 }
  
-.img-1, .row-1, .img-2, .row-2, .img-3, .row-3, .img-4, .row-4 {
+[class*="col-"]{
     margin-top: 20px; 
+}
+
+@media only screen and (max-width: 768px) {
+
+    .icon-positioned{
+        padding: 2px 5px 0 0;
+    }
+    .icon-sized{
+        height: 30px;
+        width: 30px;
+    }
+    .grid-container {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    // #logo{
+    //     height: auto;
+    //     width: 200px;
+    // }
+    a,p {
+      font-size: 14px;
+    }
 }

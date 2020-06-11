@@ -2,11 +2,13 @@
 
 <!-- {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} -->
 <section>
-    <div class="logo">
-        <img src="../assets/img/logos-ts-burgundy@2x.png" width="400px" alt="TS Logo">
+    <div id="logo">
+        <div>
+            <img src="../assets/img/logos-ts-burgundy@2x.png" alt="TS Logo">
+        </div>
     </div>
     <div class="hero">
-        <img id="404-hero" src="../../../assets/img/HERO.jpg" height="300" width="1200">
+        <img id="404-hero" src="../../../assets/img/HERO.jpg" height="200" width="1400">
     </div>
 </section>
 <section>
@@ -21,7 +23,9 @@
             <p>
                 check out what's happening now!
             </p>
-            <a href="#">View special offers ></a>
+            <div class="link-404">
+                <a href="#">View special offers ></a>
+            </div>
         </div>
         <div class="row-2">
             <p>
@@ -57,9 +61,11 @@
             <p>
                 Or just wait a bit and we will bring you to our homepage at
             </p>
-            <a href="#">tastefullysimple.com</a>
+            <div class="link-404">
+                <a class="404-link" href="#">tastefullysimple.com</a>
+            </div>
         </div>
     </div>
 </section>
 {{/partial}}
-{{> layout/base}}
+{{> layout/base-404}}

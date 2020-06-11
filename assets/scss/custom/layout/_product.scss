@@ -1,3 +1,19 @@
+//Product Details Section
+.productView-details{
+    .productView-product {
+        .productView-title{
+            font-size: 34px;
+        }
+        .productView-price{
+            .price--withoutTax{
+                // TODO add media query for upsizing on width >= 801 or downsize old price (sale items)
+                font-size: 22px;
+                font-family: "PT Serif", Arial, Helvetica, sans-serif;
+            }
+        }
+    }
+}
+
 // Qty Picker
 .form-field--increments {
     text-align: left;

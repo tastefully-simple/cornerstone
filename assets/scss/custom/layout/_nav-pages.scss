@@ -1,0 +1,191 @@
+@media only screen and (min-width:801px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        &:not(.navPages-list--user) {
+                            display:flex;
+                            justify-content:flex-end;
+                            text-transform:lowercase;
+                        }
+                        &navPages-list-main {
+                            display:flex;
+                            justify-content:flex-end;
+                        }
+                        .navPages-item {
+                            position:relative;
+                            .navPages-action {
+                                border:none;
+                                font-size:fontSize("base");
+                                padding:0 1.125rem;
+                                &:not(.title-case){
+                                    text-transform:lowercase;
+                                }
+                                &:not(.navPage-childList-action) {
+                                    @extend .framelink-xl;
+                                }
+                                &.is-open {
+                                    background-color:$white;
+                                }
+                            }
+                            &.frame-text {
+                                .navPages-action {
+                                    font-weight:400;
+                                }
+                            }
+                        }
+                        .navPage-subMenu {
+                            &.is-open {
+                                left:50%;
+                                min-width:760px;
+                                max-width:960px;
+                                top:30px;
+                                transform:translateX(-50%);
+                                width:900%;
+                                &::before {
+                                    border-left: 5px solid transparent;
+                                    border-right: 5px solid transparent;
+                                    border-bottom: 5px solid $gainsboro;
+                                    content:'';
+                                    height: 0px;
+                                    left:36%;
+                                    position:absolute;
+                                    top:-5px;
+                                    transform:translateX(-50%);
+                                    width: 0px;
+                                    z-index:99;
+                                }
+                            }
+                            .navPage-subMenu-item {
+                                float:none;
+                                padding:0 !important; //!important required to override !important
+                                width:30%;
+                                &:nth-child(5){
+                                    width:12%;
+                                }
+                                &:nth-child(1){
+                                    margin-left:0.25rem;
+                                }
+                                &>.navPage-subMenu-action {
+                                    margin-bottom:.2rem;
+                                    padding:0;
+                                }
+                            }
+                            .navPage-subMenu-list {
+                                display:flex;
+                                .navPage-childList {
+                                    .navPage-childList-item {
+                                        margin:.5rem 0;
+                                        .navPage-childList-action{
+                                            padding:0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (min-width:801px) and (max-width:920px){
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                left:245%;
+                                &::before{
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:921px){
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                left:200%;
+                                &::before{
+                                    left:38%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:801px) and (max-width:962px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPages-item {
+                            .navPages-action {
+                                padding:0 .5rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:1020px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                min-width:920px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:963px) and (max-width:1019px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                left:150%;
+                                &::before {
+                                    left:40%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

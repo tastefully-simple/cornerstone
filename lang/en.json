@@ -681,7 +681,7 @@
   },
   "products": {
     "current_stock": "Current Stock:",
-    "quantity": "Quantity:",
+    "quantity": "Qty:",
     "quantity_decrease": "Decrease Quantity:",
     "quantity_increase": "Increase Quantity:",
     "purchase_units": "{quantity, plural, =0{0 units} one {# unit} other {# units}}",

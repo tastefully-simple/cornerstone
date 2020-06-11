@@ -1,0 +1,36 @@
+// Qty Picker
+.form-field--increments {
+    text-align: left;
+    .form-increment{
+        .form-input--incrementTotal{
+            font-weight: 600;
+            padding: 2px 1px;
+        }
+    }
+}
+
+// Wishlist
+.form-wishlist{
+    .dropdown-menu-button{
+        &:hover{
+            border-color: $burgundy;
+            .icon{
+                svg{
+                    fill: $burgundy;
+                }
+            }
+        }
+        .icon{
+            svg{
+                fill: $light-burgundy;
+            }
+        }
+    }
+    #wishlist-dropdown{
+        li {
+            .button:hover{
+                border-color: $burgundy;
+            }
+        }
+    }
+}

@@ -1,7 +1,8 @@
 
-section{
-    margin-top: 10px;
+.container-404{
+    height: 900px;
 }
+
 a,p{
     font-size: 22px;
     margin: 0;
@@ -9,30 +10,35 @@ a,p{
 }
 
 .link-404{
-    font-weight: 700;
+    font-weight: $fontWeight-bold;
+    line-height: 1.1em;
 }
 
 #logo{
-    width: 45%;
+    width: 30%;
     float: left;
-    padding-bottom: 10px;
-    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 25px;
 }
   
-img#404-hero{
-    height: auto;
+#404-hero{
     width: 100%;
 }
 
+.ts-phone{
+    color: $teal;
+    font-weight: $fontWeight-bold;
+}
 //--- Grid ----------------------------------------
 .grid-container {
-    padding-top: 10px;
+    padding-top: 30px;
     width: 60%;
     margin: auto;
     display: grid;
     grid-template-columns: .4fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 5px 1px;
+    gap: 1px 1px;
     grid-template-areas: "row-1 col-1 col-1 col-1" "row-2 col-2 col-2 col-2" "row-3 col-3 col-3 col-3" "row-4 col-4 col-4 col-4";
 }
 //--- Icons ----------------------------------------
@@ -115,6 +121,10 @@ img#404-hero{
 
 @media only screen and (max-width: 768px) {
 
+    #logo{
+        width: 48%;
+    }
+
     .icon-positioned{
         padding: 2px 5px 0 0;
     }
@@ -127,10 +137,6 @@ img#404-hero{
         padding-left: 15px;
         padding-right: 15px;
     }
-    // #logo{
-    //     height: auto;
-    //     width: 200px;
-    // }
     a,p {
       font-size: 14px;
     }

@@ -1,52 +1,107 @@
-//Product Details Section
+//Product Details Section - productView-product
 .productView-details{
     .productView-product {
+        // Title
         .productView-title{
             font-size: 34px;
         }
+        // Price
         .productView-price{
             .price--withoutTax{
-                // TODO add media query for upsizing on width >= 801 or downsize old price (sale items)
                 font-size: 22px;
                 font-family: "PT Serif", Arial, Helvetica, sans-serif;
             }
         }
     }
 }
-
-// Qty Picker
-.form-field--increments {
-    text-align: left;
-    .form-increment{
-        .form-input--incrementTotal{
-            font-weight: 600;
-            padding: 2px 1px;
+@media only screen and (min-width:801px){
+    .productView-details{
+        .productView-product {
+            // Price
+            .productView-price{
+                .price--withoutTax{
+                    font-size: 28px;
+                }
+            }
         }
     }
 }
 
-// Wishlist
-.form-wishlist{
-    .dropdown-menu-button{
-        &:hover{
-            border-color: $burgundy;
-            .icon{
-                svg{
-                    fill: $burgundy;
-                }
-            }
-        }
-        .icon{
-            svg{
-                fill: $light-burgundy;
+
+//Product Details Section - productView-options
+.productView-details{
+
+    // Qty Picker
+    .form-field--increments {
+        text-align: left;
+        .form-increment{
+            .form-input--incrementTotal{
+                font-weight: 600;
+                padding: 2px 1px;
             }
         }
     }
-    #wishlist-dropdown{
-        li {
-            .button:hover{
+
+    // Wishlist
+    .form-wishlist{
+        .dropdown-menu-button{
+            margin-right: 11px;
+            &:hover{
                 border-color: $burgundy;
+                .icon{
+                    svg{
+                        fill: $burgundy;
+                    }
+                }
             }
+            .icon{
+                svg{
+                    fill: $light-burgundy;
+                }
+            }
+        }
+        #wishlist-dropdown{
+            li {
+                .button:hover{
+                    border-color: $burgundy;
+                }
+            }
+        }
+    }
+    // Social Links
+    .addthis_toolbox{
+        border-style: solid;
+        border-width: 1px;
+        border-color: $teal;
+        border-radius: 5px;
+        position: relative;
+        display: inline-block;
+        .socialLinks-title{
+            position: absolute;
+            top: -15px;
+            left: 19px;
+            background-color: white;
+            padding: 0px 2px;
+            .socialLinks-titleText{
+                font-family: "PT Serif", Arial, Helvetica, sans-serif;
+            }
+        }
+        .socialLinks{
+            display: flex;
+            justify-content: flex-start;
+            align-content: center;
+            .socialLinks-item{
+                &:first-child{
+                    margin-left: .75rem;
+                }
+                margin-bottom: 2px;
+                margin-top: 2px;
+            }
+        }
+        .socialLinks-copy{
+            margin: 2px .75rem;
+            padding: 2px 6px;
+            font-size: 14px;
         }
     }
 }

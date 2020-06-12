@@ -17,10 +17,22 @@ export default function() {
 
 class FindAConsultant {
     constructor(trigger, template = 'common/find-consultant') {
+        // API
         this.api = new TSApi();
+
+        // Modal
         trigger.addEventListener('click', (e) => this.createModal(e,template));
+
+        // Return
         $('body').on('click', '.return-search', this.returnSearch.bind(this));
-        $('body').on('click', '#consultant-search .button-alternate', this.getResults.bind(this));
+
+        // Searches
+        const buttonSel = (t) => '#consultant-search .' + t + '-search .button-alternate';
+        $('body').on('click', buttonSel('zip'), () => this.searchByZip());
+        $('body').on('click', buttonSel('name'), () => this.searchByName());
+        $('body').on('click', buttonSel('id'), () => this.searchById());
+
+        // Select
         $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
     }
 
@@ -49,10 +61,27 @@ class FindAConsultant {
         $(".consultant-footer").remove();
     }
 
-    getResults() {
-        this.fetchConsultantSearchResults()
+    searchByZip() {
+        let zip = $('#consultant-search .zip-search input').val();
+        console.log('searchByZip', zip);
+        this.api.searchConsultantsByZip(zip, "100", "1")
+            .then(res => res.json())
             .then(data => this.renderResults(data))
-            .catch(err => console.warn('searchConsultants', err));
+            .catch(err => console.warn('searchByZip', err));
+    }
+
+    searchByName() {
+        let name = $('#consultant-search .name-search input').val();
+        console.log('searchByName', name);
+    }
+
+    searchById() {
+        let id = $('#consultant-search .id-search input').val();
+        console.log('searchById', id);
+        this.api.getConsultant(id)
+            .then(res => res.json())
+            .then(data => this.renderResults(data))
+            .catch(err => console.warn('searchById', err));
     }
 
     renderResults(response) {
@@ -78,15 +107,6 @@ class FindAConsultant {
 
         var $footerHtml = this.getFooterHtml()
         $("#consultant-search-results .genmodal-body").append($footerHtml);
-    }
-
-    /**
-    * Makes an API call to retrieve consultants (based off of search parameters)
-    * and returns the data in a json object
-    */
-    fetchConsultantSearchResults() {
-        return this.api.searchConsultants("k", "mn", "1")
-            .then(res => res.json())
     }
 
     getConsultantHtmlBlock(consultant) {

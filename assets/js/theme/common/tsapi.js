@@ -15,12 +15,32 @@ export default class TSApi {
         });
     }
 
-    searchConsultants(name, state, page) {
+    searchConsultantsByZip(zip, radius, page) {
+        let uri = '/search/shop/zip/' 
+            + zip  + '/' 
+            + radius + '/' 
+            + page;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: {'Accept': 'application/json'}
+        });
+    }
+
+    searchConsultantsByName(name, state, page) {
         let uri = '/search/shop/name/' 
             + name  + '/' 
             + state + '/' 
             + page;
 
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: {'Accept': 'application/json'}
+        });
+    }
+
+    getConsultant(id) {
+        let uri = '/search/shop/cid/' + id;
         return fetch(this.fullUrl(uri), {
             method: 'GET',
             headers: {'Accept': 'application/json'}

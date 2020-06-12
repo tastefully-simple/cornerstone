@@ -41,6 +41,50 @@ a,p{
     gap: 1px 1px;
     grid-template-areas: "row-1 col-1 col-1 col-1" "row-2 col-2 col-2 col-2" "row-3 col-3 col-3 col-3" "row-4 col-4 col-4 col-4";
 }
+.img-1 {
+    grid-area: row-1;
+    @extend .icon-positioned
+    }
+  
+.row-1 {
+    grid-area: col-1;
+}
+  
+.row-2 {
+    grid-area: col-2; 
+}
+
+.img-2 {
+    grid-area: row-2;
+    @extend .icon-positioned 
+}
+
+.img-3 {
+    grid-area: row-3;
+    @extend .icon-positioned
+}
+
+.row-3 {
+    grid-area: col-3; 
+}
+
+.img-4 {
+    grid-area: row-4;
+    @extend .icon-positioned
+}
+
+.row-4 {
+    grid-area: col-4; 
+}
+ 
+[class*="col-"]{
+    margin-top: 20px; 
+}
+
+.row-1, .row-2, .row-3{
+    padding-bottom: 10px;
+}
+
 //--- Icons ----------------------------------------
 .icon-positioned{
     display: flex;
@@ -79,45 +123,6 @@ a,p{
     @extend .icon-sized;
 }
 
-.img-1 {
-    grid-area: row-1;
-    @extend .icon-positioned
-    }
-  
-.row-1 {
-    grid-area: col-1; 
-}
-  
-.row-2 {
-    grid-area: col-2; 
-}
-
-.img-2 {
-    grid-area: row-2;
-    @extend .icon-positioned 
-}
-
-.img-3 {
-    grid-area: row-3;
-    @extend .icon-positioned
-}
-
-.row-3 {
-    grid-area: col-3; 
-}
-
-.img-4 {
-    grid-area: row-4;
-    @extend .icon-positioned
-}
-
-.row-4 {
-    grid-area: col-4; 
-}
- 
-[class*="col-"]{
-    margin-top: 20px; 
-}
 
 @media only screen and (max-width: 768px) {
 

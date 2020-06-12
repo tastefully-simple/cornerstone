@@ -8,253 +8,243 @@ import { defaultModal } from '../global/modal';
  */
 export default function() {
   $(document).ready(function() {
-    const modal = defaultModal();
-    $('.headertoplinks-consult').on('click', (e) => {
-      e.preventDefault();
-      modal.open({ size: 'large' });
-      const options = { template: 'common/find-consultant' }
-      utils.api.getPage('/', options, (err, res) => {
-        if (err) {
-          console.error('Failed to get common/find-consultant. Error:', err);
-          return false;
-        } else if (res) {
-          modal.updateContent(res);
-        }
-      });
-    });
-
-    $('body').on('click', '.return-search', function() {
-      $("#consultant-search-results").hide();
-      $(".matching").remove();
-      $(".consultant-card").remove();
-      $(".consultant-divider").remove();
-      $(".consultant-footer").remove();
-      $("#consultant-search").show();
-    });
-
-    $('body').on('click', '.button-alternate', function() {
-      $("#consultant-search").hide();
-      var consultantsResult = getConsultantSearchResults();
-      var matchingConsultants = document.createElement("span");
-      matchingConsultants.className = "system-14 matching";
-      matchingConsultants.textContent = `Consultants matching \"${consultantsResult.results}\"`;
-      $("#consultant-search-results .buy-wide-card").append(matchingConsultants);
-      consultantsResult.consultants.forEach(function(consultant) {
-        var consultantHtmlBlock = getConsultantHtmlBlock(consultant);
-        var dividerHtml = document.createElement("div");
-        dividerHtml.className = "consultant-divider";
-        $("#consultant-search-results .buy-wide-card").append(consultantHtmlBlock);
-        $("#consultant-search-results .buy-wide-card").append(dividerHtml);
-      });
-      $("#consultant-search-results").show();
-      var footerHtml = document.createElement("div");
-      footerHtml.className = "consultant-footer";
-      var youHaveSelectedHtml = document.createElement("span");
-      youHaveSelectedHtml.className = "system-14 you-have-selected";
-      footerHtml.append(youHaveSelectedHtml);
-      var continueHtml = document.createElement("button");
-      continueHtml.className = "button-secondary-icon";
-      continueHtml.textContent = "continue";
-      footerHtml.append(continueHtml);
-      $(".genmodal-body").append(footerHtml);
-      $(".consultant-card").click(function(event) {
-        var consultantCard = $(event.target).closest(".consultant-card");
-        if (!consultantCard.hasClass("selected")) {
-          $(".selected").toggleClass("selected");
-        }
-        $(event.target).closest(".consultant-card").toggleClass("selected");
-        var consultantName = $(".selected .consultant-name").text();
-        youHaveSelectedHtml.innerHTML = `You have selected <span>${consultantName}</span> as your consultant`;
-      });
-    });
+    let consultant = new FindAConsultant(
+        document.querySelector('.headertoplinks-consult')
+    );
   });
 }
 
-/**
- * Makes an API call to retrieve consultants (based off of search parameters)
- * and returns the data in a json object
- */
-function getConsultantSearchResults(searchParameters = 1) {
-  var json = {
-    results: 999,
-    consultants: [
-      {
-        name: "Sally Sue Hernandez" ,
-        title: "Diamond",
-        phone: "214-555-5555",
-        email: "test-email@gmail.com",
-        image: {
-          url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
-          alt: ""
-        },
-        address: "Minneapolis, MN 55608"
-      },
-      {
-        name: "Dally Due Hernandez" ,
-        title: "Diamond",
-        phone: "214-555-5551",
-        email: "test-email1@gmail.com",
-        image: {
-          url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
-          alt: ""
-        },
-        address: "Minneapolis, MN 55608"
-      },
-      {
-        name: "Tally Tue Hernandez" ,
-        title: "Diamond",
-        phone: "214-555-5552",
-        email: "test-email2@gmail.com",
-        image: {
-          url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
-          alt: ""
-        },
-        address: "Minneapolis, MN 55608"
-      },
-      {
-        name: "Rally Rue Hernandez" ,
-        title: "Diamond",
-        phone: "214-555-5553",
-        email: "test-email3@gmail.com",
-        image: {
-          url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
-          alt: ""
-        },
-        address: "Minneapolis, MN 55608"
+class FindAConsultant {
+  constructor(trigger, template = 'common/find-consultant') {
+    trigger.addEventListener('click', (e) => this.createModal(e,template));
+    $('body').on('click', '.return-search', this.returnSearch.bind(this));
+    $('body').on('click', '#consultant-search .button-alternate', this.displayConsultantsResult.bind(this));
+    $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
+  }
+
+  createModal(e, template) {
+    const modal = defaultModal();
+    e.preventDefault();
+    modal.open({ size: 'large' });
+    const options = { template: template }
+    utils.api.getPage('/', options, (err, res) => {
+      if (err) {
+        console.error('Failed to get common/find-consultant. Error:', err);
+        return false;
+      } else if (res) {
+        modal.updateContent(res);
       }
-    ]
-  };
-  return json;
-}
+    });
+    return modal;
+  }
 
-/**
- * Makes an API call to retrieve consultants (based off of search parameters)
- * and returns the data in a json object
- */
-function getConsultantHtmlBlock(consultant) {
-  var blockHtml = document.createElement("div");
-  blockHtml.className = "consultant-card";
-  var selectedHeaderHtml = getSelectedHeaderHtml();
-  blockHtml.appendChild(selectedHeaderHtml);
-  var imageHtml = getImageHtml(consultant.image);
-  blockHtml.appendChild(imageHtml);
-  var consultantInfoHtml = getInfoHtml(consultant);
-  blockHtml.appendChild(consultantInfoHtml);
-  return blockHtml;
-}
+  returnSearch() {
+    $("#consultant-search-results").hide();
+    $("#consultant-search").show();
+    $(".matching").remove();
+    $(".consultant-card").remove();
+    $(".consultant-divider").remove();
+    $(".consultant-footer").remove();
+  }
 
-/**
- * Generates the consultant block selected header html
- */
-function getSelectedHeaderHtml() {
-  var selectedHeaderHtml = document.createElement("div");
-  selectedHeaderHtml.className = "selected-header";
-  var iconHtml = document.createElement("span");
-  iconHtml.className = "check-icon";
-  selectedHeaderHtml.appendChild(iconHtml);
-  var titleContainerHtml = document.createElement("div");
-  titleContainerHtml.className = "vertical-center";
-  var titleHtml = document.createElement("span");
-  titleHtml.className = "selection-title";
-  titleHtml.textContent = "Selected";
-  titleContainerHtml.appendChild(titleHtml);
-  selectedHeaderHtml.appendChild(titleContainerHtml);
-  return selectedHeaderHtml;
-}
+  displayConsultantsResult() {
 
-/**
- * Generates the consultant block info html
- */
-function getInfoHtml(consultant) {
-  var infoContainerHtml = document.createElement("div");
-  infoContainerHtml.className = "consultant-info";
-  var nameHtml = document.createElement("h5");
-  nameHtml.className = "frameheading-5 consultant-name";
-  nameHtml.textContent = consultant.name;
-  infoContainerHtml.appendChild(nameHtml);
-  var innerContainerHtml = document.createElement("div");
-  innerContainerHtml.className = "system-14";
-  var titleHtml = document.createElement("span");
-  titleHtml.textContent = consultant.title;
-  innerContainerHtml.appendChild(titleHtml);
-  var phoneHtml = getPhoneHtml(consultant.phone);
-  innerContainerHtml.appendChild(phoneHtml);
-  var emailHtml = getEmailHtml(consultant.email);
-  innerContainerHtml.appendChild(emailHtml);
-  var addressHtml = document.createElement("span");
-  addressHtml.textContent = consultant.address;
-  innerContainerHtml.appendChild(addressHtml);
-  var pageLinkHtml = getPageLinkHtml();
-  innerContainerHtml.appendChild(pageLinkHtml);
-  infoContainerHtml.appendChild(innerContainerHtml);
-  return infoContainerHtml;
-}
+    var consultantsResult = this.getConsultantSearchResults();
+    $("#consultant-search").hide();
 
-/**
- * Generates consultant block phone html
- */
-function getPhoneHtml(phoneNumber) {
-  var phoneHtml = document.createElement("div");
-  phoneHtml.className = "consultant-phone";
-  var iconHtml = document.createElement("span");
-  iconHtml.className = "icon-system-phone";
-  phoneHtml.appendChild(iconHtml);
-  var textContainerHtml = document.createElement("div");
-  textContainerHtml.className = "vertical-center system-14";
-  var textHtml = document.createElement("span");
-  textHtml.textContent = phoneNumber;
-  textContainerHtml.appendChild(textHtml);
-  phoneHtml.appendChild(textContainerHtml);
-  return phoneHtml;
-}
+    var $matchingConsultants = $("<span>", {"class": "system-14 matching"});
+    $matchingConsultants.text(`Consultants matching \"${consultantsResult.results}\"`);
+    $("#consultant-search-results .buy-wide-card").append($matchingConsultants);
 
-/**
- * Generates consultant block email html
- */
-function getEmailHtml(email) {
-  var emailHtml = document.createElement("div");
-  emailHtml.className = "consultant-email";
-  var iconHtml = document.createElement("span");
-  iconHtml.className = "icon-system-envelope";
-  emailHtml.appendChild(iconHtml);
-  var textContainerHtml = document.createElement("div");
-  textContainerHtml.className = "vertical-center system-14";
-  var textHtml = document.createElement("span");
-  textHtml.textContent = email;
-  textContainerHtml.appendChild(textHtml);
-  emailHtml.appendChild(textContainerHtml);
-  return emailHtml;
-}
+    //Generate consultant and divider html
+    consultantsResult.consultants.forEach(function(consultant) {
+      var $consultantHtmlBlock = this.getConsultantHtmlBlock(consultant);
+      var $dividerHtml = $("<div>", {"class": "consultant-divider"});
+      $("#consultant-search-results .buy-wide-card").append($consultantHtmlBlock);
+      $("#consultant-search-results .buy-wide-card").append($dividerHtml);
+    }.bind(this));
 
-/**
- * Generates consultant block page link html
- */
-function getPageLinkHtml() {
-  var pageLinkHtml = document.createElement("div");
-  pageLinkHtml.className = "ts-page-link";
-  var linkContainerHtml = document.createElement("div");
-  linkContainerHtml.className = "vertical-center";
-  var linkHtml = document.createElement("a");
-  linkHtml.textContent = "View my TS page";
-  linkHtml.href = "#";
-  linkHtml.className = "framelink-lg";
-  linkContainerHtml.appendChild(linkHtml);
-  pageLinkHtml.appendChild(linkContainerHtml);
-  var iconHtml = document.createElement("span");
-  iconHtml.className = "icon-system-download";
-  pageLinkHtml.appendChild(iconHtml);
-  return pageLinkHtml;
-}
+    $("#consultant-search-results").show();
 
-/**
- * Generates consultant block image html
- */
-function getImageHtml(image) {
-  var imageContainerHtml = document.createElement("div");
-  imageContainerHtml.className = "consultant-image";
-  var imageHtml = document.createElement("img");
-  imageHtml.src = image.url;
-  imageHtml.alt = image.alt;
-  imageContainerHtml.appendChild(imageHtml);
-  return imageContainerHtml;
+    var $footerHtml = this.getFooterHtml()
+    $("#consultant-search-results .genmodal-body").append($footerHtml);
+  }
+
+  /**
+   * Makes an API call to retrieve consultants (based off of search parameters)
+   * and returns the data in a json object
+   */
+  getConsultantSearchResults(searchParameters = 1) {
+    var json = {
+      results: 999,
+      consultants: [
+        {
+          name: "Sally Sue Hernandez" ,
+          title: "Diamond",
+          phone: "214-555-5555",
+          email: "test-email@gmail.com",
+          image: {
+            url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
+            alt: ""
+          },
+          address: "Minneapolis, MN 55608"
+        },
+        {
+          name: "Dally Due Hernandez" ,
+          title: "Diamond",
+          phone: "214-555-5551",
+          email: "test-email1@gmail.com",
+          image: {
+            url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
+            alt: ""
+          },
+          address: "Minneapolis, MN 55608"
+        },
+        {
+          name: "Tally Tue Hernandez" ,
+          title: "Diamond",
+          phone: "214-555-5552",
+          email: "test-email2@gmail.com",
+          image: {
+            url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
+            alt: ""
+          },
+          address: "Minneapolis, MN 55608"
+        },
+        {
+          name: "Rally Rue Hernandez" ,
+          title: "Diamond",
+          phone: "214-555-5553",
+          email: "test-email3@gmail.com",
+          image: {
+            url: "https://lh3.googleusercontent.com/IeNJWoKYx1waOhfWF6TiuSiWBLfqLb18lmZYXSgsH1fvb8v1IYiZr5aYWe0Gxu-pVZX3",
+            alt: ""
+          },
+          address: "Minneapolis, MN 55608"
+        }
+      ]
+    };
+
+    return json;
+  }
+
+  getConsultantHtmlBlock(consultant) {
+    var $blockHtml = $("<div>", {"class": "consultant-card"});
+    var $selectedHeaderHtml = this.getSelectedHeaderHtml();
+    $blockHtml.append($selectedHeaderHtml);
+    var $imageHtml = this.getImageHtml(consultant.image);
+    $blockHtml.append($imageHtml);
+    var $consultantInfoHtml = this.getInfoHtml(consultant);
+    $blockHtml.append($consultantInfoHtml);
+    return $blockHtml;
+  }
+
+  getSelectedHeaderHtml() {
+    var $selectedHeaderHtml = $("<div>", {"class": "selected-header"});
+    var $iconHtml = $("<span>", {"class": "check-icon"});
+    $selectedHeaderHtml.append($iconHtml);
+    var $titleContainerHtml = $("<div>", {"class": "vertical-center"});
+    var $titleHtml = $("<span>", {"class": "selection-title"});
+    $titleHtml.text("Selected");
+    $titleContainerHtml.append($titleHtml);
+    $selectedHeaderHtml.append($titleContainerHtml);
+    return $selectedHeaderHtml;
+  }
+
+  getImageHtml(image) {
+    var $imageContainerHtml = $("<div>", {"class": "consultant-image"});
+    var $imageHtml = $("<img>");
+    $imageHtml.attr("src", image.url);
+    $imageHtml.attr("alt", image.alt);
+    $imageContainerHtml.append($imageHtml);
+    return $imageContainerHtml;
+  }
+
+  getInfoHtml(consultant) {
+    var $infoContainerHtml = $("<div>", {"class": "consultant-info"});
+    var $nameHtml = $("<h5>", {"class": "frameheading-5 consultant-name"});
+    $nameHtml.text(consultant.name);
+    $infoContainerHtml.append($nameHtml);
+    var $innerContainerHtml = $("<div>", {"class": "system-14"});
+
+    var $titleHtml = $("<span>");
+    $titleHtml.text(consultant.title);
+    $innerContainerHtml.append($titleHtml);
+
+    var $phoneHtml = this.getPhoneHtml(consultant.phone);
+    $innerContainerHtml.append($phoneHtml);
+
+    var $emailHtml = this.getEmailHtml(consultant.email);
+    $innerContainerHtml.append($emailHtml);
+
+    var $addressHtml = $("<span>");
+    $addressHtml.text(consultant.address);
+    $innerContainerHtml.append($addressHtml);
+
+    var $pageLinkHtml = this.getPageLinkHtml();
+    $innerContainerHtml.append($pageLinkHtml);
+
+    $infoContainerHtml.append($innerContainerHtml);
+
+    return $infoContainerHtml;
+  }
+
+  getPhoneHtml(phoneNumber) {
+    var $phoneHtml = $("<div>", {"class": "consultant-phone"});
+    var $iconHtml = $("<span>", {"class": "icon-system-phone"});
+    $phoneHtml.append($iconHtml);
+    var $textContainerHtml = $("<div>", {"class": "vertical-center system-14"});
+    var $textHtml = $("<span>");
+    $textHtml.text(phoneNumber);
+    $textContainerHtml.append($textHtml);
+    $phoneHtml.append($textContainerHtml);
+    return $phoneHtml;
+  }
+
+  getEmailHtml(email) {
+    var $emailHtml = $("<div>", {"class": "consultant-email"});
+    var $iconHtml = $("<span>", {"class": "icon-system-envelope"});
+    $emailHtml.append($iconHtml);
+    var $textContainerHtml = $("<div>", {"class": "vertical-center system-14"}); 
+    var $textHtml = $("<span>");
+    $textHtml.text(email);
+    $textContainerHtml.append($textHtml);
+    $emailHtml.append($textContainerHtml);
+    return $emailHtml;
+  }
+
+  getPageLinkHtml() {
+    var $pageLinkHtml = $("<div>", {"class": "ts-page-link"});
+    var $linkContainerHtml = $("<div>", {"class": "vertical-center"});
+    var $linkHtml = $("<a>", {"class": "framelink-lg"});
+    $linkHtml.text("View my TS page");
+    $linkHtml.attr("href", "#");
+    $linkContainerHtml.append($linkHtml);
+    $pageLinkHtml.append($linkContainerHtml);
+    var $iconHtml = $("<span>", {"class": "icon-system-download"});
+    $pageLinkHtml.append($iconHtml);
+    return $pageLinkHtml;
+  }
+
+  getFooterHtml() {
+    console.log(1);
+    var $footerHtml = $("<div>", {"class": "consultant-footer"});
+    var $youHaveSelectedHtml = $("<span>", {"id": "you-have-selected", "class": "system-14"});
+    $footerHtml.append($youHaveSelectedHtml);
+    var $continueHtml = $("<button>", {"class": "button-secondary-icon"});
+    $continueHtml.text("continue");
+    $footerHtml.append($continueHtml);
+    return $footerHtml;
+  }
+
+  selectConsultant(e) {
+    console.log(2);
+    var $consultantCard = $(e.target).closest(".consultant-card");
+    if (!$consultantCard.hasClass("selected")) {
+      $(".selected").toggleClass("selected");
+    }
+    $(e.target).closest(".consultant-card").toggleClass("selected");
+    var consultantName = $(".selected .consultant-name").text();
+    $("#you-have-selected").html(`You have selected <span>${consultantName}</span> as your consultant`);
+  }
 }

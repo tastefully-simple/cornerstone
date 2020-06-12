@@ -26,7 +26,9 @@
                                     @extend .framelink-xl;
                                 }
                                 &.is-open {
-                                    background-color:$white;
+                                    &:not(.navPage-subMenu-action) {
+                                        background-color:$white;
+                                    }
                                 }
                             }
                             &.frame-text {

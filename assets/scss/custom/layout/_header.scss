@@ -3,9 +3,38 @@
 // =============================================================================
 
 .header{
-    .header-main{
-        .container{
+    .header-top {
+        .container {
+            padding:0;
+        }
+    }
+    .header-main {
+        .container {
             position:unset;
+            .header-logo--left {
+                text-align:center;
+            }
+            .nav-search {
+                .form {
+                    margin:0;
+                    .form-field {
+                        margin:0;
+                        .form-prefixPostfix {
+                            align-items:center;
+                            .form-input {
+                                border-radius:0;
+                                height:25px;
+                                padding:0 1rem;
+                                margin:0;
+                            }
+                            .button--search {
+                                max-height:25px;
+                                padding:0;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -17,7 +46,6 @@
                 color:$white;
                 display:flex;
                 justify-content:space-between;
-                padding:0;
                 &>div {
                     flex:2 2 50%;
                     &.header-top-banner {
@@ -81,33 +109,15 @@
                 .header-logo {
                     flex:2 33%;
                     margin:2rem 0;
+                    &.header-logo--left {
+                        text-align:left;
+                    }
                     .header-logo-image-container {
                         .header-logo-image {
                             position:relative;
                         }
                         &::after {
                             padding:0;
-                        }
-                    }
-                }
-                .nav-search {
-                    .form {
-                        margin:0;
-                        .form-field {
-                            margin:0;
-                            .form-prefixPostfix {
-                                align-items:center;
-                                .form-input {
-                                    border-radius:0;
-                                    height:25px;
-                                    padding:0 1rem;
-                                    margin:0;
-                                }
-                                .button--search {
-                                    max-height:25px;
-                                    padding:0;
-                                }
-                            }
                         }
                     }
                 }

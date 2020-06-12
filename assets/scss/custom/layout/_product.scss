@@ -46,6 +46,7 @@
     .form-wishlist{
         .dropdown-menu-button{
             margin-right: 11px;
+            border-color: $light-burgundy;
             &:hover{
                 border-color: $burgundy;
                 .icon{
@@ -64,6 +65,12 @@
             li {
                 .button:hover{
                     border-color: $burgundy;
+                }
+                input {
+                    border-color: $light-burgundy;
+                }
+                a {
+                    border-color: $light-burgundy;
                 }
             }
         }

@@ -171,13 +171,6 @@ $utility-blue: #3473da;
     background-color: $wan-white;
 }
 
-// Border Color Classes
-// -----------------------------------------------------------------------------
-.lightburgundy-bordercolor{
-    border-color: $light-burgundy
-}
-
-
 // Typography
 // -----------------------------------------------------------------------------
 .subhead-16{
@@ -253,6 +246,7 @@ a,
     font-size:9px;
     @extend .frametext;
 }
+
 header,
 footer,
 .alertbox,

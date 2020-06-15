@@ -35,7 +35,7 @@
                    data-dropdown="user-preview-dropdown"
                    aria-expanded="false">
                   <span class="fas fa-user-circle fa-lg" aria-hidden="true"></span>
-                  Hi, {{ first (split customer.name " ") }}
+                  <span class="navUser-action--account-text">Hi, {{ first (split customer.name " ") }}</span>
                   <span class="fas fa-caret-down fa-lg" aria-hidden="true"></span>
                 </a>
                 <div class="dropdown-menu" id="user-preview-dropdown" aria-hidden="true">
@@ -48,7 +48,7 @@
             {{else}}
                 <a class="navUser-action" href="{{urls.auth.login}}">
                   <span class="fas fa-user-circle fa-lg" aria-hidden="true"></span>
-                  {{lang 'common.login'}}
+                  <span class="navUser-action--account-text">{{lang 'common.login'}}</span>
                 </a>
             {{/if}}
         </li>

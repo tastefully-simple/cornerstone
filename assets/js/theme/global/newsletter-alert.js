@@ -1,3 +1,5 @@
+import TSApi from '../common/tsapi';
+
 export default function (e) {
     let signup = new NewsletterSignup(
         document.querySelector('.footer-newsletter > form')
@@ -6,6 +8,7 @@ export default function (e) {
 
 class NewsletterSignup {
     constructor($form) {
+        this.api = new TSApi();
         this.$form = $form;
         this.$input = $form.querySelector('input');
         this.$alert = this.initAlert();
@@ -52,18 +55,9 @@ class NewsletterSignup {
         };
 
         // Validate email against TST's API endpoint
-        this.validateEmail(formData.get('nl_email'))
+        this.api.welcomeCheck(formData.get('nl_email'))
             .then(onValidateResponse)
             .catch(onValidateFail);
-    }
-
-    validateEmail(email) {
-        let welcomeUrl = window.theme_settings.ts_tsapi_base_url + '/users/welcome/check';
-        return fetch(welcomeUrl, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({'email': email})
-        });
     }
 
     ajaxSubscribe(formData, showPromo) {

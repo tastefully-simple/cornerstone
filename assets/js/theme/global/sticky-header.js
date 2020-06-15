@@ -9,14 +9,20 @@ class StickyHeader {
         this.$header = $header;
         this.sticky = $header.offsetTop;
 
-        window.addEventListener("scroll", () => this.onScroll(this.$header, this.sticky));
+        window.addEventListener('scroll', () => this.onScroll(this.$header, this.sticky));
     }
 
-    onScroll($header, sticky) {
+    onScroll($mainHeader, sticky) {
+        let $navlinks = document.querySelector('.header-top-links');
+        let $topHeaderContainer = document.querySelector('header .header-top .container');
+        let $mainHeaderContainer = $mainHeader.querySelector('.container');
+
         if (window.pageYOffset > sticky) {
-            $header.classList.add("sticky-header");
+            $mainHeader.classList.add('sticky-header');
+            $mainHeaderContainer.appendChild($navlinks);
         } else {
-            $header.classList.remove("sticky-header");
+            $mainHeader.classList.remove('sticky-header');
+            $topHeaderContainer.appendChild($navlinks);
         }
     }
 }

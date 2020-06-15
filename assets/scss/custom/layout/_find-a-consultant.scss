@@ -1,0 +1,261 @@
+/* General Modal/Find A Consultant Styles  */
+#modal {
+    width: 100%;
+    height: 475px;
+    border-radius: 5px;
+    .modal-close {
+        display: none;
+    }
+    .modal-content {
+        background-color: #6e7a06;
+        .vertical-bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .vertical-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .genmodal-header {
+            border-radius: unset;
+            height: 45px;
+            h2 {
+                margin-left: 5px;
+            }
+            .modal-close {
+                display: block;
+                .close-modal-alternate {
+                    background-color: transparent;
+                    right: -8px;
+                    top: -18px;
+                }
+            }
+        }
+        .genmodal-body {
+            padding: 15px 10px 0 10px;
+            .buy-wide-card {
+                display: flex;
+                flex-wrap: wrap;
+                background-color: #fff;
+                margin: 0;
+                padding: 0 20px 20px;
+                margin-bottom: 13px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                .form-title {
+                    margin: 15px 0;
+                }
+                .frame-text {
+                    flex-basis: 100%;
+                }
+                .card-form {
+                    display: flex;
+                    flex-basis: 100%;
+                    justify-content: flex-start;
+                    & > * {
+                        margin-right: 15px;
+                    }
+                    span {
+                        font-size: 12px;
+                        font-weight: 400;
+                    }   
+                    .input-label {
+                        max-width: unset;
+                        flex-basis: 28.5%;
+                        input {
+                            width: 100%;
+                            height: 35px;
+                            border-radius: 3px;
+                        }
+                    }
+                    .simple-dropdown {
+                        flex-basis: 28.5%;
+                        label {
+                            min-width: 80px;
+                        }
+                        select {
+                            width: 100%;
+                            height: 35px;
+                            background-color: #F1F0EE;
+                            border-radius: 3px;
+                        }
+                    }
+                    .button-alternate {
+                        margin: 0;
+                    }
+                }
+                &:nth-child(2) {
+                    .card-form {
+                        .input-label {
+                            min-width: 102px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/* Choose A Consultant Styles  */
+#modal {
+    #consultant-search-results {
+        display: none;
+        .frameheading-5 {
+            font-family: "PT Serif", Arial, Helvetica, sans-serif;
+        }
+        .genmodal-body {
+            height: 430px;
+            overflow-y: auto;
+            .consultant-footer {
+                background: none;
+                box-shadow: none;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                #you-have-selected {
+                    span {
+                        color: #00757d;
+                    }
+                    margin: 10px 0; 
+                }
+                .button-secondary-icon {
+                    width: 30%;
+                    margin: 10px 0; 
+                }
+            }
+            .buy-wide-card {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                .return-search {
+                    margin: 10px 0;
+                    display: flex;
+                    .icon-system-left-caret {
+                        height: 12px;
+                        width: 12px;
+                        margin-right: 5px;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                #consultants-qty {
+                    margin: 10px 0;
+                }
+                .consultant-divider {
+                    width: 100%;
+                    border: 1px solid #BBB;
+                }
+                .consultant-card {
+                    display: flex;
+                    padding: 10px 0;
+                    width: 100%;
+                    .selected-header {
+                        display: none;
+                    }
+                    &.selected {
+                        width: 496px;
+                        border: 3px solid #00757D;
+                        margin: 10px 0px 10px 0;
+                        padding-top: 0;
+                        flex-wrap: wrap;
+                        position: relative;
+                        left: -12px;
+                        .selected-header {
+                            color: #fff;
+                            flex-basis: 100%; 
+                            height: 38px; 
+                            display: flex;
+                            background-color: #00757D;
+                            margin-bottom: 10px;
+                            top: -2px;
+                            position: relative;
+                            .check-icon {
+                                width: 35px;
+                                height: 35px;
+                                margin: 0 10px 0 7px;
+                                background-size: cover;
+                                background-image: url("https://cdn3.iconfinder.com/data/icons/sympletts-free-sampler/128/circle-check-512.png");
+                            }
+                            .selection-title {
+                                top: -2px;
+                                position: relative;
+                            }
+                        }
+                        .consultant-image {
+                            padding-left: 10px;
+                        }
+                        .consultant-info {
+                            padding-right: 10px
+                        }
+                    }
+                    .consultant-image {
+                        margin-right: 10px;
+                        img {
+                            max-height: 135px;  
+                        }
+                    }
+                    .consultant-info {
+                        display: flex;
+                        flex-direction: column;
+                        flex-grow: 1;
+                        h5 {
+                            margin: 0;
+                        }
+                        .consultant-phone {
+                            display: flex;
+                            .icon-system-phone {
+                                margin-right: 5px; 
+                            }
+                        }
+                        .consultant-email {
+                            display: flex;
+                            .icon-system-envelope {
+                                margin-right: 5px; 
+                            }
+                        }
+                        .ts-page-link {
+                            display: flex;
+                            .icon-system-download {
+                                margin: 0 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (min-width:801px) {
+    #modal {
+        width: 550px;
+        .modal-content {
+            .genmodal-body {
+                .buy-wide-card {
+                    .card-form {
+                        .input-label {
+                            flex-basis: unset;
+                            input {
+                                width: 160px;
+                            }
+                        }
+                        .simple-dropdown {
+                            flex-basis: unset;
+                            select {
+                                width: 160px;
+                                height: 35px;
+                                background-color: #F1F0EE;
+                                border-radius: 3px;
+                            }
+                        }
+                        .button-alternate {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

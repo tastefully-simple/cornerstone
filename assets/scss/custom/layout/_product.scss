@@ -152,23 +152,111 @@
 }
 // PDP Footer Carousels - Tabs
 .productView ~ .tabs{
+    border: none;
     .tab{
+        border: none;
         &.is-active{
             .tab-title{
                 color: $burgundy;
             }
         }
-        .tab-title:hover{
-            color: $burgundy;
+        .tab-title{
+            padding: 0px;
+        }
+        h3{
+            text-align: center;
+            margin-top: 1rem;
         }
     }
 }
 // PDP Footer Carousels - Tab Content
 .productView ~ .tabs-contents{
     .tab-content{
-        .productCarousel-slide{
-            .card{
-                width: 100%;
+        .productCarousel{
+            .slick-list{
+                margin-bottom: 5px;
+                .slick-track{
+                    .productCarousel-slide{
+                        //Product Card
+                        .buy-card-product{
+                            @extend .buy-card;
+                            width: 100%;
+                            padding: 0px 10px 10px 10px;
+                            border-radius: 0px;
+                            box-shadow: #bbbbbb 0 1px 5px;
+                            margin: 3px 0px;
+                            .card-figure{
+                                .card-img-container{
+                                    &:after{
+                                        padding-bottom: 89% !important;
+                                    }
+                                }
+                                .card-figcaption{
+                                    opacity: 1;
+                                    display: block;
+                                    .card-figcaption-body{
+                                        .card-figcaption-button{
+                                            &.quickview{
+                                                display: none;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .add-to-cart{
+                                @extend .button-primary;
+                                position: relative;
+                                top: -30px;
+                                margin-left: calc(50% - 60.5px);
+                                margin-bottom: 0px;
+                                width: 121px
+                            }
+                            .card-body{
+                                position: relative;
+                                top: -1rem;
+                            }
+                        }
+                    }
+                }
+            }
+            .slick-next:before{
+                @extend .icon-system-right-caret;
+                width: 34px;
+                height: 32px;
+                position: relative;
+                left: -6px;
+            }
+            .slick-prev{
+                left: -10px;
+                &:before{
+                    @extend .icon-system-left-caret;
+                    width: 34px;
+                    height: 32px;
+                    position: relative;
+                    left: -6px;
+                }
+            }
+            //Slider Dots
+            .slick-dots{
+                li{
+                    &.slick-active{
+                        button{
+                            &:before{
+                                background: $burgundy;
+                            }
+                            background-color: $burgundy;
+                        }
+                    }
+                    button{
+                        &:not(.slick-active){
+                            background-color: $silver;
+                            border: none;
+                        }
+                        &:hover{
+                            background-color: $burgundy;
+                        }
+                    }
+                }
             }
         }
     }

@@ -1,114 +1,175 @@
-//Product Details Section - productView-product
-.productView-details{
-    .productView-product {
-        // Title
-        .productView-title{
-            font-size: 34px;
-        }
-        // Price
-        .productView-price{
-            .price--withoutTax{
-                font-size: 22px;
-                font-family: "PT Serif", Arial, Helvetica, sans-serif;
-            }
-        }
-    }
-}
-@media only screen and (min-width:801px){
+// Product Page
+.productView{
+    // Product Details Section - productView-product
     .productView-details{
+        margin-bottom: 0px;
         .productView-product {
+            // Title
+            .productView-title{
+                font-size: 30px;
+                margin-bottom: 0px;
+            }
+            // Product Short Description
+            .productView-shortDescription{
+                margin: 1rem 0px;
+            }
             // Price
             .productView-price{
                 .price--withoutTax{
-                    font-size: 28px;
+                    font-size: 22px;
+                    font-family: "PT Serif", Arial, Helvetica, sans-serif;
                 }
             }
         }
     }
-}
-
-
-//Product Details Section - productView-options
-.productView-details{
-
-    // Qty Picker
-    .form-field--increments {
-        text-align: left;
-        .form-increment{
-            .form-input--incrementTotal{
-                font-weight: 600;
-                padding: 2px 1px;
-            }
-        }
-    }
-
-    // Wishlist
-    .form-wishlist{
-        .dropdown-menu-button{
-            margin-right: 11px;
-            border-color: $light-burgundy;
-            &:hover{
-                border-color: $burgundy;
-                .icon{
-                    svg{
-                        fill: $burgundy;
+    @media only screen and (min-width:801px){
+        .productView-details{
+            .productView-product {
+                // Price
+                .productView-price{
+                    .price--withoutTax{
+                        font-size: 28px;
                     }
                 }
             }
-            .icon{
-                svg{
-                    fill: $light-burgundy;
+        }
+    }
+
+
+    // Product Details Section - productView-options
+    .productView-details{
+        .productView-options {
+            margin-bottom: 100px;
+
+            // Qty Picker
+            .form-field--increments {
+                text-align: left;
+                .form-increment{
+                    .form-input--incrementTotal{
+                        font-weight: 600;
+                        padding: 2px 1px;
+                    }
+                }
+            }
+
+            // Wishlist
+            .form-wishlist{
+                .dropdown-menu-button{
+                    margin-right: 11px;
+                    border-color: $light-burgundy;
+                    &:hover{
+                        border-color: $burgundy;
+                        .icon{
+                            svg{
+                                fill: $burgundy;
+                            }
+                        }
+                    }
+                    .icon{
+                        svg{
+                            fill: $light-burgundy;
+                        }
+                    }
+                }
+                #wishlist-dropdown{
+                    padding-right: 11px;
+                    li {
+                        .button:hover{
+                            border-color: $burgundy;
+                        }
+                        input {
+                            border-color: $light-burgundy;
+                        }
+                        a {
+                            border-color: $light-burgundy;
+                        }
+                    }
                 }
             }
         }
-        #wishlist-dropdown{
-            li {
-                .button:hover{
-                    border-color: $burgundy;
+        // Social Links
+        .addthis_toolbox{
+            border-style: solid;
+            border-width: 1px;
+            border-color: $teal;
+            border-radius: 5px;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            .socialLinks-title{
+                position: absolute;
+                top: -15px;
+                left: 19px;
+                background-color: white;
+                padding: 0px 2px;
+                .socialLinks-titleText{
+                    font-family: "PT Serif", Arial, Helvetica, sans-serif;
                 }
-                input {
-                    border-color: $light-burgundy;
+            }
+            .socialLinks{
+                display: flex;
+                justify-content: flex-start;
+                align-content: center;
+                .socialLinks-item{
+                    &:first-child{
+                        margin-left: .75rem;
+                    }
+                    margin-bottom: 2px;
+                    margin-top: 2px;
                 }
-                a {
-                    border-color: $light-burgundy;
-                }
+            }
+            .socialLinks-copy{
+                margin: 2px .75rem;
+                padding: 4px 10px;
+                font-size: 12px;
             }
         }
     }
-    // Social Links
-    .addthis_toolbox{
-        border-style: solid;
-        border-width: 1px;
-        border-color: $teal;
-        border-radius: 5px;
-        position: relative;
-        display: inline-block;
-        .socialLinks-title{
-            position: absolute;
-            top: -15px;
-            left: 19px;
-            background-color: white;
-            padding: 0px 2px;
-            .socialLinks-titleText{
-                font-family: "PT Serif", Arial, Helvetica, sans-serif;
-            }
-        }
-        .socialLinks{
-            display: flex;
-            justify-content: flex-start;
-            align-content: center;
-            .socialLinks-item{
-                &:first-child{
-                    margin-left: .75rem;
+
+    // Product Description
+    .productView-description{
+        .tabs{
+            border-color: $shady-lady;
+            .tab{
+                border-color: $shady-lady;
+                .tab-title{
+                    color: $burgundy;
                 }
-                margin-bottom: 2px;
-                margin-top: 2px;
             }
         }
-        .socialLinks-copy{
-            margin: 2px .75rem;
-            padding: 2px 6px;
-            font-size: 14px;
+        #tab-description{
+            h5 {
+                @extend .frameheading-5;
+                border-style: solid;
+                border-color: $shady-lady;
+                border-width: 1px 0px;
+                padding: 18px 0px;
+                text-align: center;
+            }
+        }
+    }
+
+}
+// PDP Footer Carousels - Tabs
+.productView ~ .tabs{
+    .tab{
+        &.is-active{
+            .tab-title{
+                color: $burgundy;
+            }
+        }
+        .tab-title:hover{
+            color: $burgundy;
+        }
+    }
+}
+// PDP Footer Carousels - Tab Content
+.productView ~ .tabs-contents{
+    .tab-content{
+        .productCarousel-slide{
+            .card{
+                width: 100%;
+            }
         }
     }
 }

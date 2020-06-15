@@ -1,6 +1,7 @@
 import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
 import TSApi from '../common/tsapi';
+import StatesSelect from '../common/directory/states.js';
 
 /**
  * Creates a Cornerstone popup modal for Find A Consultant. 
@@ -10,13 +11,17 @@ import TSApi from '../common/tsapi';
 export default function() {
     $(document).ready(function() {
         let consultant = new FindAConsultant(
-            document.querySelector('.headertoplinks-consult')
+            document.querySelector('.headertoplinks-consult'),
+            'common/find-consultant',
+            window.theme_settings.social_bug_affiliate_url
         );
     });
 }
 
 class FindAConsultant {
-    constructor(trigger, template = 'common/find-consultant') {
+    constructor(trigger, template, continueUrl) {
+        this.continueUrl = continueUrl;
+
         // API
         this.api = new TSApi();
 
@@ -34,22 +39,32 @@ class FindAConsultant {
 
         // Select
         $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
+        
+        // Submit
+        $('body').on('click', '#consultant-continue', () => this.continue())
     }
 
     createModal(e, template) {
-        const modal = defaultModal();
+        this.modal = defaultModal();
         e.preventDefault();
-        modal.open({ size: 'large' });
+        this.modal.open({ size: 'large' });
         const options = { template: template };
         utils.api.getPage('/', options, (err, res) => {
             if (err) {
                 console.error('Failed to get common/find-consultant. Error:', err);
                 return false;
             } else if (res) {
-                modal.updateContent(res);
+                this.modalLoaded(res);
             }
         });
-        return modal;
+    }
+
+    modalLoaded(result) {
+      this.modal.updateContent(result);
+      let nameSelects = $('#consultant-search .name-search select');
+      for (let i = 0; i < nameSelects.length; i++) {
+        new StatesSelect(nameSelects[i]);
+      }
     }
 
     returnSearch() {
@@ -63,29 +78,59 @@ class FindAConsultant {
 
     searchByZip() {
         let zip = $('#consultant-search .zip-search input').val();
-        console.log('searchByZip', zip);
-        this.api.searchConsultantsByZip(zip, "100", "1")
+        this.api.searchConsultantsByZip(zip, "100", "1", "20")
             .then(res => res.json())
             .then(data => this.renderResults(data))
             .catch(err => console.warn('searchByZip', err));
     }
 
     searchByName() {
-        let name = $('#consultant-search .name-search input').val();
-        console.log('searchByName', name);
+        let name  = $('#consultant-search .name-search input').val();
+        let state = $('#consultant-search .name-search select').val();
+
+        this.api.searchConsultantsByName(name, state, "1", "20")
+            .then(res => res.json())
+            .then(data => this.renderResults(data))
+            .catch(err => console.warn('searchByZip', err));
     }
 
     searchById() {
         let id = $('#consultant-search .id-search input').val();
-        console.log('searchById', id);
         this.api.getConsultant(id)
             .then(res => res.json())
             .then(data => this.renderResults(data))
             .catch(err => console.warn('searchById', err));
     }
 
+    selectConsultant(e) {
+        var $consultantCard = $(e.target).closest(".consultant-card");
+        if (!$consultantCard.hasClass("selected")) {
+            this.selectedId = $consultantCard.data('cid');
+            $(".selected").toggleClass("selected");
+        } else {
+            this.selectedId = null;
+        }
+
+        $(e.target).closest(".consultant-card").toggleClass("selected");
+        var consultantName = $(".selected .consultant-name").text();
+        $("#you-have-selected").html(`You have selected <span>${consultantName}</span> as your consultant`);
+    }
+
+    continue() {
+        if (this.selectedId) {
+          let frame = document.createElement('iframe');
+          frame.style.display = 'none';
+          frame.src = this.continueUrl + this.selectedId;
+          document.body.appendChild(frame);
+          this.modal.close();
+        }
+    }
+
+
+    /*
+     * HTML
+     */
     renderResults(response) {
-        console.log('renderResults', response);
         $("#consultant-search").hide();
 
         var $matchingConsultants = $("<span>", {"class": "system-14 matching"});
@@ -110,7 +155,11 @@ class FindAConsultant {
     }
 
     getConsultantHtmlBlock(consultant) {
-        var $blockHtml = $("<div>", {"class": "consultant-card"});
+        var $blockHtml = $("<div>", {
+            "class": "consultant-card",
+            "data-cid" : consultant.ConsultantId
+        });
+
         var $selectedHeaderHtml = this.getSelectedHeaderHtml();
         $blockHtml.append($selectedHeaderHtml);
         var $imageHtml = this.getImageHtml(consultant.Image);
@@ -211,20 +260,9 @@ class FindAConsultant {
         var $footerHtml = $("<div>", {"class": "consultant-footer"});
         var $youHaveSelectedHtml = $("<span>", {"id": "you-have-selected", "class": "system-14"});
         $footerHtml.append($youHaveSelectedHtml);
-        var $continueHtml = $("<button>", {"class": "button-secondary-icon"});
+        var $continueHtml = $("<button>", {"id": "consultant-continue", "class": "button-secondary-icon"});
         $continueHtml.text("continue");
         $footerHtml.append($continueHtml);
         return $footerHtml;
-    }
-
-    selectConsultant(e) {
-        var $consultantCard = $(e.target).closest(".consultant-card");
-        if (!$consultantCard.hasClass("selected")) {
-            $(".selected").toggleClass("selected");
-        }
-
-        $(e.target).closest(".consultant-card").toggleClass("selected");
-        var consultantName = $(".selected .consultant-name").text();
-        $("#you-have-selected").html(`You have selected <span>${consultantName}</span> as your consultant`);
     }
 }

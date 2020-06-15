@@ -2,10 +2,31 @@
 // Tastefully Simple Header Styles
 // =============================================================================
 
+body {
+    // Necessary since the mobile header is not fixed now
+    padding-top:0;
+}
+
 .header{
+    padding:0;
+    .container{
+        padding:0;
+    }
     .header-top {
         .container {
-            padding:0;
+            .navUser {
+                position:unset;
+                .navUser-item--cart {
+                    right:0;
+                    position:absolute;
+                    top:50%;
+                    .navUser-action {
+                        color:$burgundy;
+                    }
+                }
+            }
+            .header-top-links {
+            }
         }
     }
     .header-main {
@@ -13,10 +34,19 @@
             position:unset;
             .header-logo--left {
                 text-align:center;
+                &>a {
+                    width:100%;
+                    .header-logo-image {
+                        max-height:none;
+                    }
+                }
             }
             .nav-search {
+                background-color:$wan-white;
                 .form {
-                    margin:0;
+                    margin:0 auto;;
+                    max-width:70%;
+                    padding:.5rem 0;
                     .form-field {
                         margin:0;
                         .form-prefixPostfix {
@@ -41,6 +71,9 @@
 
 @media only screen and (min-width:801px) {
     .header {
+        .container{
+            padding:0 1.5rem;
+        }
         .header-top {
             .container {
                 color:$white;
@@ -86,6 +119,12 @@
                                     .navUser-action {
                                         padding:0 1rem;
                                     }
+                                    .navUser-item--cart{
+                                        position:unset;
+                                        .navUser-action{
+                                            color:stencilColor("navUser-color");
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -119,6 +158,14 @@
                         &::after {
                             padding:0;
                         }
+                    }
+                }
+                .nav-search {
+                    background:transparent;
+                    .form {
+                        margin:0;
+                        max-width:none;
+                        padding:0;
                     }
                 }
             }
@@ -264,9 +311,11 @@
             max-width: 150px;
             width: 100%;
             color: $text-gray;
-            .headertoplinks-consult > span {
-                padding: 1rem 0.5rem;
-                width: auto;
+            .headertoplinks-consult {
+                &>span {
+                    padding: 1rem 0.5rem;
+                    width: auto;
+                }
             }
             .navUser {
                 padding: 0;
@@ -274,13 +323,17 @@
                     color: $text-gray;
                     padding: 1rem 0.5rem;
                 }
-                .navUser-item--account > .dropdown-menu {
-                    top: 45px !important;
-                    width: 128px;
-                    transform: translateX(-80%);
+                .navUser-item--account {
+                    &>.dropdown-menu {
+                        top: 45px !important;
+                        width: 128px;
+                        transform: translateX(-80%);
+                    }
                 }
-                .navUser-item--cart > .dropdown-menu {
-                    min-width: 350px;
+                .navUser-item--cart {
+                    &>.dropdown-menu {
+                        min-width: 350px;
+                    }
                 }
             }
         }

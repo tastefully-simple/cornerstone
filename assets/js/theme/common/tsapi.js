@@ -15,11 +15,12 @@ export default class TSApi {
         });
     }
 
-    searchConsultantsByZip(zip, radius, page) {
+    searchConsultantsByZip(zip, radius, page, size) {
         let uri = '/search/shop/zip/' 
             + zip  + '/' 
             + radius + '/' 
-            + page;
+            + page + '/'
+            + size;
 
         return fetch(this.fullUrl(uri), {
             method: 'GET',
@@ -27,11 +28,12 @@ export default class TSApi {
         });
     }
 
-    searchConsultantsByName(name, state, page) {
+    searchConsultantsByName(name, state, page, size) {
         let uri = '/search/shop/name/' 
             + name  + '/' 
             + state + '/' 
-            + page;
+            + page + '/'
+            + size;
 
         return fetch(this.fullUrl(uri), {
             method: 'GET',

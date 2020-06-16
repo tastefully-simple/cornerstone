@@ -87,6 +87,7 @@ class FindAConsultant {
     }
 
     searchByZip() {
+        $('.zip-search form').closest('form').submit();
         let zip = $('#consultant-search .zip-search input').val();
         if (zip === "") {
             return;
@@ -101,11 +102,12 @@ class FindAConsultant {
     }
 
     searchByName() {
+        $('.name-search').closest('form').submit();
         let name  = $('#consultant-search .name-search input').val();
-        if (name === "") {
+        let state = $('#consultant-search .name-search select').val();
+        if (state == "") {
             return;
         }
-        let state = $('#consultant-search .name-search select').val();
 
         this.api.searchConsultantsByName(name, state, "1", "20")
             .then(res => res.json())
@@ -117,6 +119,7 @@ class FindAConsultant {
     }
 
     searchById() {
+        $('.id-search').closest('form').submit();
         let id = $('#consultant-search .id-search input').val();
         if (id === "") {
             return;

@@ -81,30 +81,53 @@ class FindAConsultant {
         $(".consultant-footer").remove();
     }
 
+    displayError(err) {
+        $('.alertbox-error span').text(err);
+        $('.alertbox-error').show();
+    }
+
     searchByZip() {
         let zip = $('#consultant-search .zip-search input').val();
+        if (zip === "") {
+            return;
+        }
         this.api.searchConsultantsByZip(zip, "100", "1", "20")
             .then(res => res.json())
             .then(data => this.renderResults(data))
-            .catch(err => console.warn('searchByZip', err));
+            .catch(err => { 
+                console.warn('searchByZip', err); 
+                this.displayError(err);
+            });
     }
 
     searchByName() {
         let name  = $('#consultant-search .name-search input').val();
+        if (name === "") {
+            return;
+        }
         let state = $('#consultant-search .name-search select').val();
 
         this.api.searchConsultantsByName(name, state, "1", "20")
             .then(res => res.json())
             .then(data => this.renderResults(data))
-            .catch(err => console.warn('searchByZip', err));
+            .catch(err => { 
+                console.warn('searchByName', err);
+                this.displayError(err);
+            });
     }
 
     searchById() {
         let id = $('#consultant-search .id-search input').val();
+        if (id === "") {
+            return;
+        }
         this.api.getConsultant(id)
             .then(res => res.json())
             .then(data => this.renderResults(data))
-            .catch(err => console.warn('searchById', err));
+            .catch(err => { 
+                console.warn('searchById', err);
+                this.displayError(err);
+            });
     }
 
     selectConsultant(e) {

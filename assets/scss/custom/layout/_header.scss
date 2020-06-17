@@ -62,6 +62,21 @@
             }
         }
     }
+    .navPages-container.is-open {
+        .navPages {
+            .headertoplinks-consult {
+                text-align: center;
+                color: $burgundy;
+                font-weight: 800;
+                background: $gainsboro;
+                padding: 10px;
+            }
+        }
+        // Have "Shop" open by default
+        #navPages-catShop {
+            display: block;
+        }
+    }
 }
 
 @media only screen and (min-width:801px) {

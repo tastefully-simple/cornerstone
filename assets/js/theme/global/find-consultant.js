@@ -42,6 +42,11 @@ class FindAConsultant {
         
         // Submit
         $('body').on('click', '#consultant-continue', () => this.continue())
+
+        // Move "Find a Consultant" into the main menu in mobile view
+        this.screenMinWidth = 801;
+        this.moveConsultantEl(trigger, this.screenMinWidth);
+        $(window).on('resize', () => this.moveConsultantEl(trigger, this.screenMinWidth));
     }
 
     createModal(e, template) {
@@ -126,6 +131,18 @@ class FindAConsultant {
         }
     }
 
+    moveConsultantEl($consultant, screenMinWidth) {
+        let $navPages = $('.navPages-container .navPages');
+        let $topHeader = $('.header-top .header-top-links');
+
+        if (window.innerWidth >= screenMinWidth) {
+            // Put back consultant in the top header
+            $topHeader.prepend($consultant);
+        } else {
+            // Add consultant to mobile main menu
+            $navPages.prepend($consultant);
+        }
+    }
 
     /*
      * HTML
@@ -265,4 +282,5 @@ class FindAConsultant {
         $footerHtml.append($continueHtml);
         return $footerHtml;
     }
+
 }

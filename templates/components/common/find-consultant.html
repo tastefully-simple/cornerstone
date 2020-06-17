@@ -12,7 +12,7 @@
                 <span></span>
             </p>
         </div>
-        <form onsubmit="return false">
+        <form onsubmit="return false" id="zipcode-search-form">
             <article class="buy-wide-card zip-search">
                 <span class="form-title system-14">Search by zip code</span>
                 <div class="card-form system-12">
@@ -27,12 +27,12 @@
                         </select>
                     </div>
                     <div class="vertical-bottom">
-                        <button class="button-alternate">search</button>
+                        <button class="button-alternate" type="submit">search</button>
                     </div>
                 </div>
             </article>
         </form>
-        <form onsubmit="return false">
+        <form onsubmit="return false" id="name-search-form">
             <article class="buy-wide-card name-search">
                 <span class="form-title system-14">Search by consultant name</span>
                 <div class="card-form system-12">
@@ -47,12 +47,12 @@
                         <input type="text" placeholder="Enter first or last name">
                     </label>
                     <div class="vertical-bottom">
-                        <button class="button-alternate">search</button>
+                        <button class="button-alternate" type="submit">search</button>
                     </div>
                 </div>
             </article>
         </form>
-        <form onsubmit="return false">
+        <form onsubmit="return false" id="id-search-form">
             <article class="buy-wide-card id-search">
                 <span class="form-title system-14">Search by consultant ID</span>
                 <div class="card-form system-12">
@@ -61,7 +61,7 @@
                         <input type="text" placeholder="Enter consultant ID" required>
                     </label>
                     <div class="vertical-bottom" >
-                        <button class="button-alternate">search</button>
+                        <button class="button-alternate" type="submit">search</button>
                     </div>
                 </div>
             </article>
@@ -84,5 +84,11 @@
                 <span class="frame-caption">Refine your search</span>
             </div>
         </article>
+        <div class="alertbox-error">
+            <h2 class="alert-title">Error</h2>
+            <p class="alert-message">
+                <span></span>
+            </p>
+        </div>
     </div>
 </div>

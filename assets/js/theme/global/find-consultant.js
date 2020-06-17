@@ -31,11 +31,10 @@ class FindAConsultant {
         // Return
         $('body').on('click', '.return-search', this.returnSearch.bind(this));
 
-        // Searches
-        const buttonSel = (t) => '#consultant-search .' + t + '-search .button-alternate';
-        $('body').on('click', buttonSel('zip'), () => this.searchByZip());
-        $('body').on('click', buttonSel('name'), () => this.searchByName());
-        $('body').on('click', buttonSel('id'), () => this.searchById());
+        // Search
+        $('body').on('submit', '#zipcode-search-form', () => this.searchByZip())
+        $('body').on('submit', '#name-search-form', () => this.searchByName())
+        $('body').on('submit', '#id-search-form', () => this.searchById())
 
         // Select
         $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
@@ -87,11 +86,7 @@ class FindAConsultant {
     }
 
     searchByZip() {
-        $('.zip-search form').closest('form').submit();
         let zip = $('#consultant-search .zip-search input').val();
-        if (zip === "") {
-            return;
-        }
         this.api.searchConsultantsByZip(zip, "100", "1", "20")
             .then(res => res.json())
             .then(data => this.renderResults(data))
@@ -102,13 +97,8 @@ class FindAConsultant {
     }
 
     searchByName() {
-        $('.name-search').closest('form').submit();
         let name  = $('#consultant-search .name-search input').val();
         let state = $('#consultant-search .name-search select').val();
-        if (state == "") {
-            return;
-        }
-
         this.api.searchConsultantsByName(name, state, "1", "20")
             .then(res => res.json())
             .then(data => this.renderResults(data))
@@ -119,11 +109,7 @@ class FindAConsultant {
     }
 
     searchById() {
-        $('.id-search').closest('form').submit();
         let id = $('#consultant-search .id-search input').val();
-        if (id === "") {
-            return;
-        }
         this.api.getConsultant(id)
             .then(res => res.json())
             .then(data => this.renderResults(data))
@@ -134,6 +120,7 @@ class FindAConsultant {
     }
 
     selectConsultant(e) {
+        $('.alertbox-error').hide();
         var $consultantCard = $(e.target).closest(".consultant-card");
         if (!$consultantCard.hasClass("selected")) {
             this.selectedId = $consultantCard.data('cid');
@@ -154,6 +141,8 @@ class FindAConsultant {
           frame.src = this.continueUrl + this.selectedId;
           document.body.appendChild(frame);
           this.modal.close();
+        } else {
+            this.displayError("Please select a consultant before continuing");
         }
     }
 
@@ -227,8 +216,8 @@ class FindAConsultant {
     getImageHtml(image) {
         var $imageContainerHtml = $("<div>", {"class": "consultant-image"});
         var $imageHtml = $("<img>");
-        $imageHtml.attr("src", image.url);
-        $imageHtml.attr("alt", image.alt);
+        $imageHtml.attr("src", image);
+        $imageHtml.attr("onerror", "this.onerror=null;this.src='https://www.tastefullysimple.com/_/media/images/noconsultantphoto.png';");
         $imageContainerHtml.append($imageHtml);
         return $imageContainerHtml;
     }

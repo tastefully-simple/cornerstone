@@ -73,6 +73,7 @@ class FindAConsultant {
 
     returnSearch() {
         $("#consultant-search-results").hide();
+        $('.alertbox-error').hide();
         $("#consultant-search").show();
         $(".matching").remove();
         $(".consultant-card").remove();
@@ -89,7 +90,10 @@ class FindAConsultant {
         let zip = $('#consultant-search .zip-search input').val();
         this.api.searchConsultantsByZip(zip, "100", "1", "20")
             .then(res => res.json())
-            .then(data => this.renderResults(data))
+            .then(data => { 
+                this.renderResults(data);
+                $('.alertbox-error').hide();
+            })
             .catch(err => { 
                 console.warn('searchByZip', err); 
                 this.displayError(err);
@@ -101,7 +105,10 @@ class FindAConsultant {
         let state = $('#consultant-search .name-search select').val();
         this.api.searchConsultantsByName(name, state, "1", "20")
             .then(res => res.json())
-            .then(data => this.renderResults(data))
+            .then(data => { 
+                this.renderResults(data);
+                $('.alertbox-error').hide();
+            })
             .catch(err => { 
                 console.warn('searchByName', err);
                 this.displayError(err);
@@ -112,7 +119,10 @@ class FindAConsultant {
         let id = $('#consultant-search .id-search input').val();
         this.api.getConsultant(id)
             .then(res => res.json())
-            .then(data => this.renderResults(data))
+            .then(data => {
+                this.renderResults(data);
+                $('.alertbox-error').hide();
+            })
             .catch(err => { 
                 console.warn('searchById', err);
                 this.displayError(err);

@@ -5,29 +5,13 @@
             <span class="socialLinks-titleText teal-text frameheading-3">Share</span>
         </div>
         <ul class="socialLinks">
-            {{#each settings.add_this.buttons}}
-                <li class="socialLinks-item socialLinks-item--{{service}}">
-                    <a class="icon-social-{{service}} addthis_button_{{service}} icon icon--{{service}}" {{{annotation}}}>
-                        {{#if service '===' 'email'}}
-                            <svg>
-                                <use xlink:href="#icon-envelope"/>
-                            </svg>
-                        {{else if service '===' 'print'}}
-                            <svg>
-                                <use xlink:href="#icon-print"/>
-                            </svg>
-                        {{else if service '===' 'linkedin'}}
-                            <svg>
-                                <use xlink:href="#icon-linkedin"/>
-                            </svg>
-                        {{else if service '===' 'google'}}
-                            <svg>
-                                <use xlink:href="#icon-google"/>
-                            </svg>
-                        {{/if}}
-                    </a>
-                </li>
+            {{#if social_media}}
+            {{#each social_media}}
+            <li class="socialLinks-item socialLinks-item--{{display_name}}">
+                <a class="icon-social-{{display_name}} addthis_button_{{display_name}} icon icon--{{display_name}}" href="{{url}}"> </a>
+            </li>
             {{/each}}
+            {{/if}}
             <li>
                 <button class="button-secondary socialLinks-copy" type="button">Copy Link</button>
             </li>

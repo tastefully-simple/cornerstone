@@ -1,6 +1,12 @@
 <nav class="navPages">
     <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
-        <li class="navPages-item">
+        <li class="navPages-item navPages-item-join">
+            <a class="navPages-action teal-text" href="/join">join</a>
+        </li>
+        <li class="navPages-item navPages-item-host">
+            <a class="navPages-action greenapple-text" href="/host">host</a>
+        </li>
+        <li class="navPages-item navPages-item-shop">
             <a
                 class="navPages-action had-subMenu burgundy-text"
                 href="/shop"
@@ -165,20 +171,20 @@
                 </ul>
             </div>
         </li>
-        <li class="navPages-item">
-            <a class="navPages-action teal-text" href="/join">join</a>
-        </li>
-        <li class="navPages-item">
-            <a class="navPages-action greenapple-text" href="/host">host</a>
-        </li>
-        <li class="navPages-item frame-text">
+        <li class="navPages-item navPages-item-recipes frame-text">
             <a class="navPages-action" href="/recipes">recipes</a>
         </li>
-        <li class="navPages-item frame-text">
+        <li class="navPages-item navPages-item-blog frame-text">
             <a class="navPages-action" href="/blog">blog</a>
         </li>
     </ul>
     <ul class="navPages-list navPages-list--user">
+        <li class="navPages-item navPages-item-recipes frame-text">
+            <a class="navPages-action" href="/recipes">recipes</a>
+        </li>
+        <li class="navPages-item navPages-item-blog frame-text">
+            <a class="navPages-action" href="/blog">blog</a>
+        </li>
         {{#if currency_selector.currencies.length '>' 1}}
             <li class="navPages-item">
                 <a class="navPages-action has-subMenu" href="#" data-collapsible="navPages-currency" aria-controls="navPages-currency" aria-expanded="false">
@@ -220,8 +226,8 @@
         {{/if}}
         {{#if customer}}
             <li class="navPages-item">
-                <a class="navPages-action has-subMenu" href="{{urls.account.index}}" data-collapsible="navPages-account">
-                    {{lang 'common.account'}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xlink:href="#icon-chevron-down" /></svg></i>
+                <a class="navPages-action navPages-action-account has-subMenu title-case" href="{{urls.account.index}}" data-collapsible="navPages-account">
+                    Hi, {{ first (split customer.name " ") }}
                 </a>
                 <div class="navPage-subMenu" id="navPages-account" aria-hidden="true" tabindex="-1">
                     <ul class="navPage-subMenu-list">

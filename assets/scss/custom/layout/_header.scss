@@ -7,6 +7,11 @@
     .container{
         padding:0;
     }
+    &.is-open {
+        .header-top-banner {
+            display:none;
+        }
+    }
     .header-top {
         .container {
             .navUser {
@@ -20,8 +25,6 @@
                     }
                 }
             }
-            .header-top-links {
-            }
         }
     }
     .header-main {
@@ -32,7 +35,9 @@
                 &>a {
                     width:100%;
                     .header-logo-image {
+                        left:50%;
                         max-height:none;
+                        transform:translateX(-50%);
                     }
                 }
             }
@@ -164,6 +169,8 @@
                     .header-logo-image-container {
                         .header-logo-image {
                             position:relative;
+                            left:unset;
+                            transform:unset;
                         }
                         &::after {
                             padding:0;

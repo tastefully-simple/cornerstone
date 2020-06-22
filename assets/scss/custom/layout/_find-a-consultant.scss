@@ -96,10 +96,10 @@
                         margin: 0;
                     }
                 }
-                &:nth-child(2) {
+                &.name-search {
                     .card-form {
                         .input-label {
-                            min-width: 102px;
+                            min-width: 104px;
                         }
                     }
                 }
@@ -197,19 +197,23 @@
                             padding-left: 10px;
                         }
                         .consultant-info {
-                            padding-right: 10px
+                            padding-right: 10px;
                         }
                     }
                     .consultant-image {
                         margin-right: 10px;
                         img {
                             max-height: 135px;  
+                            min-width: 100px;
                         }
                     }
                     .consultant-info {
                         display: flex;
                         flex-direction: column;
                         flex-grow: 1;
+                        .system-14 {
+                            font-size: 12px;
+                        }
                         h5 {
                             margin: 0;
                         }
@@ -218,11 +222,18 @@
                             .icon-system-phone {
                                 margin-right: 5px; 
                             }
+                            span {
+                                font-size: 12px;
+                            }
                         }
                         .consultant-email {
                             display: flex;
                             .icon-system-envelope {
                                 margin-right: 5px; 
+                            }
+                            span {
+                                font-size: 12px;
+                                overflow-wrap: anywhere;
                             }
                         }
                         .ts-page-link {
@@ -243,6 +254,24 @@
         .modal-content {
             .genmodal-body {
                 .buy-wide-card {
+                    .consultant-card {
+                        .consultant-info {
+                            .system-14 {
+                                font-size: 14px;
+                                .consultant-phone {
+                                    span {
+                                        font-size: 14px;
+                                    }
+                                }
+                                .consultant-email {
+                                    span {
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                     .card-form {
                         .input-label {
                             flex-basis: unset;

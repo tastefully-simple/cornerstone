@@ -130,7 +130,7 @@
                     margin: 10px 0; 
                 }
                 .button-secondary-icon {
-                    width: 30%;
+                    width: 40%;
                     margin: 10px 0; 
                 }
             }
@@ -253,6 +253,11 @@
         width: 550px;
         .modal-content {
             .genmodal-body {
+                .consultant-footer {
+                    .button-secondary-icon {
+                        width: 30%; 
+                    }
+                }
                 .buy-wide-card {
                     .consultant-card {
                         .consultant-info {

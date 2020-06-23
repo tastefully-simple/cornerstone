@@ -2,7 +2,14 @@
 // Tastefully Simple Common Styles
 // =============================================================================
 
-@media only screen and (min-width:800px){
+.body {
+    margin-top:7rem;
+}
+
+@media only screen and (min-width:801px){
+    .body {
+        margin-top:2.5rem;
+    }
     .container{
         margin:auto;
         max-width:1920px;

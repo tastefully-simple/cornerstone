@@ -205,6 +205,9 @@ a,
 .frametext-semibold{
     font:600 16px stencilFontFamily("body-font"); 
 }
+.frametext-body{
+    @extend .frametext;
+}
 .frameheading-1{
     @extend .frametext-black;
 }
@@ -246,6 +249,7 @@ a,
     font-size:9px;
     @extend .frametext;
 }
+
 header,
 footer,
 .alertbox,

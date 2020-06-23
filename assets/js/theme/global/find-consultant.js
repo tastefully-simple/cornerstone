@@ -31,17 +31,21 @@ class FindAConsultant {
         // Return
         $('body').on('click', '.return-search', this.returnSearch.bind(this));
 
-        // Searches
-        const buttonSel = (t) => '#consultant-search .' + t + '-search .button-alternate';
-        $('body').on('click', buttonSel('zip'), () => this.searchByZip());
-        $('body').on('click', buttonSel('name'), () => this.searchByName());
-        $('body').on('click', buttonSel('id'), () => this.searchById());
+        // Search
+        $('body').on('submit', '#zipcode-search-form', () => this.searchByZip())
+        $('body').on('submit', '#name-search-form', () => this.searchByName())
+        $('body').on('submit', '#id-search-form', () => this.searchById())
 
         // Select
         $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
         
         // Submit
         $('body').on('click', '#consultant-continue', () => this.continue())
+
+        // Move "Find a Consultant" into the main menu in mobile view
+        this.screenMinWidth = 801;
+        this.moveConsultantEl(trigger, this.screenMinWidth);
+        $(window).on('resize', () => this.moveConsultantEl(trigger, this.screenMinWidth));
     }
 
     createModal(e, template) {
@@ -69,6 +73,7 @@ class FindAConsultant {
 
     returnSearch() {
         $("#consultant-search-results").hide();
+        $('.alertbox-error').hide();
         $("#consultant-search").show();
         $(".matching").remove();
         $(".consultant-card").remove();
@@ -76,33 +81,56 @@ class FindAConsultant {
         $(".consultant-footer").remove();
     }
 
+    displayError(err) {
+        $('.alertbox-error span').text(err);
+        $('.alertbox-error').show();
+    }
+
     searchByZip() {
         let zip = $('#consultant-search .zip-search input').val();
         this.api.searchConsultantsByZip(zip, "100", "1", "20")
             .then(res => res.json())
-            .then(data => this.renderResults(data))
-            .catch(err => console.warn('searchByZip', err));
+            .then(data => { 
+                this.renderResults(data);
+                $('.alertbox-error').hide();
+            })
+            .catch(err => { 
+                console.warn('searchByZip', err); 
+                this.displayError(err);
+            });
     }
 
     searchByName() {
         let name  = $('#consultant-search .name-search input').val();
         let state = $('#consultant-search .name-search select').val();
-
         this.api.searchConsultantsByName(name, state, "1", "20")
             .then(res => res.json())
-            .then(data => this.renderResults(data))
-            .catch(err => console.warn('searchByZip', err));
+            .then(data => { 
+                this.renderResults(data);
+                $('.alertbox-error').hide();
+            })
+            .catch(err => { 
+                console.warn('searchByName', err);
+                this.displayError(err);
+            });
     }
 
     searchById() {
         let id = $('#consultant-search .id-search input').val();
         this.api.getConsultant(id)
             .then(res => res.json())
-            .then(data => this.renderResults(data))
-            .catch(err => console.warn('searchById', err));
+            .then(data => {
+                this.renderResults(data);
+                $('.alertbox-error').hide();
+            })
+            .catch(err => { 
+                console.warn('searchById', err);
+                this.displayError(err);
+            });
     }
 
     selectConsultant(e) {
+        $('.alertbox-error').hide();
         var $consultantCard = $(e.target).closest(".consultant-card");
         if (!$consultantCard.hasClass("selected")) {
             this.selectedId = $consultantCard.data('cid');
@@ -123,9 +151,23 @@ class FindAConsultant {
           frame.src = this.continueUrl + this.selectedId;
           document.body.appendChild(frame);
           this.modal.close();
+        } else {
+            this.displayError("Please select a consultant before continuing");
         }
     }
 
+    moveConsultantEl($consultant, screenMinWidth) {
+        let $navPages = $('.navPages-container .navPages');
+        let $topHeader = $('.header-top .header-top-links');
+
+        if (window.innerWidth >= screenMinWidth) {
+            // Put back consultant in the top header
+            $topHeader.prepend($consultant);
+        } else {
+            // Add consultant to mobile main menu
+            $navPages.prepend($consultant);
+        }
+    }
 
     /*
      * HTML
@@ -184,8 +226,8 @@ class FindAConsultant {
     getImageHtml(image) {
         var $imageContainerHtml = $("<div>", {"class": "consultant-image"});
         var $imageHtml = $("<img>");
-        $imageHtml.attr("src", image.url);
-        $imageHtml.attr("alt", image.alt);
+        $imageHtml.attr("src", image);
+        $imageHtml.attr("onerror", "this.onerror=null;this.src='https://www.tastefullysimple.com/_/media/images/noconsultantphoto.png';");
         $imageContainerHtml.append($imageHtml);
         return $imageContainerHtml;
     }
@@ -265,4 +307,5 @@ class FindAConsultant {
         $footerHtml.append($continueHtml);
         return $footerHtml;
     }
+
 }

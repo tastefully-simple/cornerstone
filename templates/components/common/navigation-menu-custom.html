@@ -1,6 +1,12 @@
 <nav class="navPages">
     <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
-        <li class="navPages-item">
+        <li class="navPages-item navPages-item-join">
+            <a class="navPages-action teal-text" href="/join">join</a>
+        </li>
+        <li class="navPages-item navPages-item-host">
+            <a class="navPages-action greenapple-text" href="/host">host</a>
+        </li>
+        <li class="navPages-item navPages-item-shop">
             <a
                 class="navPages-action had-subMenu burgundy-text"
                 href="/shop"
@@ -13,7 +19,6 @@
                     <li class="navPage-subMenu-item">
                         <a 
                             class="navPage-subMenu-action navPages-action has-subMenu is-open"
-                            href="/shop/meal-kits"
                             data-collapsible="navPages-catShopByMeal"
                             data-collapsible-disabled-state="open"
                             data-collapsible-enabled-state="closed"
@@ -45,7 +50,6 @@
                     <li class="navPage-subMenu-item">
                         <a 
                             class="navPage-subMenu-action navPages-action has-subMenu is-open"
-                            href="/shop/products"
                             data-collapsible="navPages-catShopByProd"
                             data-collapsible-disabled-state="open"
                             data-collapsible-enabled-state="closed"
@@ -89,7 +93,6 @@
                     <li class="navPage-subMenu-item">
                         <a 
                             class="navPage-subMenu-action navPages-action has-subMenu is-open"
-                            href="/shop/sale-specials"
                             data-collapsible="navPages-catShopBySpecials"
                             data-collapsible-disabled-state="open"
                             data-collapsible-enabled-state="closed"
@@ -112,7 +115,6 @@
                     <li class="navPage-subMenu-item">
                         <a 
                             class="navPage-subMenu-action navPages-action has-subMenu is-open"
-                            href="/shop/cooking-styles-ingredients"
                             data-collapsible="navPages-catShopByStyles"
                             data-collapsible-disabled-state="open"
                             data-collapsible-enabled-state="closed"
@@ -137,7 +139,7 @@
                                 <a class="navPage-childList-action navPages-action" href="/kid-favorites">Kid Favorites</a>
                             </li>
                             <li class="navPage-childList-item">
-                                <a class="navPage-childList-action navPages-action" href="/clean-eating-TSEatwell">Clean Eating</a>
+                                <a class="navPage-childList-action navPages-action" href="/clean-eating">Clean Eating</a>
                             </li>
                             <li class="navPage-childList-item">
                                 <a class="navPage-childList-action navPages-action" href="/no-gluten-ingredients">No Gluten Ingredients</a>
@@ -150,7 +152,6 @@
                     <li class="navPage-subMenu-item">
                         <a 
                             class="navPage-subMenu-action navPages-action has-subMenu is-open"
-                            href="/shop/gifts"
                             data-collapsible="navPages-catShopByGifts"
                             data-collapsible-disabled-state="open"
                             data-collapsible-enabled-state="closed"
@@ -170,20 +171,20 @@
                 </ul>
             </div>
         </li>
-        <li class="navPages-item">
-            <a class="navPages-action teal-text" href="/join">join</a>
-        </li>
-        <li class="navPages-item">
-            <a class="navPages-action greenapple-text" href="/host">host</a>
-        </li>
-        <li class="navPages-item frame-text">
+        <li class="navPages-item navPages-item-recipes frame-text">
             <a class="navPages-action" href="/recipes">recipes</a>
         </li>
-        <li class="navPages-item frame-text">
+        <li class="navPages-item navPages-item-blog frame-text">
             <a class="navPages-action" href="/blog">blog</a>
         </li>
     </ul>
     <ul class="navPages-list navPages-list--user">
+        <li class="navPages-item navPages-item-recipes frame-text">
+            <a class="navPages-action" href="/recipes">recipes</a>
+        </li>
+        <li class="navPages-item navPages-item-blog frame-text">
+            <a class="navPages-action" href="/blog">blog</a>
+        </li>
         {{#if currency_selector.currencies.length '>' 1}}
             <li class="navPages-item">
                 <a class="navPages-action has-subMenu" href="#" data-collapsible="navPages-currency" aria-controls="navPages-currency" aria-expanded="false">
@@ -225,8 +226,8 @@
         {{/if}}
         {{#if customer}}
             <li class="navPages-item">
-                <a class="navPages-action has-subMenu" href="{{urls.account.index}}" data-collapsible="navPages-account">
-                    {{lang 'common.account'}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xlink:href="#icon-chevron-down" /></svg></i>
+                <a class="navPages-action navPages-action-account has-subMenu title-case" href="{{urls.account.index}}" data-collapsible="navPages-account">
+                    Hi, {{ first (split customer.name " ") }}
                 </a>
                 <div class="navPage-subMenu" id="navPages-account" aria-hidden="true" tabindex="-1">
                     <ul class="navPage-subMenu-list">

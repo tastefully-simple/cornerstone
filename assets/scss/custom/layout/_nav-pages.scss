@@ -1,3 +1,126 @@
+// =============================================================================
+// Tastefully Simple Navigation Styles
+// =============================================================================
+
+.header {
+    .header-main {
+        .container {
+            .navPages-container {
+                .navPages {
+                    background-color: $white;
+                    padding:0;
+                }
+                .navPages-list {
+                    &:not(.navPages-list--user) {
+                        display:flex;
+                        flex-wrap:wrap;
+                        justify-content:space-between;
+                        padding-top:0;
+                        position:relative;
+                        .navPages-item {
+                            &.navPages-item-recipes,
+                            &.navPages-item-blog {
+                                display:none;
+                            }
+                            &.navPages-item-shop {
+                                padding:1.5rem;
+                                width:100%;
+                                &>.navPages-action {
+                                    left:50%;
+                                    position:absolute;
+                                    border-bottom:3px solid $wan-white;
+                                    padding-bottom:0;
+                                    top:0;
+                                    transform:translateX(-50%);
+                                    &::after {
+                                        border-bottom:3px solid $burgundy;
+                                        width:90px;
+                                    }
+                                }
+                            }
+                            &>.navPages-action {
+                                text-align:center;
+                                &::after {
+                                    border-bottom:6px solid $wan-white;
+                                    content:'';
+                                    display:block;
+                                    margin:6px auto 0;
+                                    padding-top:.15rem;
+                                    width:150px;
+                                }
+                            }
+                            .navPages-action {
+                                @extend .framelink-xl;
+                                &:not(.navPage-childList-action) {
+                                    &.navPage-subMenu-action {
+                                        @extend .subhead-16;
+                                    }
+                                }
+                                &.navPage-childList-action {
+                                    @extend .subhead-14;
+                                    margin-bottom:.5rem;
+                                }
+                            }
+                        }
+                    }
+                    &.navPages-list--user {
+                        background-color:$wan-white;
+                        border-top:none;
+                        padding:0 .5rem;
+                        margin:1.5rem;
+                        .navPages-item {
+                            .navPages-action {
+                                @extend .subhead-16;
+                                &.navPage-subMenu-action {
+                                    padding:.25rem 0;
+                                }
+                            }
+                            .navPage-subMenu-list {
+                                @extend .is-open;
+                                @extend .navPage-childList;
+                                .navPage-subMenu-action {
+                                    @extend .navPage-childList-action;
+                                }
+                            }
+                        }
+                    }
+                    .navPages-item {
+                        .navPages-action {
+                            &:not(.title-case) {
+                                text-transform:lowercase;
+                            }
+                            &.title-case {
+                                text-transform:capitalize;
+                            }
+                        }
+                        .navPage-childList {
+                            border-left:none;
+                        }
+                        .navPages-action-account,
+                        .navPage-subMenu-action {
+                            &.has-subMenu {
+                                display:flex;
+                                justify-content:space-between;
+                                &::after {
+                                    content:'\f0da';
+                                    font-family:'Font Awesome 5 Free';
+                                    font-size:1.2em;
+                                }
+                                &.is-open {
+                                    &::after {
+                                        content:'\f0d7';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 @media only screen and (min-width:801px) {
     .header {
         .header-main {
@@ -5,9 +128,57 @@
                 .navPages-container {
                     .navPages-list {
                         &:not(.navPages-list--user) {
-                            display:flex;
+                            align-items:center;
+                            flex-direction:row;
                             justify-content:flex-end;
-                            text-transform:lowercase;
+                            .navPages-item {
+                                &.navPages-item-shop {
+                                    order:1;
+                                    padding:0;
+                                    width:auto;
+                                    &>.navPages-action {
+                                        border:none;
+                                        left:unset;
+                                        position:unset;
+                                        top:unset;
+                                        text-align:left;
+                                        transform:unset;
+                                    }
+                                }
+                                &.navPages-item-join {
+                                    order:2;
+                                }
+                                &.navPages-item-host {
+                                    order:3;
+                                }
+                                &.navPages-item-recipes {
+                                    display:block;
+                                    order:4;
+                                }
+                                &.navPages-item-blog {
+                                    display:block;
+                                    order:5;
+                                }
+                                &>.navPages-action {
+                                    border:none;
+                                    &::after {
+                                        display:none;
+                                    }
+                                }
+                                .navPages-action {
+                                    &:active,
+                                    &:focus,
+                                    &:hover,
+                                    &.activePage {
+                                        color: $caramel;
+                                    }
+                                    &:not(.navPage-childList-action) {
+                                        &.navPage-subMenu-action {
+                                            @extend .framelink-xl;
+                                        }
+                                    }
+                                }
+                            }
                         }
                         &navPages-list-main {
                             display:flex;
@@ -19,12 +190,6 @@
                                 border:none;
                                 font-size:fontSize("base");
                                 padding:0 1.125rem;
-                                &:not(.title-case){
-                                    text-transform:lowercase;
-                                }
-                                &:not(.navPage-childList-action) {
-                                    @extend .framelink-xl;
-                                }
                                 &.is-open {
                                     &:not(.navPage-subMenu-action) {
                                         background-color:$white;
@@ -72,6 +237,9 @@
                                 &>.navPage-subMenu-action {
                                     margin-bottom:.2rem;
                                     padding:0;
+                                    &::after {
+                                        display:none;
+                                    }
                                 }
                             }
                             .navPage-subMenu-list {
@@ -80,7 +248,10 @@
                                     .navPage-childList-item {
                                         margin:.5rem 0;
                                         .navPage-childList-action{
+                                            line-height:inherit;
+                                            margin:0;
                                             padding:0;
+                                            @extend .frametext-body;
                                         }
                                     }
                                 }

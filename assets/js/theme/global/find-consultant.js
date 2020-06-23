@@ -75,9 +75,14 @@ class FindAConsultant {
         $("#consultant-search-results").hide();
         $('.alertbox-error').hide();
         $("#consultant-search").show();
+        this.clearConsultantWindow();
+    }
+
+    clearConsultantWindow() {
         $(".matching").remove();
         $(".consultant-card").remove();
         $(".consultant-divider").remove();
+        $(".consultant-pagination").remove();
         $(".consultant-footer").remove();
     }
 
@@ -86,12 +91,17 @@ class FindAConsultant {
         $('.alertbox-error').show();
     }
 
-    searchByZip() {
-        let zip = $('#consultant-search .zip-search input').val();
-        this.api.searchConsultantsByZip(zip, "100", "1", "20")
+    searchByZip(zipcode=0, pageNumber="1", pageSize="5") {
+        if (zipcode == 0) {
+            zipcode = $('#consultant-search .zip-search input').val();
+        }
+
+        var apiParameter = {zipcode: zipcode};
+
+        this.api.searchConsultantsByZip(zipcode, "100", pageNumber, pageSize)
             .then(res => res.json())
-            .then(data => { 
-                this.renderResults(data);
+            .then(data => {
+                this.renderResults("searchByZip", apiParameter, data);
             })
             .catch(err => { 
                 console.warn('searchByZip', err); 
@@ -99,13 +109,20 @@ class FindAConsultant {
             });
     }
 
-    searchByName() {
-        let name  = $('#consultant-search .name-search input').val();
-        let state = $('#consultant-search .name-search select').val();
-        this.api.searchConsultantsByName(name, state, "1", "20")
+    searchByName(name='', state='', pageNumber="1", pageSize="5") {
+        if (name == '') {
+            name  = $('#consultant-search .name-search input').val();
+        }
+
+        if (state == '') {
+           state = $('#consultant-search .name-search select').val();
+        }
+
+        var apiParameter = {name: name, state: state};
+        this.api.searchConsultantsByName(name, state, pageNumber, pageSize)
             .then(res => res.json())
-            .then(data => { 
-                this.renderResults(data);
+            .then(data => {
+                this.renderResults("searchByName", apiParameter, data);
             })
             .catch(err => { 
                 console.warn('searchByName', err);
@@ -118,7 +135,7 @@ class FindAConsultant {
         this.api.getConsultant(id)
             .then(res => res.json())
             .then(data => {
-                this.renderResults(data);
+                this.renderResults("searchById", {}, data);
             })
             .catch(err => { 
                 console.warn('searchById', err);
@@ -169,13 +186,14 @@ class FindAConsultant {
     /*
      * HTML
      */
-    renderResults(response) {
+    renderResults(method="", apiParameter={}, response) {
         if (!response.Results) {
             this.displayError("No match was found.");
             return;
         }
         $("#consultant-search").hide();
         $('.alertbox-error').hide();
+        this.clearConsultantWindow();
 
         var $matchingConsultants = $("<span>", {"class": "system-14 matching"});
         $matchingConsultants.text(`Consultants matching \"${response.TotalRecordCount}\"`);
@@ -193,6 +211,14 @@ class FindAConsultant {
         });
 
         $("#consultant-search-results").show();
+
+        // Pagination is only needed when searching by zipcode or searching by name
+        // Searching by Consultant Id should produce only 1 result
+        if (method != "searchById") {
+            var totalPages = Math.ceil(response.TotalRecordCount / response.PageSize);
+            var $paginationHtml = this.getPaginationHtml(method, apiParameter, response.CurrentPage, response.PageSize, totalPages)
+            $("#consultant-search-results .genmodal-body").append($paginationHtml);
+        }
 
         var $footerHtml = this.getFooterHtml()
         $("#consultant-search-results .genmodal-body").append($footerHtml);
@@ -308,6 +334,99 @@ class FindAConsultant {
         $continueHtml.text("continue");
         $footerHtml.append($continueHtml);
         return $footerHtml;
+    }
+
+    getPaginationHtml(method, apiParameter, currentPage, pageSize, totalPages) {
+        var $paginationHtml = $("<div>", {"class": "consultant-pagination"});
+        var $paginationListHtml = $("<ul>", {"class": "consultant-pagination-list"});
+
+        if (method == "searchByZip") {
+            var zipcode = apiParameter["zipcode"];
+        } else if (method = "searchByName") {
+            var name = apiParameter["name"];
+            var state = apiParameter["state"];
+        }
+
+        // Loop created to account for the total pages + beginning and ending carets for next/previous buttons
+        // First loop is the previous caret
+        // Last loop is the next caret
+        // Everything in between is the pages from the API call
+        for (let x = 0; x <= totalPages + 1; x++) {
+
+            if (x == 0) {
+                // Create the previous caret HTML element
+                var $paginationItemHtml = $("<li>", {"class": "consultant-pagination-item"});
+                var $paginationLinkHtml = $("<a>", {"class": "consultant-pagination-link previous-button"});
+                var $fontAwesomeCaretHtml = $("<i>", {"class": "fas fa-caret-left"});
+                $paginationLinkHtml.append($fontAwesomeCaretHtml);
+
+                // If current page is 1, can't go backwards in pages so have to disable the caret
+                if (currentPage == 1) {
+                    $paginationLinkHtml.addClass("isDisabled");
+                } else {
+
+                    if (method == 'searchByZip') {
+                        $paginationLinkHtml.click(event => {
+                            this.searchByZip(zipcode, (currentPage - 1).toString());
+                        });
+                    } else if (method == 'searchByName') {
+                        $paginationLinkHtml.click(event => {
+                            this.searchByName(name, state, (currentPage - 1).toString());
+                        });
+                    }
+
+                }
+            } else if ( x == totalPages + 1) {
+                // Create the next caret HTML element
+                var $paginationItemHtml = $("<li>", {"class": "consultant-pagination-item"});
+                var $paginationLinkHtml = $("<a>", {"class": "consultant-pagination-link next-button"});
+                var $fontAwesomeCaretHtml = $("<i>", {"class": "fas fa-caret-right"});
+                $paginationLinkHtml.append($fontAwesomeCaretHtml);
+
+                // If current page is on the last page, can't move forward in pages so have to disable the caret
+                if (currentPage == totalPages) {
+                    $paginationLinkHtml.addClass("isDisabled");
+                } else {
+                    if (method == 'searchByZip') {
+                        $paginationLinkHtml.click(event => {
+                            this.searchByZip(zipcode, (currentPage + 1).toString());
+                        });
+                    } else if (method == 'searchByName') {
+                        $paginationLinkHtml.click(event => {
+                            this.searchByName(name, state, (currentPage + 1).toString());
+                        });
+                    }
+                }
+            } else {
+                // Create the HTML elements for the page numbers
+                var $paginationItemHtml = $("<li>", {"class": "consultant-pagination-item"});
+
+                if (x == currentPage) {
+                    $paginationItemHtml.addClass("consultant-pagination-item--current");
+                }
+
+                var $paginationLinkHtml = $("<a>", {"class": "consultant-pagination-link"});
+                $paginationLinkHtml.text(x);
+
+                if (method == 'searchByZip') {
+                    $paginationLinkHtml.click(event => {
+                        this.searchByZip(zipcode, x.toString());
+                    });
+                } else if (method == 'searchByName') {
+                        $paginationLinkHtml.click(event => {
+                            this.searchByName(name, state, x.toString());
+                        });
+                }
+
+            }
+
+            $paginationItemHtml.append($paginationLinkHtml);
+            $paginationListHtml.append($paginationItemHtml);
+
+        }
+
+        $paginationHtml.append($paginationListHtml);
+        return $paginationHtml;
     }
 
 }

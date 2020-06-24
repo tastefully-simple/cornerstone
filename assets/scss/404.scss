@@ -1,12 +1,15 @@
 
-.container-404{
-    height: 900px;
-}
-
 a,p{
     font-size: 22px;
     margin: 0;
     line-height: 1.1em;
+}
+
+.body {
+    margin-top: 0;
+}
+.container {
+    padding: 0;
 }
 
 .link-404{
@@ -30,76 +33,33 @@ a,p{
     color: $teal;
     font-weight: $fontWeight-bold;
 }
-//--- Grid ----------------------------------------
-.grid-container {
-    padding-top: 30px;
+//--- Content Layout ----------------------------------------
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+}
+.flex-responsive {
     width: 60%;
-    margin: auto;
-    display: grid;
-    grid-template-columns: .4fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    gap: 1px 1px;
-    grid-template-areas: "row-1 col-1 col-1 col-1" "row-2 col-2 col-2 col-2" "row-3 col-3 col-3 col-3" "row-4 col-4 col-4 col-4";
-}
-.img-1 {
-    grid-area: row-1;
-    @extend .icon-positioned
-    }
-  
-.row-1 {
-    grid-area: col-1;
-}
-  
-.row-2 {
-    grid-area: col-2; 
-}
-
-.img-2 {
-    grid-area: row-2;
-    @extend .icon-positioned 
-}
-
-.img-3 {
-    grid-area: row-3;
-    @extend .icon-positioned
-}
-
-.row-3 {
-    grid-area: col-3; 
-}
-
-.img-4 {
-    grid-area: row-4;
-    @extend .icon-positioned
-}
-
-.row-4 {
-    grid-area: col-4; 
-}
- 
-[class*="col-"]{
-    margin-top: 20px; 
-}
-
-.row-1, .row-2, .row-3{
-    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
 }
 
 //--- Icons ----------------------------------------
 .icon-positioned{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-items: top;
-    align-content: stretch;
     padding: 5px 10px 0 0;
 }
 
 .icon-sized{
     @extend .all-icons;
-    height: 55px;
-    width: 55px;
+    height: 3em;
+    width: 3em;
 }
 
 .book-mark{
@@ -126,21 +86,38 @@ a,p{
 
 @media only screen and (max-width: 768px) {
 
-    #logo{
-        width: 48%;
+    body {
+        padding-top: 0;
+    }
+    .body {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .header {
+        position: static;
+      }
+    .header-top {
+        padding: 0 $container-padding;
+    }
+    .container {
+        padding: 0;
     }
 
     .icon-positioned{
-        padding: 2px 5px 0 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0 0 1.5% 0;
     }
-    .icon-sized{
-        height: 30px;
-        width: 30px;
-    }
-    .grid-container {
+    .flex-responsive {
         width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 15%;
+        padding-right: 10%;
     }
     a,p {
       font-size: 14px;

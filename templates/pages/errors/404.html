@@ -1,73 +1,74 @@
 {{#partial "page"}}
 
 <!-- {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} -->
-<div class="container-404">
-    <section>
-        <div id="logo">
-            <div>
-                <img src="../assets/img/logos-ts-burgundy@2x.png" alt="TS Logo">
-            </div>
-        </div>
+<div id="404-container">
+    <section id="responsive">
         <div class="hero">
             <img id="404-hero" src="../../../assets/img/HERO.jpg" width="1440">
         </div>
     </section>
     <section>
-        <div class="grid-container">
-            <div class="img-1">
-                <div class="view-special-offers-icon"></div>
-            </div>
-            <div class="row-1">
-                <p>
-                    Maybe where you were going doesn't exist anymore...
-                </p>
-                <p>
-                    check out what's happening now!
-                </p>
-                <div class="link-404">
-                    <a href="#">View special offers ></a>
+        <div class="flex-col">
+            <div class="flex-responsive">
+                <div class="icon-positioned">
+                    <div class="view-special-offers-icon"></div>
+                </div>
+                <div>
+                    <p>
+                        Maybe where you were going doesn't exist anymore...
+                    </p>
+                    <p>
+                        check out what's happening now!
+                    </p>
+                    <div class="link-404">
+                        <a href="#">View special offers ></a>
+                    </div>
                 </div>
             </div>
-            <div class="row-2">
-                <p>
-                    If you are using a bookmark and you are sure this is where you want to go...
-                </p>
-                <p>
-                    check to see if you need to update your bookmark!
-                </p>
+            <div class="flex-responsive">
+                <div class="icon-positioned">
+                    <div class="book-mark"></div>
+                </div>
+                <div>
+                    <p>
+                        If you are using a bookmark and you are sure this is where you want to go...
+                    </p>
+                    <p>
+                        check to see if you need to update your bookmark!
+                    </p>
+                </div>
             </div>
-            <div class="img-2">
-                <div class="book-mark"></div>
+            <div class="flex-responsive">
+                <div class="icon-positioned">
+                    <div class="phone-icon"></div>
+                </div>
+                <div>
+                    <p>
+                        Still think where you are going should work?
+                    </p>
+                    <p>
+                        Give us a call... we might be experiencing temporary problems.
+                    </p>
+                    <p class="ts-phone">
+                        866.448.646
+                    </p>
+                </div>
             </div>
-            <div class="img-3">
-                <div class="phone-icon"></div>
-            </div>
-            <div class="row-3">
-                <p>
-                    Still think where you are going should work?
-                </p>
-                <p>
-                    Give us a call... we might be experiencing temporary problems.
-                </p>
-                <p class="ts-phone">
-                    866.448.646
-                </p>
-    
-    
-            </div>
-            <div class="img-4">
-                <div class="house-icon"></div>
-            </div>
-            <div class="row-4">
-                <p>
-                    Or just wait a bit and we will bring you to our homepage at
-                </p>
-                <div class="link-404">
-                    <a href="#">tastefullysimple.com</a>
+            <div class="flex-responsive">
+                <div class="icon-positioned">
+                    <div class="house-icon"></div>
+                </div>
+                <div>
+                    <p>
+                        Or just wait a bit and we will bring you to our homepage at
+                    </p>
+                    <div class="link-404">
+                        <a href="#">tastefullysimple.com</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
 {{/partial}}
-{{> layout/base-404}}
+{{> layout/base}}

@@ -92,7 +92,6 @@ class FindAConsultant {
             .then(res => res.json())
             .then(data => { 
                 this.renderResults(data);
-                $('.alertbox-error').hide();
             })
             .catch(err => { 
                 console.warn('searchByZip', err); 
@@ -107,7 +106,6 @@ class FindAConsultant {
             .then(res => res.json())
             .then(data => { 
                 this.renderResults(data);
-                $('.alertbox-error').hide();
             })
             .catch(err => { 
                 console.warn('searchByName', err);
@@ -121,7 +119,6 @@ class FindAConsultant {
             .then(res => res.json())
             .then(data => {
                 this.renderResults(data);
-                $('.alertbox-error').hide();
             })
             .catch(err => { 
                 console.warn('searchById', err);
@@ -173,7 +170,12 @@ class FindAConsultant {
      * HTML
      */
     renderResults(response) {
+        if (!response.Results) {
+            this.displayError("No match was found.");
+            return;
+        }
         $("#consultant-search").hide();
+        $('.alertbox-error').hide();
 
         var $matchingConsultants = $("<span>", {"class": "system-14 matching"});
         $matchingConsultants.text(`Consultants matching \"${response.TotalRecordCount}\"`);

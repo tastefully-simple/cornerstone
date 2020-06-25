@@ -22,6 +22,30 @@
             }
         }
     }
+    .productView-options {
+        .alertBox--error {
+            background: none;
+            display: flex;
+            .alertBox-icon {
+                vertical-align: baseline;
+            }
+            .icon {
+                svg {
+                    fill: $burgundy;
+                }
+            }
+            .alertBox-message {
+                margin-left: 10px;
+                &>span {
+                    flex-direction: column;
+                    display: flex;
+                    .out-of-stock-title {
+                        color: $burgundy;
+                    }
+                }
+            }
+        }
+    }
     @media only screen and (min-width:801px){
         .productView-details{
             .productView-product {

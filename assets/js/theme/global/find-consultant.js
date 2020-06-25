@@ -179,7 +179,18 @@ class FindAConsultant {
     }
 
     goToPage(p) {
-        console.log('Going to page', p);
+        this.searchInfo.page = p;
+
+        switch (this.searchInfo.mode) {
+            case SEARCH_BY_ZIP:
+                this.search()
+                break;
+
+            case SEARCH_BY_NAME:
+                this.search();
+                break;
+        }
+
     }
 
     selectConsultant(e) {
@@ -375,98 +386,5 @@ class FindAConsultant {
         $continueHtml.text("continue");
         $footerHtml.append($continueHtml);
         return $footerHtml;
-    }
-
-    getPaginationHtml(method, apiParameter, currentPage, pageSize, totalPages) {
-        var $paginationHtml = $("<div>", {"class": "consultant-pagination"});
-        var $paginationListHtml = $("<ul>", {"class": "consultant-pagination-list"});
-
-        if (method == "searchByZip") {
-            var zipcode = apiParameter["zipcode"];
-        } else if (method = "searchByName") {
-            var name = apiParameter["name"];
-            var state = apiParameter["state"];
-        }
-
-        // Loop created to account for the total pages + beginning and ending carets for next/previous buttons
-        // First loop is the previous caret
-        // Last loop is the next caret
-        // Everything in between is the pages from the API call
-        for (let x = 0; x <= totalPages + 1; x++) {
-
-            if (x == 0) {
-                // Create the previous caret HTML element
-                var $paginationItemHtml = $("<li>", {"class": "consultant-pagination-item"});
-                var $paginationLinkHtml = $("<a>", {"class": "consultant-pagination-link previous-button"});
-                var $fontAwesomeCaretHtml = $("<i>", {"class": "fas fa-caret-left"});
-                $paginationLinkHtml.append($fontAwesomeCaretHtml);
-
-                // If current page is 1, can't go backwards in pages so have to disable the caret
-                if (currentPage == 1) {
-                    $paginationLinkHtml.addClass("isDisabled");
-                } else {
-
-                    if (method == 'searchByZip') {
-                        $paginationLinkHtml.click(event => {
-                            this.searchByZip(zipcode, (currentPage - 1).toString());
-                        });
-                    } else if (method == 'searchByName') {
-                        $paginationLinkHtml.click(event => {
-                            this.searchByName(name, state, (currentPage - 1).toString());
-                        });
-                    }
-
-                }
-            } else if ( x == totalPages + 1) {
-                // Create the next caret HTML element
-                var $paginationItemHtml = $("<li>", {"class": "consultant-pagination-item"});
-                var $paginationLinkHtml = $("<a>", {"class": "consultant-pagination-link next-button"});
-                var $fontAwesomeCaretHtml = $("<i>", {"class": "fas fa-caret-right"});
-                $paginationLinkHtml.append($fontAwesomeCaretHtml);
-
-                // If current page is on the last page, can't move forward in pages so have to disable the caret
-                if (currentPage == totalPages) {
-                    $paginationLinkHtml.addClass("isDisabled");
-                } else {
-                    if (method == 'searchByZip') {
-                        $paginationLinkHtml.click(event => {
-                            this.searchByZip(zipcode, (currentPage + 1).toString());
-                        });
-                    } else if (method == 'searchByName') {
-                        $paginationLinkHtml.click(event => {
-                            this.searchByName(name, state, (currentPage + 1).toString());
-                        });
-                    }
-                }
-            } else {
-                // Create the HTML elements for the page numbers
-                var $paginationItemHtml = $("<li>", {"class": "consultant-pagination-item"});
-
-                if (x == currentPage) {
-                    $paginationItemHtml.addClass("consultant-pagination-item--current");
-                }
-
-                var $paginationLinkHtml = $("<a>", {"class": "consultant-pagination-link"});
-                $paginationLinkHtml.text(x);
-
-                if (method == 'searchByZip') {
-                    $paginationLinkHtml.click(event => {
-                        this.searchByZip(zipcode, x.toString());
-                    });
-                } else if (method == 'searchByName') {
-                        $paginationLinkHtml.click(event => {
-                            this.searchByName(name, state, x.toString());
-                        });
-                }
-
-            }
-
-            $paginationItemHtml.append($paginationLinkHtml);
-            $paginationListHtml.append($paginationItemHtml);
-
-        }
-
-        $paginationHtml.append($paginationListHtml);
-        return $paginationHtml;
     }
 }

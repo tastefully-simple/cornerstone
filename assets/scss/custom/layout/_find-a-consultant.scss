@@ -117,51 +117,6 @@
         .genmodal-body {
             height: 430px;
             overflow-y: auto;
-            .consultant-pagination {
-                //background: none;
-                //box-shadow: none;
-                text-align: right;
-                .consultant-pagination-list {
-                    li {
-                        margin-left: 0.375rem;
-                    }
-                    .consultant-pagination-item {
-                        display: inline-block;
-                        a {
-                            text-decoration: none;
-                        }
-
-                        &.consultant-pagination-item--current {
-                            a {
-                                text-decoration: underline;
-                            }
-                        }
-                        .consultant-pagination-link {
-                            color: black;
-                            &.previous-button {
-                                display: inline-block;
-                                &.isDisabled {
-                                    color: currentColor;
-                                    cursor: default;
-                                    opacity: 0.5;
-                                    text-decoration: none;
-                                }
-                            }
-                            &.next-button {
-                                //width: 0;
-                                //height: 0;
-                                display: inline-block;
-                                &.isDisabled {
-                                    color: currentColor;
-                                    cursor: default;
-                                    opacity: 0.5;
-                                    text-decoration: none;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             .consultant-footer {
                 background: none;
                 box-shadow: none;

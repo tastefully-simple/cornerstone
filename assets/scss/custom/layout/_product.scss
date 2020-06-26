@@ -36,12 +36,10 @@
             }
             .alertBox-message {
                 margin-left: 10px;
-                &>span {
-                    flex-direction: column;
-                    display: flex;
-                    .out-of-stock-title {
-                        color: $burgundy;
-                    }
+                flex-direction: column;
+                display: flex;
+                .out-of-stock-title {
+                    color: $burgundy;
                 }
             }
         }

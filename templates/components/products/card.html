@@ -55,7 +55,7 @@
                             <a href="{{add_to_cart_url}}" data-event-type="product-click" class="button button--small card-figcaption-button">{{lang 'products.add_to_cart'}}</a>
                         {{/if}}
                         {{#if out_of_stock_message }}
-                            <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">{{out_of_stock_message}}</a>
+                            <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">Temporarily out of stock. {{out_of_stock_message}}</a>
                         {{/if}}
                     {{/if}}
                 {{/or}}

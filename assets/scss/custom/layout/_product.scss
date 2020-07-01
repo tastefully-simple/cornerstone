@@ -1,21 +1,21 @@
 // Product Page
-.productView{
+.productView {
     // Product Details Section - productView-product
-    .productView-details{
+    .productView-details {
         margin-bottom: 0px;
         .productView-product {
             // Title
-            .productView-title{
+            .productView-title {
                 font-size: 30px;
                 margin-bottom: 0px;
             }
             // Product Short Description
-            .productView-shortDescription{
+            .productView-shortDescription {
                 margin: 1rem 0px;
             }
             // Price
-            .productView-price{
-                .price--withoutTax{
+            .productView-price {
+                .price--withoutTax {
                     font-size: 22px;
                     font-family: "PT Serif", Arial, Helvetica, sans-serif;
                 }
@@ -44,30 +44,18 @@
             }
         }
     }
-    @media only screen and (min-width:801px){
-        .productView-details{
-            .productView-product {
-                // Price
-                .productView-price{
-                    .price--withoutTax{
-                        font-size: 28px;
-                    }
-                }
-            }
-        }
-    }
 
 
     // Product Details Section - productView-options
-    .productView-details{
+    .productView-details {
         .productView-options {
             margin-bottom: 100px;
 
             // Qty Picker
             .form-field--increments {
                 text-align: left;
-                .form-increment{
-                    .form-input--incrementTotal{
+                .form-increment {
+                    .form-input--incrementTotal {
                         font-weight: 600;
                         padding: 2px 1px;
                     }
@@ -75,28 +63,28 @@
             }
 
             // Wishlist
-            .form-wishlist{
-                .dropdown-menu-button{
+            .form-wishlist {
+                .dropdown-menu-button {
                     margin-right: 11px;
                     border-color: $light-burgundy;
-                    &:hover{
+                    &:hover {
                         border-color: $burgundy;
-                        .icon{
-                            svg{
+                        .icon {
+                            svg {
                                 fill: $burgundy;
                             }
                         }
                     }
-                    .icon{
-                        svg{
+                    .icon {
+                        svg {
                             fill: $light-burgundy;
                         }
                     }
                 }
-                #wishlist-dropdown{
+                #wishlist-dropdown {
                     padding-right: 11px;
                     li {
-                        .button:hover{
+                        .button:hover {
                             border-color: $burgundy;
                         }
                         input {
@@ -110,7 +98,7 @@
             }
         }
         // Social Links
-        .addthis_toolbox{
+        .addthis_toolbox {
             border-style: solid;
             border-width: 1px;
             border-color: $teal;
@@ -118,25 +106,25 @@
             position: relative;
             display: inline-block;
             margin-bottom: 1.5rem;
-            .socialLinks-title{
+            .socialLinks-title {
                 position: absolute;
                 top: -15px;
                 left: 19px;
                 background-color: white;
                 padding: 0px 2px;
-                .socialLinks-titleText{
+                .socialLinks-titleText {
                     font-family: "PT Serif", Arial, Helvetica, sans-serif;
                 }
             }
-            .socialLinks{
+            .socialLinks {
                 display: flex;
                 justify-content: flex-start;
                 align-content: center;
-                .socialLinks-item{
-                    &:first-child{
+                .socialLinks-item {
+                    &:first-child {
                         margin-left: .75rem;
                     }
-                    &:last-child{
+                    &:last-child {
                         margin-right: 0px;
                     }
                     margin-bottom: 2px;
@@ -144,7 +132,7 @@
                     width: 20px;
                 }
             }
-            .socialLinks-copy{
+            .socialLinks-copy {
                 margin: 2px .75rem;
                 padding: 4px 10px;
                 font-size: 11px;
@@ -153,17 +141,18 @@
     }
 
     // Product Description
-    .productView-description{
-        .tabs{
+    .productView-description {
+        .tabs {
             border-color: $shady-lady;
-            .tab{
+            .tab {
+                display:none;
                 border-color: $shady-lady;
-                .tab-title{
+                .tab-title {
                     color: $burgundy;
                 }
             }
         }
-        #tab-description{
+        #tab-description {
             h5 {
                 @extend .frameheading-5;
                 border-style: solid;
@@ -177,59 +166,59 @@
 
 }
 // PDP Footer Carousels - Tabs
-.productView ~ .tabs{
+.productView ~ .tabs {
     border: none;
-    .tab{
+    .tab {
         border: none;
-        &.is-active{
-            .tab-title{
+        &.is-active {
+            .tab-title {
                 color: $burgundy;
             }
         }
-        .tab-title{
+        .tab-title {
             padding: 0px;
         }
-        h3{
+        h3 {
             text-align: center;
             margin-top: 1rem;
         }
     }
 }
 // PDP Footer Carousels - Tab Content
-.productView ~ .tabs-contents{
-    .tab-content{
-        .productCarousel{
-            .slick-list{
+.productView ~ .tabs-contents {
+    .tab-content {
+        .productCarousel {
+            .slick-list {
                 margin-bottom: 5px;
-                .slick-track{
-                    .productCarousel-slide{
+                .slick-track {
+                    .productCarousel-slide {
                         //Product Card
-                        .buy-card-product{
+                        .buy-card-product {
                             @extend .buy-card;
                             width: 100%;
                             padding: 0px 10px 10px 10px;
                             border-radius: 0px;
                             box-shadow: #bbbbbb 0 1px 5px;
                             margin: 3px 0px;
-                            .card-figure{
-                                .card-img-container{
-                                    &:after{
+                            .card-figure {
+                                .card-img-container {
+                                    &:after {
                                         padding-bottom: 89% !important;
                                     }
                                 }
-                                .card-figcaption{
+                                .card-figcaption {
                                     opacity: 1;
                                     display: block;
-                                    .card-figcaption-body{
-                                        .card-figcaption-button{
-                                            &.quickview{
+                                    .card-figcaption-body {
+                                        .card-figcaption-button {
+                                            &.quickview {
                                                 display: none;
                                             }
                                         }
                                     }
                                 }
                             }
-                            .add-to-cart{
+                            .add-to-cart {
                                 @extend .button-primary;
                                 position: relative;
                                 top: -30px;
@@ -237,7 +226,7 @@
                                 margin-bottom: 0px;
                                 width: 121px
                             }
-                            .card-body{
+                            .card-body {
                                 position: relative;
                                 top: -1rem;
                             }
@@ -245,11 +234,11 @@
                     }
                 }
             }
-            .slick-next{
+            .slick-next {
                 border: none;
                 background: none;
                 right: -6px;
-                &:before{
+                &:before {
                     @extend .icon-system-right-caret;
                     width: 34px;
                     height: 32px;
@@ -257,11 +246,11 @@
                     left: -4px;
                 }
             }
-            .slick-prev{
+            .slick-prev {
                 left: -10px;
                 border: none;
                 background: none;
-                &:before{
+                &:before {
                     @extend .icon-system-left-caret;
                     width: 34px;
                     height: 32px;
@@ -270,27 +259,55 @@
                 }
             }
             //Slider Dots
-            .slick-dots{
-                li{
-                    &.slick-active{
-                        button{
-                            &:before{
+            .slick-dots {
+                li {
+                    &.slick-active {
+                        button {
+                            &:before {
                                 background: $burgundy;
                             }
                             background-color: $burgundy;
                         }
                     }
-                    button{
-                        &:not(.slick-active){
+                    button {
+                        &:not(.slick-active) {
                             background-color: $silver;
                             border: none;
                         }
-                        &:hover{
+                        &:hover {
                             background-color: $burgundy;
                         }
                     }
                 }
             }
+        }
+    }
+}
+@media only screen and (min-width:801px) {
+    .productView {
+        .productView-details {
+            .productView-product {
+                // Price
+                .productView-price {
+                    .price--withoutTax {
+                        font-size: 28px;
+                    }
+                }
+            }
+        }
+        .productView-description {
+            #tab-description {
+                h5 {
+                    text-align:left;
+                }
+            }
+        }
+    }
+}
+@media only screen and (min-width:1261px) {
+    .productView {
+        .productView-description {
+            width:100%;
         }
     }
 }

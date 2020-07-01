@@ -44,6 +44,7 @@ class FindAConsultant {
             this.searchInfo = {
                 mode: SEARCH_BY_ZIP,
                 zip: $('#consultant-search .zip-search input').val(),
+                radius: $('#consultant-search .zip-search select').val(),
                 page: 1
             };
 
@@ -133,7 +134,7 @@ class FindAConsultant {
             case SEARCH_BY_ZIP:
                 this.api.searchConsultantsByZip(
                         this.searchInfo.zip,
-                        "100",
+                        this.searchInfo.radius,
                         this.searchInfo.page,
                         this.pageSize
                     )

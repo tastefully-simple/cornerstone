@@ -112,6 +112,9 @@
                                     }
                                 }
                             }
+                            &>br {
+                                display:none;
+                            }
                         }
                     }
                 }
@@ -240,6 +243,9 @@
                                     padding:0;
                                     &::after {
                                         display:none;
+                                    }
+                                    &>br {
+                                        display:block;
                                     }
                                 }
                             }

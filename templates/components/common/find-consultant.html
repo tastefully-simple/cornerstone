@@ -23,7 +23,13 @@
                     <div class="simple-dropdown">
                         <label for="dropdown-demo">Search Radius</label>
                         <select name="dropdown-demo" class="dropdown-demo">
-                            <option value="Exact Match">Exact Match</option>
+                            <option selected="selected" value="0">Exact Match</option>
+                            <option value="25">25 Miles</option>
+                            <option value="50">50 Miles</option>
+                            <option value="75">75 Miles</option>
+                            <option value="100">100 Miles</option>
+                            <option value="150">150 Miles</option>
+                            <option value="200">200 Miles</option>
                         </select>
                     </div>
                     <div class="vertical-bottom">
@@ -44,7 +50,7 @@
                     </div>
                     <label class="input-label">
                         <span>First or Last Name</span>
-                        <input type="text" placeholder="Enter first or last name">
+                        <input type="text" placeholder="Enter first or last name" required>
                     </label>
                     <div class="vertical-bottom">
                         <button class="button-alternate" type="submit">search</button>

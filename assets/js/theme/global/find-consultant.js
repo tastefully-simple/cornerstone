@@ -2,6 +2,7 @@ import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
 import TSApi from '../common/tsapi';
 import StatesSelect from '../common/directory/states.js';
+import pagination from '../common/pagination.js';
 
 /**
  * Creates a Cornerstone popup modal for Find A Consultant. 
@@ -18,9 +19,16 @@ export default function() {
     });
 }
 
+const NO_SEARCH = 0;
+const SEARCH_BY_ZIP = 1;
+const SEARCH_BY_NAME = 2;
+const SEARCH_BY_ID = 3;
+
 class FindAConsultant {
     constructor(trigger, template, continueUrl) {
         this.continueUrl = continueUrl;
+        this.searchInfo = {mode: NO_SEARCH};
+        this.pageSize   = 10;
 
         // API
         this.api = new TSApi();
@@ -31,10 +39,40 @@ class FindAConsultant {
         // Return
         $('body').on('click', '.return-search', this.returnSearch.bind(this));
 
-        // Search
-        $('body').on('submit', '#zipcode-search-form', () => this.searchByZip())
-        $('body').on('submit', '#name-search-form', () => this.searchByName())
-        $('body').on('submit', '#id-search-form', () => this.searchById())
+        // Search by ZIP
+        $('body').on('submit', '#zipcode-search-form', () => {
+            this.searchInfo = {
+                mode: SEARCH_BY_ZIP,
+                zip: $('#consultant-search .zip-search input').val(),
+                radius: $('#consultant-search .zip-search select').val(),
+                page: 1
+            };
+
+            this.search();
+        });
+
+        // Search by Name
+        $('body').on('submit', '#name-search-form', () => {
+            this.searchInfo = {
+                mode: SEARCH_BY_NAME,
+                name: $('#consultant-search .name-search input').val(),
+                state: $('#consultant-search .name-search select').val(),
+                page: 1
+            };
+
+            this.search();
+        });
+
+        // Search by ID
+        $('body').on('submit', '#id-search-form', () => {
+            this.searchInfo = {
+                mode: SEARCH_BY_ID,
+                id: $('#consultant-search .id-search input').val(),
+                page: 1
+            };
+
+            this.search();
+        });
 
         // Select
         $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
@@ -64,20 +102,25 @@ class FindAConsultant {
     }
 
     modalLoaded(result) {
-      this.modal.updateContent(result);
-      let nameSelects = $('#consultant-search .name-search select');
-      for (let i = 0; i < nameSelects.length; i++) {
-        new StatesSelect(nameSelects[i]);
-      }
+        this.modal.updateContent(result);
+        let nameSelects = $('#consultant-search .name-search select');
+        for (let i = 0; i < nameSelects.length; i++) {
+            new StatesSelect(nameSelects[i]);
+        }
     }
 
     returnSearch() {
         $("#consultant-search-results").hide();
         $('.alertbox-error').hide();
         $("#consultant-search").show();
+        this.clearConsultantWindow();
+    }
+
+    clearConsultantWindow() {
         $(".matching").remove();
         $(".consultant-card").remove();
         $(".consultant-divider").remove();
+        $(".consultant-pagination").remove();
         $(".consultant-footer").remove();
     }
 
@@ -86,47 +129,69 @@ class FindAConsultant {
         $('.alertbox-error').show();
     }
 
-    searchByZip() {
-        let zip = $('#consultant-search .zip-search input').val();
-        this.api.searchConsultantsByZip(zip, "100", "1", "20")
-            .then(res => res.json())
-            .then(data => { 
-                this.renderResults(data);
-                $('.alertbox-error').hide();
-            })
-            .catch(err => { 
-                console.warn('searchByZip', err); 
-                this.displayError(err);
-            });
+    search() {
+        switch (this.searchInfo.mode) {
+            case SEARCH_BY_ZIP:
+                this.api.searchConsultantsByZip(
+                        this.searchInfo.zip,
+                        this.searchInfo.radius,
+                        this.searchInfo.page,
+                        this.pageSize
+                    )
+                    .then(res => res.json())
+                    .then(data => {
+                        this.renderResults(data);
+                    })
+                    .catch(err => { 
+                        console.warn('searchByZip', err); 
+                        this.displayError(err);
+                    });
+                break;
+
+            case SEARCH_BY_NAME:
+                this.api.searchConsultantsByName(
+                        this.searchInfo.name,
+                        this.searchInfo.state,
+                        this.searchInfo.page,
+                        this.pageSize
+                    )
+                    .then(res => res.json())
+                    .then(data => {
+                        this.renderResults(data);
+                    })
+                    .catch(err => { 
+                        console.warn('searchByName', err);
+                        this.displayError(err);
+                    });
+                break;
+
+            case SEARCH_BY_ID:
+                this.api.getConsultant(this.searchInfo.id)
+                    .then(res => res.json())
+                    .then(data => {
+                        this.renderResults(data);
+                    })
+                    .catch(err => { 
+                        console.warn('searchById', err);
+                        this.displayError(err);
+                    });
+                break;
+        }
     }
 
-    searchByName() {
-        let name  = $('#consultant-search .name-search input').val();
-        let state = $('#consultant-search .name-search select').val();
-        this.api.searchConsultantsByName(name, state, "1", "20")
-            .then(res => res.json())
-            .then(data => { 
-                this.renderResults(data);
-                $('.alertbox-error').hide();
-            })
-            .catch(err => { 
-                console.warn('searchByName', err);
-                this.displayError(err);
-            });
-    }
+    goToPage(p) {
+        this.searchInfo.page = p;
 
-    searchById() {
-        let id = $('#consultant-search .id-search input').val();
-        this.api.getConsultant(id)
-            .then(res => res.json())
-            .then(data => {
-                this.renderResults(data);
-                $('.alertbox-error').hide();
-            })
-            .catch(err => { 
-                console.warn('searchById', err);
-                this.displayError(err);
-            });
+        switch (this.searchInfo.mode) {
+            case SEARCH_BY_ZIP:
+                this.search()
+                break;
+
+            case SEARCH_BY_NAME:
+                this.search();
+                break;
+        }
+
     }
 
     selectConsultant(e) {
@@ -173,16 +238,19 @@ class FindAConsultant {
      * HTML
      */
     renderResults(response) {
+        if (!response.Results) {
+            this.displayError("No match was found.");
+            return;
+        }
         $("#consultant-search").hide();
+        $('.alertbox-error').hide();
+        this.clearConsultantWindow();
 
         var $matchingConsultants = $("<span>", {"class": "system-14 matching"});
         $matchingConsultants.text(`Consultants matching \"${response.TotalRecordCount}\"`);
         $("#consultant-search-results .buy-wide-card").append($matchingConsultants);
 
         //Generate consultant and divider html
-        /*
-        */
-
         response.Results.forEach((consultant) => {
             var $consultantHtmlBlock = this.getConsultantHtmlBlock(consultant);
             var $dividerHtml = $("<div>", {"class": "consultant-divider"});
@@ -191,6 +259,19 @@ class FindAConsultant {
         });
 
         $("#consultant-search-results").show();
+
+        // Pagination is only needed when searching by zipcode or searching by name
+        // Searching by Consultant Id should produce only 1 result
+        if (this.searchInfo.mode != SEARCH_BY_ID) {
+            var $paginationContainer = $("<div>", {"class": "consultant-pagination pagination"});
+            $("#consultant-search-results .genmodal-body").append($paginationContainer);
+            pagination(
+                $paginationContainer,
+                response.CurrentPage,
+                Math.ceil(response.TotalRecordCount / response.PageSize),
+                ((p) => this.goToPage(p))
+            );
+        }
 
         var $footerHtml = this.getFooterHtml()
         $("#consultant-search-results .genmodal-body").append($footerHtml);
@@ -307,5 +388,4 @@ class FindAConsultant {
         $footerHtml.append($continueHtml);
         return $footerHtml;
     }
-
 }

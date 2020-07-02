@@ -112,6 +112,9 @@
                                     }
                                 }
                             }
+                            &>br {
+                                display:none;
+                            }
                         }
                     }
                 }
@@ -131,6 +134,7 @@
                             align-items:center;
                             flex-direction:row;
                             justify-content:flex-end;
+                            flex-wrap:nowrap;
                             .navPages-item {
                                 &.navPages-item-shop {
                                     order:1;
@@ -239,6 +243,9 @@
                                     padding:0;
                                     &::after {
                                         display:none;
+                                    }
+                                    &>br {
+                                        display:block;
                                     }
                                 }
                             }

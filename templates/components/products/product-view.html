@@ -239,18 +239,18 @@
                         {{{dynamicComponent 'components/products/options'}}}
                     {{/each}}
                 </div>
-                <div class="form-field form-field--stock{{#unless product.stock_level}} u-hiddenVisually{{/unless}}">
+                {{!-- <div class="form-field form-field--stock{{#unless product.stock_level}} u-hiddenVisually{{/unless}}">
                     <label class="form-label form-label--alternate">
                         {{lang 'products.current_stock'}}
                         <span data-product-stock>{{product.stock_level}}</span>
                     </label>
-                </div>
+                </div> --}}
                 {{#if product.can_purchase}}
                     {{> components/products/add-to-cart}}
                 {{/if}}
                 {{#if product.out_of_stock}}
                     {{#if product.out_of_stock_message}}
-                        {{> components/common/alert-error product.out_of_stock_message}}
+                        {{> components/common/product-alert-error product.out_of_stock_message}}
                     {{else}}
                         {{> components/common/alert-error (lang 'products.sold_out')}}
                     {{/if}}

@@ -82,6 +82,9 @@
             display: block;
         }
     }
+    .headertoplinks-consult {
+        cursor: pointer;
+    }
 }
 
 @media only screen and (min-width:801px) {
@@ -241,7 +244,7 @@
         .header-top-links {
             display: flex;
             justify-content: flex-end;
-            max-width: 150px;
+            max-width: 115px;
             width: 100%;
             color: $text-gray;
             .headertoplinks-consult {

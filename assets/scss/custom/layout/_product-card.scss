@@ -1,0 +1,36 @@
+// =============================================================================
+// Tastefully Simple Product Card Styles
+// =============================================================================
+
+@media only screen and (min-width:801px) {
+    .productGrid {
+        .product {
+            .button {
+                display:block;
+                margin:0 auto 1rem;
+                max-width:121px;
+            }
+            .out-of-stock-button {
+                align-items:center;
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+                text-decoration:none;
+                .out-of-stock-title {
+                    color: $burgundy;
+                    align-items:center;
+                    display:flex;
+                    &>span {
+                        margin-right:.25rem;
+                    }
+                }
+            }
+            .card-body {
+                text-align:center;
+                .price {
+                    font-family:stencilFontFamily("headings-font");
+                }
+            }
+        }
+    }
+}

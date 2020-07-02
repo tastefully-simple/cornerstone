@@ -812,7 +812,7 @@ table{
 
 // Cards
 // -----------------------------------------------------------------------------
-.card{
+.grid-card{
     padding:0 10px 20px;
     margin:auto;
     width:300px;
@@ -832,7 +832,7 @@ table{
 }
 .buy-card{
     width:200px;
-    @extend .card;
+    @extend .grid-card;
     .card-button{
         margin-top:-20px;
         text-align:center;

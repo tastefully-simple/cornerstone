@@ -707,7 +707,7 @@ textarea{
     background-color:$green-apple;
     @extend .close-modal;
 }
-.modal-dropshadow{
+@mixin modal-dropshadow() {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 5px;
@@ -715,11 +715,22 @@ textarea{
     -moz-box-shadow: rgba(187,187,187,1) 0 0 25px 6px;
     box-shadow: rgba(187,187,187,1) 0 0 25px 6px;
 }
+@mixin card-dropshadow() {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 5px;
+    -webkit-box-shadow: rgba(187,187,187,1) 0px 0 6px 4px;
+    -moz-box-shadow: rgba(187,187,187,1) 0 0 6px 4px;
+    box-shadow: rgba(187,187,187,1) 0 0 6px 4px;
+}
+.modal-dropshadow{
+    @include modal-dropshadow();
+}
 .modal-general{
     position:relative;
 }
 .modal-general{
-    @extend .modal-dropshadow;
+    @include modal-dropshadow();
     .genmodal-header{
         align-items:center;
         border-radius:5px 5px 0 0;
@@ -738,7 +749,7 @@ textarea{
             background-color:$white;
             padding:5px 20px;
             margin:20px 0;
-            @extend .modal-dropshadow;
+            @include modal-dropshadow();
             form{
                 display:flex;
             }
@@ -768,7 +779,7 @@ textarea{
     position:absolute;
     transform:translateX(-50%);
     width:300px;
-    @extend .modal-dropshadow;
+    @include modal-dropshadow();
     &>div{
         padding:23px;
     }
@@ -816,7 +827,7 @@ table{
     padding:0 10px 20px;
     margin:auto;
     width:300px;
-    @extend .modal-dropshadow;
+    @include card-dropshadow();
     .card-img-container{
         .card-image{
             margin:10px 0;
@@ -847,7 +858,7 @@ table{
     flex-direction:row;
     justify-content:space-between;
     width:auto;
-    @extend .card;
+    @extend .grid-card;
     .card-info{
         align-items:center;
         display:flex;

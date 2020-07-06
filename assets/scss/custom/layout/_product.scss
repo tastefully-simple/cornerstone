@@ -143,9 +143,8 @@
     // Product Description
     .productView-description {
         .tabs {
-            border-color: $shady-lady;
+            display:none;
             .tab {
-                display:none;
                 border-color: $shady-lady;
                 .tab-title {
                     color: $burgundy;
@@ -191,7 +190,10 @@
             .slick-list {
                 margin-bottom: 5px;
                 .slick-track {
+                    display:flex;
                     .productCarousel-slide {
+                        display:flex;
+                        height:auto;
                         //Product Card
                         .buy-card-product {
                             @extend .buy-card;
@@ -229,6 +231,9 @@
                             .card-body {
                                 position: relative;
                                 top: -1rem;
+                                .price {
+                                    font-family: stencilFontFamily("headings-font");
+                                }
                             }
                         }
                     }

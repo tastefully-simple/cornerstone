@@ -8,6 +8,17 @@
             .productView-title {
                 font-size: 30px;
                 margin-bottom: 0px;
+                color: $text-gray;
+            }
+            // Product Rating
+            .productView-rating {
+              .productView-reviewLink + .productView-reviewLink {
+                display: inline-block;
+
+                a {
+                  color: $burgundy;
+                }
+              }
             }
             // Product Short Description
             .productView-shortDescription {
@@ -49,11 +60,18 @@
     // Product Details Section - productView-options
     .productView-details {
         .productView-options {
-            margin-bottom: 100px;
+            margin-bottom: 0;
 
             // Qty Picker
             .form-field--increments {
                 text-align: left;
+                text-transform: uppercase;
+
+                label {
+                  max-width: 80px;
+                  text-align: center;
+                }
+
                 .form-increment {
                     .form-input--incrementTotal {
                         font-weight: 600;

@@ -187,17 +187,20 @@
     border: none;
     .tab {
         border: none;
+        float:none;
+        text-align:center;
         &.is-active {
             .tab-title {
+                text-align:center;
                 color: $burgundy;
+                @extend .frametext-semibold;
+            }
+            .tab-title-heading {
+                margin:0;
             }
         }
         .tab-title {
             padding: 0px;
-        }
-        h3 {
-            text-align: center;
-            margin-top: 1rem;
         }
     }
 }

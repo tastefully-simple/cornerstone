@@ -313,6 +313,12 @@
     .productView {
         .productView-details {
             .productView-product {
+                border: none;
+                padding-bottom: 0;
+                // Title
+                .productView-title {
+                    font-weight: 700;
+                }
                 // Price
                 .productView-price {
                     .price--withoutTax {
@@ -324,8 +330,23 @@
         .productView-description {
             #tab-description {
                 h5 {
+                    border-color: $light-burgundy;
                     text-align:left;
                 }
+            }
+        }
+        .productView-options {
+            // Cart and Wishlist button wrapper
+            .form-action {
+                display: inline-block;
+                float: left;
+                min-width: 250px;
+                margin-right: 0.75rem;
+            }
+            // Cart and Wishlist button
+            #form-action-addToCart,
+            .form-wishlist .dropdown-menu-button {
+                width: 100%;
             }
         }
     }

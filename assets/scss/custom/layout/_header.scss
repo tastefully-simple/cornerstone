@@ -244,7 +244,7 @@
         .header-top-links {
             display: flex;
             justify-content: flex-end;
-            max-width: 115px;
+            max-width: 130px;
             width: 100%;
             color: $text-gray;
             .headertoplinks-consult {
@@ -255,6 +255,9 @@
             }
             .navUser {
                 padding: 0;
+                ul.navUser-section {
+                    display: flex;
+                }
                 .navUser-action {
                     color: $text-gray;
                     padding: 1rem 0.5rem;

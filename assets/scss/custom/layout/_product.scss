@@ -8,6 +8,17 @@
             .productView-title {
                 font-size: 30px;
                 margin-bottom: 0px;
+                color: $text-gray;
+            }
+            // Product Rating
+            .productView-rating {
+              .productView-reviewLink + .productView-reviewLink {
+                display: inline-block;
+
+                a {
+                  color: $burgundy;
+                }
+              }
             }
             // Product Short Description
             .productView-shortDescription {
@@ -49,11 +60,18 @@
     // Product Details Section - productView-options
     .productView-details {
         .productView-options {
-            margin-bottom: 100px;
+            margin-bottom: 0;
 
             // Qty Picker
             .form-field--increments {
                 text-align: left;
+                text-transform: uppercase;
+
+                label {
+                  max-width: 80px;
+                  text-align: center;
+                }
+
                 .form-increment {
                     .form-input--incrementTotal {
                         font-weight: 600;
@@ -143,9 +161,8 @@
     // Product Description
     .productView-description {
         .tabs {
-            border-color: $shady-lady;
+            display:none;
             .tab {
-                display:none;
                 border-color: $shady-lady;
                 .tab-title {
                     color: $burgundy;
@@ -170,17 +187,20 @@
     border: none;
     .tab {
         border: none;
+        float:none;
+        text-align:center;
         &.is-active {
             .tab-title {
+                text-align:center;
                 color: $burgundy;
+                @extend .frametext-semibold;
+            }
+            .tab-title-heading {
+                margin:0;
             }
         }
         .tab-title {
             padding: 0px;
-        }
-        h3 {
-            text-align: center;
-            margin-top: 1rem;
         }
     }
 }
@@ -191,7 +211,10 @@
             .slick-list {
                 margin-bottom: 5px;
                 .slick-track {
+                    display:flex;
                     .productCarousel-slide {
+                        display:flex;
+                        height:auto;
                         //Product Card
                         .buy-card-product {
                             @extend .buy-card;
@@ -229,6 +252,9 @@
                             .card-body {
                                 position: relative;
                                 top: -1rem;
+                                .price {
+                                    font-family: stencilFontFamily("headings-font");
+                                }
                             }
                         }
                     }
@@ -287,6 +313,12 @@
     .productView {
         .productView-details {
             .productView-product {
+                border: none;
+                padding-bottom: 0;
+                // Title
+                .productView-title {
+                    font-weight: 700;
+                }
                 // Price
                 .productView-price {
                     .price--withoutTax {
@@ -298,8 +330,23 @@
         .productView-description {
             #tab-description {
                 h5 {
+                    border-color: $light-burgundy;
                     text-align:left;
                 }
+            }
+        }
+        .productView-options {
+            // Cart and Wishlist button wrapper
+            .form-action {
+                display: inline-block;
+                float: left;
+                min-width: 250px;
+                margin-right: 0.75rem;
+            }
+            // Cart and Wishlist button
+            #form-action-addToCart,
+            .form-wishlist .dropdown-menu-button {
+                width: 100%;
             }
         }
     }

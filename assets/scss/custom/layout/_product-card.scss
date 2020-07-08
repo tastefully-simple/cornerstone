@@ -17,6 +17,22 @@
                 }
             }
         }
+        .out-of-stock-button {
+            align-items:center;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            text-decoration:none;
+            .out-of-stock-title {
+                align-items:center;
+                color: $burgundy;
+                display:flex;
+                flex-direction:column;
+                &>span {
+                    margin-right:.25rem;
+                }
+            }
+        }
     }
 }
 
@@ -54,18 +70,8 @@
                 }
             }
             .out-of-stock-button {
-                align-items:center;
-                display:flex;
-                flex-direction:column;
-                justify-content:center;
-                text-decoration:none;
                 .out-of-stock-title {
-                    color: $burgundy;
-                    align-items:center;
-                    display:flex;
-                    &>span {
-                        margin-right:.25rem;
-                    }
+                    flex-direction:row;
                 }
             }
             .card-body {

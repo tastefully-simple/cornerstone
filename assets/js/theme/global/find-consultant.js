@@ -24,6 +24,9 @@ const SEARCH_BY_ZIP = 1;
 const SEARCH_BY_NAME = 2;
 const SEARCH_BY_ID = 3;
 
+// Number of page numbers to show in pagination
+const DISPLAY_NUM_PAGES = 6;
+
 class FindAConsultant {
     constructor(trigger, template, continueUrl) {
         this.continueUrl = continueUrl;
@@ -269,6 +272,7 @@ class FindAConsultant {
                 $paginationContainer,
                 response.CurrentPage,
                 Math.ceil(response.TotalRecordCount / response.PageSize),
+                DISPLAY_NUM_PAGES,
                 ((p) => this.goToPage(p))
             );
         }

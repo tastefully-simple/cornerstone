@@ -242,7 +242,7 @@ class FindAConsultant {
      */
     renderResults(response) {
         if (!response.Results) {
-            this.displayError("No match was found.");
+            this.displayError("No consultant was found. Search again or shop directly with Tastefully Simple, Inc.");
             return;
         }
         $("#consultant-search").hide();

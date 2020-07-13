@@ -7,6 +7,7 @@ import collapsibleFactory from './common/collapsible';
 import ProductDetails from './common/product-details';
 import videoGallery from './product/video-gallery';
 import { classifyForm } from './common/form-utils';
+import copy from 'copy-to-clipboard';
 
 export default class Product extends PageManager {
     constructor(context) {
@@ -52,6 +53,7 @@ export default class Product extends PageManager {
 
         this.productReviewHandler();
         this.bulkPricingHandler();
+        this.socialShareHandler();
     }
 
     productReviewHandler() {
@@ -64,5 +66,11 @@ export default class Product extends PageManager {
         if (this.url.indexOf('#bulk_pricing') !== -1) {
             this.$bulkPricingLink.trigger('click');
         }
+    }
+
+    socialShareHandler() {
+      // Copy PDP URL to clipboard
+      $('.socialLinks-copy')
+        .click(e => copy(window.location.href))
     }
 }

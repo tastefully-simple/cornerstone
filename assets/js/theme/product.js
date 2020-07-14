@@ -71,6 +71,17 @@ export default class Product extends PageManager {
     socialShareHandler() {
       // Copy PDP URL to clipboard
       $('.socialLinks-copy')
-        .click(e => copy(window.location.href))
+        .click(this.copyToClipboard);
+    }
+
+    copyToClipboard() {
+        let $linkCopied = $('.link-copied-text');
+
+        copy(window.location.href);
+        $linkCopied.addClass('copied');
+
+        setTimeout(function() {
+            $linkCopied.removeClass('copied');
+        }, 2000);
     }
 }

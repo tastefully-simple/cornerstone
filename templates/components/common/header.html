@@ -2,15 +2,17 @@
     <div class="header-top textgray-background">
         <div class="container">
             <div class="header-top-banner">
+                {{#if banners.top}}
                 <div class="banners" data-banner-location="top">
-                    <div class="banner">
-                      <!--
-                      Hardcoding the banner content here so that the banner
-                      can be shown to all pages
-                      -->
-                      <p>Free Shipping on Orders over $100 <a href="#">details</a></p>
+                    {{#each (limit banners.top_metadata 1)}}
+                    <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
+                        <div data-event-type="promotion-click">
+                            {{{this.content}}}
+                        </div>
                     </div>
+                    {{/each}}
                 </div>
+                {{/if}}
             </div>
             <div class="header-top-links">
                 <div class="headertoplinks-consult">

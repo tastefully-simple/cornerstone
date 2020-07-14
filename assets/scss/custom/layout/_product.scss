@@ -163,6 +163,12 @@
                 margin: 2px .75rem;
                 padding: 4px 10px;
                 font-size: 11px;
+                width: 75px;
+
+                &:focus {
+                    background-color: $teal;
+                    border-color: $teal;
+                }
             }
         }
         // Copy to clipboard (show/hide link copied text)

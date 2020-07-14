@@ -76,12 +76,15 @@ export default class Product extends PageManager {
 
     copyToClipboard() {
         let $linkCopied = $('.link-copied-text');
+        let $copyLinkBtn = this;
 
         copy(window.location.href);
+        $copyLinkBtn.innerHTML = '<i class="fas fa-check"></i>';
         $linkCopied.addClass('copied');
 
         setTimeout(function() {
+            $copyLinkBtn.innerHTML = 'Copy Link';
             $linkCopied.removeClass('copied');
-        }, 2000);
+        }, 10000);
     }
 }

@@ -1,6 +1,6 @@
 import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
-import TSApi from '../common/tsapi';
+import TSApi from '../common/ts-api';
 import StatesSelect from '../common/directory/states.js';
 import pagination from '../common/pagination.js';
 

@@ -1,4 +1,4 @@
-import TSApi from '../common/tsapi';
+import TSApi from '../common/ts-api';
 
 export default function (e) {
     let signup = new NewsletterSignup(

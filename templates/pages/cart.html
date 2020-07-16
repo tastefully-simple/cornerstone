@@ -4,7 +4,7 @@ cart: true
 {{#partial "page"}}
 <div class="page">
 
-    <main class="page-content" data-cart>
+    <main class="page-content cart-content" data-cart>
         {{!-- {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} --}}
 
         {{> components/cart/page-title}}
@@ -56,13 +56,10 @@ cart: true
         {{else}}
             <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
         {{/if}}
-
-        {{> components/cart/affiliate-info}}
-
     </main>
 
     {{> components/cart/modals/find-affiliate}}
 
 </div>
 {{/partial}}
-{{> layout/base}}
+{{> layout/base-cart}}

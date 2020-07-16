@@ -35,8 +35,8 @@
   "cart": {
     "continue_shopping": "Click here to continue shopping",
     "shop_more": {
-      "button": "Shop more",
-      "title": "Click here to shop more"
+      "button": "Continue Shopping",
+      "title": "Click here to continue shopping"
     },
     "items": "{NUM, plural, =0{(0 items)} one {(# item)} other {(# items)}}",
     "checkout": {
@@ -130,7 +130,7 @@
     },
     "find_affiliate": {
       "modal_title": "Change independent consultant",
-      "button": "change"
+      "button": "edit"
     }
   },
   "common": {

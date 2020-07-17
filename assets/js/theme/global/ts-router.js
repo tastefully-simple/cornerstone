@@ -4,7 +4,6 @@ import TSCookie from '../common/ts-cookie';
 export default class TSRouter {
     constructor(settings) {
         this.settings = settings;
-        console.log('Tastefully Simple routing:' + window.location);
 
         // Function returns true to stop routing chain
         this.checkUrlForBuyNow()
@@ -133,7 +132,6 @@ export default class TSRouter {
         }
 
         // Check cookie
-        console.log('Test Cookie', TSCookie.GetTest());
         TSCookie.SetTest('thisisacookie');
 
         return false;

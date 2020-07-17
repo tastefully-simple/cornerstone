@@ -3,11 +3,7 @@ import Cookies from 'js-cookie';
 export default {
     // Social Bug Affiliate ID
     SetAffiliateId: function(afid) {
-        Cookies.set('afid', afid,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('afid', afid);
     },
 
     GetAffiliateId: function() {
@@ -16,11 +12,7 @@ export default {
 
     // Consultant ID
     SetConsultantId: function(cid) {
-        Cookies.set('cid', cid,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('cid', cid);
     },
 
     GetConsultantId: function() {
@@ -29,11 +21,7 @@ export default {
 
     // Consultant XID
     SetConsultantXid: function(cxid) {
-        Cookies.set('cxid', cxid,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('cxid', cxid);
     },
 
     GetConsultantXid: function() {
@@ -42,11 +30,7 @@ export default {
 
     // Party Date
     SetConsultantName: function(name) {
-        Cookies.set('name', name,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('name', name);
     },
 
     GetConsultantName: function() {
@@ -55,11 +39,7 @@ export default {
 
     // Party Id
     SetPartyId: function(pid) {
-        Cookies.set('pid', pid,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('pid', pid);
     },
 
     GetPartyId: function() {
@@ -68,11 +48,7 @@ export default {
 
     // Party Host
     SetPartyHost: function(phost) {
-        Cookies.set('phost', phost,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('phost', phost);
     },
 
     GetPartyHost: function() {
@@ -81,11 +57,7 @@ export default {
 
     // Party Date
     SetPartyDate: function(pdate) {
-        Cookies.set('pdate', pdate,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('pdate', pdate);
     },
 
     GetPartyDate: function() {
@@ -94,11 +66,7 @@ export default {
 
     // Party Time
     SetPartyTime: function(ptime) {
-        Cookies.set('ptime', ptime,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('ptime', ptime);
     },
 
     GetPartyTime: function() {
@@ -107,11 +75,7 @@ export default {
 
     // Party Total
     SetPartyTotal: function(ptotal) {
-        Cookies.set('ptotal', ptotal,
-            {
-                secure: true, expires: 7, path: '/', domain: 'tastefully-simple-sandbox-2.mybigcommerce.com',
-            },
-        );
+        Cookies.set('ptotal', ptotal);
     },
 
     GetPartyTotal: function() {

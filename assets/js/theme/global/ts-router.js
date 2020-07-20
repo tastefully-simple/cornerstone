@@ -14,6 +14,9 @@ export default class TSRouter {
         ;
     }
 
+    //
+    // CHECKS
+    //
 
     /**
      * This function is responsible for grabbing the URL parameters before the BigCommerce cart
@@ -40,24 +43,22 @@ export default class TSRouter {
 
 
     // Check for party id
-    checkUrlForPartyId(apiBase) {
+    checkUrlForPartyId() {
         const szUrl = window.location.pathname;
-        if (szUrl.match(/[Pp]\/\d+/g)) {
+        if (szUrl.match(/^\/p\/\d+/ig)) {
             const filterString = szUrl.substring(4);
             const iPid = parseInt(filterString, 10);
             if (iPid > 0) {
-                const currentCookie = new TSCookie();
-
-                this.getPartyDetails(iPid, apiBase)
+                this.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
-                        currentCookie.SetAffiliateId(data.AfId);
-                        currentCookie.SetConsultantId(data.ConsultantId);
-                        currentCookie.SetConsultantName(data.Consultant);
-                        currentCookie.SetPartyId(iPid);
-                        currentCookie.SetPartyHost(`${data.HostFirstName} ${data.HostLastName}`);
-                        currentCookie.SetPartyDate(`${data.Date}`);
-                        currentCookie.SetPartyTime(`${data.Time}`);
+                        TSCookie.SetAffiliateId(data.AfId);
+                        TSCookie.SetConsultantId(data.ConsultantId);
+                        TSCookie.SetConsultantName(data.Consultant);
+                        TSCookie.SetPartyId(iPid);
+                        TSCookie.SetPartyHost(`${data.HostFirstName} ${data.HostLastName}`);
+                        TSCookie.SetPartyDate(data.Date);
+                        TSCookie.SetPartyTime(data.Time);
                         window.location = '/party-details';
                     })
                     .catch(err => {
@@ -125,6 +126,7 @@ export default class TSRouter {
     }
 
     checkUrlForTest() {
+        /*
         const params = this.getQuery();
         if (params.tstroutetest && params.tstroutetest == "1") {
             window.location = 'https://www.google.com/';
@@ -133,10 +135,13 @@ export default class TSRouter {
 
         // Check cookie
         TSCookie.SetTest('thisisacookie');
-
+        */
         return false;
     }
 
+    //
+    // HELPERS
+    //
 
     getPartyDetails(partyId) {
         const uri = `/party/detail?pid=${partyId}`;
@@ -159,6 +164,8 @@ export default class TSRouter {
     }
 
     getQuery() {
-        return querystring.parse(window.location.search.substr(1));
+        return querystring.parse(
+          window.location.search.substr(1)
+        );
     }
 }

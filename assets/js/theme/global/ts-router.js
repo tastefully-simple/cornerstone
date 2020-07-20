@@ -52,7 +52,6 @@ export default class TSRouter {
                 this.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
-                        console.log('getPartyDetails', data);
                         TSCookie.SetAffiliateId(data.AfId);
                         TSCookie.SetConsultantId(data.ConsultantId);
                         TSCookie.SetConsultantName(data.Consultant);

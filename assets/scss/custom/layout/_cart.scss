@@ -1,0 +1,45 @@
+// =============================================================================
+// Tastefully Simple Cart Styles
+// =============================================================================
+
+.cart {
+    .cart-affiliate {
+        align-items:center;
+        background-color: $cream;
+        display:flex;
+        justify-content:center;
+        margin-top:42px;
+        padding:.5rem  0;
+        .cart-affiliate-info {
+            align-items:flex-end;
+            display:flex;
+            margin:0 .5rem;
+            .cart-affiliate-name {
+                margin-bottom:0;
+                .affiliate-name {
+                    @extend .frameheading-1;
+                }
+            }
+        }
+    }
+    .cart-actions {
+        .button {
+            text-transform:lowercase;
+        }
+    }
+}
+
+@media only screen and (min-width:801px) {
+    .cart {
+        .cart-affiliate {
+            margin-top:0;
+            .cart-affiliate-info {
+                .cart-affiliate-name {
+                    br {
+                        display:none;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -54,7 +54,7 @@
             .button {
                 display:block;
                 margin:0 auto 1rem;
-                max-width:121px;
+                min-width:121px;
             }
             .card-figure {
                 &:not(:hover) {

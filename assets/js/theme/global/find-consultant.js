@@ -1,6 +1,7 @@
 import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
-import TSApi from '../common/tsapi';
+import TSApi from '../common/ts-api';
+import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states.js';
 import pagination from '../common/pagination.js';
 
@@ -29,6 +30,7 @@ const DISPLAY_NUM_PAGES = 6;
 
 class FindAConsultant {
     constructor(trigger, template, continueUrl) {
+        this.$findConsultant = trigger;
         this.continueUrl = continueUrl;
         this.searchInfo = {mode: NO_SEARCH};
         this.pageSize   = 10;
@@ -87,6 +89,10 @@ class FindAConsultant {
         this.screenMinWidth = 801;
         this.moveConsultantEl(trigger, this.screenMinWidth);
         $(window).on('resize', () => this.moveConsultantEl(trigger, this.screenMinWidth));
+
+        // Insert consultant name in the header
+        let consultantName = TSCookie.GetConsultantName();
+        this.insertConsultantNameInHeader(consultantName);
     }
 
     createModal(e, template) {
@@ -218,9 +224,28 @@ class FindAConsultant {
           frame.style.display = 'none';
           frame.src = this.continueUrl + this.selectedId;
           document.body.appendChild(frame);
+
+          // Set cookie for consultant name
+          let consultantName = $(".selected .consultant-name").text();
+          TSCookie.SetConsultantName(consultantName);
+
+          // Insert consultant name in the header
+          this.insertConsultantNameInHeader(consultantName);
+
           this.modal.close();
         } else {
             this.displayError("Please select a consultant before continuing");
+        }
+    }
+
+    insertConsultantNameInHeader(name) {
+        let nameHtml = 
+            `<span>
+                <strong>${name}</strong> is your Consultant <small>(edit)</small>
+            </span>`;
+
+        if (name) {
+            this.$findConsultant.innerHTML = nameHtml;
         }
     }
 

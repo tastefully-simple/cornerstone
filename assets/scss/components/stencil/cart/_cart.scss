@@ -663,24 +663,3 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     padding: spacing("double");
     text-align: center;
 }
-
-// Cart affiliate info
-// -----------------------------------------------------------------------------
-
-.cart-NoAffiliateInfo {
-    text-align: center;
-}
-
-.cart-affiliateInfo {
-    text-align: center;
-}
-
-#cart-affiliate-name, #cart-no-affiliate-name {
-    display: none;
-}
-
-// This will hide the Social Bug flyout
-
-.bg-info {
-    display: none;
-}

@@ -15,7 +15,6 @@ import loadingProgressBar from './global/loading-progress-bar';
 import svgInjector from './global/svg-injector';
 import objectFitImages from './global/object-fit-polyfill';
 import affiliate from './global/affiliate';
-import associateAffiliate from './global/associate-affiliate';
 import joinProcessInteraction from './global/joinProcessInteraction';
 import shippingModalInteraction from './global/shippingModalInteraction';
 import accordian from './global/accordian';
@@ -40,7 +39,6 @@ export default class Global extends PageManager {
         svgInjector();
         objectFitImages();
         affiliate(this.context.themeSettings);
-        associateAffiliate(this.context.themeSettings);
         joinProcessInteraction(this.context.themeSettings);
         shippingModalInteraction(this.context.themeSettings);
         accordian();

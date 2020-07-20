@@ -22,6 +22,7 @@
                 </li>
             {{/if}}
         {{/if}}
+        {{!-- @razoyo: remove messages from account nav
         {{#if account_page '===' 'messages'}}
             <li class="navBar-item is-active">{{lang 'account.nav.messages' num_new_messages=customer.num_new_messages}}</li>
         {{else}}
@@ -29,6 +30,7 @@
                 <a class="navBar-action" href="{{urls.account.inbox}}">{{lang 'account.nav.messages' num_new_messages=customer.num_new_messages}}</a>
             </li>
         {{/if}}
+        --}}
         {{#if account_page '===' 'addresses'}}
             <li class="navBar-item is-active">{{lang 'account.nav.addresses'}}</li>
         {{else}}
@@ -54,6 +56,7 @@
                 </li>
             {{/if}}
         {{/if}}
+        {{!-- @razoyo: remove recently viewed from account nav
         {{#if account_page '===' 'recent_items'}}
             <li class="navBar-item is-active">{{lang 'account.nav.recently_viewed'}}</li>
         {{else}}
@@ -61,6 +64,7 @@
                 <a class="navBar-action" href="{{urls.account.recent_items}}">{{lang 'account.nav.recently_viewed'}}</a>
             </li>
         {{/if}}
+        --}}
         {{#if account_page '===' 'settings'}}
             <li class="navBar-item is-active">{{lang 'account.nav.settings'}}</li>
         {{else}}

@@ -220,19 +220,21 @@ class FindAConsultant {
 
     continue() {
         if (this.selectedId) {
-          let frame = document.createElement('iframe');
-          frame.style.display = 'none';
-          frame.src = this.continueUrl + this.selectedId;
-          document.body.appendChild(frame);
+            let frame = document.createElement('iframe');
+            frame.style.display = 'none';
+            frame.src = this.continueUrl + this.selectedId;
+            document.body.appendChild(frame);
 
-          // Set cookie for consultant name
-          let consultantName = $(".selected .consultant-name").text();
-          TSCookie.SetConsultantName(consultantName);
+            // Set cookie for consultant name
+            let consultantName = $(".selected .consultant-name").text();
+            TSCookie.SetConsultantName(consultantName);
+            // Set cookie for consultant ID
+            TSCookie.SetConsultantId(this.selectedId);
 
-          // Insert consultant name in the header
-          this.insertConsultantNameInHeader(consultantName);
+            // Insert consultant name in the header
+            this.insertConsultantNameInHeader(consultantName);
 
-          this.modal.close();
+            this.modal.close();
         } else {
             this.displayError("Please select a consultant before continuing");
         }

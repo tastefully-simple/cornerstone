@@ -32,6 +32,9 @@
                     margin-right:.25rem;
                 }
             }
+            .out-of-stock-message {
+                display:none;
+            }
         }
     }
 }
@@ -72,6 +75,9 @@
             .out-of-stock-button {
                 .out-of-stock-title {
                     flex-direction:row;
+                }
+                .out-of-stock-message {
+                    display:block;
                 }
             }
             .card-body {

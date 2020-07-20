@@ -91,8 +91,10 @@ class FindAConsultant {
         $(window).on('resize', () => this.moveConsultantEl(trigger, this.screenMinWidth));
 
         // Insert consultant name in the header
-        let consultantName = TSCookie.GetConsultantName();
-        this.insertConsultantNameInHeader(consultantName);
+        this.insertConsultantNameInHeader();
+
+        // Account for sticky header
+        $(window).on('scroll', () => this.insertConsultantNameInHeader());
     }
 
     createModal(e, template) {
@@ -232,7 +234,7 @@ class FindAConsultant {
             TSCookie.SetConsultantId(this.selectedId);
 
             // Insert consultant name in the header
-            this.insertConsultantNameInHeader(consultantName);
+            this.insertConsultantNameInHeader();
 
             this.modal.close();
         } else {
@@ -240,14 +242,24 @@ class FindAConsultant {
         }
     }
 
-    insertConsultantNameInHeader(name) {
+    insertConsultantNameInHeader() {
+        let consultantName = TSCookie.GetConsultantName();
         let nameHtml = 
             `<span>
-                <strong>${name}</strong> is your Consultant <small>(edit)</small>
+                <strong>${consultantName}</strong> is your Consultant <small>(edit)</small>
             </span>`;
+        let defaultConsultantHtml =
+            `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+             <span class="headertoplinks-consult-text">Find a Consultant</span>`;
 
-        if (name) {
+        let $header = $('#headerMain');
+        let offsetTop = $header.offset().top;
+        let isStickyHeader = $header.hasClass('sticky-header');
+
+        if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
             this.$findConsultant.innerHTML = nameHtml;
+        } else {
+            this.$findConsultant.innerHTML = defaultConsultantHtml;
         }
     }
 

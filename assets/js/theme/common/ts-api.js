@@ -48,4 +48,17 @@ export default class TSApi {
             headers: {'Accept': 'application/json'}
         });
     }
+
+    searchPartyByState(state, name, page, size) {
+        let uri = '/search/party/'
+            + state + '/'
+            + page + '/'
+            + size
+            + '?name=' + name;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: {'Accept': 'application/json'}
+        });
+    }
 }

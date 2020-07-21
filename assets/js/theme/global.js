@@ -21,6 +21,7 @@ import accordian from './global/accordian';
 import newsletterAlert from './global/newsletter-alert';
 import stickyHeader from './global/sticky-header';
 import findConsultant from './global/find-consultant';
+import findParty from './global/find-party';
 
 
 export default class Global extends PageManager {
@@ -45,5 +46,6 @@ export default class Global extends PageManager {
         newsletterAlert();
         stickyHeader();
         findConsultant();
+        findParty();
     }
 }

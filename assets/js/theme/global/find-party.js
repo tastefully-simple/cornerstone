@@ -1,6 +1,7 @@
 import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
 import TSApi from '../common/ts-api';
+import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
 
@@ -41,7 +42,10 @@ class FindAParty {
         });
 
         // Select party
-        $('body').on('click', '.party-card', this.selectParty.bind(this));
+        $('body').on('click', '.party-card', (e) => this.selectParty(e));
+
+        // Submit
+        $('body').on('click', '#party-continue', () => this.continue());
 
         // Move "Find a Party" bar into the main menu in mobile view
         this.movePartyElement(this.$findPartyBar);
@@ -111,6 +115,20 @@ class FindAParty {
 
         let partyName = $('.selected .party-name').text();
         $('#you-have-selected').html(`You have selected <span>${partyName}</span>`);
+
+        // Set cookies
+        TSCookie.SetPartyId(this.selectedId);
+        TSCookie.SetPartyHost($partyCard.data('phost'));
+        TSCookie.SetPartyDate($partyCard.data('pdate'));
+        TSCookie.SetPartyTime($partyCard.data('ptime'));
+        TSCookie.SetPartyTotal($partyCard.data('ptotal'));
+    }
+
+    continue() {
+        if (this.selectedId) {
+            // Redirect
+            window.location.href = '/party-details';
+        }
     }
 
     movePartyElement($party) {
@@ -184,8 +202,12 @@ class FindAParty {
 
     getPartyHtmlBlock(party) {
         let $blockHtml = $('<div>', {
-            'class': 'party-card',
-            'data-pid' : party.PartyId
+            'class'       : 'party-card',
+            'data-pid'    : party.PartyId,
+            'data-phost'  : `${party.HostFirstName} ${party.HostLastName}`,
+            'data-pdate'  : party.Date,
+            'data-ptime'  : party.Time,
+            'data-ptotal' : party.Total
         });
 
         let $selectedHeaderHtml = this.getSelectedHeaderHtml();

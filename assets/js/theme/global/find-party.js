@@ -40,6 +40,9 @@ class FindAParty {
             this.search();
         });
 
+        // Select party
+        $('body').on('click', '.party-card', this.selectParty.bind(this));
+
         // Move "Find a Party" bar into the main menu in mobile view
         this.movePartyElement(this.$findPartyBar);
         $(window).on('resize', () => this.movePartyElement(this.$findPartyBar));
@@ -93,6 +96,23 @@ class FindAParty {
         this.search();
     }
 
+    selectParty(e) {
+        $('.alertbox-error').hide();
+        let $partyCard = $(e.target).closest('.party-card');
+
+        if (!$partyCard.hasClass('selected')) {
+            this.selectedId = $partyCard.data('pid');
+            $('.selected').toggleClass('selected');
+        } else {
+            this.selectedId = null;
+        }
+
+        $(e.target).closest('.party-card').toggleClass('selected');
+
+        let partyName = $('.selected .party-name').text();
+        $('#you-have-selected').html(`You have selected <span>${partyName}</span>`);
+    }
+
     movePartyElement($party) {
         let $navPages = $('.navPages-container .navPages');
 
@@ -109,6 +129,7 @@ class FindAParty {
         $('.party-pagination').remove();
         $('.party-footer').remove();
     }
+
     /*
      * HTML
      */
@@ -148,12 +169,23 @@ class FindAParty {
         // Footer
         let $footerHtml = this.getFooterHtml();
         $('#party-search-results .genmodal-body').append($footerHtml);
+
+        // If only one party is found,
+        // select that party automatically
+        if (response.Results.length == 1) {
+            let $partyCard = $('.party-card');
+            this.selectedId = $partyCard.data('pid');
+            $partyCard.addClass('selected');
+
+            let partyName = $('.selected .party-name').text();
+            $('#you-have-selected').html(`You have selected <span>${partyName}</span>`);
+        }
     }
 
     getPartyHtmlBlock(party) {
-        let $blockHtml = $("<div>", {
-            "class": "party-card",
-            "data-pid" : party.PartyId
+        let $blockHtml = $('<div>', {
+            'class': 'party-card',
+            'data-pid' : party.PartyId
         });
 
         let $selectedHeaderHtml = this.getSelectedHeaderHtml();
@@ -164,32 +196,32 @@ class FindAParty {
     }
 
     getSelectedHeaderHtml() {
-        let $selectedHeaderHtml = $("<div>", {"class": "selected-header"});
-        let $iconHtml = $("<span>", {"class": "check-icon"});
+        let $selectedHeaderHtml = $('<div>', {'class': 'selected-header'});
+        let $iconHtml = $('<span>', {'class': 'check-icon'});
         $selectedHeaderHtml.append($iconHtml);
-        let $titleContainerHtml = $("<div>", {"class": "vertical-center"});
-        let $titleHtml = $("<span>", {"class": "selection-title"});
-        $titleHtml.text("Current Party");
+        let $titleContainerHtml = $('<div>', {'class': 'vertical-center'});
+        let $titleHtml = $('<span>', {'class': 'selection-title'});
+        $titleHtml.text('Current Party');
         $titleContainerHtml.append($titleHtml);
         $selectedHeaderHtml.append($titleContainerHtml);
         return $selectedHeaderHtml;
     }
 
     getInfoHtml(party) {
-        let $infoContainerHtml = $("<div>", {"class": "party-info"});
+        let $infoContainerHtml = $('<div>', {'class': 'party-info'});
 
-        let $nameHtml = $("<h5>", {"class": "frameheading-5 party-name"});
+        let $nameHtml = $('<h5>', {'class': 'party-name'});
         $nameHtml.text(`${party.HostFirstName} ${party.HostLastName}'s Party`);
         $infoContainerHtml.append($nameHtml);
 
-        let $innerContainerHtml = $("<div>", {"class": "system-14"});
+        let $innerContainerHtml = $('<div>', {'class': 'system-12'});
 
-        let $dateHtml = $("<span>");
-        $dateHtml.text(party.Date);
+        let $dateHtml = $('<div>');
+        $dateHtml.html(`<span>Date: ${party.Date}</span>`);
         $innerContainerHtml.append($dateHtml);
 
-        let $consultantHtml = $("<span>");
-        $consultantHtml.text(party.Consultant);
+        let $consultantHtml = $('<div>');
+        $consultantHtml.html(`<span>Consultant: ${party.Consultant}</span>`);
         $innerContainerHtml.append($consultantHtml);
 
         $infoContainerHtml.append($innerContainerHtml);

@@ -2,6 +2,7 @@ import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
 import TSApi from '../common/ts-api';
 import StatesSelect from '../common/directory/states';
+import pagination from '../common/pagination';
 
 export default function() {
     $(document).ready(function() {
@@ -14,11 +15,13 @@ export default function() {
 
 // Breakpoint for mobile
 const SCREEN_MIN_WIDTH = 801;
+// Number of page numbers to show in pagination
+const DISPLAY_NUM_PAGES = 6;
+const PAGE_SIZE = 10;
 
 class FindAParty {
     constructor(trigger, template) {
         this.$findPartyBar = trigger.parent();
-        this.pageSize = 10;
 
         // API
         this.api = new TSApi();
@@ -70,23 +73,24 @@ class FindAParty {
             this.searchInfo.state,
             this.searchInfo.name,
             this.searchInfo.page,
-            this.pageSize
+            PAGE_SIZE
         )
         .then(res => res.json())
-        .then(data => this.renderResults(data));
+        .then(data => this.renderResults(data))
         .catch(err => {
             console.warn('searchByState', err);
             this.displayError(err);
         });
     }
 
-    renderResults(response) {
-        // Show search results
-    }
-
     displayError(err) {
         $('.alertbox-error span').text(err);
         $('.alertbox-error').show();
+    }
+
+    goToPage(p) {
+        this.searchInfo.page = p;
+        this.search();
     }
 
     movePartyElement($party) {
@@ -97,5 +101,109 @@ class FindAParty {
         } else {
             $navPages.append($party);
         }
+    }
+
+    clearPartyWindow() {
+        $('.party-card').remove();
+        $('.party-divider').remove();
+        $('.party-pagination').remove();
+        $('.party-footer').remove();
+    }
+    /*
+     * HTML
+     */
+    renderResults(response) {
+        if (!response.Results) {
+            this.displayError("No party was found.");
+            return;
+        }
+
+        $('#party-search').hide();
+        $('.alertbox-error').hide();
+        this.clearPartyWindow();
+
+        // List of Parties
+        response.Results.forEach(party => {
+            let $partyHtmlBlock = this.getPartyHtmlBlock(party);
+            let $dividerHtml = $('<div>', {'class': 'party-divider'});
+            $('#party-search-results article').append($partyHtmlBlock);
+            $('#party-search-results article').append($dividerHtml);
+        });
+
+        $('#party-search-results').show();
+
+        // Pagination
+        let $paginationContainer = $('<div>', {'class': 'party-pagination pagination'});
+
+        $('#party-search-results .genmodal-body').append($paginationContainer);
+
+        pagination(
+            $paginationContainer,
+            response.CurrentPage,
+            Math.ceil(response.TotalRecordCount / response.PageSize),
+            DISPLAY_NUM_PAGES,
+            ((p) => this.goToPage(p))
+        );
+
+        // Footer
+        let $footerHtml = this.getFooterHtml();
+        $('#party-search-results .genmodal-body').append($footerHtml);
+    }
+
+    getPartyHtmlBlock(party) {
+        let $blockHtml = $("<div>", {
+            "class": "party-card",
+            "data-pid" : party.PartyId
+        });
+
+        let $selectedHeaderHtml = this.getSelectedHeaderHtml();
+        $blockHtml.append($selectedHeaderHtml);
+        let $partyInfoHtml = this.getInfoHtml(party);
+        $blockHtml.append($partyInfoHtml);
+        return $blockHtml;
+    }
+
+    getSelectedHeaderHtml() {
+        let $selectedHeaderHtml = $("<div>", {"class": "selected-header"});
+        let $iconHtml = $("<span>", {"class": "check-icon"});
+        $selectedHeaderHtml.append($iconHtml);
+        let $titleContainerHtml = $("<div>", {"class": "vertical-center"});
+        let $titleHtml = $("<span>", {"class": "selection-title"});
+        $titleHtml.text("Current Party");
+        $titleContainerHtml.append($titleHtml);
+        $selectedHeaderHtml.append($titleContainerHtml);
+        return $selectedHeaderHtml;
+    }
+
+    getInfoHtml(party) {
+        let $infoContainerHtml = $("<div>", {"class": "party-info"});
+
+        let $nameHtml = $("<h5>", {"class": "frameheading-5 party-name"});
+        $nameHtml.text(`${party.HostFirstName} ${party.HostLastName}'s Party`);
+        $infoContainerHtml.append($nameHtml);
+
+        let $innerContainerHtml = $("<div>", {"class": "system-14"});
+
+        let $dateHtml = $("<span>");
+        $dateHtml.text(party.Date);
+        $innerContainerHtml.append($dateHtml);
+
+        let $consultantHtml = $("<span>");
+        $consultantHtml.text(party.Consultant);
+        $innerContainerHtml.append($consultantHtml);
+
+        $infoContainerHtml.append($innerContainerHtml);
+
+        return $infoContainerHtml;
+    }
+
+    getFooterHtml() {
+        let $footerHtml = $("<div>", {"class": "party-footer"});
+        var $youHaveSelectedHtml = $("<span>", {"id": "you-have-selected", "class": "system-14"});
+        $footerHtml.append($youHaveSelectedHtml);
+        var $continueHtml = $("<button>", {"id": "party-continue", "class": "button-secondary-icon"});
+        $continueHtml.text("continue");
+        $footerHtml.append($continueHtml);
+        return $footerHtml;
     }
 }

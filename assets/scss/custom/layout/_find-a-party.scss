@@ -1,0 +1,14 @@
+#party-search-results {
+    display: none;
+
+    .party-card {
+        .selected-header {
+            display: none;
+        }
+        &.selected {
+            .selected-header {
+                display: block;
+            }
+        }
+    }
+}

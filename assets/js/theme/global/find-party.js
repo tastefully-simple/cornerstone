@@ -113,22 +113,28 @@ class FindAParty {
 
         $(e.target).closest('.party-card').toggleClass('selected');
 
-        let partyName = $('.selected .party-name').text();
-        $('#you-have-selected').html(`You have selected <span>${partyName}</span>`);
+        let partyName = $partyCard.data('phost');
+        $('#you-have-selected').html(`You have selected <span>${partyName}</span>'s Party`);
 
         // Set cookies
-        TSCookie.SetPartyId(this.selectedId);
-        TSCookie.SetPartyHost($partyCard.data('phost'));
-        TSCookie.SetPartyDate($partyCard.data('pdate'));
-        TSCookie.SetPartyTime($partyCard.data('ptime'));
-        TSCookie.SetPartyTotal($partyCard.data('ptotal'));
+        this.setCookies($partyCard);
     }
 
     continue() {
         if (this.selectedId) {
             // Redirect
             window.location.href = '/party-details';
+        } else {
+            this.displayError('Please select a party before continuing');
         }
+    }
+
+    setCookies($partyCard) {
+        TSCookie.SetPartyId($partyCard.data('pid'));
+        TSCookie.SetPartyHost($partyCard.data('phost'));
+        TSCookie.SetPartyDate($partyCard.data('pdate'));
+        TSCookie.SetPartyTime($partyCard.data('ptime'));
+        TSCookie.SetPartyTotal($partyCard.data('ptotal'));
     }
 
     movePartyElement($party) {
@@ -195,8 +201,10 @@ class FindAParty {
             this.selectedId = $partyCard.data('pid');
             $partyCard.addClass('selected');
 
-            let partyName = $('.selected .party-name').text();
-            $('#you-have-selected').html(`You have selected <span>${partyName}</span>`);
+            let partyName = $partyCard.data('phost');
+            $('#you-have-selected').html(`You have selected <span>${partyName}</span>'s Party`);
+            // Set cookies
+            this.setCookies($partyCard);
         }
     }
 

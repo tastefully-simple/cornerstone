@@ -15,6 +15,9 @@ export default class TSApi {
         });
     }
 
+    /*
+     * Find a Consultant
+     */
     searchConsultantsByZip(zip, radius, page, size) {
         let uri = '/search/shop/zip/' 
             + zip  + '/' 
@@ -43,6 +46,57 @@ export default class TSApi {
 
     getConsultant(id) {
         let uri = '/search/shop/cid/' + id;
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: {'Accept': 'application/json'}
+        });
+    }
+
+
+    /*
+     * Find a Party
+     */
+    searchPartyByState(state, name, page, size) {
+        let uri = '/search/party/'
+            + state + '/'
+            + page + '/'
+            + size
+            + '?name=' + name;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: {'Accept': 'application/json'}
+        });
+    }
+
+    /*
+     * Consultant Detail Page
+     */
+
+    // Consultant - About Me
+    getConsultantInfo(cid) {
+        let uri = '/consultant/info?cid=' + cid;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: {'Accept': 'application/json'}
+        });
+    }
+
+    // Consultant - My Story
+    getConsultantStory(cid) {
+        let uri = '/consultant/mystory?cid=' + cid;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: {'Accept': 'application/json'}
+        });
+    }
+
+    // Consultant - My Parties
+    getConsultantParties(cid) {
+        let uri = '/consultant/parties?cid=' + cid;
+
         return fetch(this.fullUrl(uri), {
             method: 'GET',
             headers: {'Accept': 'application/json'}

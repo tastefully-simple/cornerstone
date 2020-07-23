@@ -1,0 +1,46 @@
+/* Consultant Details Styles */
+.consultant-details {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    h2 {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+
+    p {
+        margin-bottom: 0.4rem;
+    }
+
+    .cdetails-summary,
+    .cdetails-more-info {
+        max-width: 330px;
+        padding: 1rem;
+    }
+
+    // COLUMN 1
+    .cdetails-summary {
+        .cdetails-img {
+            border-radius: 2px;
+            padding: 0.75rem;
+        }
+    }
+
+    // COLUMN 2
+    .cdetails-more-info {
+        .cdetails-heading {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        button {
+            display: block;
+            max-width: 253px;
+            width: 100%;
+            margin: 0 auto;
+            margin-bottom: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+    }
+}

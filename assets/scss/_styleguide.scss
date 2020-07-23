@@ -129,6 +129,10 @@
                         align-items:center;
                         display:flex;
                         margin-bottom:10px;
+                        .icon-system-x,
+                        .icon-system-check{
+                            @extend .standard-icons;
+                        }
                     }
                     .guide-label{
                         margin-left:30px;

@@ -1,0 +1,111 @@
+// =============================================================================
+// Tastefully Simple Search Modal Styles
+// =============================================================================
+
+#modal {
+    border-radius: 5px;
+    min-height:0;
+    width: 100%;
+    .modal-close {
+        display: none;
+    }
+    .modal-content {
+        .vertical-bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .vertical-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .genmodal-header {
+            border-radius: unset;
+            height: 45px;
+            h2 {
+                margin-left: 5px;
+            }
+            .modal-close {
+                display: block;
+                .close-modal-alternate {
+                    background-color: transparent;
+                    right: -8px;
+                    top: -18px;
+                }
+            }
+        }
+        .genmodal-body {
+            padding: 15px 10px 0 10px;
+            overflow-y: auto;
+            max-height: 430px;
+            .alertbox-error {
+                background-color: #fdd;
+                display: none;
+                width: 100%;
+                margin-bottom: 15px;
+                margin-top: 0;
+            }
+            .buy-wide-card {
+                display: flex;
+                flex-wrap: wrap;
+                background-color: #fff;
+                margin: 0;
+                padding: 0 20px 20px;
+                margin-bottom: 13px;
+                &.id-search {
+                    margin-bottom: 15px;
+                }
+                .form-title {
+                    margin: 15px 0;
+                }
+                .frame-text {
+                    flex-basis: 100%;
+                }
+                .card-form {
+                    display: flex;
+                    flex-basis: 100%;
+                    justify-content: flex-start;
+                    & > * {
+                        margin-right: 15px;
+                    }
+                    span {
+                        font-size: 12px;
+                        font-weight: 400;
+                    }   
+                    .input-label {
+                        max-width: unset;
+                        flex-basis: 28.5%;
+                        input {
+                            width: 100%;
+                            height: 35px;
+                            border-radius: 3px;
+                        }
+                    }
+                    .simple-dropdown {
+                        flex-basis: 28.5%;
+                        label {
+                            min-width: 80px;
+                        }
+                        select {
+                            width: 100%;
+                            height: 35px;
+                            background-color: #F1F0EE;
+                            border-radius: 3px;
+                        }
+                    }
+                    .button-alternate {
+                        margin: 0;
+                    }
+                }
+                &.name-search {
+                    .card-form {
+                        .input-label {
+                            min-width: 104px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

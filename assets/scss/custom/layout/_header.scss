@@ -17,8 +17,8 @@
             .navUser {
                 position:unset;
                 .navUser-item--cart {
-                    right:0;
                     position:absolute;
+                    right:0;
                     top:50%;
                     .navUser-action {
                         color:$burgundy;
@@ -54,8 +54,8 @@
                             .form-input {
                                 border-radius:0;
                                 height:25px;
-                                padding:0 1rem;
                                 margin:0;
+                                padding:0 1rem;
                             }
                             .button--search {
                                 max-height:25px;
@@ -70,11 +70,11 @@
     .navPages-container.is-open {
         .navPages {
             .headertoplinks-consult {
-                text-align: center;
+                background: $gainsboro;
                 color: $burgundy;
                 font-weight: 800;
-                background: $gainsboro;
                 padding: 10px;
+                text-align: center;
             }
         }
         // Have "Shop" open by default
@@ -90,14 +90,14 @@
         background-color: $green-apple;
         color: white;
         .partybar-container {
-            display: flex;
             align-items: center;
-            padding: 0.6rem 1.5rem;
             cursor: pointer;
+            display: flex;
+            padding: 0.6rem 1.5rem;
             .partybar-text {
-                width: 95%;
-                text-align: center;
                 font-weight: 700;
+                text-align: center;
+                width: 95%;
             }
             .fa-caret-right {
                 width: 5%;
@@ -123,12 +123,12 @@
                             background-color: $text-gray;
                             color: $white;
                             text-align: left;
-
-                            p:last-child {
-                                margin-bottom: 0;
-                                text-transform: uppercase;
+                            p {
+                                &:last-child {
+                                    margin-bottom: 0;
+                                    text-transform: uppercase;
+                                }
                             }
-
                             a {
                                 color: $white;
                                 text-transform: none;
@@ -190,8 +190,8 @@
                     }
                     .header-logo-image-container {
                         .header-logo-image {
-                            position:relative;
                             left:unset;
+                            position:relative;
                             transform:unset;
                         }
                         &::after {
@@ -213,74 +213,79 @@
         .party-bar {
             .partybar-container {
                 display: block;
-                width: 20%;
                 max-width: 160px;
                 margin: 0 auto;
                 text-align: center;
+                width: 20%;
                 .partybar-text {
-                    margin-right: 0.5rem;
                     font-weight: unset;
+                    margin-right: 0.5rem;
                 }
             }
         }
     }
     .navUser-item--account {
+        position:relative;
         .navUser-action {
-            text-transform: capitalize;
             font-weight: 100;
+            text-transform: capitalize;
+            &:hover,
+            &:focus {
+                color: $white;
+            }
         }
-
         .dropdown-menu {
             // Override Foundation's inline style on left and top properties
-            left: 53px !important;
-            top: 30px !important;
-            transform: translateX(-50%);
-            max-width: remCalc(128px);
+            background-color: $gainsboro;
             border-color: $gainsboro;
+            box-shadow: 4px 5px 7px rgba(0, 0, 0, 0.2);
+            left: 50% !important;
+            max-width: remCalc(128px);
             padding: 0rem 1rem;
             padding-bottom: 0.5rem;
-            background-color: $gainsboro;
-            box-shadow: 4px 5px 7px rgba(0, 0, 0, 0.2);
-
+            top: 30px !important;
+            transform: translateX(-50%);
+            width:130px;
             &.is-open {
                 &:before,
                 &:after {
                     left: auto;
                 }
-
                 &:before {
                     right: 3.19rem;
                 }
-
                 &:after {
                     right: 3.29rem;
                     border-color: transparent transparent $gainsboro transparent;
                 }
             }
-
-            ul > li > a {
-                text-decoration: none;
-                text-transform: lowercase;
+            ul {
+                &>li {
+                    &>a {
+                        text-decoration: none;
+                        text-transform: lowercase;
+                    }
+                }
             }
         }
     }
     // Makes the main header sticky when scrolling
     .sticky-header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: $header-bg;
-      .headertoplinks-consult-text,
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: $header-bg;
+        .headertoplinks-consult-text,
         .navUser-action--account-text,
         .fa-caret-down {
             display: none;
         }
         .header-top-links {
+            color: $text-gray;
             display: flex;
             justify-content: flex-end;
             max-width: 130px;
             width: 100%;
-            color: $text-gray;
             .headertoplinks-consult {
                 &>span {
                     padding: 1rem 0.5rem;
@@ -289,8 +294,10 @@
             }
             .navUser {
                 padding: 0;
-                ul.navUser-section {
-                    display: flex;
+                ul {
+                    &.navUser-section {
+                        display: flex;
+                    }
                 }
                 .navUser-action {
                     color: $text-gray;
@@ -299,8 +306,8 @@
                 .navUser-item--account {
                     &>.dropdown-menu {
                         top: 45px !important;
-                        width: 128px;
                         transform: translateX(-80%);
+                        width: 128px;
                     }
                 }
                 .navUser-item--cart {

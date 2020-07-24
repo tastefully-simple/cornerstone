@@ -1,13 +1,147 @@
-#party-search-results {
-    display: none;
+// =============================================================================
+// Tastefully Simple Party Search Styles
+// =============================================================================
 
-    .party-card {
-        .selected-header {
-            display: none;
+#modal {
+    .modal-content {
+        #party-search {
+            .genmodal-body {
+                .buy-wide-card {
+                    .card-form {
+                        margin-top:.5rem;
+                        .simple-dropdown,
+                        .input-label {
+                            flex-basis:100%;
+                        }
+                    }
+                }
+            }
         }
-        &.selected {
-            .selected-header {
-                display: block;
+        #party-search-results {
+            display: none;
+            .genmodal-body {
+                position:relative;
+                overflow-y:hidden;
+                .buy-wide-card {
+                    overflow-y:auto;
+                    max-height:300px;
+                    .party-card {
+                        cursor:pointer;
+                        width:100%;
+                        &:not(.selected) {
+                            padding:1rem 20px 20px;
+                            .selected-header {
+                                display: none;
+                            }
+                            &::after {
+                                border-top:1px solid $text-gray;
+                                content:'';
+                                display:inline-block;
+                                margin-top:1rem;
+                                width:100%;
+                            }
+                        }
+                        &.selected {
+                            border:.5rem solid $teal;
+                            .selected-header {
+                                align-items:center;
+                                background-color: $teal;
+                                color: $white;
+                                display: flex;
+                                padding-bottom:10px;
+                                .selection-title {
+                                    color:$white;
+                                    margin:0;
+                                }
+                                .icon-system-check {
+                                    color:$white;
+                                    font-size:2rem;
+                                    margin-right:1rem;
+                                }
+                            }
+                            .party-info {
+                                padding:0 20px .5rem;
+                                .party-name {
+                                    margin:.5rem 0;
+                                }
+                            }
+                        }
+                        .party-info {
+                            .party-name {
+                                margin-top:0;
+                            }
+                        }
+                    }
+                }
+            }
+            .party-footer {
+                background-color: $gainsboro;
+                text-align:center;
+                width:100%;
+                .party-selected-next {
+                    margin:auto;
+                    text-align:right;
+                    width:70%;
+                    #you-have-selected {
+                        margin-bottom:.5rem;
+                        &>span {
+                            color: $teal;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:801px) {
+    #modal {
+        .modal-content {
+            #party-search {
+                .genmodal-body {
+                    /* stacked
+                    .buy-wide-card {
+                        .card-form {
+                            align-items:center;
+                            justify-content:center;
+                            .simple-dropdown,
+                            .input-label {
+                            align-items:center;
+                            justify-content:center;
+                            }
+                        }
+                    }
+                    */
+                    .buy-wide-card {
+                        align-items:flex-end;
+                        justify-content:space-between;
+                        .card-form {
+                            flex-basis:33.333%;
+                            justify-content:center;
+                            margin-top:.5rem;
+                            &:last-child {
+                                flex-basis:20.5%;
+                            }
+                        }
+                    }
+                }
+            }
+            #party-search-results {
+                .genmodal-body {
+                    .buy-wide-card {
+                        .party-card {
+                            width:50%;
+                            &::after {
+                                width:85%;
+                            }
+                        }
+                    }
+                }
+                .party-footer {
+                    .party-selected-next {
+                        text-align:center;
+                    }
+                }
             }
         }
     }

@@ -433,10 +433,16 @@ footer{
     background-image:url('../img/icons/icons-addtocart@2x.png');
     @extend .standard-icons;
 }
+.icon-system-check{
+    color:$teal;
+    font: 700 25px 'Font Awesome 5 Free';
+    &::before{
+        content:"\f058";
+    }
+}
 .icon-system-x{
     color:$white;
     font: 700 25px 'Font Awesome 5 Free';
-    @extend .standard-icons;
     &::before{
         content:"\f00d";
     }

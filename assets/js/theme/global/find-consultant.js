@@ -40,6 +40,8 @@ class FindAConsultant {
 
         // Modal
         trigger.addEventListener('click', (e) => this.createModal(e,template));
+        // Consultant bar in cart page
+        $('.cart-affiliate-info button').on('click', (e) => this.createModal(e,template));
 
         // Return
         $('body').on('click', '.return-search', this.returnSearch.bind(this));
@@ -258,6 +260,8 @@ class FindAConsultant {
 
         if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
             this.$findConsultant.innerHTML = nameHtml;
+            // Consultant bar in cart page
+            $('.affiliate-name').text(consultantName);
         } else {
             this.$findConsultant.innerHTML = defaultConsultantHtml;
         }

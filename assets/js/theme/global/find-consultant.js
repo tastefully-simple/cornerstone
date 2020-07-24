@@ -14,8 +14,7 @@ export default function() {
     $(document).ready(function() {
         let consultant = new FindAConsultant(
             document.querySelector('.headertoplinks-consult'),
-            'common/find-consultant',
-            window.theme_settings.social_bug_affiliate_url
+            'common/find-consultant'
         );
     });
 }
@@ -29,17 +28,16 @@ const SEARCH_BY_ID = 3;
 const DISPLAY_NUM_PAGES = 6;
 
 class FindAConsultant {
-    constructor(trigger, template, continueUrl) {
+    constructor(trigger, template) {
         this.$findConsultant = trigger;
-        this.continueUrl = continueUrl;
-        this.searchInfo = {mode: NO_SEARCH};
-        this.pageSize   = 10;
+        this.searchInfo = { mode: NO_SEARCH };
+        this.pageSize = 10;
 
         // API
         this.api = new TSApi();
 
         // Modal
-        trigger.addEventListener('click', (e) => this.createModal(e,template));
+        trigger.addEventListener('click', (e) => this.createModal(e, template));
 
         // Return
         $('body').on('click', '.return-search', this.returnSearch.bind(this));
@@ -222,11 +220,6 @@ class FindAConsultant {
 
     continue() {
         if (this.selectedId) {
-            let frame = document.createElement('iframe');
-            frame.style.display = 'none';
-            frame.src = this.continueUrl + this.selectedId;
-            document.body.appendChild(frame);
-
             // Set cookie for consultant name
             let consultantName = $(".selected .consultant-name").text();
             TSCookie.SetConsultantName(consultantName);

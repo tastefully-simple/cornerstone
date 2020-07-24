@@ -138,3 +138,38 @@
 {{/partial}}
 
 {{> layout/base}}
+
+<script>
+	function getCookie(name) {
+	  const value = `; ${document.cookie}`;
+	  const parts = value.split(`; ${name}=`);
+	  if (parts.length === 2) return parts.pop().split(';').shift();
+	}
+
+	function SendOrderNotification() {
+		var orderId = '{{checkout.order.id}}';
+        console.log('orderId' + orderId);
+		if (orderId.indexOf('chechout.order.id') === -1){
+			const cid = getCookie('cid');
+			const partyId = getCookie('pid');
+
+			var queryString = 'oid=' + orderId + '&cid=' + cid
+			if(partyId != null){
+                if(partyId.length > 0) {
+                   queryString = queryString +'&pid=' + partyId
+                }
+			}
+			console.log(window.theme_settings.ts_tsapi_base_url + '/webhook/order/success?' + queryString);
+			var frmSuccess = document.createElement("iframe");
+			frmSuccess.style.width = '1px';
+			frmSuccess.style.height = '1px';
+			frmSuccess.style.border = '0';
+			frmSuccess.src = window.theme_settings.ts_tsapi_base_url + '/webhook/order/success?' + queryString
+			document.body.appendChild(frmSuccess);
+		}
+	}
+
+	try{
+		SendOrderNotification();
+	}catch(ex){console.log(ex)}
+</script>

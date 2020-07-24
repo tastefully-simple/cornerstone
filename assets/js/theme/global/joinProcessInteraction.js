@@ -1,4 +1,5 @@
 import { confetti } from 'dom-confetti';
+import TSCookie from '../common/ts-cookie';
 
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
@@ -24,9 +25,6 @@ const toggleLoginSignUp = {
     logInForm: true,
     signUpForm: false,
 };
-
-/** Variables used to associate sponsor selected with SocialBug and create hidden iframe */
-const frame = document.createElement('iframe');
 
 /**
  * This object will hold the consultant search information
@@ -71,8 +69,6 @@ const API_URLS = {
     TELL_US: '',
     CHECKOUT: '',
     TSAPI_BASE: '',
-    SOCIAL_BUG: '',
-    CHECKOUT_REDIRECT_PID: 0,
     JOIN_SS_PRODUCT_ID: 0,
 };
 
@@ -145,19 +141,6 @@ const formatToSSN = (event) => {
         target.value = `${zip}`;
     }
 };
-
-// Initialize Social Bug Functionality
-function initializeSocialBug(affiliateId) {
-    frame.style.display = 'none';
-    frame.src = `${API_URLS.SOCIAL_BUG}${affiliateId}`;
-
-    document.body.appendChild(frame);
-}
-
-// Update Social Bug Functionality
-function associateSocialBugAffiliate(socialBugAfId) {
-    frame.src = `${API_URLS.SOCIAL_BUG}${socialBugAfId}`;
-}
 
 /**
  * This function displays an error message on the login form.
@@ -282,14 +265,6 @@ function populateFormFields(data) {
             }
         }
     });
-}
-
-function waitForSocialBug(callback) {
-    if ($('#affiliatediv').length) {
-        callback();
-    } else {
-        setTimeout(() => waitForSocialBug(callback), 500);
-    }
 }
 
 /**
@@ -492,8 +467,7 @@ selectSponsor(sponsorSearchData, 'click', (event) => {
     document.getElementById('SponsorId').value = $(event.target).closest('div').data('consid');
     $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
 
-    const socialBugAfId = ($(event.target).closest('div').data('afid'));
-    associateSocialBugAffiliate(socialBugAfId);
+    TSCookie.SetConsultantId(document.getElementById('SponsorId').value);
 });
 
 /**
@@ -858,13 +832,15 @@ function triggerSubmit() {
         const serialized = oForm.serialize();
         disabled.attr('disabled', 'disabled');
         const iSponsorID = document.getElementById('SponsorId').value;
+        TSCookie.SetConsultantId(iSponsorID);
         $.ajax({
             type: 'POST',
+            url: `${API_URLS.TSAPI_BASE}/join/user`,
             url: `${API_URLS.TSAPI_BASE}/join/user`,
             data: serialized,
             cache: true,
             success: () => {
-                location.href = `${API_URLS.SOCIAL_BUG}${iSponsorID}?PID=${API_URLS.CHECKOUT_REDIRECT_PID}`;
+                location.href = '/cart.php';
             },
             error: (error) => {
                 displayErrorMessage(error);
@@ -929,6 +905,7 @@ function triggerConfetti() {
     confettiRoots.forEach(confettiRoot => {
         confetti(confettiRoot);
     });
+    localStorage.removeItem('isJoin');
 }
 
 /**
@@ -992,8 +969,6 @@ export default function joinProcessInteraction(themeSettings) {
     API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/`;
     API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself`;
     API_URLS.TSAPI_BASE = themeSettings.ts_tsapi_base_url;
-    API_URLS.SOCIAL_BUG = `${themeSettings.social_bug_affiliate_url}`;
-    API_URLS.CHECKOUT_REDIRECT_PID = `${themeSettings.social_bug_redirect_to_checkout_product_id}`;
     API_URLS.JOIN_SS_PRODUCT_ID = `${themeSettings.ts_join_ss_product_id}`;
 
     // call functions on join page
@@ -1029,10 +1004,6 @@ export default function joinProcessInteraction(themeSettings) {
         triggerTermsApprove();
         triggerTextOptIn();
         getUrlParams();
-        waitForSocialBug(() => {
-            const affiliateId = $('#affiliatediv').data('affiliateid');
-            initializeSocialBug(affiliateId);
-        });
 
         $(document).ready(() => {
             const inputElement = document.getElementById('CellPhone');

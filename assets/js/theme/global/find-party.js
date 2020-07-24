@@ -47,6 +47,10 @@ class FindAParty {
         // Submit
         $('body').on('click', '#party-continue', () => this.continue());
 
+        // Go back to search
+        $('body').on('click', '#party-goback', () => this.returnSearch());
+        $('body').on('click', '.return-search', () => this.returnSearch());
+
         // Move "Find a Party" bar into the main menu in mobile view
         this.movePartyElement(this.$findPartyBar);
         $(window).on('resize', () => this.movePartyElement(this.$findPartyBar));
@@ -147,6 +151,12 @@ class FindAParty {
         }
     }
 
+    returnSearch() {
+        $('#party-search-results').hide();
+        $('.alertbox-error').hide();
+        $('#party-search').show();
+    }
+
     clearPartyWindow() {
         $('.party-card').remove();
         $('.party-pagination').remove();
@@ -157,13 +167,7 @@ class FindAParty {
      * HTML
      */
     renderResults(response) {
-        if (!response.Results) {
-            this.displayError("No party was found.");
-            return;
-        }
-
         $('#party-search').hide();
-        $('.alertbox-error').hide();
         this.clearPartyWindow();
 
         // List of Parties
@@ -173,14 +177,24 @@ class FindAParty {
         });
 
         $('#party-search-results').show();
+        $('#party-search-results article').show();
 
         // Footer
         let $footerHtml = this.getFooterHtml();
         $('#party-search-results').append($footerHtml);
 
+        if (response.Results.length === 0) {
+            this.displayError('No party was found.');
+            $('#party-search-results article').hide();
+            $('#party-continue').hide();
+            $('.return-search').hide();
+            $('#party-goback').show();
+            return;
+        }
+
         // If only one party is found,
         // select that party automatically
-        if (response.Results.length == 1) {
+        if (response.Results.length === 1) {
             let $partyCard = $('.party-card');
             this.selectedId = $partyCard.data('pid');
             $partyCard.addClass('selected');
@@ -193,7 +207,6 @@ class FindAParty {
 
         // Pagination
         let $paginationContainer = $('<div>', {'class': 'party-pagination pagination'});
-
         $footerHtml.prepend($paginationContainer);
 
         pagination(
@@ -203,10 +216,21 @@ class FindAParty {
             DISPLAY_NUM_PAGES,
             ((p) => this.goToPage(p))
         );
+
+        // Return search
+        let $returnSearch = $('<div>', {'class': 'return-search'});
+        $returnSearch.html(`
+            <div class="vertical-center">
+                <span class="icon-system-left-caret"></span>
+            </div>
+            <span class="frame-caption">Refine your search</span>
+        `);
+
+        $footerHtml.prepend($returnSearch);
     }
 
     getPartyHtmlBlock(party) {
-        let $blockHtml = $('<div>', {
+        let $block = $('<div>', {
             'class'       : 'party-card',
             'data-pid'    : party.PartyId,
             'data-phost'  : `${party.HostFirstName} ${party.HostLastName}`,
@@ -215,21 +239,23 @@ class FindAParty {
             'data-ptotal' : party.Total
         });
 
-        let $selectedHeaderHtml = this.getSelectedHeaderHtml();
-        $blockHtml.append($selectedHeaderHtml);
-        let $partyInfoHtml = this.getInfoHtml(party);
-        $blockHtml.append($partyInfoHtml);
-        return $blockHtml;
+        let $selectedHeader = this.getSelectedHeaderHtml();
+        $block.append($selectedHeader);
+        let $partyInfo = this.getInfoHtml(party);
+        $block.append($partyInfo);
+        return $block;
     }
 
     getSelectedHeaderHtml() {
-        let $selectedHeaderHtml = $('<div>', {'class': 'selected-header'});
-        let $iconHtml = $('<span>', {'class': 'icon-system-check'});
-        $selectedHeaderHtml.append($iconHtml);
-        let $titleHtml = $('<h3>', {'class': 'selection-title'});
-        $titleHtml.text('Current Party');
-        $selectedHeaderHtml.append($titleHtml);
-        return $selectedHeaderHtml;
+        let $selectedHeader = $('<div>', {'class': 'selected-header'});
+        let $icon = $('<span>', {'class': 'icon-system-check'});
+        $selectedHeader.append($icon);
+
+        let $title = $('<h3>', {'class': 'selection-title'});
+        $title.text('Current Party');
+        $selectedHeader.append($title);
+
+        return $selectedHeader;
     }
 
     getInfoHtml(party) {
@@ -255,14 +281,27 @@ class FindAParty {
     }
 
     getFooterHtml() {
-        let $footerHtml = $("<div>", {"class": "party-footer"});
-        let $selectedHtml = $("<div>", {"class": "party-selected-next"});
-        var $youHaveSelectedHtml = $("<p>", {"id": "you-have-selected", "class": "system-14"});
-        $footerHtml.append($selectedHtml);
-        $selectedHtml.append($youHaveSelectedHtml);
-        var $continueHtml = $("<button>", {"id": "party-continue", "class": "button-secondary-icon"});
-        $continueHtml.text("continue");
-        $selectedHtml.append($continueHtml);
-        return $footerHtml;
+        let $footer = $('<div>', {'class': 'party-footer'});
+
+
+        let $selectedNextContainer = $('<div>', {'class': 'party-selected-next'});
+        $footer.append($selectedNextContainer);
+
+        // You have selected <consultant> text
+        let $youHaveSelected = $('<p>', {'id': 'you-have-selected', 'class': 'system-14'});
+        $selectedNextContainer.append($youHaveSelected);
+
+        // Continue button
+        let $continueButton = $('<button>', {'id': 'party-continue', 'class': 'button-secondary-icon'});
+        $continueButton.text('continue');
+        $selectedNextContainer.append($continueButton);
+
+        // Back button
+        let $backButton = $('<button>', {'id': 'party-goback', 'class': 'button-primary'});
+        $selectedNextContainer.append($backButton);
+        $backButton.text('go back');
+        $backButton.hide();
+
+        return $footer;
     }
 }

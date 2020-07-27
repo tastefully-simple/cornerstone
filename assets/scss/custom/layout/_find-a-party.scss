@@ -78,6 +78,17 @@
                 background-color: $gainsboro;
                 text-align:center;
                 width:100%;
+                .return-search {
+                    cursor: pointer;
+                    display: flex;
+                    margin-bottom: 10px;
+                    padding-left: 10px;
+                    .icon-system-left-caret {
+                        height: 12px;
+                        margin-right: 5px;
+                        width: 12px;
+                    }
+                }
                 .party-selected-next {
                     margin:auto;
                     text-align:right;

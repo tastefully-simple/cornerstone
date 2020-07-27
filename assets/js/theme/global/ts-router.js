@@ -26,11 +26,7 @@ export default class TSRouter {
     checkUrlForBuyNow() {
         const params = this.getQuery();
         if (params.affiliate_action && params.affiliate_action === 'add') {
-            $(() => {
-                const docHeight = $(document).height();
-                $('body').append("<div id='overlay' class='body-overlay'></div>");
-                $('#overlay').height(docHeight);
-            });
+            this.showLoading();
 
             fetch(`/cart.php?action=add&sku=${params.sku}&source=buy_button`)
                 .then(() => window.location = this.apiUrl(params.SCID));
@@ -49,6 +45,7 @@ export default class TSRouter {
             const filterString = szUrl.substring(4);
             const iPid = parseInt(filterString, 10);
             if (iPid > 0) {
+                this.showLoading();
                 this.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
@@ -168,4 +165,23 @@ export default class TSRouter {
           window.location.search.substr(1)
         );
     }
-}
+
+    showLoading() {
+        $(() => {
+            const docHeight = $(document).height();
+            $('#page-wrapper').html(`
+                <div class="loader-icon">
+                    <div class="sk-chase">
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                    </div>
+                </div>
+                <div id='overlay' class='body-overlay'></div>
+            `);
+            $('#overlay').height(docHeight);
+        });
+    } }

@@ -280,7 +280,7 @@
       "messages": "Messages ({num_new_messages})",
       "wishlists": "Wish Lists ({num_wishlists})",
       "recently_viewed": "Recently Viewed",
-      "settings": "Account Settings",
+      "settings": "Profile",
       "addresses": "Addresses",
       "payment_methods": "Payment Methods"
     },
@@ -427,7 +427,7 @@
       }
     },
     "settings": {
-      "heading": "Account Settings",
+      "heading": "Profile",
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email Address",

@@ -319,7 +319,7 @@ class FindAConsultant {
 
     getConsultantHtmlBlock(consultant) {
         var $blockHtml = $("<div>", {
-            "class": "consultant-card",
+            "class": "consultant-card result-card",
             "data-cid" : consultant.ConsultantId
         });
 
@@ -334,7 +334,7 @@ class FindAConsultant {
 
     getSelectedHeaderHtml() {
         var $selectedHeaderHtml = $("<div>", {"class": "selected-header"});
-        var $iconHtml = $("<span>", {"class": "check-icon"});
+        var $iconHtml = $("<span>", {"class": "icon-system-check"});
         $selectedHeaderHtml.append($iconHtml);
         var $titleContainerHtml = $("<div>", {"class": "vertical-center"});
         var $titleHtml = $("<span>", {"class": "selection-title"});

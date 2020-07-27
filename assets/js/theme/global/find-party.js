@@ -231,7 +231,7 @@ class FindAParty {
 
     getPartyHtmlBlock(party) {
         let $block = $('<div>', {
-            'class'       : 'party-card',
+            'class'       : 'party-card result-card',
             'data-pid'    : party.PartyId,
             'data-phost'  : `${party.HostFirstName} ${party.HostLastName}`,
             'data-pdate'  : party.Date,

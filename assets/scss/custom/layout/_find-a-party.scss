@@ -26,13 +26,8 @@
                     overflow-y:auto;
                     max-height:300px;
                     .party-card {
-                        cursor:pointer;
                         width:100%;
                         &:not(.selected) {
-                            padding:1rem 20px 20px;
-                            .selected-header {
-                                display: none;
-                            }
                             &::after {
                                 border-top:1px solid $text-gray;
                                 content:'';
@@ -42,23 +37,6 @@
                             }
                         }
                         &.selected {
-                            border:.5rem solid $teal;
-                            .selected-header {
-                                align-items:center;
-                                background-color: $teal;
-                                color: $white;
-                                display: flex;
-                                padding-bottom:10px;
-                                .selection-title {
-                                    color:$white;
-                                    margin:0;
-                                }
-                                .icon-system-check {
-                                    color:$white;
-                                    font-size:2rem;
-                                    margin-right:1rem;
-                                }
-                            }
                             .party-info {
                                 padding:0 20px .5rem;
                                 .party-name {
@@ -76,6 +54,7 @@
             }
             .party-footer {
                 background-color: $gainsboro;
+                padding:0 10px 0 10px;
                 text-align:center;
                 width:100%;
                 .return-search {
@@ -89,15 +68,23 @@
                         width: 12px;
                     }
                 }
+                .party-pagination {
+                    background-color:$white;
+                    padding:5px 20px;
+                    margin:20px 0;
+                    @include modal-dropshadow();
+                }
                 .party-selected-next {
-                    margin:auto;
+                    padding:5px 20px;
                     text-align:right;
-                    width:70%;
                     #you-have-selected {
                         margin-bottom:.5rem;
                         &>span {
                             color: $teal;
                         }
+                    }
+                    #party-continue {
+                        width:190px;
                     }
                 }
             }
@@ -141,16 +128,10 @@
                 .genmodal-body {
                     .buy-wide-card {
                         .party-card {
-                            width:50%;
                             &::after {
                                 width:85%;
                             }
                         }
-                    }
-                }
-                .party-footer {
-                    .party-selected-next {
-                        text-align:center;
                     }
                 }
             }

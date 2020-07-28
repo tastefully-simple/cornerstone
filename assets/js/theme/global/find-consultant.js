@@ -37,7 +37,15 @@ class FindAConsultant {
         this.api = new TSApi();
 
         // Modal
-        trigger.addEventListener('click', (e) => this.createModal(e,template));
+        trigger.addEventListener('click', (e) => {
+            // Github issue #179, go to consultant page
+            if (TSCookie.GetConsultantId() && e.target.tagName != 'SMALL') {
+                window.location = '/web';
+            } else {
+                this.createModal(e, template);
+            }
+        });
+
         // Consultant bar in cart page
         $('.cart-affiliate-info button').on('click', (e) => this.createModal(e,template));
 
@@ -241,8 +249,10 @@ class FindAConsultant {
         let consultantName = TSCookie.GetConsultantName();
         let nameHtml = 
             `<span>
-                <strong>${consultantName}</strong> is your Consultant <small>(edit)</small>
+                <strong>${consultantName}</strong> is your Consultant
+                <small>(edit)</small>
             </span>`;
+
         let defaultConsultantHtml =
             `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
              <span class="headertoplinks-consult-text">Find a Consultant</span>`;

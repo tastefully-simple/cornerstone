@@ -133,7 +133,7 @@
                                 <input type="hidden" name="reorderitem[{{order_product_id}}]">
                             {{/if}}
                         {{/each}}
-                        <input type="submit" class="button" value="{{lang 'account.orders.details.reorder'}}">
+                        <button type="submit" class="button button-primary">{{lang 'account.orders.details.reorder'}}</button>
                     </form>
                     {{#if settings.returns_enabled}}
                         {{#if order.is_complete}}

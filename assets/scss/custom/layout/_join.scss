@@ -240,6 +240,9 @@
     form .join__terms {
         padding: 0 $SPACING_3 0 $SPACING_3;
         border: 1px solid $COLOR_GRAY_200;
+        h4 {
+            text-align:center;
+        }
 
         label {
             @include checkboxLabel();

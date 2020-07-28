@@ -102,6 +102,9 @@ $utility-success: #d5ffd8;
 .wanwhite-text{
     color: $wan-white;
 }
+.white-text{
+    color: $white;
+}
 
 // Background Color Classes
 // -----------------------------------------------------------------------------
@@ -296,6 +299,9 @@ footer{
         background-color:$teal-hover;
         border-color:$teal-hover;
     }
+}
+.button--secondary{
+    @extend .button-secondary;
 }
 .button-secondary-icon{
     @extend .button-secondary;
@@ -529,7 +535,6 @@ select{
     border:1px solid #d3d3d3;
     border-radius:2px;
     padding:5px;
-    width:300px;
     &.input-active{
         border-color:$utility-blue;
     }
@@ -555,7 +560,6 @@ label{
     &.input-label{
         display:flex;
         flex-direction:column;
-        max-width:300px;
         position:relative;
     }
     &.input-confirmed,

@@ -122,12 +122,35 @@
             @include disabledField();
         }
 
-        label {
-            @include formLabel();
+        &#consultantSearchForm {
+            .input-label {
+                display:inline-flex;
+                width:65%;
+                input {
+                    margin-bottom:0;
+                    width:100%;
+                }
+            }
+            .input-dropdown {
+                display:flex;
+                justify-content:space-between;
+                .simple-dropdown {
+                    display:inline-flex;
+                    width:30%;
+                }
+            }
+            button {
+                margin-bottom:0;
+                vertical-align:bottom;
+            }
         }
 
-        input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
+        input[type=text], input[type=tel], input[type=date], input[type=email], input[type=password] {
             @include formInput();
+        }
+
+        select {
+            margin-bottom: $SPACING_2;
         }
 
         input[type=checkbox] {
@@ -158,10 +181,6 @@
             input {
                 margin-bottom: $SPACING_1;
             }
-        }
-
-        #ConsultantState {
-            width: 34%;
         }
 
         .join__field--subtext {

@@ -181,6 +181,11 @@
                     display:flex;
                     flex-basis:33%;
                     justify-content:space-between;
+                    input,
+                    textarea,
+                    select{
+                        width:300px;
+                    }
                 }
             }
         }

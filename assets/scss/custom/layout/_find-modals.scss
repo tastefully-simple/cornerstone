@@ -40,7 +40,7 @@
             overflow-y: auto;
             max-height: 430px;
             .alertbox-error {
-                background-color: #fdd;
+                background-color: $utility-error;
                 display: none;
                 width: 100%;
                 margin-bottom: 15px;
@@ -49,9 +49,8 @@
             .buy-wide-card {
                 display: flex;
                 flex-wrap: wrap;
-                background-color: #fff;
+                background-color: $color-white;
                 margin: 0;
-                padding: 0 20px 20px;
                 margin-bottom: 13px;
                 &.id-search {
                     margin-bottom: 15px;
@@ -90,7 +89,7 @@
                         select {
                             width: 100%;
                             height: 35px;
-                            background-color: #F1F0EE;
+                            background-color: $wan-white;
                             border-radius: 3px;
                         }
                     }
@@ -102,6 +101,43 @@
                     .card-form {
                         .input-label {
                             min-width: 104px;
+                        }
+                    }
+                }
+            }
+        }
+        .modal-results {
+            .genmodal-body {
+                .buy-wide-card {
+                    .result-card {
+                        cursor:pointer;
+                        &:not(.selected) {
+                            padding-top:1rem;
+                            .selected-header {
+                                display: none;
+                            }
+                        }
+                        &.selected {
+                            margin-top:1rem;
+                            border:.5rem solid $teal;
+                            border-top:none;
+                            .selected-header {
+                                align-items:center;
+                                background-color: $teal;
+                                color: $white;
+                                display: flex;
+                                flex-basis: 100%; 
+                                padding:10px 0;
+                                .selection-title {
+                                    color:$white;
+                                    margin:0;
+                                }
+                                .icon-system-check {
+                                    color:$white;
+                                    font-size:2rem;
+                                    margin-right:1rem;
+                                }
+                            }
                         }
                     }
                 }

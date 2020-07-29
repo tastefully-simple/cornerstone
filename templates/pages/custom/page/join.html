@@ -8,7 +8,7 @@
     </div>
     <div class="join__container">
         <div class="join__form">
-            <h2 class="heading--2">Ready to Join?</h2>
+            <h2 class="text-white">Ready to Join?</h2>
             <p>Joining is super easy! Just input your preferred email address and password to get started.</p>
             <div class="join__form--toggle">
                 <p id="login" class="active">Log in</p>
@@ -19,26 +19,36 @@
                 <p id="sign-up">Sign up</p>
             </div>
             <form id="frmJoinLoginTest" style="" runat="server" method="post" action="#">
-                <input type="hidden" id="Id" name="Id" value="1cc"><br>
+                <input type="hidden" id="Id" name="Id" value="1cc">
                 <div id="firstNameField" class="hidden">
-                    <label for="FirstName">First Name</label>
-                    <input type="text" id="FirstName" name="FirstName" value=""><br>
+                    <label for="FirstName" class="input-label">
+                        <span>First Name</span>
+                        <input type="text" id="FirstName" name="FirstName" value="">
+                    </label>
                 </div>
                 <div id="lastNameField" class="hidden">
-                    <label for="LastName">Last Name</label>
-                    <input type="text" id="LastName" name="LastName" value=""><br>
+                    <label for="LastName" class="input-label">
+                        <span>Last Name</span>
+                        <input type="text" id="LastName" name="LastName" value="">
+                    </label>
                 </div>
                 <div id="emailAddressField">
-                    <label for="EmailAddress">Email Address</label>
-                    <input type="email" id="EmailAddress" name="EmailAddress" value=""><br>
+                    <label for="EmailAddress" class="input-label">
+                        <span>Email Address</span>
+                        <input type="email" id="EmailAddress" name="EmailAddress" value="">
+                    </label>
                 </div>
                 <div id="passwordField">
-                    <label for="Password">Password</label>
-                    <input type="password" id="Password" name="Password" value=""><br>
+                    <label for="Password" class="input-label">
+                        <span>Password</span>
+                        <input type="password" id="Password" name="Password" value="">
+                    </label>
                 </div>
                 <div id="password2Field" class="hidden">
-                    <label for="Password2">Retype Password</label>
-                    <input type="password" id="Password2" name="Password2" value=""><br>
+                    <label for="Password2" class="input-label">
+                        <span>Retype Password</span>
+                        <input type="password" id="Password2" name="Password2" value="">
+                    </label>
                 </div>
                 <button id="submit" type="submit" value="select my starting kit" class="button-secondary-icon">next</button>
             </form>

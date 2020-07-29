@@ -5,7 +5,7 @@
 <h2 class="page-heading title">{{lang 'account.orders.details.heading' number=order.id}}</h2>
 {{> components/account/navigation account_page='orders'}}
 
-<div class="account">
+<div class="account order-details">
     <div class="account-body">
         {{#each order.status_messages}}
             {{> components/common/alert-info message}}
@@ -48,7 +48,7 @@
                     {{/if}}
                 </dl>
 
-                <button data-print-invoice="{{order.invoice_url}}" class="button">{{lang 'account.orders.details.print_invoice'}}</button>
+                <button data-print-invoice="{{order.invoice_url}}" class="button button-primary">{{lang 'account.orders.details.print_invoice'}}</button>
             </section>
 
             {{#if order.shipping_address}}
@@ -137,7 +137,7 @@
                     </form>
                     {{#if settings.returns_enabled}}
                         {{#if order.is_complete}}
-                            <a href="{{order.return_url}}" class="button">{{lang 'account.orders.details.return'}}</a>
+                            <a href="{{order.return_url}}" class="button button-primary">{{lang 'account.orders.details.return'}}</a>
                         {{/if}}
                     {{/if}}
                 </div>

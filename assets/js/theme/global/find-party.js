@@ -118,7 +118,7 @@ class FindAParty {
         $(e.target).closest('.party-card').toggleClass('selected');
 
         let partyName = $partyCard.data('phost');
-        $('#you-have-selected').html(`You have selected <span>${partyName}</span>'s Party`);
+        $('#you-have-selected').html(`You have selected <strong>${partyName}'s</strong> Party`);
 
         // Set cookies
         this.setCookies($partyCard);
@@ -200,7 +200,7 @@ class FindAParty {
             $partyCard.addClass('selected');
 
             let partyName = $partyCard.data('phost');
-            $('#you-have-selected').html(`You have selected <span>${partyName}</span>'s Party`);
+            $('#you-have-selected').html(`You have selected <strong>${partyName}'s</strong> Party`);
             // Set cookies
             this.setCookies($partyCard);
         }

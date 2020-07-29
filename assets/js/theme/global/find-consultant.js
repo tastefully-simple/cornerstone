@@ -27,6 +27,8 @@ const SEARCH_BY_ID = 3;
 // Number of page numbers to show in pagination
 const DISPLAY_NUM_PAGES = 6;
 
+const CONSULTANT_PAGE = '/web';
+
 class FindAConsultant {
     constructor(trigger, template) {
         this.$findConsultant = trigger;
@@ -40,7 +42,7 @@ class FindAConsultant {
         trigger.addEventListener('click', (e) => {
             // Github issue #179, go to consultant page
             if (TSCookie.GetConsultantId() && e.target.tagName != 'SMALL') {
-                window.location = '/web';
+                window.location = CONSULTANT_PAGE;
             } else {
                 this.createModal(e, template);
             }
@@ -236,10 +238,13 @@ class FindAConsultant {
             // Set cookie for consultant ID
             TSCookie.SetConsultantId(this.selectedId);
 
-            // Insert consultant name in the header
-            this.insertConsultantNameInHeader();
-
-            this.modal.close();
+            if (this.isOnConsultantPage()) {
+                window.location = CONSULTANT_PAGE;
+            } else {
+                // Insert consultant name in the header
+                this.insertConsultantNameInHeader();
+                this.modal.close();
+            }
         } else {
             this.displayError("Please select a consultant before continuing");
         }
@@ -281,6 +286,10 @@ class FindAConsultant {
             // Add consultant to mobile main menu
             $navPages.prepend($consultant);
         }
+    }
+
+    isOnConsultantPage() {
+        return document.location.pathname == CONSULTANT_PAGE;
     }
 
     /*

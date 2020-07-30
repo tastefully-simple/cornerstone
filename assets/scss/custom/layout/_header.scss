@@ -86,22 +86,50 @@
         cursor: pointer;
     }
     // Find a Party bar
-    .party-bar {
+    .partybar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         background-color: $green-apple;
         color: white;
-        .partybar-container {
+        p {
+          margin: 0 auto;
+        }
+        &-container {
+            max-width: 50%;
+            justify-content: center;
             align-items: center;
             cursor: pointer;
             display: flex;
             padding: 0.6rem 1.5rem;
-            .partybar-text {
-                font-weight: 700;
-                text-align: center;
-                width: 95%;
-            }
             .fa-caret-right {
-                width: 5%;
+                transition: rotate 0.2s ease-in-out;
+                width: .25rem;
+                margin-left: 0.75rem;
             }
+            &.active {
+                .fa-caret-right {
+                    rotate: 90deg;
+                }
+            }
+        }
+        &-button {
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            padding: 0.6rem;
+        }
+        &-accordion {
+          max-height: 0;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          transition: max-height 0.2s ease-out;
+        }
+        &-text {
+            text-align: center;
         }
     }
 }
@@ -210,17 +238,17 @@
             }
         }
         // Find a Party bar
-        .party-bar {
-            .partybar-container {
-                display: block;
-                max-width: 160px;
+        .partybar {
+            display: flex;
+            flex-direction: column;
+            &-container {
+                max-width: 100%;
+                display: flex;
                 margin: 0 auto;
                 text-align: center;
-                width: 20%;
-                .partybar-text {
-                    font-weight: unset;
-                    margin-right: 0.5rem;
-                }
+            }
+            &-text {
+                font-weight: unset;
             }
         }
     }

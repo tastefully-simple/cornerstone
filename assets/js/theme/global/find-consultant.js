@@ -92,8 +92,10 @@ class FindAConsultant {
         // Select
         $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
         
-        // Submit
-        $('body').on('click', '#consultant-continue', () => this.continue())
+        // Submit with consultant
+        $('body').on('click', '#consultant-continue', () => this.continue());
+        // Submit with Tastefully Simple
+        $('body').on('click', '#no-consultants-continue', () => this.shopWithTsimple());
 
         // Move "Find a Consultant" into the main menu in mobile view
         this.screenMinWidth = 801;
@@ -250,6 +252,21 @@ class FindAConsultant {
         }
     }
 
+    shopWithTsimple() {
+        // Set cookie for consultant name
+        TSCookie.SetConsultantName("Tastefully Simple");
+        // Set cookie for consultant ID
+        TSCookie.SetConsultantId("0160785");
+
+        if (this.isOnConsultantPage()) {
+            window.location = CONSULTANT_PAGE;
+        } else {
+            // Insert consultant name in the header
+            this.insertConsultantNameInHeader();
+            this.modal.close();
+        }
+    }
+
     insertConsultantNameInHeader() {
         let consultantName = TSCookie.GetConsultantName();
         let nameHtml = 
@@ -298,6 +315,8 @@ class FindAConsultant {
     renderResults(response) {
         if (!response.Results) {
             this.displayError("No consultant was found. Search again or shop directly with Tastefully Simple, Inc.");
+            var $tSimpleBtn = this.getTsimpleBtn();
+            $tSimpleBtn.insertBefore("#zipcode-search-form");
             return;
         }
         $("#consultant-search").hide();
@@ -446,5 +465,12 @@ class FindAConsultant {
         $continueHtml.text("continue");
         $footerHtml.append($continueHtml);
         return $footerHtml;
+    }
+
+    getTsimpleBtn() {
+        var $tSimpleBtn = $("<button>", {"id": "no-consultants-continue", "class": "button-secondary-icon"});
+        $tSimpleBtn.text("Shop with Tastefully Simple");
+
+        return $tSimpleBtn;
     }
 }

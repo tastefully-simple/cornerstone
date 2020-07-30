@@ -3,11 +3,7 @@
 // =============================================================================
 /* Choose A Consultant Styles  */
 #modal {
-    #consultant-search-results {
-        display: none;
-        .frameheading-5 {
-            font-family: stencilFontFamily("headings-font");
-        }
+    .find-a-consultant {
         .genmodal-body {
             height: 430px;
             overflow-y: auto;
@@ -28,6 +24,17 @@
                     margin: 10px 0; 
                 }
             }
+        }
+    }
+    #no-consultants-continue {
+        width: 60%;
+    }
+    #consultant-search-results {
+        display: none;
+        .frameheading-5 {
+            font-family: stencilFontFamily("headings-font");
+        }
+        .genmodal-body {
             .buy-wide-card {
                 display: flex;
                 flex-direction: column;
@@ -111,6 +118,7 @@
         }
     }
 }
+
 @media only screen and (min-width:801px) {
     #modal {
         width: 550px;

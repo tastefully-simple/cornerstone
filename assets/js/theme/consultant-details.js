@@ -14,7 +14,13 @@ const PARTIES_DATA = 1;
 
 // Modes to what party tab to render
 const ATTEND_TAB = 0;
-const PAST_TAB = 1;
+const PAST_TAB   = 1;
+
+// ConnectTypes for social media urls
+const FACEBOOK  = 1;
+const TWITTER   = 2;
+const PINTEREST = 3;
+const YOUTUBE   = 4;
 
 class ConsultantDetails {
     constructor() {
@@ -137,6 +143,34 @@ class ConsultantDetails {
         $headline.text(details.Headline || "Testing Shop or Host With Me Headline");
         $phoneNumber.text(details.PhoneNumber || "888-888-8888");
         $email.text(details.EmailAddress || "help@tastefullysimple.com");
+
+        // Social Media Links
+        let $socialLinksContainer = $('.cdetails-more-info .socialLinks');
+        let $socialLinks = this.getSocialMedias(details.SocialMediaURLs);
+        $socialLinksContainer.append($socialLinks);
+    }
+
+    getSocialMedias(socialMedias) {
+        if (socialMedias === null) {
+            return;
+        }
+
+        return socialMedias.map(socialMedia => this.getSocialMedia(socialMedia));
+    }
+
+    getSocialMedia(social) {
+        switch(social.ConnectType) {
+            case FACEBOOK:
+                return this.createSocialMedia(social.URL, 'facebook');
+            case TWITTER:
+                return this.createSocialMedia(social.URL, 'twitter');
+            case PINTEREST:
+                return this.createSocialMedia(social.URL, 'pinterest');
+            case YOUTUBE:
+                return this.createSocialMedia(social.URL, 'youtube');
+            default:
+                console.error('ConnectType', social.ConnectType);
+        }
     }
 
     /*
@@ -182,6 +216,20 @@ class ConsultantDetails {
     /* 
      * Helpers
      */
+
+    createSocialMedia(url, social) {
+        let $item = $('<li>', {'class': 'socialLinks-item'});
+        let attrs = {
+            'class' : `icon-social-${social}`,
+            'href'  : url,
+            'target': '_blank'
+        };
+        let $socialLink = $('<a>', attrs);
+
+        $item.append($socialLink);
+
+        return $item;
+    }
 
     /* Tab Content
      * - Party Host

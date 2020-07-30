@@ -1,0 +1,112 @@
+// =============================================================================
+// Tastefully Simple Account Styles
+// =============================================================================
+
+.account {
+    &:not(.order-details) {
+        .account-body {
+            .account-heading {
+                text-align:center;
+            }
+            .account-list {
+                .account-listItem {
+                    @extend .modal-dropshadow;
+                    &:not(:last-child) {
+                        margin-bottom:2rem;
+                    }
+                    .account-product {
+                        align-items:flex-start;
+                        box-shadow:none;
+                        display:flex;
+                        flex-direction:column;
+                        justify-content:center;
+                        padding:0 1rem;
+                        .account-product-figure {
+                            float:none;
+                            margin:auto;
+                            width:auto;
+                            &::after {
+                                display:none;
+                            }
+                        }
+                        .account-product-body {
+                            padding-bottom:1rem;
+                            text-align:center;
+                            width:100%;
+                            .account-product-title {
+                                margin-top:1rem;
+                            }
+                            .account-product-description {
+                                margin-bottom:0;
+                            }
+                            .account-product-detail {
+                                float:none;
+                                width:100%;
+                                .account-product-detail-heading {
+                                    margin-bottom:0;
+                                    margin-top:1rem;
+                                    text-transform:capitalize;
+                                }
+                            }
+                        }
+                        .account-product-status {
+                            background-color: $cream;
+                            margin:auto;
+                            width:80%;
+                            .account-orderStatus {
+                                position:unset;
+                                .account-orderStatus-label {
+                                    background-color: $cream;
+                                    display:block;
+                                    margin:auto;
+                                    padding:.5rem 1.5rem;
+                                    text-align:center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .support-message {
+        text-align:center;
+    }
+}
+
+@media only screen and (min-width:801px) {
+    .account {
+        &:not(.order-details) {
+            .account-body {
+                .account-list {
+                    .account-listItem {
+                        .account-product {
+                            flex-direction:row;
+                            justify-content:space-between;
+                            &::before,
+                            &::after {
+                                display:none;
+                            }
+                            .account-product-figure {
+                                flex-grow:.5;
+                                img {
+                                    margin:0;
+                                    width:160px;
+                                }
+                            }
+                            .account-product-body {
+                                flex-grow:2;
+                                text-align:left;
+                                width:auto;
+                            }
+                            .account-product-status {
+                                margin:0;
+                                width:auto;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

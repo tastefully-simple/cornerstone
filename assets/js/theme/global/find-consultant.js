@@ -339,6 +339,7 @@ class FindAConsultant {
 
         //Generate consultant and divider html
         response.Results.forEach((consultant) => {
+            debugger;
             var $consultantHtmlBlock = this.getConsultantHtmlBlock(consultant);
             var $dividerHtml = $("<div>", {"class": "consultant-divider"});
             $("#consultant-search-results .buy-wide-card").append($consultantHtmlBlock);
@@ -432,7 +433,7 @@ class FindAConsultant {
         $addressHtml.text(consultant.Location);
         $innerContainerHtml.append($addressHtml);
 
-        var $pageLinkHtml = this.getPageLinkHtml();
+        var $pageLinkHtml = this.getPageLinkHtml(consultant.WebUrl);
         $innerContainerHtml.append($pageLinkHtml);
 
         $infoContainerHtml.append($innerContainerHtml);
@@ -464,12 +465,12 @@ class FindAConsultant {
         return $emailHtml;
     }
 
-    getPageLinkHtml() {
+    getPageLinkHtml(weburl) {
         var $pageLinkHtml = $("<div>", {"class": "ts-page-link"});
         var $linkContainerHtml = $("<div>", {"class": "vertical-center"});
         var $linkHtml = $("<a>", {"class": "framelink-lg"});
         $linkHtml.text("View my TS page");
-        $linkHtml.attr("href", "#");
+        $linkHtml.attr("href", weburl);
         $linkContainerHtml.append($linkHtml);
         $pageLinkHtml.append($linkContainerHtml);
         var $iconHtml = $("<span>", {"class": "icon-system-download"});

@@ -40,8 +40,10 @@ class FindAConsultant {
 
         // Modal
         trigger.addEventListener('click', (e) => {
+            var $consultantId = TSCookie.GetConsultantId();
+            var $consultantName = TSCookie.GetConsultantName();
             // Github issue #179, go to consultant page
-            if (TSCookie.GetConsultantId() && e.target.tagName != 'SMALL') {
+            if ($consultantId && $consultantName != "Tastefully Simple" && e.target.tagName != 'SMALL') {
                 window.location = CONSULTANT_PAGE;
             } else {
                 this.createModal(e, template);
@@ -103,10 +105,11 @@ class FindAConsultant {
         $(window).on('resize', () => this.moveConsultantEl(trigger, this.screenMinWidth));
 
         // Insert consultant name in the header
-        this.insertConsultantNameInHeader();
-
-        // Account for sticky header
-        $(window).on('scroll', () => this.insertConsultantNameInHeader());
+        if (TSCookie.GetConsultantName() != "Tastefully Simple") {
+            this.insertConsultantNameInHeader();
+            // Account for sticky header
+            $(window).on('scroll', () => this.insertConsultantNameInHeader());
+        }
     }
 
     createModal(e, template) {
@@ -261,8 +264,6 @@ class FindAConsultant {
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;
         } else {
-            // Insert consultant name in the header
-            this.insertConsultantNameInHeader();
             this.modal.close();
         }
     }

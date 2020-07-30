@@ -313,12 +313,14 @@ class FindAConsultant {
      * HTML
      */
     renderResults(response) {
-        if (!response.Results) {
-            this.displayError("No consultant was found. Search again or shop directly with Tastefully Simple, Inc.");
-            var $tSimpleBtn = this.getTsimpleBtn();
-            $tSimpleBtn.insertBefore("#zipcode-search-form");
-            return;
+        if (response.Results) {
+            this.renderHasResults(response);
+        } else {
+            this.renderNoResults(response);
         }
+    }
+
+    renderHasResults(response) {
         $("#consultant-search").hide();
         $('.alertbox-error').hide();
         this.clearConsultantWindow();
@@ -351,8 +353,18 @@ class FindAConsultant {
             );
         }
 
-        var $footerHtml = this.getFooterHtml()
-        $("#consultant-search-results .genmodal-body").append($footerHtml);
+        $("#consultant-search-results .genmodal-body")
+            .append(this.getResultsFooterHtml());
+    }
+
+    renderNoResults(response) {
+        this.displayError(
+            "No consultant was found."
+            + " Search again or shop directly with Tastefully Simple, Inc."
+        );
+
+        $("#consultant-search .genmodal-body")
+            .append(this.getNoResultsFooterHtml());
     }
 
     getConsultantHtmlBlock(consultant) {
@@ -457,7 +469,7 @@ class FindAConsultant {
         return $pageLinkHtml;
     }
 
-    getFooterHtml() {
+    getResultsFooterHtml() {
         var $footerHtml = $("<div>", {"class": "consultant-footer"});
         var $youHaveSelectedHtml = $("<span>", {"id": "you-have-selected", "class": "system-14"});
         $footerHtml.append($youHaveSelectedHtml);
@@ -467,10 +479,11 @@ class FindAConsultant {
         return $footerHtml;
     }
 
-    getTsimpleBtn() {
+    getNoResultsFooterHtml() {
+        var $footerHtml = $("<div>", {"class": "consultant-footer"});
         var $tSimpleBtn = $("<button>", {"id": "no-consultants-continue", "class": "button-secondary-icon"});
         $tSimpleBtn.text("Shop with Tastefully Simple");
-
-        return $tSimpleBtn;
+        $footerHtml.append($tSimpleBtn);
+        return $footerHtml;
     }
 }

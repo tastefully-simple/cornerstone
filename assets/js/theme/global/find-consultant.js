@@ -224,7 +224,7 @@ class FindAConsultant {
 
     selectConsultant(e) {
         if (!($(e.target).hasClass('consultant-card') || $(e.target).is('img'))) {
-            return false;
+            return true;
         }
         $('.alertbox-error').hide();
         var $consultantCard = $(e.target).closest(".consultant-card");

@@ -339,7 +339,6 @@ class FindAConsultant {
 
         //Generate consultant and divider html
         response.Results.forEach((consultant) => {
-            debugger;
             var $consultantHtmlBlock = this.getConsultantHtmlBlock(consultant);
             var $dividerHtml = $("<div>", {"class": "consultant-divider"});
             $("#consultant-search-results .buy-wide-card").append($consultantHtmlBlock);

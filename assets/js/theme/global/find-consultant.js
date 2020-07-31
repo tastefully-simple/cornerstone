@@ -19,14 +19,19 @@ export default function() {
     });
 }
 
+// Consultants
+const TST_CONSULTANT = "0160785";
+
+// Search mode
 const NO_SEARCH = 0;
 const SEARCH_BY_ZIP = 1;
 const SEARCH_BY_NAME = 2;
 const SEARCH_BY_ID = 3;
 
-// Number of page numbers to show in pagination
+// Pagination
 const DISPLAY_NUM_PAGES = 6;
 
+// Redirect
 const CONSULTANT_PAGE = '/web';
 
 class FindAConsultant {
@@ -40,8 +45,9 @@ class FindAConsultant {
 
         // Modal
         trigger.addEventListener('click', (e) => {
+            let consultantId = TSCookie.GetConsultantId();
             // Github issue #179, go to consultant page
-            if (TSCookie.GetConsultantId() && e.target.tagName != 'SMALL') {
+            if (consultantId && consultantId != TST_CONSULTANT && e.target.tagName != 'SMALL') {
                 window.location = CONSULTANT_PAGE;
             } else {
                 this.createModal(e, template);
@@ -104,7 +110,6 @@ class FindAConsultant {
 
         // Insert consultant name in the header
         this.insertConsultantNameInHeader();
-
         // Account for sticky header
         $(window).on('scroll', () => this.insertConsultantNameInHeader());
     }
@@ -218,6 +223,9 @@ class FindAConsultant {
     }
 
     selectConsultant(e) {
+        if (!($(e.target).hasClass('consultant-card') || $(e.target).is('img'))) {
+            return true;
+        }
         $('.alertbox-error').hide();
         var $consultantCard = $(e.target).closest(".consultant-card");
         if (!$consultantCard.hasClass("selected")) {
@@ -256,39 +264,39 @@ class FindAConsultant {
         // Set cookie for consultant name
         TSCookie.SetConsultantName("Tastefully Simple");
         // Set cookie for consultant ID
-        TSCookie.SetConsultantId("0160785");
+        TSCookie.SetConsultantId(TST_CONSULTANT);
 
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;
         } else {
-            // Insert consultant name in the header
-            this.insertConsultantNameInHeader();
             this.modal.close();
         }
     }
 
     insertConsultantNameInHeader() {
-        let consultantName = TSCookie.GetConsultantName();
-        let nameHtml = 
-            `<span>
-                <strong>${consultantName}</strong> is your Consultant
-                <small>(edit)</small>
-            </span>`;
+        if (TSCookie.GetConsultantId() != TST_CONSULTANT) {
+            let consultantName = TSCookie.GetConsultantName();
+            let nameHtml = 
+                `<span>
+                    <strong>${consultantName}</strong> is your Consultant
+                    <small>(edit)</small>
+                </span>`;
 
-        let defaultConsultantHtml =
-            `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-             <span class="headertoplinks-consult-text">Find a Consultant</span>`;
+            let defaultConsultantHtml =
+                `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+                 <span class="headertoplinks-consult-text">Find a Consultant</span>`;
 
-        let $header = $('#headerMain');
-        let offsetTop = $header.offset().top;
-        let isStickyHeader = $header.hasClass('sticky-header');
+            let $header = $('#headerMain');
+            let offsetTop = $header.offset().top;
+            let isStickyHeader = $header.hasClass('sticky-header');
 
-        if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
-            this.$findConsultant.innerHTML = nameHtml;
-            // Consultant bar in cart page
-            $('.affiliate-name').text(consultantName);
-        } else {
-            this.$findConsultant.innerHTML = defaultConsultantHtml;
+            if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
+                this.$findConsultant.innerHTML = nameHtml;
+                // Consultant bar in cart page
+                $('.affiliate-name').text(consultantName);
+            } else {
+                this.$findConsultant.innerHTML = defaultConsultantHtml;
+            }
         }
     }
 
@@ -424,7 +432,7 @@ class FindAConsultant {
         $addressHtml.text(consultant.Location);
         $innerContainerHtml.append($addressHtml);
 
-        var $pageLinkHtml = this.getPageLinkHtml();
+        var $pageLinkHtml = this.getPageLinkHtml(consultant.WebUrl);
         $innerContainerHtml.append($pageLinkHtml);
 
         $infoContainerHtml.append($innerContainerHtml);
@@ -456,12 +464,12 @@ class FindAConsultant {
         return $emailHtml;
     }
 
-    getPageLinkHtml() {
+    getPageLinkHtml(weburl) {
         var $pageLinkHtml = $("<div>", {"class": "ts-page-link"});
         var $linkContainerHtml = $("<div>", {"class": "vertical-center"});
         var $linkHtml = $("<a>", {"class": "framelink-lg"});
         $linkHtml.text("View my TS page");
-        $linkHtml.attr("href", "#");
+        $linkHtml.attr("href", weburl);
         $linkContainerHtml.append($linkHtml);
         $pageLinkHtml.append($linkContainerHtml);
         var $iconHtml = $("<span>", {"class": "icon-system-download"});

@@ -8,7 +8,7 @@ import pagination from '../common/pagination';
 export default function() {
     $(document).ready(function() {
         let party = new FindAParty(
-            $('.partybar-container'),
+            $('#partybar-find'),
             'common/find-party'
         );
     });
@@ -24,11 +24,39 @@ class FindAParty {
     constructor(trigger, template) {
         this.$findPartyBar = trigger.parent();
 
+        this.$findPartyBarText = trigger.find(".partybar-text");
+
+        this.$findPartyButtons = this.$findPartyBar.find(".partybar-accordion").find(".partybar-button");
+
+        this.$viewPartyButton = $(this.$findPartyButtons[0])
+
+        this.$switchPartyButton = $(this.$findPartyButtons[1])
+
+        // Partybar Greeting Text
+        const hostname = TSCookie.GetPartyHost();
+        this.$findPartyBarText.html(this.partyGreeting(hostname));
+
         // API
         this.api = new TSApi();
 
         // Modal
-        trigger.on('click', (e) => this.createModal(e, template));
+        trigger.on('click', (e) => {
+            if (!TSCookie.GetPartyId()) {
+                this.createModal(e, template)
+            } else {
+                this.openDropdown(trigger)
+            }
+        });
+
+        // View party button
+        this.$viewPartyButton.on('click', () => {
+          window.location.href = '/party-details';
+        });
+
+        // Switch party button
+        this.$switchPartyButton.on('click', (e) => {
+            this.createModal(e, template);
+        });
 
         // Search by State / Name
         $('body').on('submit', '#state-search-form', () => {
@@ -69,6 +97,26 @@ class FindAParty {
                 this.modalLoaded(res);
             }
         });
+    }
+
+    openDropdown(target) {
+        target.toggleClass("active");
+
+        let accord = target.next();
+      
+        if (accord.css("max-height") == "0px") {
+            accord.css("max-height", (accord.prop('scrollHeight')));
+        } else {
+            accord.css("max-height", 0);
+        } 
+    }
+
+    partyGreeting(hostname) {
+      if (hostname) {
+        return `You\'re shopping in <strong>${hostname}\'s</strong> party`
+      } else {
+        return 'Find a party'
+      }
     }
 
     modalLoaded(result) {

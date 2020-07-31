@@ -85,25 +85,6 @@
     .headertoplinks-consult {
         cursor: pointer;
     }
-    // Find a Party bar
-    .party-bar {
-        background-color: $green-apple;
-        color: white;
-        .partybar-container {
-            align-items: center;
-            cursor: pointer;
-            display: flex;
-            padding: 0.6rem 1.5rem;
-            .partybar-text {
-                font-weight: 700;
-                text-align: center;
-                width: 95%;
-            }
-            .fa-caret-right {
-                width: 5%;
-            }
-        }
-    }
 }
 
 @media only screen and (min-width:801px) {
@@ -206,20 +187,6 @@
                         max-width:none;
                         padding:0;
                     }
-                }
-            }
-        }
-        // Find a Party bar
-        .party-bar {
-            .partybar-container {
-                display: block;
-                max-width: 160px;
-                margin: 0 auto;
-                text-align: center;
-                width: 20%;
-                .partybar-text {
-                    font-weight: unset;
-                    margin-right: 0.5rem;
                 }
             }
         }

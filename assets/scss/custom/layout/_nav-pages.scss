@@ -8,10 +8,19 @@
             .navPages-container {
                 .navPages {
                     background-color: $white;
+                    display:flex;
+                    flex-direction:column;
                     padding:0;
+                    .headertoplinks-consult {
+                        order:3;
+                    }
+                    .partybar {
+                        order:4;
+                    }
                 }
                 .navPages-list {
                     &:not(.navPages-list--user) {
+                        order:1;
                         display:flex;
                         flex-wrap:wrap;
                         justify-content:space-between;
@@ -23,7 +32,7 @@
                                 display:none;
                             }
                             &.navPages-item-shop {
-                                padding:1.5rem;
+                                padding:0 1.5rem 1.5rem;
                                 width:100%;
                                 &>.navPages-action {
                                     left:50%;
@@ -64,6 +73,7 @@
                         }
                     }
                     &.navPages-list--user {
+                        order:2;
                         background-color:$wan-white;
                         border-top:none;
                         padding:0 .5rem;
@@ -129,6 +139,9 @@
         .header-main {
             .container {
                 .navPages-container {
+                    .navPages {
+                        display:block;
+                    }
                     .navPages-list {
                         &:not(.navPages-list--user) {
                             align-items:center;

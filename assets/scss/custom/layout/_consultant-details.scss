@@ -4,6 +4,12 @@
 .consultant-details {
     display: flex;
     justify-content: center;
+}
+
+// COL-1 & 2
+.cdetails-summary,
+.cdetails-more-info {
+    padding: 1rem;
     text-align: center;
 
     h2 {
@@ -14,49 +20,61 @@
     p {
         margin-bottom: 0.4rem;
     }
+}
 
-    .cdetails-summary,
-    .cdetails-more-info {
-        max-width: 330px;
-        padding: 1rem;
+// COLUMN 1
+.cdetails-summary {
+    .cdetails-img {
+        border-radius: 2px;
+        padding: 0.75rem;
     }
+}
 
-    // COLUMN 1
-    .cdetails-summary {
-        .cdetails-img {
-            border-radius: 2px;
-            padding: 0.75rem;
-        }
+// COLUMN 2
+.cdetails-more-info {
+    .cdetails-heading {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
     }
+    button {
+        display: block;
+        max-width: 253px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+}
 
-    // COLUMN 2
-    .cdetails-more-info {
-        .cdetails-heading {
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        button {
-            display: block;
-            max-width: 253px;
-            width: 100%;
-            margin: 0 auto;
-            margin-bottom: 1rem;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
+/* My Story Section */
+.consultant-story {
+    text-align: center;
+}
+
+/* Become a Consultant Section */
+.becomeconsultant-join-team {
+    margin-top: 1rem;
+    a {
+      max-width: 300px;
+      width: 100%;
     }
+}
+
+/* learn more links */
+.consultant-details-learn-more {
+    text-decoration: none;
 }
 
 /* My Parties Section */
 .consultant-parties {
-    max-width: 300px;
-    width: 100%;
 
     h2 {
         text-align: center;
     }
 
     .tabs {
+        width: 100%;
         border-bottom: 1px solid $silver;
         .tab.is-active {
             border: 0;
@@ -67,8 +85,7 @@
         }
 
         .tab {
-            max-width: 150px;
-            width: 100%;
+            width: 50%;
             .tab-title {
                 text-align: center;
             }

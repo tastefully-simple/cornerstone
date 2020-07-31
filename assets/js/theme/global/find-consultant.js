@@ -19,14 +19,19 @@ export default function() {
     });
 }
 
+// Consultants
+const TST_CONSULTANT = "0160785";
+
+// Search mode
 const NO_SEARCH = 0;
 const SEARCH_BY_ZIP = 1;
 const SEARCH_BY_NAME = 2;
 const SEARCH_BY_ID = 3;
 
-// Number of page numbers to show in pagination
+// Pagination
 const DISPLAY_NUM_PAGES = 6;
 
+// Redirect
 const CONSULTANT_PAGE = '/web';
 
 class FindAConsultant {
@@ -40,10 +45,9 @@ class FindAConsultant {
 
         // Modal
         trigger.addEventListener('click', (e) => {
-            var $consultantId = TSCookie.GetConsultantId();
-            var $consultantName = TSCookie.GetConsultantName();
+            let consultantId = TSCookie.GetConsultantId();
             // Github issue #179, go to consultant page
-            if ($consultantId && $consultantName != "Tastefully Simple" && e.target.tagName != 'SMALL') {
+            if (consultantId && consultantId != TST_CONSULTANT && e.target.tagName != 'SMALL') {
                 window.location = CONSULTANT_PAGE;
             } else {
                 this.createModal(e, template);

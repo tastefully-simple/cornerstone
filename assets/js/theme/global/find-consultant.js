@@ -109,11 +109,9 @@ class FindAConsultant {
         $(window).on('resize', () => this.moveConsultantEl(trigger, this.screenMinWidth));
 
         // Insert consultant name in the header
-        if (TSCookie.GetConsultantName() != "Tastefully Simple") {
-            this.insertConsultantNameInHeader();
-            // Account for sticky header
-            $(window).on('scroll', () => this.insertConsultantNameInHeader());
-        }
+        this.insertConsultantNameInHeader();
+        // Account for sticky header
+        $(window).on('scroll', () => this.insertConsultantNameInHeader());
     }
 
     createModal(e, template) {
@@ -263,7 +261,7 @@ class FindAConsultant {
         // Set cookie for consultant name
         TSCookie.SetConsultantName("Tastefully Simple");
         // Set cookie for consultant ID
-        TSCookie.SetConsultantId("0160785");
+        TSCookie.SetConsultantId(TST_CONSULTANT);
 
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;
@@ -273,27 +271,29 @@ class FindAConsultant {
     }
 
     insertConsultantNameInHeader() {
-        let consultantName = TSCookie.GetConsultantName();
-        let nameHtml = 
-            `<span>
-                <strong>${consultantName}</strong> is your Consultant
-                <small>(edit)</small>
-            </span>`;
+        if (TSCookie.GetConsultantId() != TST_CONSULTANT) {
+            let consultantName = TSCookie.GetConsultantName();
+            let nameHtml = 
+                `<span>
+                    <strong>${consultantName}</strong> is your Consultant
+                    <small>(edit)</small>
+                </span>`;
 
-        let defaultConsultantHtml =
-            `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-             <span class="headertoplinks-consult-text">Find a Consultant</span>`;
+            let defaultConsultantHtml =
+                `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+                 <span class="headertoplinks-consult-text">Find a Consultant</span>`;
 
-        let $header = $('#headerMain');
-        let offsetTop = $header.offset().top;
-        let isStickyHeader = $header.hasClass('sticky-header');
+            let $header = $('#headerMain');
+            let offsetTop = $header.offset().top;
+            let isStickyHeader = $header.hasClass('sticky-header');
 
-        if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
-            this.$findConsultant.innerHTML = nameHtml;
-            // Consultant bar in cart page
-            $('.affiliate-name').text(consultantName);
-        } else {
-            this.$findConsultant.innerHTML = defaultConsultantHtml;
+            if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
+                this.$findConsultant.innerHTML = nameHtml;
+                // Consultant bar in cart page
+                $('.affiliate-name').text(consultantName);
+            } else {
+                this.$findConsultant.innerHTML = defaultConsultantHtml;
+            }
         }
     }
 

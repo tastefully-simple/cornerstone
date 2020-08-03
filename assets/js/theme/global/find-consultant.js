@@ -291,11 +291,15 @@ class FindAConsultant {
                 </span>`;
 
             this.$findConsultant.innerHTML = nameHtml;
+            $('.cart-affiliate').css('height', 'initial');
             $('.cart-affiliate-btn').text('(edit)');
+            $('.cart-affiliate-img').css('display', 'initial');
         }
         else {
             this.$findConsultant.innerHTML = defaultConsultantHtml;
+            $('.cart-affiliate').css('height', '83px');
             $('.cart-affiliate-btn').text('(Find a Consultant)');
+            $('.cart-affiliate-img').css('display', 'none');
         }
 
         $('.affiliate-name').text(consultantName);

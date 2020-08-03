@@ -20,7 +20,7 @@ export default function() {
 }
 
 // Consultants
-const TST_CONSULTANT = "0160785";
+const TST_CONSULTANT_ID = "0160785";
 
 // Search mode
 const NO_SEARCH = 0;
@@ -47,7 +47,7 @@ class FindAConsultant {
         trigger.addEventListener('click', (e) => {
             let consultantId = TSCookie.GetConsultantId();
             // Github issue #179, go to consultant page
-            if (consultantId && consultantId != TST_CONSULTANT && e.target.tagName != 'SMALL') {
+            if (consultantId && consultantId != TST_CONSULTANT_ID && e.target.tagName != 'SMALL') {
                 window.location = CONSULTANT_PAGE;
             } else {
                 this.createModal(e, template);
@@ -264,40 +264,56 @@ class FindAConsultant {
         // Set cookie for consultant name
         TSCookie.SetConsultantName("Tastefully Simple");
         // Set cookie for consultant ID
-        TSCookie.SetConsultantId(TST_CONSULTANT);
+        TSCookie.SetConsultantId(TST_CONSULTANT_ID);
 
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;
         } else {
+            // Insert consultant name in the header
+            this.insertConsultantNameInHeader();
             this.modal.close();
         }
     }
 
     insertConsultantNameInHeader() {
-        if (TSCookie.GetConsultantId() != TST_CONSULTANT) {
-            let consultantName = TSCookie.GetConsultantName();
+        let consultantId = TSCookie.GetConsultantId();
+        let consultantName = TSCookie.GetConsultantName();
+
+        let defaultConsultantHtml =
+            `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+                <span class="headertoplinks-consult-text">Find a Consultant</span>`;
+        
+        if (consultantId && consultantId != TST_CONSULTANT_ID) {
             let nameHtml = 
                 `<span>
                     <strong>${consultantName}</strong> is your Consultant
                     <small>(edit)</small>
                 </span>`;
 
-            let defaultConsultantHtml =
-                `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
-                 <span class="headertoplinks-consult-text">Find a Consultant</span>`;
-
-            let $header = $('#headerMain');
-            let offsetTop = $header.offset().top;
-            let isStickyHeader = $header.hasClass('sticky-header');
-
-            if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
-                this.$findConsultant.innerHTML = nameHtml;
-                // Consultant bar in cart page
-                $('.affiliate-name').text(consultantName);
-            } else {
-                this.$findConsultant.innerHTML = defaultConsultantHtml;
-            }
+            this.$findConsultant.innerHTML = nameHtml;
+            $('.cart-affiliate').css('height', 'initial');
+            $('.cart-affiliate-btn').text('(edit)');
+            $('.cart-affiliate-img').css('display', 'initial');
         }
+        else {
+            this.$findConsultant.innerHTML = defaultConsultantHtml;
+            $('.cart-affiliate').css('height', '83px');
+            $('.cart-affiliate-btn').text('(Find a Consultant)');
+            $('.cart-affiliate-img').css('display', 'none');
+        }
+
+        $('.affiliate-name').text(consultantName);
+
+        // let $header = $('#headerMain');
+        // let offsetTop = $header.offset().top;
+        // let isStickyHeader = $header.hasClass('sticky-header');
+        
+        // if (consultantName && consultantId != TST_CONSULTANT_ID && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
+        //     this.$findConsultant.innerHTML = nameHtml;
+        //     // Consultant bar in cart page
+        // } else {
+        //     this.$findConsultant.innerHTML = defaultConsultantHtml;
+        // }
     }
 
     moveConsultantEl($consultant, screenMinWidth) {
@@ -488,10 +504,15 @@ class FindAConsultant {
     }
 
     getNoResultsFooterHtml() {
-        var $footerHtml = $("<div>", {"class": "consultant-footer"});
-        var $tSimpleBtn = $("<button>", {"id": "no-consultants-continue", "class": "button-secondary-icon"});
-        $tSimpleBtn.text("Shop with Tastefully Simple");
-        $footerHtml.append($tSimpleBtn);
-        return $footerHtml;
+        var $parent = $("#consultant-search .genmodal-body");
+
+        // If no footer (i.e. "Shop with TST" button) is found, then return one
+        if ($parent.find(".consultant-footer").length == 0) {
+            var $footerHtml = $("<div>", {"class": "consultant-footer"});
+            var $tSimpleBtn = $("<button>", {"id": "no-consultants-continue", "class": "button-secondary-icon"});
+            $tSimpleBtn.text("Shop with Tastefully Simple");
+            $footerHtml.append($tSimpleBtn);
+            return $footerHtml;
+        }
     }
 }

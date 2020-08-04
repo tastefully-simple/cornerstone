@@ -182,11 +182,21 @@ class FindAParty {
     }
 
     setCookies($partyCard) {
-        TSCookie.SetPartyId($partyCard.data('pid'));
-        TSCookie.SetPartyHost($partyCard.data('phost'));
-        TSCookie.SetPartyDate($partyCard.data('pdate'));
-        TSCookie.SetPartyTime($partyCard.data('ptime'));
-        TSCookie.SetPartyTotal($partyCard.data('ptotal'));
+        this.updatePartyCookies($partyCard);
+        this.updateConsultantCookies($partyCard);
+    }
+
+    updatePartyCookies($card) {
+        TSCookie.SetPartyId($card.data('pid'));
+        TSCookie.SetPartyHost($card.data('phost'));
+        TSCookie.SetPartyDate($card.data('pdate'));
+        TSCookie.SetPartyTime($card.data('ptime'));
+        TSCookie.SetPartyTotal($card.data('ptotal'));
+    }
+
+    updateConsultantCookies($card) {
+        TSCookie.SetConsultantId($card.data('cid'));
+        TSCookie.SetConsultantName($card.data('cname'));
     }
 
     movePartyElement($party) {
@@ -284,7 +294,9 @@ class FindAParty {
             'data-phost'  : `${party.HostFirstName} ${party.HostLastName}`,
             'data-pdate'  : party.Date,
             'data-ptime'  : party.Time,
-            'data-ptotal' : party.Total
+            'data-ptotal' : party.Total,
+            'data-cid'    : party.ConsultantId,
+            'data-cname'  : party.Consultant
         });
 
         let $selectedHeader = this.getSelectedHeaderHtml();

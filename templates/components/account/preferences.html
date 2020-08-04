@@ -1,0 +1,53 @@
+{{#unless customer.email}}
+    <h2><strong>No user logged in</strong></h2>
+{{/unless}}
+
+<script type="text/javascript">
+    let getPageData = () => {
+        return fetch(window.location + "&debug=context")
+            .then(res => res.json())
+    }
+
+    let getPreferences = (url) => {
+        return fetch(url)
+            .then(response => response.json())
+            .catch(err => console.log("FETCH ERROR: " + err))
+    }
+
+    let iframeData = async () => {
+        let data = await getPageData();
+        const base = "https://qa1-tsapi.tastefullysimple.com";
+        const email = data.customer.email;
+        const cid = data.customer.id;
+        
+        let url = base + '/users/preferencecenter?email=' + email + '&customerId=' + cid;
+        let res = await getPreferences(url);
+
+        const container = document.querySelector('.account-head');
+        let iframe = document.querySelector('#iframe');
+
+        if (res != null) {
+            if (iframe == null) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'iframe';
+                iframe.src = res;
+                iframe.setAttribute('width', '800px');
+                iframe.setAttribute('height', '600px');
+                container.textContent = "";
+                container.append(iframe);
+            }
+            else {
+                iframe.src = res;
+                error.setAttribute('display', 'none');
+            }
+        }
+        else {
+            if (iframe != null) {
+                iframe.setAttribute('display', 'none');
+            }
+            container.textContent = "FAILED TO RETRIEVE USER PREFERENCES";
+        }
+    }
+    iframeData();
+
+</script>

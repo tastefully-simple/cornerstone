@@ -38,6 +38,8 @@
             </li>
         {{/if}}
         --}}
+
+
         {{#if account_page '===' 'addresses'}}
             <li class="navBar-item is-active">{{lang 'account.nav.addresses'}}</li>
         {{else}}
@@ -45,6 +47,8 @@
                 <a class="navBar-action" href="{{urls.account.addresses}}">{{lang 'account.nav.addresses'}}</a>
             </li>
         {{/if}}
+
+        
         {{#if settings.show_payment_methods}}
             {{#if account_page '===' 'payment_methods'}}
                 <li class="navBar-item is-active">{{lang 'account.nav.payment_methods'}}</li>
@@ -63,6 +67,17 @@
                 </li>
             {{/if}}
         {{/if}}
+
+
+        {{#if account_page '===' 'preferences'}}
+            <li class="navBar-item is-active">{{lang 'account.nav.preferences'}}</li>
+        {{else}}
+            <li class="navBar-item">
+                <a class="navBar-action" href="/account.php?action=preferences">{{lang 'account.nav.preferences'}}</a>
+            </li>
+        {{/if}}        
+
+
         {{!-- @razoyo: remove recently viewed from account nav
         {{#if account_page '===' 'recent_items'}}
             <li class="navBar-item is-active">{{lang 'account.nav.recently_viewed'}}</li>

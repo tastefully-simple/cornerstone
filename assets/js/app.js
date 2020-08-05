@@ -53,7 +53,8 @@ const pageClasses = {
 };
 
 const customClasses = {
-    'pages/custom/page/consultant-details': () => import('./theme/consultant-details')
+    'pages/custom/page/consultant-details': () => import('./theme/consultant-details'),
+    'pages/custom/page/communication-preferences': () => import('./theme/communication-preferences')
 };
 
 /**

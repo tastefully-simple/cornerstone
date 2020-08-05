@@ -102,4 +102,16 @@ export default class TSApi {
             headers: {'Accept': 'application/json'}
         });
     }
+
+    /*
+     * Account Profile Page
+     */
+
+    // Communication Preferences
+    getCommunicationPreferences(email, cid) {
+        let uri = '/users/preferencecenter?email=' + email + '&customerId=' + cid;
+
+        return fetch(this.fullUrl(uri))
+            .then(response => response.json());
+    }
 }

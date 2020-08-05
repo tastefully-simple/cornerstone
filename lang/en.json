@@ -282,7 +282,8 @@
       "recently_viewed": "Recently Viewed",
       "settings": "Profile",
       "addresses": "Addresses",
-      "payment_methods": "Payment Methods"
+      "payment_methods": "Payment Methods",
+      "preferences": "Communication Preferences"
     },
     "mobile_nav": {
       "messages": "Messages",
@@ -396,6 +397,9 @@
         "choose_country": "Choose a Country",
         "zip_postcode": "Zip/Postcode"
       }
+    },
+    "preferences": {
+      "heading": "Communication Preferences"
     },
     "returns": {
       "heading": "Returns",

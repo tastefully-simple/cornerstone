@@ -63,6 +63,17 @@
                 </li>
             {{/if}}
         {{/if}}
+
+
+        {{#if account_page '===' 'communication-preferences'}}
+            <li class="navBar-item is-active">{{lang 'account.nav.preferences'}}</li>
+        {{else}}
+            <li class="navBar-item">
+                <a class="navBar-action" href="/communication-preferences/">{{lang 'account.nav.preferences'}}</a>
+            </li>
+        {{/if}}        
+
+
         {{!-- @razoyo: remove recently viewed from account nav
         {{#if account_page '===' 'recent_items'}}
             <li class="navBar-item is-active">{{lang 'account.nav.recently_viewed'}}</li>

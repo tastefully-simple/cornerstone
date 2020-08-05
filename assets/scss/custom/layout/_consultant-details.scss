@@ -1,15 +1,32 @@
 /* Consultant Details Styles */
 
 /* Basic Info Section */
-.consultant-details {
+.cdetails-hero {
+    width: 100%;
+}
+
+.cdetails {
     display: flex;
     justify-content: center;
+
+    .cdetails-wrapper {
+        background: white;
+        border-radius: 5px;
+        box-shadow: $silver 0 0 6px 4px;
+        margin-top: -200px;
+
+        .cdetails-more-info {
+            background-color: $wan-white;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    }
 }
 
 // COL-1 & 2
 .cdetails-summary,
 .cdetails-more-info {
-    padding: 1rem;
+    padding: 2.5rem 2rem;
     text-align: center;
 
     h2 {
@@ -117,6 +134,19 @@
             border-bottom: 1px solid $silver;
             margin: 1rem 0;
             width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-width:801px) {
+    .cdetails {
+        .cdetails-wrapper {
+            display: flex;
+
+            .cdetails-more-info {
+                border-bottom-left-radius: 0;
+                border-top-right-radius: 5px;
+            }
         }
     }
 }

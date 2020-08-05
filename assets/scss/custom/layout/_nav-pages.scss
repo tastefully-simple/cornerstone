@@ -382,3 +382,26 @@
         }
     }
 }
+
+/* iPhone-specific media queries to deal with webkit's scroll issue on the mobile menu */
+@media not all and (min-resolution:.001dpcm) {
+    .navPages-container {
+        overflow-y:scroll;
+        -webkit-overflow-scrolling:auto;
+        &>* {
+            -webkit-transform: translateZ(0);
+        }
+        .navPages {
+            height:auto;
+            -webkit-overflow-scrolling:auto;
+        }
+    }
+    header {
+        &.is-open {
+            .mobileMenu-toggle,
+            .header-logo-image-container {
+                background-color: $white;
+            }
+        }
+    }
+}

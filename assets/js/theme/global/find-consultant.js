@@ -461,7 +461,7 @@ class FindAConsultant {
         var $iconHtml = $("<span>", {"class": "icon-system-phone"});
         $phoneHtml.append($iconHtml);
         var $textContainerHtml = $("<div>", {"class": "vertical-center system-14"});
-        var $textHtml = $("<span>");
+        var $textHtml = $("<a>",{"href": "tel:" + phoneNumber});
         $textHtml.text(phoneNumber);
         $textContainerHtml.append($textHtml);
         $phoneHtml.append($textContainerHtml);
@@ -473,7 +473,7 @@ class FindAConsultant {
         var $iconHtml = $("<span>", {"class": "icon-system-envelope"});
         $emailHtml.append($iconHtml);
         var $textContainerHtml = $("<div>", {"class": "vertical-center system-14"}); 
-        var $textHtml = $("<span>");
+        var $textHtml = $("<a>", {"href": "mailto:" + email});
         $textHtml.text(email);
         $textContainerHtml.append($textHtml);
         $emailHtml.append($textContainerHtml);

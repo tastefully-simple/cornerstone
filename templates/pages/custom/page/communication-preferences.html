@@ -1,12 +1,17 @@
 {{#partial "page"}}
 
+{{inject 'customerEmail' customer.email}}
+{{inject 'customerId' customer.id}}
+
 {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
 <h1 class="page-heading">{{lang 'account.preferences.heading' }}</h1>
-{{> components/account/navigation account_page='preferences'}}
+{{> components/account/navigation account_page='communication-preferences'}}
 
 <main class="account account--fixed">
     <div class="account-head">
-        {{> components/account/preferences }}
+        {{#unless customer.email}}
+            <h2><strong>No user logged in</strong></h2>
+        {{/unless}}
     </div>
     <div class="account-body">
         <section class="account-content">

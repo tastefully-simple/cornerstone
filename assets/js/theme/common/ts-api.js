@@ -111,9 +111,7 @@ export default class TSApi {
     getCommunicationPreferences(email, cid) {
         let uri = '/users/preferencecenter?email=' + email + '&customerId=' + cid;
 
-        return fetch(this.fullUrl(uri), {
-            method: 'GET',
-            headers: {'Accept': 'application/json'}
-        });
+        return fetch(this.fullUrl(uri))
+            .then(response => response.json());
     }
 }

@@ -82,6 +82,15 @@
                 return Cookies.get('ptotal');
             },
 
+            // Delete Party cookies
+            DeleteParty: function() {
+                Cookies.remove('pid');
+                Cookies.remove('phost');
+                Cookies.remove('pdate');
+                Cookies.remove('ptime');
+                Cookies.remove('ptotal');
+            },
+
             // Debugging
             GetTest: function() {
                 return Cookies.get('_test');

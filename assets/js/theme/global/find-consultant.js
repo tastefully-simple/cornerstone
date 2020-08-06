@@ -34,6 +34,7 @@ const DISPLAY_NUM_PAGES = 6;
 
 // Redirect
 const CONSULTANT_PAGE = '/web';
+const PARTY_DETAILS_PAGE = '/party-details';
 
 class FindAConsultant {
     constructor(trigger, template) {
@@ -256,6 +257,9 @@ class FindAConsultant {
                 this.insertConsultantNameInHeader();
                 this.modal.close();
             }
+
+            // Delete party cookies
+            this.deletePartyCookies();
         } else {
             this.displayError("Please select a consultant before continuing");
         }
@@ -334,6 +338,20 @@ class FindAConsultant {
         return document.location.pathname == CONSULTANT_PAGE;
     }
 
+    isOnPartyDetailsPage() {
+        return document.location.pathname == PARTY_DETAILS_PAGE;
+    }
+
+    deletePartyCookies() {
+        if (this.isOnPartyDetailsPage()) {
+            document.location = PARTY_DETAILS_PAGE;
+        }
+
+        let $partyBarText = $('#partybar-find .partybar-text');
+        $partyBarText.text('Find a party');
+
+        TSCookie.DeleteParty();
+    }
     /*
      * HTML
      */

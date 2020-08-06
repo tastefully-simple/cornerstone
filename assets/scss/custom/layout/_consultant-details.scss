@@ -1,8 +1,24 @@
 /* Consultant Details Styles */
 
+/* Remove the space between the party bar
+ * and hero image
+ */
+.consultant-page {
+    margin-top: 0;
+
+    .container {
+        padding-top: 0;
+    }
+
+    .page .page-content > p {
+        margin-bottom: 0;
+    }
+}
+
 /* Basic Info Section */
 .cdetails-hero {
     width: 100%;
+    margin-top: 40px;
 }
 
 .cdetails {
@@ -13,7 +29,9 @@
         background: white;
         border-radius: 5px;
         box-shadow: $silver 0 0 6px 4px;
-        margin-top: -200px;
+        margin-top: -75px;
+        width: 75%;
+        word-break: break-word;
 
         .cdetails-more-info {
             background-color: $wan-white;
@@ -73,8 +91,8 @@
 .becomeconsultant-join-team {
     margin-top: 1rem;
     a {
-      max-width: 300px;
-      width: 100%;
+        max-width: 300px;
+        width: 100%;
     }
 }
 
@@ -102,7 +120,9 @@
         }
 
         .tab {
+            border-top: none;
             width: 50%;
+            float: left;
             .tab-title {
                 text-align: center;
             }
@@ -142,6 +162,8 @@
     .cdetails {
         .cdetails-wrapper {
             display: flex;
+            margin-top: -200px;
+            width: auto;
 
             .cdetails-more-info {
                 border-bottom-left-radius: 0;

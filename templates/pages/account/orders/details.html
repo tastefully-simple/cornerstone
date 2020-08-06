@@ -117,13 +117,13 @@
             {{/if}}
 
             {{#if order.comments}}
-                <section class="account-sidebar-block">
+                <section class=" orders-listaccount-sidebar-block">
                     <h3 class="account-heading">{{lang 'account.orders.details.comments'}}</h3>
                     <p>{{order.comments}}</p>
                 </section>
             {{/if}}
 
-            <section class="account-sidebar-block">
+            <section class="account-sidebar-block account-sidebar-actions">
                 <h3 class="account-heading">{{lang 'account.orders.details.actions'}}</h3>
                 <div class="order-details-info">
                     <form class="account-reorder-form" action="{{order.reorder_url}}" method="post" data-account-reorder-form>

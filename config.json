@@ -47,7 +47,7 @@
     "ts_current_store_base_url": "https://tastefully-simple-sandbox-2.mybigcommerce.com",
     "ts_shop_more_url": "/shop/",
     "ts_tsapi_base_url": "https://qa1-tsapi.tastefullysimple.com",
-    "ts_join_ss_product_id": 133,
+    "ts_join_ss_product_id": 532,
     "ts_help_email": "help@tastefullysimple.com",
     "hide_breadcrumbs": false,
     "hide_page_heading": false,
@@ -419,7 +419,7 @@
         "ts_current_store_base_url": "https://tastefully-simple-sandbox-1.mybigcommerce.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://stage-tsapi.tastefullysimple.com",
-        "ts_join_ss_product_id": 134
+        "ts_join_ss_product_id": 566
       }
     },
     {
@@ -444,7 +444,7 @@
         "ts_current_store_base_url": "https://shoptastefullysimple.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://tsapi.tastefullysimple.com",
-        "ts_join_ss_product_id": 115
+        "ts_join_ss_product_id": 661
       }
     }
   ]

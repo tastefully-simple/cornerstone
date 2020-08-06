@@ -106,42 +106,5 @@
                 }
             }
         }
-        .modal-results {
-            .genmodal-body {
-                .buy-wide-card {
-                    .result-card {
-                        cursor:pointer;
-                        &:not(.selected) {
-                            padding-top:1rem;
-                            .selected-header {
-                                display: none;
-                            }
-                        }
-                        &.selected {
-                            margin-top:1rem;
-                            border:.5rem solid $teal;
-                            border-top:none;
-                            .selected-header {
-                                align-items:center;
-                                background-color: $teal;
-                                color: $white;
-                                display: flex;
-                                flex-basis: 100%; 
-                                padding:10px 0;
-                                .selection-title {
-                                    color:$white;
-                                    margin:0;
-                                }
-                                .icon-system-check {
-                                    color:$white;
-                                    font-size:2rem;
-                                    margin-right:1rem;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }

@@ -287,14 +287,15 @@ class FindAConsultant {
         let defaultConsultantHtml =
             `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
                 <span class="headertoplinks-consult-text">Find a Consultant</span>`;
-        
-        if (consultantId && consultantId != TST_CONSULTANT_ID) {
-            let nameHtml = 
-                `<span>
-                    <strong>${consultantName}</strong> is your Consultant
-                    <small>(edit)</small>
-                </span>`;
 
+        let nameHtml = 
+            `<span>
+                <strong>${consultantName}</strong> is your Consultant
+                <small>(edit)</small>
+            </span>`;
+
+        if (consultantId && consultantId != TST_CONSULTANT_ID) {
+            this.$findConsultant.setAttribute('title', `${consultantName} is your Consultant`);
             this.$findConsultant.innerHTML = nameHtml;
             $('.cart-affiliate').css('height', 'initial');
             $('.cart-affiliate-btn').text('(edit)');
@@ -309,16 +310,16 @@ class FindAConsultant {
 
         $('.affiliate-name').text(consultantName);
 
-        // let $header = $('#headerMain');
-        // let offsetTop = $header.offset().top;
-        // let isStickyHeader = $header.hasClass('sticky-header');
+        // Consultant in the sticky header
+        let $header = $('#headerMain');
+        let offsetTop = $header.offset().top;
+        let isStickyHeader = $header.hasClass('sticky-header');
         
-        // if (consultantName && consultantId != TST_CONSULTANT_ID && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
-        //     this.$findConsultant.innerHTML = nameHtml;
-        //     // Consultant bar in cart page
-        // } else {
-        //     this.$findConsultant.innerHTML = defaultConsultantHtml;
-        // }
+        if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
+            this.$findConsultant.innerHTML = nameHtml;
+        } else {
+            this.$findConsultant.innerHTML = defaultConsultantHtml;
+        }
     }
 
     moveConsultantEl($consultant, screenMinWidth) {

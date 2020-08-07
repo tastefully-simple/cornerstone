@@ -84,6 +84,12 @@
     }
     .headertoplinks-consult {
         cursor: pointer;
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        &:hover {
+            color: white;
+        }
     }
 }
 
@@ -255,6 +261,10 @@
             max-width: 130px;
             width: 100%;
             .headertoplinks-consult {
+                color: $text-gray;
+                &:hover {
+                    color: $text-gray;
+                }
                 &>span {
                     padding: 1rem 0.5rem;
                     width: auto;

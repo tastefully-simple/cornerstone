@@ -1,0 +1,90 @@
+// =============================================================================
+// Tastefully Simple - Consultant Card
+// =============================================================================
+
+.consultant-divider {
+    width: 100%;
+    border: 1px solid $silver;
+}
+.consultant-card {
+    cursor:pointer;
+    display: flex;
+    justify-content:space-between;
+    padding: 10px 0;
+    width: 100%;
+    &:not(.selected) {
+        padding-top:1rem;
+        .selected-header {
+            display: none;
+        }
+    }
+    &.selected {
+        margin-top:1rem;
+        border:.5rem solid $teal;
+        border-top:none;
+        flex-wrap: wrap;
+        margin: 10px 0px 10px 0;
+        padding-top: 0;
+        position: relative;
+        .selected-header {
+            align-items:center;
+            background-color: $teal;
+            color: $white;
+            display: flex;
+            flex-basis: 100%; 
+            padding:10px 0;
+            .selection-title {
+                color:$white;
+                margin:0;
+            }
+            .icon-system-check {
+                color:$white;
+                font-size:2rem;
+                margin-right:1rem;
+            }
+        }
+    }
+    .consultant-image {
+        width:30%;
+        img {
+            max-height: 135px;
+        }
+    }
+    .consultant-info {
+        cursor: auto;
+        display: flex;
+        flex-basis:65%;
+        flex-direction: column;
+        .system-14 {
+            font-size: 12px;
+        }
+        h5 {
+            margin: 0;
+        }
+        .consultant-phone {
+            display: flex;
+            .icon-system-phone {
+                margin-right: 5px;
+            }
+            span {
+                font-size: 12px;
+            }
+        }
+        .consultant-email {
+            display: flex;
+            .icon-system-envelope {
+                margin-right: 5px;
+            }
+            span {
+                font-size: 12px;
+                overflow-wrap: anywhere;
+            }
+        }
+        .ts-page-link {
+            display: flex;
+            .icon-system-download {
+                margin: 0 10px;
+            }
+        }
+    }
+}

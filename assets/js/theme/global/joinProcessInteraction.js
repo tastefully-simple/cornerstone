@@ -1,5 +1,6 @@
 import { confetti } from 'dom-confetti';
 import TSCookie from '../common/ts-cookie';
+import ConsultantCard from '../common/consultant-card';
 
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
@@ -36,24 +37,18 @@ const consultantSearchParams = {
     consultantZipCode: null,
 };
 
-const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
-const defaultConsultantSearchMarkup = `
-    <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
-        <div data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-one'>
-            <img src='${sponsorImage}' class="sponsor-img-wrapper"/>
-        </div><div  data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-two'>
-            <ul>
-                <li class="sponsor-name">Tastefully Simple</li>
-                <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
-                <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>help@tastefullysimple.com</li>
-                <li>Alexandria, MN</li>
-                <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
-            </ul>
-            <div class="checkmark"></div>
-        <div>
-    </div>
-    <div class="sponsor-divider"></div>
-`;
+const defaultConsultantData = { 
+    Results: [{
+        ConsultantId: '0160785',
+        EmailAddress: 'help@tastefullysimple.com',
+        Location: 'Alexandria, MN',
+        Name: 'Tastefully Simple',
+        PhoneNumber: '866.448.6446',
+        WebUrl: 'https://www.tastefullysimple.com/web/htstoyou',
+        AfId: '1',
+    }],
+};
+
 
 /**
  * This variables will hold parameters for GET calls to
@@ -398,77 +393,42 @@ function submitLoginInfo() {
  * Display consultant information returned from Tastefully Simple API when searching by ID or name
  */
 function displayConsultantInformation(data) {
-    $.each(data.Results, (i) => {
-        const results = data.Results[i];
-        const {
-            AfId,
-            ConsultantId,
-            Image,
-            Name,
-            Title,
-            PhoneNumber,
-            EmailAddress,
-            Location,
-            WebUrl,
-            Distance,
-        } = results;
-        if (Distance !== 0) {
-            locationDisplay = `${Location} (${Distance} mi)`;
-        } else {
-            locationDisplay = Location;
-        }
-        $('#sponsorSearchData').append(`
-            <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
-                <div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-one'>
-                    <img src='${Image}' class='sponsor-img-wrapper'/>
-                </div><div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-two'>
-                    <ul>
-                        <li class="sponsor-name">${Name}</li>
-                        <li>${Title}</li>
-                        <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
-                        <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>${EmailAddress}</li>
-                        <li>${locationDisplay}</li>
-                        <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
-                    </ul>
-                    <div class="checkmark"></div>
-                </div>
-            </div>
-            <div class="sponsor-divider"></div>
-    `);
-        if (data.Results.length < 3) {
-            $('#sponsorSearchData').addClass('no-scroll');
-        } else {
-            $('#sponsorSearchData').removeClass('no-scroll');
-        } if (!PhoneNumber) {
-            $('.sponsor-phone').addClass('hidden');
-        } if (!EmailAddress) {
-            $('.sponsor-email').addClass('hidden');
-        } if (data.Results.length > 0) {
-            $('.sponsorSearchData-wrapper').addClass('active');
-            $('#sponsorSearchData').addClass('active');
-        }
+    const consultantCard = new ConsultantCard();
+    consultantCard.getTemplate().then(function(template) {
+        data.Results.forEach((consultant) => {
+            const consultantCardHtml = consultantCard.insertConsultantData(template, consultant);
+            $('#sponsorSearchData').append(consultantCardHtml);
+            if (data.Results.length < 3) {
+                $('#sponsorSearchData').addClass('no-scroll');
+            } else {
+                $('#sponsorSearchData').removeClass('no-scroll');
+            } 
+        });
+        $('body').on('click', '#sponsorSearchData .consultant-card', function(e) {
+           selectConsultant(e); 
+        });
     });
 }
+
 
 /**
  * This function will allow us to select a sponsor from the data
  * that is returned from Tastefully Simple's API.
  */
-function selectSponsor(array, type, func) {
-    for (let i = 0; i < array.length; i++) {
-        $(array[i]).bind(type, func);
+function selectConsultant(e) {
+    if (!($(e.target).hasClass('consultant-card') || $(e.target).is('img')) 
+        || $(e.target).closest(".consultant-card").hasClass('selected')) {
+        return true;
+    }
+    const $consultantCard = $(e.target).closest(".consultant-card");
+
+    if (!$consultantCard.hasClass("selected")) {
+        $("#sponsorSearchData .selected").toggleClass("selected");
+        $consultantCard.toggleClass("selected");
+        const cid =  $consultantCard.data('cid') || null;
+        $("#SponsorId").val(cid);
     }
 }
-
-const sponsorSearchData = $('#sponsorSearchData');
-
-selectSponsor(sponsorSearchData, 'click', (event) => {
-    $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
-    document.getElementById('SponsorId').value = $(event.target).closest('div').data('consid');
-    $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
-
-    TSCookie.SetConsultantId(document.getElementById('SponsorId').value);
-});
 
 /**
  * Get consultant information from Tastefully Simple's API by name.
@@ -534,7 +494,7 @@ function getConsultantInfoByZip() {
         },
         error: () => {
             document.getElementById('divTsConsFound').style.display = 'block';
-            $('#sponsorSearchData').append(defaultConsultantSearchMarkup);
+            displayConsultantInformation(defaultConsultantData);
         },
     });
 }
@@ -831,8 +791,16 @@ function triggerSubmit() {
         const disabled = oForm.find(':input:disabled').removeAttr('disabled');
         const serialized = oForm.serialize();
         disabled.attr('disabled', 'disabled');
-        const iSponsorID = document.getElementById('SponsorId').value;
-        TSCookie.SetConsultantId(iSponsorID);
+
+        const $consultantCard = $('.consultant-card.selected');
+        const cid =  $consultantCard.data('cid') || null;
+        const afid = $consultantCard.data('afid') || null;
+        const name = $consultantCard.data('name') || null;
+
+        TSCookie.SetConsultantId(cid);
+        TSCookie.SetConsultantName(name);
+        TSCookie.SetAffiliateId(afid);
+
         $.ajax({
             type: 'POST',
             url: `${API_URLS.TSAPI_BASE}/join/user`,

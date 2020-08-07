@@ -4,6 +4,7 @@ import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states.js';
 import pagination from '../common/pagination.js';
+import ConsultantCard from '../common/consultant-card';
 
 /**
  * Creates a Cornerstone popup modal for Find A Consultant. 
@@ -33,6 +34,7 @@ const DISPLAY_NUM_PAGES = 6;
 
 // Redirect
 const CONSULTANT_PAGE = '/web';
+const PARTY_DETAILS_PAGE = '/party-details';
 
 class FindAConsultant {
     constructor(trigger, template) {
@@ -96,7 +98,7 @@ class FindAConsultant {
         });
 
         // Select
-        $('body').on('click', '.consultant-card', this.selectConsultant.bind(this));
+        $('body').on('click', '#consultant-search-results .consultant-card', this.selectConsultant.bind(this));
         
         // Submit with consultant
         $('body').on('click', '#consultant-continue', () => this.continue());
@@ -255,6 +257,9 @@ class FindAConsultant {
                 this.insertConsultantNameInHeader();
                 this.modal.close();
             }
+
+            // Delete party cookies
+            this.deletePartyCookies();
         } else {
             this.displayError("Please select a consultant before continuing");
         }
@@ -333,6 +338,20 @@ class FindAConsultant {
         return document.location.pathname == CONSULTANT_PAGE;
     }
 
+    isOnPartyDetailsPage() {
+        return document.location.pathname == PARTY_DETAILS_PAGE;
+    }
+
+    deletePartyCookies() {
+        if (this.isOnPartyDetailsPage()) {
+            document.location = PARTY_DETAILS_PAGE;
+        }
+
+        let $partyBarText = $('#partybar-find .partybar-text');
+        $partyBarText.text('Find a party');
+
+        TSCookie.DeleteParty();
+    }
     /*
      * HTML
      */
@@ -353,32 +372,35 @@ class FindAConsultant {
         $matchingConsultants.text(`Consultants matching \"${response.TotalRecordCount}\"`);
         $("#consultant-search-results .buy-wide-card").append($matchingConsultants);
 
-        //Generate consultant and divider html
-        response.Results.forEach((consultant) => {
-            var $consultantHtmlBlock = this.getConsultantHtmlBlock(consultant);
-            var $dividerHtml = $("<div>", {"class": "consultant-divider"});
-            $("#consultant-search-results .buy-wide-card").append($consultantHtmlBlock);
-            $("#consultant-search-results .buy-wide-card").append($dividerHtml);
+        const consultantCard = new ConsultantCard();
+        let that = this;
+        // Get consultant-card template
+        consultantCard.getTemplate().then(function(template) {
+
+            response.Results.forEach((consultant) => {
+                const consultantCardHtml = consultantCard.insertConsultantData(template, consultant);
+                $("#consultant-search-results .buy-wide-card").append(consultantCardHtml);
+            });
+
+            $("#consultant-search-results").show();
+
+            // Pagination is only needed when searching by zipcode or searching by name
+            // Searching by Consultant Id should produce only 1 result
+            if (that.searchInfo.mode != SEARCH_BY_ID) {
+                var $paginationContainer = $("<div>", {"class": "consultant-pagination pagination"});
+                $("#consultant-search-results .genmodal-body").append($paginationContainer);
+                pagination(
+                    $paginationContainer,
+                    response.CurrentPage,
+                    Math.ceil(response.TotalRecordCount / response.PageSize),
+                    DISPLAY_NUM_PAGES,
+                    ((p) => that.goToPage(p))
+                );
+            }
+
+            $("#consultant-search-results .genmodal-body")
+                .append(that.getResultsFooterHtml());
         });
-
-        $("#consultant-search-results").show();
-
-        // Pagination is only needed when searching by zipcode or searching by name
-        // Searching by Consultant Id should produce only 1 result
-        if (this.searchInfo.mode != SEARCH_BY_ID) {
-            var $paginationContainer = $("<div>", {"class": "consultant-pagination pagination"});
-            $("#consultant-search-results .genmodal-body").append($paginationContainer);
-            pagination(
-                $paginationContainer,
-                response.CurrentPage,
-                Math.ceil(response.TotalRecordCount / response.PageSize),
-                DISPLAY_NUM_PAGES,
-                ((p) => this.goToPage(p))
-            );
-        }
-
-        $("#consultant-search-results .genmodal-body")
-            .append(this.getResultsFooterHtml());
     }
 
     renderNoResults(response) {
@@ -389,108 +411,6 @@ class FindAConsultant {
 
         $("#consultant-search .genmodal-body")
             .append(this.getNoResultsFooterHtml());
-    }
-
-    getConsultantHtmlBlock(consultant) {
-        var $blockHtml = $("<div>", {
-            "class": "consultant-card result-card",
-            "data-cid" : consultant.ConsultantId
-        });
-
-        var $selectedHeaderHtml = this.getSelectedHeaderHtml();
-        $blockHtml.append($selectedHeaderHtml);
-        var $imageHtml = this.getImageHtml(consultant.Image);
-        $blockHtml.append($imageHtml);
-        var $consultantInfoHtml = this.getInfoHtml(consultant);
-        $blockHtml.append($consultantInfoHtml);
-        return $blockHtml;
-    }
-
-    getSelectedHeaderHtml() {
-        var $selectedHeaderHtml = $("<div>", {"class": "selected-header"});
-        var $iconHtml = $("<span>", {"class": "icon-system-check"});
-        $selectedHeaderHtml.append($iconHtml);
-        var $titleContainerHtml = $("<div>", {"class": "vertical-center"});
-        var $titleHtml = $("<span>", {"class": "selection-title"});
-        $titleHtml.text("Selected");
-        $titleContainerHtml.append($titleHtml);
-        $selectedHeaderHtml.append($titleContainerHtml);
-        return $selectedHeaderHtml;
-    }
-
-    getImageHtml(image) {
-        var $imageContainerHtml = $("<div>", {"class": "consultant-image"});
-        var $imageHtml = $("<img>");
-        $imageHtml.attr("src", image);
-        $imageHtml.attr("onerror", "this.onerror=null;this.src='https://www.tastefullysimple.com/_/media/images/noconsultantphoto.png';");
-        $imageContainerHtml.append($imageHtml);
-        return $imageContainerHtml;
-    }
-
-    getInfoHtml(consultant) {
-        var $infoContainerHtml = $("<div>", {"class": "consultant-info"});
-        var $nameHtml = $("<h5>", {"class": "frameheading-5 consultant-name"});
-        $nameHtml.text(consultant.Name);
-        $infoContainerHtml.append($nameHtml);
-        var $innerContainerHtml = $("<div>", {"class": "system-14"});
-
-        var $titleHtml = $("<span>");
-        $titleHtml.text(consultant.Title);
-        $innerContainerHtml.append($titleHtml);
-
-        var $phoneHtml = this.getPhoneHtml(consultant.PhoneNumber);
-        $innerContainerHtml.append($phoneHtml);
-
-        var $emailHtml = this.getEmailHtml(consultant.EmailAddress);
-        $innerContainerHtml.append($emailHtml);
-
-        var $addressHtml = $("<span>");
-        $addressHtml.text(consultant.Location);
-        $innerContainerHtml.append($addressHtml);
-
-        var $pageLinkHtml = this.getPageLinkHtml(consultant.WebUrl);
-        $innerContainerHtml.append($pageLinkHtml);
-
-        $infoContainerHtml.append($innerContainerHtml);
-
-        return $infoContainerHtml;
-    }
-
-    getPhoneHtml(phoneNumber) {
-        var $phoneHtml = $("<div>", {"class": "consultant-phone"});
-        var $iconHtml = $("<span>", {"class": "icon-system-phone"});
-        $phoneHtml.append($iconHtml);
-        var $textContainerHtml = $("<div>", {"class": "vertical-center system-14"});
-        var $textHtml = $("<a>",{"href": "tel:" + phoneNumber});
-        $textHtml.text(phoneNumber);
-        $textContainerHtml.append($textHtml);
-        $phoneHtml.append($textContainerHtml);
-        return $phoneHtml;
-    }
-
-    getEmailHtml(email) {
-        var $emailHtml = $("<div>", {"class": "consultant-email"});
-        var $iconHtml = $("<span>", {"class": "icon-system-envelope"});
-        $emailHtml.append($iconHtml);
-        var $textContainerHtml = $("<div>", {"class": "vertical-center system-14"}); 
-        var $textHtml = $("<a>", {"href": "mailto:" + email});
-        $textHtml.text(email);
-        $textContainerHtml.append($textHtml);
-        $emailHtml.append($textContainerHtml);
-        return $emailHtml;
-    }
-
-    getPageLinkHtml(weburl) {
-        var $pageLinkHtml = $("<div>", {"class": "ts-page-link"});
-        var $linkContainerHtml = $("<div>", {"class": "vertical-center"});
-        var $linkHtml = $("<a>", {"class": "framelink-lg"});
-        $linkHtml.text("View my TS page");
-        $linkHtml.attr("href", weburl);
-        $linkContainerHtml.append($linkHtml);
-        $pageLinkHtml.append($linkContainerHtml);
-        var $iconHtml = $("<span>", {"class": "icon-system-download"});
-        $pageLinkHtml.append($iconHtml);
-        return $pageLinkHtml;
     }
 
     getResultsFooterHtml() {

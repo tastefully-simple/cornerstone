@@ -8,6 +8,7 @@ export default class TSRouter {
         // Function returns true to stop routing chain
         this.checkUrlForBuyNow()
             || this.checkUrlForPartyId()
+            || this.checkUrlForPartyPlannerId()
             || this.checkUrlForConsultantId()
             || this.checkUrlForConsultantWebSlug()
             || this.checkUrlForTest()
@@ -51,9 +52,40 @@ export default class TSRouter {
                     .then(data => {
                         TSCookie.SetAffiliateId(data.AfId);
                         TSCookie.SetConsultantId(data.ConsultantId);
-                        TSCookie.SetConsultantName(data.Consultant);
+                        TSCookie.SetConsultantName(data.ConsultantName);
                         TSCookie.SetPartyId(iPid);
-                        TSCookie.SetPartyHost(`${data.HostFirstName} ${data.HostLastName}`);
+                        TSCookie.SetPartyHost(data.HostName);
+                        TSCookie.SetPartyDate(data.Date);
+                        TSCookie.SetPartyTime(data.Time);
+                        window.location = '/party-details';
+                    })
+                    .catch(err => {
+                        console.warn('getPartyDetails', err);
+                        //window.location = '/';
+                    });
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Check for party id
+    checkUrlForPartyPlannerId() {
+        const matches = window.location.pathname.match(/^\/party-planner\/(\d+)\//i);
+        if (matches && matches[1]) {
+            const iPid = parseInt(matches[1], 10);
+            if (iPid > 0) {
+                this.showLoading();
+                this.getPartyDetails(iPid)
+                    .then(res => res.json())
+                    .then(data => {
+                        TSCookie.SetAffiliateId(data.AfId);
+                        TSCookie.SetConsultantId(data.ConsultantId);
+                        TSCookie.SetConsultantName(data.ConsultantName);
+                        TSCookie.SetPartyId(iPid);
+                        TSCookie.SetPartyHost(data.HostName);
                         TSCookie.SetPartyDate(data.Date);
                         TSCookie.SetPartyTime(data.Time);
                         window.location = '/party-details';
@@ -85,7 +117,7 @@ export default class TSRouter {
     //                .then(data => {
     //                    currentCookie.SetAffiliateId(data.AfId);
     //                    currentCookie.SetConsultantId(data.ConsultantId);
-    //                    currentCookie.SetConsultantName(data.Consultant);
+    //                    currentCookie.SetConsultantName(data.ConsultantName);
     //                    window.location = '/web';
     //                })
     //                .catch(err => {
@@ -111,7 +143,7 @@ export default class TSRouter {
         //                .then(data => {
         //                    currentCookie.SetAffiliateId(data.AfId);
         //                    currentCookie.SetConsultantId(data.ConsultantId);
-        //                    currentCookie.SetConsultantName(data.Consultant);
+        //                    currentCookie.SetConsultantName(data.ConsultantName);
         //                    window.location = '/web';
         //                })
         //                .catch(err => {

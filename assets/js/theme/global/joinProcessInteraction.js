@@ -804,11 +804,10 @@ function triggerSubmit() {
         $.ajax({
             type: 'POST',
             url: `${API_URLS.TSAPI_BASE}/join/user`,
-            url: `${API_URLS.TSAPI_BASE}/join/user`,
             data: serialized,
             cache: true,
             success: () => {
-                location.href = '/cart.php';
+                location.href = '/checkout.php';
             },
             error: (error) => {
                 displayErrorMessage(error);

@@ -225,9 +225,12 @@ class FindAConsultant {
     }
 
     selectConsultant(e) {
-        if (!($(e.target).hasClass('consultant-card') || $(e.target).is('img'))) {
-            return true;
+        // If "View my TS page" link is clicked,
+        // do nothing. Don't select the consultant
+        if ($(e.target).is('.ts-page-link .framelink-lg')) {
+            return;
         }
+
         $('.alertbox-error').hide();
         var $consultantCard = $(e.target).closest(".consultant-card");
         if (!$consultantCard.hasClass("selected")) {

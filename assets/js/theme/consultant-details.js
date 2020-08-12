@@ -133,6 +133,7 @@ class ConsultantDetails {
      */
     getDetailsMoreInfoHtmlBlock(details) {
         let consultantFName = details.Name.split(" ")[0];
+        let formattedNumber = this.formatPhoneNumber(details.PhoneNumber);
 
         let $greetings   = $('.cdetails-greetings');
         let $headline    = $('.cdetails-headline');
@@ -141,8 +142,8 @@ class ConsultantDetails {
 
         $greetings.text(`hello, I'm ${consultantFName}!`);
         $headline.text(details.Headline || "Testing Shop or Host With Me Headline");
-        $phoneNumber.text(details.PhoneNumber || "888-888-8888");
-        $email.text(details.EmailAddress || "help@tastefullysimple.com");
+        $phoneNumber.text(formattedNumber);
+        $email.text(details.EmailAddress);
 
         // Social Media Links
         let $socialLinksContainer = $('.cdetails-more-info .socialLinks');
@@ -216,6 +217,10 @@ class ConsultantDetails {
     /* 
      * Helpers
      */
+
+    formatPhoneNumber(number) {
+        return number.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+    }
 
     createSocialMedia(url, social) {
         let $item = $('<li>', {'class': 'socialLinks-item'});

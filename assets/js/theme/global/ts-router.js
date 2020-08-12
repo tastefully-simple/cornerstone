@@ -9,6 +9,7 @@ export default class TSRouter {
         this.checkUrlForBuyNow()
             || this.checkUrlForPartyId()
             || this.checkUrlForPartyPlannerId()
+            || this.checkUrlForMissingPartyId()
             || this.checkUrlForConsultantId()
             || this.checkUrlForConsultantWebSlug()
             || this.checkUrlForTest()
@@ -97,6 +98,17 @@ export default class TSRouter {
 
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    checkUrlForMissingPartyId() {
+        const matches = window.location.pathname.match(/^\/party-details/i);
+        if (matches && !TSCookie.SetPartyId()) {
+            this.showLoading();
+            window.location = '/';
+            return true;
         }
 
         return false;

@@ -213,7 +213,7 @@ class FindAParty {
         let $navPages = $('.navPages-container .navPages');
 
         if (window.innerWidth >= SCREEN_MIN_WIDTH) {
-            $('header').append($party);
+            $('header.header').append($party);
         } else {
             $navPages.append($party);
         }

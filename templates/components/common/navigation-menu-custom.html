@@ -232,6 +232,9 @@
                 <div class="navPage-subMenu" id="navPages-account" aria-hidden="true" tabindex="-1">
                     <ul class="navPage-subMenu-list">
                         <li class="navPage-subMenu-item">
+                            <a class="navPage-subMenu-action navPages-action" href="{{urls.account.details}}">{{lang 'account.nav.settings'}}</a>
+                        </li>
+                        <li class="navPage-subMenu-item">
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.orders.all}}">{{lang 'account.nav.orders'}}</a>
                         </li>
                         {{#if settings.returns_enabled}}
@@ -239,9 +242,11 @@
                                 <a class="navPage-subMenu-action navPages-action" href="{{urls.account.returns}}">{{lang 'account.nav.returns'}}</a>
                             </li>
                         {{/if}}
+                        {{!-- @razoyo: remove messages from menu
                         <li class="navPage-subMenu-item">
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.inbox}}">{{lang 'account.mobile_nav.messages'}}</a>
                         </li>
+                        --}}
                         <li class="navPage-subMenu-item">
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.addresses}}">{{lang 'account.nav.addresses'}}</a>
                         </li>
@@ -261,9 +266,6 @@
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.recent_items}}">{{lang 'account.nav.recently_viewed'}}</a>
                         </li>
                         --}}
-                        <li class="navPage-subMenu-item">
-                            <a class="navPage-subMenu-action navPages-action" href="{{urls.account.details}}">{{lang 'account.nav.settings'}}</a>
-                        </li>
                     </ul>
                 </div>
             </li>

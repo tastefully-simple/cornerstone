@@ -105,7 +105,7 @@ export default class TSRouter {
 
     checkUrlForMissingPartyId() {
         const matches = window.location.pathname.match(/^\/party-details/i);
-        if (matches && !TSCookie.SetPartyId()) {
+        if (matches && !TSCookie.GetPartyId()) {
             this.showLoading();
             window.location = '/';
             return true;

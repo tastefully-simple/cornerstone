@@ -9,6 +9,10 @@
     .modal-close {
         display: none;
     }
+    // fix issue with modal flickering in firefox
+    .button {
+        filter:grayscale(1%);
+    }
     .modal-content {
         .vertical-bottom {
             display: flex;

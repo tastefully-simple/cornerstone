@@ -285,6 +285,7 @@ footer{
 // -----------------------------------------------------------------------------
 .button{
     @extend .frametext-semibold;
+    -webkit-transition: all 0.15s ease;
 }
 .button-primary{
     padding:10px 15px;

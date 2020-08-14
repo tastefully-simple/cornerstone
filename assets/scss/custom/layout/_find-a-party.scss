@@ -107,7 +107,8 @@
         cursor: pointer;
         display: flex;
         padding: 0.6rem 1.5rem;
-        .fa-caret-right {
+        .fa-caret-right,
+        .fa-caret-down {
             transition: rotate 0.2s ease-in-out;
             width: .25rem;
             margin-left: 0.75rem;

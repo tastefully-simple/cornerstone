@@ -26,6 +26,8 @@ class FindAParty {
 
         this.$findPartyBarText = trigger.find(".partybar-text");
 
+        this.$findPartyBarArrow = trigger.find(".fa-caret-right");
+
         this.$findPartyButtons = this.$findPartyBar.find(".partybar-accordion").find(".partybar-button");
 
         this.$viewPartyButton = $(this.$findPartyButtons[0])
@@ -108,7 +110,15 @@ class FindAParty {
             accord.css("max-height", (accord.prop('scrollHeight')));
         } else {
             accord.css("max-height", 0);
-        } 
+        }
+
+        if (target.hasClass('active')) {
+            // Change arrow pointing down when party bar opened
+            this.$findPartyBarArrow.addClass('fa-caret-down').removeClass('fa-caret-right');
+        } else {
+            // Default
+            this.$findPartyBarArrow.addClass('fa-caret-right').removeClass('fa-caret-down');
+        }
     }
 
     partyGreeting(hostname) {
@@ -203,7 +213,7 @@ class FindAParty {
         let $navPages = $('.navPages-container .navPages');
 
         if (window.innerWidth >= SCREEN_MIN_WIDTH) {
-            $('header').append($party);
+            $('header.header').append($party);
         } else {
             $navPages.append($party);
         }

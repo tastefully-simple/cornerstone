@@ -142,28 +142,29 @@ export default class TSRouter {
 
     // Consultant Web Slug
     checkUrlForConsultantWebSlug() {
-        return false;
-        // const szUrl = window.location.pathname;
-        //    if (szUrl.match(/[Pp]\/\d+/g)) {
-        //        const filterString = szUrl.substring(4);
-        //        const iPid = parseInt(filterString, 10);
-        //        if (iPid > 0) {
-        //            const currentCookie = new TSCookie();
+        const szUrl = window.location.pathname;
 
-        //            getPartyDetails(iPid)
-        //                .then(res => res.json())
-        //                .then(data => {
-        //                    currentCookie.SetAffiliateId(data.AfId);
-        //                    currentCookie.SetConsultantId(data.ConsultantId);
-        //                    currentCookie.SetConsultantName(data.ConsultantName);
-        //                    window.location = '/web';
-        //                })
-        //                .catch(err => {
-        //                    console.warn('getPartyDetails', err);
-        //                    //window.location = '/';
-        //                });
-        //        }
-        //    }
+        if (szUrl.match(/^\/web\/[a-z0-9]+/i)) {
+            this.showLoading();
+            const cUsername = szUrl.substring(5);
+
+            this.getConsultantByUsername(cUsername)
+                .then(res => res.json())
+                .then(data => {
+                    window.location = '/web';
+
+                    let cname = `${data.FirstName} ${data.LastName}`;
+                    TSCookie.SetConsultantName(cname);
+                    TSCookie.SetConsultantId(data.ConsultantId);
+                })
+                .catch(err => {
+                    console.warn("getConsultantByUsername", err);
+                    window.location = '/';
+                });
+
+            return true;
+        }
+        return false;
     }
 
     checkUrlForTest() {
@@ -189,6 +190,14 @@ export default class TSRouter {
         return fetch(this.apiUrl(uri), {
             method: 'GET',
             headers: { Accept: 'application/json' },
+        });
+    }
+
+    getConsultantByUsername(username) {
+        const uri = `/sb/web/${username}`;
+        return fetch(this.apiUrl(uri), {
+            method: 'GET',
+            headers: { Accept: 'application/json' }
         });
     }
 

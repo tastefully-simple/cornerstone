@@ -156,6 +156,7 @@ export default class TSRouter {
                     let cname = `${data.FirstName} ${data.LastName}`;
                     TSCookie.SetConsultantName(cname);
                     TSCookie.SetConsultantId(data.ConsultantId);
+                    this.deletePartyCookies();
                 })
                 .catch(err => {
                     console.warn("getConsultantByUsername", err);
@@ -237,4 +238,12 @@ export default class TSRouter {
             `);
             $('#overlay').height(docHeight);
         });
-    } }
+    }
+
+    deletePartyCookies() {
+        let $partyBarText = $('#partybar-find .partybar-text');
+        $partyBarText.text('Find a party');
+
+        TSCookie.DeleteParty();
+    }
+}

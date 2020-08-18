@@ -108,6 +108,9 @@ class FindAParty {
       
         if (accord.css("max-height") == "0px") {
             accord.css("max-height", (accord.prop('scrollHeight')));
+
+            // Scroll down when showing party bar's options
+            $('.header.is-open .navPages').animate({ scrollTop: accord.offset().top });
         } else {
             accord.css("max-height", 0);
         }

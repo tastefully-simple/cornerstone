@@ -55,10 +55,11 @@
         flex-basis:65%;
         flex-direction: column;
         .system-14 {
-            font-size: 12px;
+            font-size: 14px;
         }
         h5 {
             margin: 0;
+            font-family: "PT Serif";
         }
         .consultant-phone {
             display: flex;
@@ -66,7 +67,8 @@
                 margin-right: 5px;
             }
             span {
-                font-size: 12px;
+                font-size: 14px;
+                vertical-align: middle;
             }
         }
         .consultant-email {
@@ -75,12 +77,17 @@
                 margin-right: 5px;
             }
             span {
-                font-size: 12px;
+                font-size: 14px;
                 overflow-wrap: anywhere;
+                vertical-align: middle;
             }
         }
         .ts-page-link {
             display: flex;
+            a {
+                text-decoration: none;
+                vertical-align: middle;
+            }
             .icon-system-download {
                 margin: 0 10px;
             }

@@ -89,7 +89,7 @@ export default class TSRouter {
                         TSCookie.SetPartyHost(data.HostName);
                         TSCookie.SetPartyDate(data.Date);
                         TSCookie.SetPartyTime(data.Time);
-                        window.location = '/party-details';
+                        window.location = '/host-planner';
                     })
                     .catch(err => {
                         console.warn('getPartyDetails', err);

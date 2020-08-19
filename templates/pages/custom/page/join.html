@@ -38,6 +38,13 @@
                         <input type="email" id="EmailAddress" name="EmailAddress" value="">
                     </label>
                 </div>
+                <div id="email2Field">
+                    <label for="Email2" class="input-label">
+                        <span>Retype Email Address</span>
+                        <input type="email" id="EmailAddress2" name="EmailAddress2" value="" onblur="confirmEmail()">
+                        <span id="ConfirmEmailError"></span>
+                    </label>
+                </div>
                 <div id="passwordField">
                     <label for="Password" class="input-label">
                         <span>Password</span>

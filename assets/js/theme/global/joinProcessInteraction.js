@@ -563,9 +563,12 @@ $('#frmJoinLoginTest').submit((e) => {
         if (($('#FirstName').val()) === ''
             || ($('#LastName').val()) === ''
             || ($('#EmailAddress').val()) === ''
+            || ($('#EmailAddress2').val()) === ''
             || ($('#Password').val()) === ''
             || ($('#Password2').val()) === '') {
             $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
+        } else if (!isConfirmEmailMatch()) {
+            $('#loginErrors').append('<h5>Email Addresses Must Match.</h5>');
         } else {
             localStorage.setItem('isJoin', true);
             submitLoginInfo();
@@ -598,6 +601,15 @@ $('#kit-page-next').on('click', () => {
 });
 
 /**
+ * This function checks to see if the join form email and confirmation email match
+ */
+function isConfirmEmailMatch() {
+    var email = document.getElementById("EmailAddress").value;
+    var confirmEmail = document.getElementById("EmailAddress2").value;
+    return (email == confirmEmail);
+}
+
+/**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
  */
 function removeContainer() {
@@ -614,6 +626,7 @@ function toggleStyles() {
     const firstName = loginPage.querySelector('#firstNameField');
     const lastName = loginPage.querySelector('#lastNameField');
     const password2 = loginPage.querySelector('#password2Field');
+    const email2 = loginPage.querySelector('#email2Field');
 
     checkbox.addEventListener('change', (event) => {
         clearErrorMessages();
@@ -625,6 +638,7 @@ function toggleStyles() {
             firstName.classList.remove('hidden');
             lastName.classList.remove('hidden');
             password2.classList.remove('hidden');
+            email2.classList.remove('hidden');
         } else {
             toggleLoginSignUp.logInForm = true;
             toggleLoginSignUp.signUpForm = false;
@@ -633,6 +647,7 @@ function toggleStyles() {
             firstName.classList.add('hidden');
             lastName.classList.add('hidden');
             password2.classList.add('hidden');
+            email2.classList.add('hidden');
         }
     });
 }

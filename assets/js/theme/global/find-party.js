@@ -111,6 +111,11 @@ class FindAParty {
 
             // Scroll down when showing party bar's options
             $('.header.is-open .navPages').animate({ scrollTop: accord.offset().top });
+            // TST-164 for Safari
+            // this code won't be applied to other browsers
+            // because .navPages-container's overflow CSS property
+            // is only set on Safari
+            $('.header.is-open .navPages-container').animate({ scrollTop: accord.offset().top });
         } else {
             accord.css("max-height", 0);
         }

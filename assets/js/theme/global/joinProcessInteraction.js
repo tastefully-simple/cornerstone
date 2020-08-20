@@ -948,7 +948,7 @@ function createCart() {
  * Export join process front end functions.
  */
 export default function joinProcessInteraction(themeSettings) {
-    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/`;
+    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-fw2020/`;
     API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself`;
     API_URLS.TSAPI_BASE = themeSettings.ts_tsapi_base_url;
     API_URLS.JOIN_SS_PRODUCT_ID = `${themeSettings.ts_join_ss_product_id}`;

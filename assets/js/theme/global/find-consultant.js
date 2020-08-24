@@ -318,7 +318,7 @@ class FindAConsultant {
         let offsetTop = $header.offset().top;
         let isStickyHeader = $header.hasClass('sticky-header');
         
-        if (consultantName && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
+        if (consultantName && consultantId != TST_CONSULTANT_ID && !isStickyHeader && !(window.pageYOffset > offsetTop)) {
             this.$findConsultant.innerHTML = nameHtml;
         } else {
             this.$findConsultant.innerHTML = defaultConsultantHtml;

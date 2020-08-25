@@ -14,6 +14,33 @@
     }
     .header-top {
         .container {
+            &>div {
+                &.header-top-banner {
+                    .banners {
+                        background-color: $text-gray;
+                        color: $white;
+                        text-align: center;
+                        .banner {
+                            display:inline-block;
+                            position:relative;
+                            width:auto;
+                            p {
+                                &.tst-top-banner {
+                                    display:inline;
+                                }
+                            }
+                            .banner-detail-button {
+                                font-weight: 700;
+                            }
+                            .tooltip-center {
+                                max-width:none;
+                                text-align:left;
+                                width:95%;
+                            }
+                        }
+                    }
+                }
+            }
             .navUser {
                 position:unset;
                 .navUser-item--cart {
@@ -93,6 +120,55 @@
     }
 }
 
+@media only screen and (min-width:180px) and (max-width:575px) {
+    .header{
+        .header-top {
+            .container {
+                &>div {
+                    &.header-top-banner {
+                        .banners {
+                            .banner {
+                                .tooltip-center {
+                                    // !important required to override inline style
+                                    left:50%!important;
+                                    transform:translateX(-50%);
+                                    &::before {
+                                        left:unset;
+                                        right:5%;
+                                        transform:unset;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:576px) {
+    .header{
+        .header-top {
+            .container {
+                &>div {
+                    &.header-top-banner {
+                        .banners {
+                            .banner {
+                                .tooltip-center {
+                                    // !important required to override inline style
+                                    left:unset!important;
+                                    right:-36%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media only screen and (min-width:801px) {
     .header {
         .container{
@@ -107,21 +183,7 @@
                     flex:2 2 50%;
                     &.header-top-banner {
                         .banners {
-                            background-color: $text-gray;
-                            color: $white;
-                            text-align: left;
-                            p {
-                                &:last-child {
-                                    margin-bottom: 0;
-                                    text-transform: uppercase;
-                                }
-                            }
-                            a {
-                                color: $white;
-                                text-transform: none;
-                                text-decoration: none;
-                                font-weight: 800;
-                            }
+                            text-align:left;
                         }
                     }
                     &.header-top-links {

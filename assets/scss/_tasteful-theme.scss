@@ -616,6 +616,8 @@ textarea{
     position:relative;
 }
 .tooltip-inner{
+    background-color:$white;
+    color:$text-gray;
     position:absolute;
     padding:10px;
     @extend .tooltip-dropshadow;
@@ -654,7 +656,7 @@ textarea{
         @extend .tooltip-inner;
         width:100%;
         p{
-            width:80%;
+            width:85%;
         }
     }
 }

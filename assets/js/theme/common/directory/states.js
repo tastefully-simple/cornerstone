@@ -15,7 +15,6 @@ export default class StatesSelect {
 }
 
 const STATES = {
-    "AL": "Select State",
     "AL": "Alabama",
     "AK": "Alaska",
     "AZ": "Arizona",

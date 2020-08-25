@@ -35,10 +35,12 @@ const DISPLAY_NUM_PAGES = 6;
 // Redirect
 const CONSULTANT_PAGE = '/web';
 const PARTY_DETAILS_PAGE = '/party-details';
+const CART_PAGE = '/cart.php';
 
 class FindAConsultant {
     constructor(trigger, template) {
         this.$findConsultant = trigger;
+        this.modalTemplate = template;
         this.searchInfo = { mode: NO_SEARCH };
         this.pageSize = 10;
         this.screenMinWidth = 801;
@@ -51,13 +53,14 @@ class FindAConsultant {
         return {
             id: TSCookie.GetConsultantId(),
             name: TSCookie.GetConsultantName(), 
-            image: null // @todo
+            image: TSCookie.GetConsultantImage()
         };
     }
 
     saveCookie(consultant) {
         TSCookie.SetConsultantId(consultant.id);
         TSCookie.SetConsultantName(consultant.name);
+        TSCookie.SetConsultantImage(consultant.image);
     }
 
     isExternalConsultant() {
@@ -68,7 +71,7 @@ class FindAConsultant {
     initListeners() {
         // Trigger modal or go to consultant page if clicking on
         // consultant name
-        trigger.addEventListener('click', (e) => {
+        this.$findConsultant.addEventListener('click', (e) => {
             // Github issue #179, go to consultant page
             if (this.consultant.id 
                 && this.consultant.id != TST_CONSULTANT_ID
@@ -76,12 +79,12 @@ class FindAConsultant {
             ) {
                 window.location = CONSULTANT_PAGE;
             } else {
-                this.createModal(e, template);
+                this.createModal(e, this.modalTemplate);
             }
         });
 
         // Consultant bar in cart page
-        $('.cart-affiliate-info button').on('click', (e) => this.createModal(e,template));
+        $('.cart-affiliate-info button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // Return
         $('body').on('click', '.return-search', this.returnSearch.bind(this));
@@ -275,7 +278,7 @@ class FindAConsultant {
             this.continue({
                 id: this.selectedId,
                 name: $(".selected .consultant-name").text(),
-                image: null // @todo
+                image: $(".selected .consultant-image img").attr("src")
             })
             this.deletePartyCookies();
         } else {
@@ -287,7 +290,7 @@ class FindAConsultant {
         this.continue({
             id: TST_CONSULTANT_ID,
             name: "Tastefully Simple",
-            image: null // @todo: Does this have an image?
+            image: null
         });
     }
 
@@ -303,11 +306,11 @@ class FindAConsultant {
 
     // consultant = { id: string, name: null|string, image: string }
     setConsultant(consultant) {
-      this.consultant = consultant;
-      this.renderConsultantInHeader();
-      if (this.isOnCartPage()) {
-        this.renderConsultantInCart();
-      }
+        this.consultant = consultant;
+        this.renderConsultantInHeader();
+        if (this.isOnCartPage()) {
+            this.renderConsultantInCart();
+        }
     }
 
     renderConsultantInHeader() {
@@ -335,8 +338,9 @@ class FindAConsultant {
         let $header = $('#headerMain');
         let offsetTop = $header.offset().top;
         let isStickyHeader = $header.hasClass('sticky-header');
+        let isStickyHeaderDisabled = !isStickyHeader && !(window.pageYOffset === offsetTop);
 
-        if (this.isExternalConsultant()) {
+        if (this.isExternalConsultant() && isStickyHeaderDisabled) {
             this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
             this.$findConsultant.innerHTML = nameHtml;
         } else {
@@ -345,18 +349,22 @@ class FindAConsultant {
     }
 
     renderConsultantInCart() {
+        let $consultantImg = $('.cart-affiliate-img');
+
         if (this.isExternalConsultant()) {
             $('.cart-affiliate').css('height', 'initial');
             $('.cart-affiliate-btn').text('(edit)');
-            $('.cart-affiliate-img').css('display', 'initial');
+            $consultantImg.css('display', 'initial');
+            $consultantImg.attr('src', this.consultant.image);
+            $consultantImg.attr('alt', `Photograph thumbnail of ${this.consultant.name}`);
         } else {
             $('.cart-affiliate').css('height', '83px');
             $('.cart-affiliate-btn').text('(Find a Consultant)');
-            $('.cart-affiliate-img').css('display', 'none');
+            $consultantImg.css('display', 'none');
         }
 
-        // @todo: what is this?
-        $('.affiliate-name').text(this.consultant.name);
+        // Update the displayed consultant name in the banner
+        $('.cart-affiliate-info .affiliate-name').text(this.consultant.name);
     }
 
     isOnConsultantPage() {
@@ -368,8 +376,7 @@ class FindAConsultant {
     }
 
     isOnCartPage() {
-        // @todo
-        return false;
+        return document.location.pathname == CART_PAGE;
     }
 
     deletePartyCookies() {

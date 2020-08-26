@@ -28,6 +28,15 @@
                 return Cookies.get('cxid');
             },
 
+            // Consultant Image
+            SetConsultantImage: function(cimg) {
+                Cookies.set('cimg', cimg);
+            },
+
+            GetConsultantImage: function() {
+                return Cookies.get('cimg');
+            },
+
             // Party Date
             SetConsultantName: function(name) {
                 Cookies.set('name', name);

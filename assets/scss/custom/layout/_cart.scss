@@ -10,6 +10,14 @@
         justify-content:center;
         margin-top:42px;
         padding:.5rem  0;
+        .cart-affiliate-img {
+            border-radius: 2px;
+            padding: .15rem;
+            background-color: white;
+            margin: 0.5rem;
+            height: 83px;
+            width: auto;
+        }
         .cart-affiliate-info {
             align-items:flex-end;
             display:flex;

@@ -621,7 +621,10 @@ textarea{
     position:absolute;
     padding:10px;
     @extend .tooltip-dropshadow;
-    @extend .frame-caption;
+    @extend .system-14;
+    p{
+        width:85%;
+    }
 }
 .tooltip-arrow{
     &::before{
@@ -639,6 +642,7 @@ textarea{
 .close-tooltip{
     color:$green-apple;
     float:right;
+    font-size:18px;
     &::after{
         content:'';
         clear:both;
@@ -655,9 +659,6 @@ textarea{
     &>div{
         @extend .tooltip-inner;
         width:100%;
-        p{
-            width:85%;
-        }
     }
 }
 .tooltip-left{

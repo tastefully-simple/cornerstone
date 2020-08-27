@@ -24,6 +24,11 @@
                             display:inline-block;
                             position:relative;
                             width:auto;
+                            .dropdown-menu {
+                                a {
+                                    color:$teal;
+                                }
+                            }
                             p {
                                 &.tst-top-banner {
                                     display:inline;

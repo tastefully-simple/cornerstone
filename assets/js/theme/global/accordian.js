@@ -1,22 +1,3 @@
-class Accordian {
-    constructor($accordion) {
-        this.openItem = null;
-
-        this.$accordion = $accordion;
-        let itemsArr = Array.from($accordion.querySelectorAll('.tst-accordion-item'));
-        this.items = itemsArr.map((el) => {
-          return new AccordianItem(el, this);
-        });
-    }
-
-    itemOpened(item) {
-        if (this.openItem) {
-            this.openItem.close();
-        }
-        this.openItem = item;
-    }
-}
-
 class AccordianItem {
     constructor($item, accordion) {
         this.isOpen = false;
@@ -25,7 +6,7 @@ class AccordianItem {
         this.$item = $item;
         this.$title = $item.querySelector('.tst-accordion-title');
         this.$body = $item.querySelector('.tst-accordion-body');
-        this.accordion = accordion
+        this.accordion = accordion;
 
         this.initListeners();
     }
@@ -34,7 +15,7 @@ class AccordianItem {
         this.$item.addEventListener(
             'click',
             () => this.onClick(),
-            false
+            false,
         );
     }
 
@@ -58,9 +39,24 @@ class AccordianItem {
     }
 }
 
+class Accordian {
+    constructor($accordion) {
+        this.openItem = null;
+
+        this.$accordion = $accordion;
+        const itemsArr = Array.from($accordion.querySelectorAll('.tst-accordion-item'));
+        this.items = itemsArr.map((el) => new AccordianItem(el, this));
+    }
+
+    itemOpened(item) {
+        if (this.openItem) {
+            this.openItem.close();
+        }
+        this.openItem = item;
+    }
+}
+
 export default function () {
-    let accordion = $('.tst-accordion');
-    accordion.each((i, elem) => {
-        new Accordian(elem);
-    });
+    const accordion = $('.tst-accordion');
+    accordion.each((i, elem) => new Accordian(elem));
 }

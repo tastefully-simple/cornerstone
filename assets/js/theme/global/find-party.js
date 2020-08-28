@@ -5,15 +5,6 @@ import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
 
-export default function() {
-    $(document).ready(function() {
-        let party = new FindAParty(
-            $('#partybar-find'),
-            'common/find-party'
-        );
-    });
-}
-
 // Breakpoint for mobile
 const SCREEN_MIN_WIDTH = 801;
 // Number of page numbers to show in pagination
@@ -24,15 +15,15 @@ class FindAParty {
     constructor(trigger, template) {
         this.$findPartyBar = trigger.parent();
 
-        this.$findPartyBarText = trigger.find(".partybar-text");
+        this.$findPartyBarText = trigger.find('.partybar-text');
 
-        this.$findPartyBarArrow = trigger.find(".fa-caret-right");
+        this.$findPartyBarArrow = trigger.find('.fa-caret-right');
 
-        this.$findPartyButtons = this.$findPartyBar.find(".partybar-accordion").find(".partybar-button");
+        this.$findPartyButtons = this.$findPartyBar.find('.partybar-accordion').find('.partybar-button');
 
-        this.$viewPartyButton = $(this.$findPartyButtons[0])
+        this.$viewPartyButton = $(this.$findPartyButtons[0]);
 
-        this.$switchPartyButton = $(this.$findPartyButtons[1])
+        this.$switchPartyButton = $(this.$findPartyButtons[1]);
 
         // Partybar Greeting Text
         const hostname = TSCookie.GetPartyHost();
@@ -44,15 +35,15 @@ class FindAParty {
         // Modal
         trigger.on('click', (e) => {
             if (!TSCookie.GetPartyId()) {
-                this.createModal(e, template)
+                this.createModal(e, template);
             } else {
-                this.openDropdown(trigger)
+                this.openDropdown(trigger);
             }
         });
 
         // View party button
         this.$viewPartyButton.on('click', () => {
-          window.location.href = '/party-details';
+            window.location.href = '/party-details';
         });
 
         // Switch party button
@@ -65,7 +56,7 @@ class FindAParty {
             this.searchInfo = {
                 state: $('#party-search .state-search select').val(),
                 name: $('#party-search .state-search input').val(),
-                page: 1
+                page: 1,
             };
 
             this.search();
@@ -90,7 +81,7 @@ class FindAParty {
         this.modal = defaultModal();
         e.preventDefault();
         this.modal.open({ size: 'small' });
-        const options = { template: template };
+        const options = { template };
         utils.api.getPage('/', options, (err, res) => {
             if (err) {
                 console.error('Failed to get common/find-party. Error:', err);
@@ -102,12 +93,12 @@ class FindAParty {
     }
 
     openDropdown(target) {
-        target.toggleClass("active");
+        target.toggleClass('active');
 
-        let accord = target.next();
-      
-        if (accord.css("max-height") == "0px") {
-            accord.css("max-height", (accord.prop('scrollHeight')));
+        const accord = target.next();
+
+        if (accord.css('max-height') === '0px') {
+            accord.css('max-height', (accord.prop('scrollHeight')));
 
             // Scroll down when showing party bar's options
             $('.header.is-open .navPages').animate({ scrollTop: accord.offset().top });
@@ -117,7 +108,7 @@ class FindAParty {
             // is only set on Safari
             $('.header.is-open .navPages-container').animate({ scrollTop: accord.offset().top });
         } else {
-            accord.css("max-height", 0);
+            accord.css('max-height', 0);
         }
 
         if (target.hasClass('active')) {
@@ -130,19 +121,21 @@ class FindAParty {
     }
 
     partyGreeting(hostname) {
-      if (hostname) {
-        return `You\'re shopping in <strong>${hostname}\'s</strong> party`
-      } else {
-        return 'Find a party'
-      }
+        if (hostname) {
+            return `You\'re shopping in <strong>${hostname}\'s</strong> party`;
+        }
+        return 'Find a party';
     }
+
 
     modalLoaded(result) {
         this.modal.updateContent(result);
-        let $nameSelects = $('#party-search .state-search select');
-        for (let i = 0; i < $nameSelects.length; i++) {
-            new StatesSelect($nameSelects[i]);
-        }
+        this.renderStatesSelect();
+    }
+
+    renderStatesSelect() {
+        const $statesSelect = document.querySelector('#party-search .state-search select');
+        return new StatesSelect($statesSelect);
     }
 
     search() {
@@ -150,14 +143,14 @@ class FindAParty {
             this.searchInfo.state,
             this.searchInfo.name,
             this.searchInfo.page,
-            PAGE_SIZE
+            PAGE_SIZE,
         )
-        .then(res => res.json())
-        .then(data => this.renderResults(data))
-        .catch(err => {
-            console.warn('searchByState', err);
-            this.displayError(err);
-        });
+            .then(res => res.json())
+            .then(data => this.renderResults(data))
+            .catch(err => {
+                console.warn('searchByState', err);
+                this.displayError(err);
+            });
     }
 
     displayError(err) {
@@ -172,7 +165,7 @@ class FindAParty {
 
     selectParty(e) {
         $('.alertbox-error').hide();
-        let $partyCard = $(e.target).closest('.party-card');
+        const $partyCard = $(e.target).closest('.party-card');
 
         if (!$partyCard.hasClass('selected')) {
             this.selectedId = $partyCard.data('pid');
@@ -183,7 +176,7 @@ class FindAParty {
 
         $(e.target).closest('.party-card').toggleClass('selected');
 
-        let partyName = $partyCard.data('phost');
+        const partyName = $partyCard.data('phost');
         $('#you-have-selected').html(`You have selected <strong>${partyName}'s</strong> Party`);
 
         // Set cookies
@@ -218,7 +211,7 @@ class FindAParty {
     }
 
     movePartyElement($party) {
-        let $navPages = $('.navPages-container .navPages');
+        const $navPages = $('.navPages-container .navPages');
 
         if (window.innerWidth >= SCREEN_MIN_WIDTH) {
             $('header.header').append($party);
@@ -248,7 +241,7 @@ class FindAParty {
 
         // List of Parties
         response.Results.forEach(party => {
-            let $partyHtmlBlock = this.getPartyHtmlBlock(party);
+            const $partyHtmlBlock = this.getPartyHtmlBlock(party);
             $('#party-search-results article').append($partyHtmlBlock);
         });
 
@@ -256,7 +249,7 @@ class FindAParty {
         $('#party-search-results article').show();
 
         // Footer
-        let $footerHtml = this.getFooterHtml();
+        const $footerHtml = this.getFooterHtml();
         $('#party-search-results').append($footerHtml);
 
         if (response.Results.length === 0) {
@@ -271,18 +264,18 @@ class FindAParty {
         // If only one party is found,
         // select that party automatically
         if (response.Results.length === 1) {
-            let $partyCard = $('.party-card');
+            const $partyCard = $('.party-card');
             this.selectedId = $partyCard.data('pid');
             $partyCard.addClass('selected');
 
-            let partyName = $partyCard.data('phost');
+            const partyName = $partyCard.data('phost');
             $('#you-have-selected').html(`You have selected <strong>${partyName}'s</strong> Party`);
             // Set cookies
             this.setCookies($partyCard);
         }
 
         // Pagination
-        let $paginationContainer = $('<div>', {'class': 'party-pagination pagination'});
+        const $paginationContainer = $('<div>', { class: 'party-pagination pagination' });
         $footerHtml.prepend($paginationContainer);
 
         pagination(
@@ -290,11 +283,11 @@ class FindAParty {
             response.CurrentPage,
             Math.ceil(response.TotalRecordCount / response.PageSize),
             DISPLAY_NUM_PAGES,
-            ((p) => this.goToPage(p))
+            ((p) => this.goToPage(p)),
         );
 
         // Return search
-        let $returnSearch = $('<div>', {'class': 'return-search'});
+        const $returnSearch = $('<div>', { class: 'return-search' });
         $returnSearch.html(`
             <div class="vertical-center">
                 <span class="icon-system-left-caret"></span>
@@ -306,30 +299,30 @@ class FindAParty {
     }
 
     getPartyHtmlBlock(party) {
-        let $block = $('<div>', {
-            'class'       : 'party-card result-card',
-            'data-pid'    : party.PartyId,
-            'data-phost'  : `${party.HostFirstName} ${party.HostLastName}`,
-            'data-pdate'  : party.Date,
-            'data-ptime'  : party.Time,
-            'data-ptotal' : party.Total,
-            'data-cid'    : party.ConsultantId,
-            'data-cname'  : party.Consultant
+        const $block = $('<div>', {
+            class: 'party-card result-card',
+            'data-pid': party.PartyId,
+            'data-phost': `${party.HostFirstName} ${party.HostLastName}`,
+            'data-pdate': party.Date,
+            'data-ptime': party.Time,
+            'data-ptotal': party.Total,
+            'data-cid': party.ConsultantId,
+            'data-cname': party.Consultant,
         });
 
-        let $selectedHeader = this.getSelectedHeaderHtml();
+        const $selectedHeader = this.getSelectedHeaderHtml();
         $block.append($selectedHeader);
-        let $partyInfo = this.getInfoHtml(party);
+        const $partyInfo = this.getInfoHtml(party);
         $block.append($partyInfo);
         return $block;
     }
 
     getSelectedHeaderHtml() {
-        let $selectedHeader = $('<div>', {'class': 'selected-header'});
-        let $icon = $('<span>', {'class': 'icon-system-check'});
+        const $selectedHeader = $('<div>', { class: 'selected-header' });
+        const $icon = $('<span>', { class: 'icon-system-check' });
         $selectedHeader.append($icon);
 
-        let $title = $('<h3>', {'class': 'selection-title'});
+        const $title = $('<h3>', { class: 'selection-title' });
         $title.text('Current Party');
         $selectedHeader.append($title);
 
@@ -337,19 +330,19 @@ class FindAParty {
     }
 
     getInfoHtml(party) {
-        let $infoContainerHtml = $('<div>', {'class': 'party-info'});
+        const $infoContainerHtml = $('<div>', { class: 'party-info' });
 
-        let $nameHtml = $('<h5>', {'class': 'party-name'});
+        const $nameHtml = $('<h5>', { class: 'party-name' });
         $nameHtml.text(`${party.HostFirstName} ${party.HostLastName}'s Party`);
         $infoContainerHtml.append($nameHtml);
 
-        let $innerContainerHtml = $('<div>', {'class': 'system-12'});
+        const $innerContainerHtml = $('<div>', { class: 'system-12' });
 
-        let $dateHtml = $('<div>');
+        const $dateHtml = $('<div>');
         $dateHtml.html(`<span>Date: ${party.Date}</span>`);
         $innerContainerHtml.append($dateHtml);
 
-        let $consultantHtml = $('<div>');
+        const $consultantHtml = $('<div>');
         $consultantHtml.html(`<span>Consultant: ${party.Consultant}</span>`);
         $innerContainerHtml.append($consultantHtml);
 
@@ -359,27 +352,37 @@ class FindAParty {
     }
 
     getFooterHtml() {
-        let $footer = $('<div>', {'class': 'party-footer'});
+        const $footer = $('<div>', { class: 'party-footer' });
 
-
-        let $selectedNextContainer = $('<div>', {'class': 'party-selected-next'});
+        const $selectedNextContainer = $('<div>', { class: 'party-selected-next' });
         $footer.append($selectedNextContainer);
 
         // You have selected <consultant> text
-        let $youHaveSelected = $('<p>', {'id': 'you-have-selected', 'class': 'system-14'});
+        const $youHaveSelected = $('<p>', { id: 'you-have-selected', class: 'system-14' });
         $selectedNextContainer.append($youHaveSelected);
 
         // Continue button
-        let $continueButton = $('<button>', {'id': 'party-continue', 'class': 'button-secondary-icon'});
+        const $continueButton = $('<button>', { id: 'party-continue', class: 'button-secondary-icon' });
         $continueButton.text('continue');
         $selectedNextContainer.append($continueButton);
 
         // Back button
-        let $backButton = $('<button>', {'id': 'party-goback', 'class': 'button-primary'});
+        const $backButton = $('<button>', { id: 'party-goback', class: 'button-primary' });
         $selectedNextContainer.append($backButton);
         $backButton.text('go back');
         $backButton.hide();
 
         return $footer;
     }
+}
+
+export default function () {
+    $(document).ready(() => {
+        const party = new FindAParty(
+            $('#partybar-find'),
+            'common/find-party',
+        );
+
+        return party;
+    });
 }

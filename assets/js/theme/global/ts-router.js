@@ -5,15 +5,18 @@ export default class TSRouter {
     constructor(settings) {
         this.settings = settings;
 
+        this.checkUrls();
+    }
+
+    checkUrls() {
         // Function returns true to stop routing chain
-        this.checkUrlForBuyNow()
+        return this.checkUrlForBuyNow()
             || this.checkUrlForPartyId()
             || this.checkUrlForPartyPlannerId()
             || this.checkUrlForMissingPartyId()
             || this.checkUrlForConsultantId()
             || this.checkUrlForConsultantWebSlug()
-            || this.checkUrlForTest()
-        ;
+            || this.checkUrlForTest();
     }
 
     //
@@ -31,7 +34,9 @@ export default class TSRouter {
             this.showLoading();
 
             fetch(`/cart.php?action=add&sku=${params.sku}&source=buy_button`)
-                .then(() => window.location = this.apiUrl(params.SCID));
+                .then(() => {
+                    window.location = this.apiUrl(params.SCID);
+                });
 
             return true;
         }
@@ -62,7 +67,6 @@ export default class TSRouter {
                     })
                     .catch(err => {
                         console.warn('getPartyDetails', err);
-                        //window.location = '/';
                     });
 
                 return true;
@@ -93,7 +97,6 @@ export default class TSRouter {
                     })
                     .catch(err => {
                         console.warn('getPartyDetails', err);
-                        //window.location = '/';
                     });
 
                 return true;
@@ -153,13 +156,13 @@ export default class TSRouter {
                 .then(data => {
                     window.location = '/web';
 
-                    let cname = `${data.FirstName} ${data.LastName}`;
+                    const cname = `${data.FirstName} ${data.LastName}`;
                     TSCookie.SetConsultantName(cname);
                     TSCookie.SetConsultantId(data.ConsultantId);
                     this.deletePartyCookies();
                 })
                 .catch(err => {
-                    console.warn("getConsultantByUsername", err);
+                    console.warn('getConsultantByUsername', err);
                     window.location = '/';
                 });
 
@@ -198,26 +201,28 @@ export default class TSRouter {
         const uri = `/sb/web/${username}`;
         return fetch(this.apiUrl(uri), {
             method: 'GET',
-            headers: { Accept: 'application/json' }
-        });
-    }
-
-    sendPartyOrder(orderId, partyId) {
-        const uri = `/webhook/party/order/${orderId}/${partyId}`;
-        return fetch(getFullUrl(uri), {
-            method: 'GET',
             headers: { Accept: 'application/json' },
         });
     }
+
+    /* TST-175
+     * commented out sendPartyOrder() as it's not being called anywhere
+     * and ESLint detects that 'getFullUrl' is not defined
+     */
+    // sendPartyOrder(orderId, partyId) {
+    //     const uri = `/webhook/party/order/${orderId}/${partyId}`;
+    //     return fetch(getFullUrl(uri), {
+    //         method: 'GET',
+    //         headers: { Accept: 'application/json' },
+    //     });
+    // }
 
     apiUrl(uri) {
         return this.settings.ts_tsapi_base_url + uri;
     }
 
     getQuery() {
-        return querystring.parse(
-          window.location.search.substr(1)
-        );
+        return querystring.parse(window.location.search.substr(1));
     }
 
     showLoading() {
@@ -241,7 +246,7 @@ export default class TSRouter {
     }
 
     deletePartyCookies() {
-        let $partyBarText = $('#partybar-find .partybar-text');
+        const $partyBarText = $('#partybar-find .partybar-text');
         $partyBarText.text('Find a party');
 
         TSCookie.DeleteParty();

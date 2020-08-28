@@ -1,10 +1,3 @@
-export default function () {
-    let stickyHeader = new StickyHeader(
-        document.querySelector('#headerMain'),
-        { screenMinWidth: 801 }
-    );
-}
-
 class StickyHeader {
     constructor($header, config) {
         this.$header = $header;
@@ -17,9 +10,9 @@ class StickyHeader {
     }
 
     onScroll($mainHeader, sticky, screenMinWidth) {
-        let $navlinks = document.querySelector('.header-top-links');
-        let $topHeaderContainer = document.querySelector('header .header-top .container');
-        let $mainHeaderContainer = $mainHeader.querySelector('.container');
+        const $navlinks = document.querySelector('.header-top-links');
+        const $topHeaderContainer = document.querySelector('header .header-top .container');
+        const $mainHeaderContainer = $mainHeader.querySelector('.container');
 
         if (window.pageYOffset > sticky && (window.innerWidth >= screenMinWidth)) {
             $mainHeader.classList.add('sticky-header');
@@ -29,4 +22,13 @@ class StickyHeader {
             $topHeaderContainer.appendChild($navlinks);
         }
     }
+}
+
+export default function () {
+    const stickyHeader = new StickyHeader(
+        document.querySelector('#headerMain'),
+        { screenMinWidth: 801 },
+    );
+
+    return stickyHeader;
 }

@@ -1,10 +1,9 @@
 import utils from '@bigcommerce/stencil-utils';
 
 export default class ConsultantCard {
-
     /* Returns Promise that returns the consultant-card template */
     async getTemplate() {
-        let promise = new Promise ((resolve, reject) => {
+        const promise = new Promise((resolve, _reject) => {
             utils.api.getPage(window.location, {
                 template: 'common/consultant-card',
             }, (err, res) => {
@@ -15,24 +14,26 @@ export default class ConsultantCard {
                 resolve(res);
             });
         });
-        let template = await promise;
+        const template = await promise;
 
         return template;
     }
 
     /* Replaces placholder values of provided consultant-card template with data from consultant obj */
     insertConsultantData(card, consultant) {
-        card = card.replace(/{consultant-id}/g, consultant.ConsultantId ? consultant.ConsultantId : '');
-        card = card.replace(/{consultant-afid}/g, consultant.AfId? consultant.AfId : '');
-        card = card.replace(/{consultant-imagesrc}/g, consultant.Image ? consultant.Image : '');
-        card = card.replace(/{consultant-name}/g, consultant.Name ? consultant.Name : '');
-        card = card.replace(/{consultant-title}/g, consultant.Title ? consultant.Title : '');
-        card = card.replace(/{consultant-phone}/g, consultant.PhoneNumber ? consultant.PhoneNumber : '');
-        card = card.replace(/{consultant-email}/g, consultant.EmailAddress ? consultant.EmailAddress : '');
-        card = card.replace(/{consultant-location}/g, consultant.Location ? consultant.Location : '');
-        card = card.replace(/{consultant-weburl}/g, consultant.WebUrl ? consultant.WebUrl : '');
-        return card;
-    }
+        let newCard = card;
 
+        newCard = newCard.replace(/{consultant-id}/g, consultant.ConsultantId ? consultant.ConsultantId : '');
+        newCard = newCard.replace(/{consultant-afid}/g, consultant.AfId ? consultant.AfId : '');
+        newCard = newCard.replace(/{consultant-imagesrc}/g, consultant.Image ? consultant.Image : '');
+        newCard = newCard.replace(/{consultant-name}/g, consultant.Name ? consultant.Name : '');
+        newCard = newCard.replace(/{consultant-title}/g, consultant.Title ? consultant.Title : '');
+        newCard = newCard.replace(/{consultant-phone}/g, consultant.PhoneNumber ? consultant.PhoneNumber : '');
+        newCard = newCard.replace(/{consultant-email}/g, consultant.EmailAddress ? consultant.EmailAddress : '');
+        newCard = newCard.replace(/{consultant-location}/g, consultant.Location ? consultant.Location : '');
+        newCard = newCard.replace(/{consultant-weburl}/g, consultant.WebUrl ? consultant.WebUrl : '');
+
+        return newCard;
+    }
 }
 

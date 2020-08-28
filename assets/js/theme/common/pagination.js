@@ -1,16 +1,16 @@
 import _ from 'lodash';
 
-export default function($container, current, total, displayNumPages, onGoTo) {
+export default function ($container, current, total, displayNumPages, onGoTo) {
     const prevItem = (() => {
-        const $item = $("<li>", {"class": "custom-pagination-item"});
-        const $link = $("<a>", {"class": "custom-pagination-link previous-button"});
-        const $icon = $("<i>", {"class": "fas fa-caret-left"});
+        const $item = $('<li>', { class: 'custom-pagination-item' });
+        const $link = $('<a>', { class: 'custom-pagination-link previous-button' });
+        const $icon = $('<i>', { class: 'fas fa-caret-left' });
 
         // First page
-        if (current == 1) {
-            $link.addClass("isDisabled");
+        if (current === 1) {
+            $link.addClass('isDisabled');
         } else {
-            $link.click(e => onGoTo(current-1));
+            $link.click(_e => onGoTo(current - 1));
         }
 
         $link.append($icon);
@@ -19,15 +19,15 @@ export default function($container, current, total, displayNumPages, onGoTo) {
     })();
 
     const nextItem = (() => {
-        const $item = $("<li>", {"class": "custom-pagination-item"});
-        const $link = $("<a>", {"class": "custom-pagination-link next-button"});
-        const $icon = $("<i>", {"class": "fas fa-caret-right"});
+        const $item = $('<li>', { class: 'custom-pagination-item' });
+        const $link = $('<a>', { class: 'custom-pagination-link next-button' });
+        const $icon = $('<i>', { class: 'fas fa-caret-right' });
 
         // Last page
         if (current >= total) {
-            $link.addClass("isDisabled");
+            $link.addClass('isDisabled');
         } else {
-            $link.click(e => onGoTo(current+1));
+            $link.click(_e => onGoTo(current + 1));
         }
 
         $link.append($icon);
@@ -50,7 +50,7 @@ export default function($container, current, total, displayNumPages, onGoTo) {
         let end = current + offset;
 
         if (isOddNumber) {
-            end = end + 1;
+            end += 1;
         }
 
         // Situation where total from API result is less than displayNumPages option
@@ -75,25 +75,25 @@ export default function($container, current, total, displayNumPages, onGoTo) {
         }
 
         // Use lodash's range function to produce an array of numbers in the specified range
-        let range =  _.range(start, end);
+        const range = _.range(start, end);
         return range;
     })();
 
-    const pageItems = getPageRange.map((p, i) => {
+    const pageItems = getPageRange.map(p => {
         const pageNum = p;
 
-        const $item = $("<li>", {"class": "custom-pagination-item"});
+        const $item = $('<li>', { class: 'custom-pagination-item' });
 
         // current page
-        if (pageNum == current) {
-            $item.addClass("custom-pagination-item--current");
+        if (pageNum === current) {
+            $item.addClass('custom-pagination-item--current');
         }
 
-        const $link = $("<a>", {"class": "custom-pagination-link"});
+        const $link = $('<a>', { class: 'custom-pagination-link' });
         $link.text(pageNum);
         $item.append($link);
 
-        $link.click(e => onGoTo(pageNum))
+        $link.click(_e => onGoTo(pageNum));
 
         return $item;
     });
@@ -102,7 +102,7 @@ export default function($container, current, total, displayNumPages, onGoTo) {
         .concat(pageItems)
         .concat([nextItem]);
 
-    const $list = $("<ul>", {"class": "custom-pagination-list"});
+    const $list = $('<ul>', { class: 'custom-pagination-list' });
     $list.append(allItems);
 
     $($container).html($list);

@@ -396,10 +396,12 @@ function submitLoginInfo() {
  * that is returned from Tastefully Simple's API.
  */
 function selectConsultant(e) {
-    if (!($(e.target).hasClass('consultant-card') || $(e.target).is('img'))
-        || $(e.target).closest('.consultant-card').hasClass('selected')) {
-        return true;
+    // If "View my TS page" link is clicked,
+    // do nothing. Don't select the consultant
+    if ($(e.target).is('.ts-page-link .framelink-lg')) {
+        return;
     }
+
     const $consultantCard = $(e.target).closest('.consultant-card');
 
     if (!$consultantCard.hasClass('selected')) {

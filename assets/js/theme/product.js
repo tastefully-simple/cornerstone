@@ -69,20 +69,19 @@ export default class Product extends PageManager {
     }
 
     socialShareHandler() {
-      // Copy PDP URL to clipboard
-      $('.socialLinks-copy')
-        .click(this.copyToClipboard);
+        // Copy PDP URL to clipboard
+        $('.socialLinks-copy').click(this.copyToClipboard);
     }
 
     copyToClipboard() {
-        let $linkCopied = $('.link-copied-text');
-        let $copyLinkBtn = this;
+        const $linkCopied = $('.link-copied-text');
+        const $copyLinkBtn = this;
 
         copy(window.location.href);
         $copyLinkBtn.innerHTML = '<i class="fas fa-check"></i>';
         $linkCopied.addClass('copied');
 
-        setTimeout(function() {
+        setTimeout(() => {
             $copyLinkBtn.innerHTML = 'Copy Link';
             $linkCopied.removeClass('copied');
         }, 10000);

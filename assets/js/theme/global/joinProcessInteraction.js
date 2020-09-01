@@ -37,7 +37,7 @@ const consultantSearchParams = {
     consultantZipCode: null,
 };
 
-const defaultConsultantData = { 
+const defaultConsultantData = {
     Results: [{
         ConsultantId: '0160785',
         EmailAddress: 'help@tastefullysimple.com',
@@ -56,7 +56,9 @@ const defaultConsultantData = {
  */
 let apiParams = '';
 let consultantState = '';
-let locationDisplay = '';
+// TST-175 Commenting out locationDisplay because it's not
+// being used. Not sure if it's needed anywhere
+// let locationDisplay = '';
 
 /** API URLs used throughout the join process */
 const API_URLS = {
@@ -281,7 +283,7 @@ function checkLinkId(formIdValue = '') {
                 url: `${API_URLS.TSAPI_BASE}/users/scauth/check/?id=${szLinkId}`,
                 cache: true,
                 success: () => {
-                    location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
+                    window.location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
                     setTimeout(() => { document.getElementById('divOverlayLinkLookup').remove(); }, 3000);
                 },
                 error: () => {
@@ -381,7 +383,7 @@ function submitLoginInfo() {
         data: $('#frmJoinLoginTest').serialize(),
         cache: false,
         success: (data) => {
-            location.href = `${API_URLS.BLAST_OFF}?id=${data.Id}`;
+            window.location.href = `${API_URLS.BLAST_OFF}?id=${data.Id}`;
         },
         error: (error) => {
             displayLoginErrorMessage(error);
@@ -390,11 +392,32 @@ function submitLoginInfo() {
 }
 
 /**
+ * This function will allow us to select a sponsor from the data
+ * that is returned from Tastefully Simple's API.
+ */
+function selectConsultant(e) {
+    // If "View my TS page" link is clicked,
+    // do nothing. Don't select the consultant
+    if ($(e.target).is('.ts-page-link .framelink-lg')) {
+        return;
+    }
+
+    const $consultantCard = $(e.target).closest('.consultant-card');
+
+    if (!$consultantCard.hasClass('selected')) {
+        $('#sponsorSearchData .selected').toggleClass('selected');
+        $consultantCard.toggleClass('selected');
+        const cid = $consultantCard.data('cid') || null;
+        $('#SponsorId').val(cid);
+    }
+}
+
+/**
  * Display consultant information returned from Tastefully Simple API when searching by ID or name
  */
 function displayConsultantInformation(data) {
     const consultantCard = new ConsultantCard();
-    consultantCard.getTemplate().then(function(template) {
+    consultantCard.getTemplate().then(template => {
         data.Results.forEach((consultant) => {
             const consultantCardHtml = consultantCard.insertConsultantData(template, consultant);
             $('#sponsorSearchData').append(consultantCardHtml);
@@ -402,32 +425,12 @@ function displayConsultantInformation(data) {
                 $('#sponsorSearchData').addClass('no-scroll');
             } else {
                 $('#sponsorSearchData').removeClass('no-scroll');
-            } 
+            }
         });
-        $('body').on('click', '#sponsorSearchData .consultant-card', function(e) {
-           selectConsultant(e); 
+        $('body').on('click', '#sponsorSearchData .consultant-card', (e) => {
+            selectConsultant(e);
         });
     });
-}
-
-
-/**
- * This function will allow us to select a sponsor from the data
- * that is returned from Tastefully Simple's API.
- */
-function selectConsultant(e) {
-    if (!($(e.target).hasClass('consultant-card') || $(e.target).is('img')) 
-        || $(e.target).closest(".consultant-card").hasClass('selected')) {
-        return true;
-    }
-    const $consultantCard = $(e.target).closest(".consultant-card");
-
-    if (!$consultantCard.hasClass("selected")) {
-        $("#sponsorSearchData .selected").toggleClass("selected");
-        $consultantCard.toggleClass("selected");
-        const cid =  $consultantCard.data('cid') || null;
-        $("#SponsorId").val(cid);
-    }
 }
 
 /**
@@ -550,6 +553,15 @@ $('#btnConsZipSearch').on('click', (e) => {
     }
 });
 
+/**
+ * This function checks to see if the join form email and confirmation email match
+ */
+function isConfirmEmailMatch() {
+    const email = document.getElementById('EmailAddress').value;
+    const confirmEmail = document.getElementById('EmailAddress2').value;
+    return (email === confirmEmail);
+}
+
 // Join Page Event Listeners
 $('#frmJoinLoginTest').submit((e) => {
     e.preventDefault();
@@ -594,20 +606,11 @@ $('#kit-page-next').on('click', () => {
             const szLinkId = encodeURIComponent(params.get('xfid'));
             szUrl = `${szUrl}&xfid=${szLinkId}`;
         }
-        location.href = szUrl;
+        window.location.href = szUrl;
     } else {
-        location.href = '/join';
+        window.location.href = '/join';
     }
 });
-
-/**
- * This function checks to see if the join form email and confirmation email match
- */
-function isConfirmEmailMatch() {
-    var email = document.getElementById("EmailAddress").value;
-    var confirmEmail = document.getElementById("EmailAddress2").value;
-    return (email == confirmEmail);
-}
 
 /**
  * This function will remove the container class on the page wrapper for join pages. This is to allow full width banner.
@@ -808,7 +811,7 @@ function triggerSubmit() {
         disabled.attr('disabled', 'disabled');
 
         const $consultantCard = $('.consultant-card.selected');
-        const cid =  $consultantCard.data('cid') || null;
+        const cid = $consultantCard.data('cid') || null;
         const afid = $consultantCard.data('afid') || null;
         const name = $consultantCard.data('name') || null;
 
@@ -822,7 +825,7 @@ function triggerSubmit() {
             data: serialized,
             cache: true,
             success: () => {
-                location.href = '/checkout.php';
+                window.location.href = '/checkout.php';
             },
             error: (error) => {
                 displayErrorMessage(error);
@@ -925,7 +928,7 @@ function getUrlParams() {
     if (params.has('id')) {
         setInfoFormId(params.get('id'));
     } else {
-        location.href = '/join';
+        window.location.href = '/join';
     }
 }
 
@@ -942,7 +945,7 @@ function createCart() {
         .then(data => {
             setLoginFormId(data.id);
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
 }
 /**
  * Export join process front end functions.

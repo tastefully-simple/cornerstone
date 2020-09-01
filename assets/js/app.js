@@ -53,7 +53,7 @@ const pageClasses = {
 };
 
 const customClasses = {
-    'pages/custom/page/communication-preferences': () => import('./theme/communication-preferences')
+    'pages/custom/page/communication-preferences': () => import('./theme/communication-preferences'),
 };
 
 /**

@@ -1,10 +1,5 @@
 import TSApi from '../common/ts-api';
 
-export default function (e) {
-    let signup = new NewsletterSignup(
-        document.querySelector('.footer-newsletter > form')
-    );
-}
 
 class NewsletterSignup {
     constructor($form) {
@@ -17,7 +12,7 @@ class NewsletterSignup {
     }
 
     initAlert() {
-        let alert = document.createElement('div');
+        const alert = document.createElement('div');
         alert.style.display = 'none';
         alert.classList.add('alertbox-container');
         return alert;
@@ -27,10 +22,10 @@ class NewsletterSignup {
         e.preventDefault(); // Prevent from navigating off the page to original BC action
 
         // Capture form data about to be submitted
-        let formData = new FormData(e.target);
+        const formData = new FormData(e.target);
 
         // Validate API call succeeds
-        let onValidateResponse = (res) => {
+        const onValidateResponse = (res) => {
             switch (res.status) {
                 // Email has not used coupon
                 case 200:
@@ -50,7 +45,7 @@ class NewsletterSignup {
         };
 
         // Validate API call fails
-        let onValidateFail = (err) => {
+        const onValidateFail = (err) => {
             console.warn('Email validation error', err);
         };
 
@@ -62,11 +57,11 @@ class NewsletterSignup {
 
     ajaxSubscribe(formData, showPromo) {
         fetch('/subscribe.php?action=subscribe', {
-          method: 'POST',
-          body: formData
-        }).then(res => this.handleSubscribe(res, showPromo))
-          .catch(err => this.generalError())
-        ;
+            method: 'POST',
+            body: formData,
+        })
+            .then(res => this.handleSubscribe(res, showPromo))
+            .catch(_err => this.generalError());
     }
 
     handleSubscribe(res, showPromo) {
@@ -75,18 +70,14 @@ class NewsletterSignup {
             if (showPromo) {
                 this.successMessage(
                     'Good things are coming your way!',
-                    'Use promo code: 00000 for 10% off on your $60 purchase.'
+                    'Use promo code: 00000 for 10% off on your $60 purchase.',
                 );
             } else {
                 this.successMessage('Success!', 'You have been subscribed.');
             }
-        }
-        // BigCommerce says already subscribed
-        else if (res.url.includes('already_subscribed')) {
+        } else if (res.url.includes('already_subscribed')) { // BigCommerce says already subscribed
             this.errorMessage('Error', 'You have already been subscribed.');
-        } 
-        // Unknown BigCommerce response
-        else {
+        } else { // Unknown BigCommerce response
             this.generalError();
         }
     }
@@ -105,21 +96,21 @@ class NewsletterSignup {
 
     alertMessage(status, title, message) {
         let retryHtml;
-        if (status == 'error') {
+        if (status === 'error') {
             retryHtml = '<a class="retry-btn framelink-md">retry</a>';
         } else {
             retryHtml = '<a class="ok-btn framelink-md">ok</a>';
         }
 
-        let alertBox = 
+        const alertBox =
             `
             <div class="alertbox-${status}">
                 <h2 class="alert-title">${title}</h2>
                 <p class="alert-message">${message}</p>
                 ${retryHtml}
             </div>
-            `
-        
+            `;
+
         this.$alert.innerHTML = alertBox;
         this.$alert.style.display = 'block';
 
@@ -134,4 +125,11 @@ class NewsletterSignup {
             });
         }
     }
+}
+
+export default function () {
+    const $newsLetter = document.querySelector('.footer-newsletter > form');
+    const newsletterSignup = new NewsletterSignup($newsLetter);
+
+    return newsletterSignup;
 }

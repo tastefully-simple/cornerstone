@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="container" style=" text-align: right; padding-top: 6px; display:none;">Your order number is: {{checkout.order.id}}</div>
+        <div class="container order-number" style=" text-align: right; padding-top: 6px;">Your order number is:</div>
     </div>
     <div class="confirmation__steps-lead container">
         <div class="confirmation__steps-lead-text-wrapper">
@@ -140,54 +140,58 @@
 {{> layout/base-noparty}}
 
 <script>
-	function getCookie(name) {
-	  const value = `; ${document.cookie}`;
-	  const parts = value.split(`; ${name}=`);
-	  if (parts.length === 2) return parts.pop().split(';').shift();
-	}
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 
-	function deleteCookie( name, path, domain ) {
-	  if(getCookie(name)) {
-		document.cookie = name + "=" +
-		  ((path) ? ";path="+path:"")+
-		  ((domain)?";domain="+domain:"") +
-		  ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
-	  }
-	}
+    function deleteCookie( name, path ) {
+        if (getCookie(name)) {
+            document.cookie = name + '=' +
+                ((path) ? '; path=' + path : '; path=/') +
+                '; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+        }
+    }
 
-	function SendOrderNotification() {
-		var orderId = '{{checkout.order.id}}';
-        console.log('orderId' + orderId);
-		if (orderId.indexOf('chechout.order.id') === -1){
-			const cid = getCookie('cid');
-			const partyId = getCookie('pid');
+    function SendOrderNotification() {
+        // lastOrderId cookie is being set in Redirect
+        // Confirmation Page script from BC Script Manager
+        const orderId = getCookie('lastOrderId');
+        console.log('JoinConfirmation::OrderId' + orderId);
 
-			var queryString = 'oid=' + orderId + '&cid=' + cid
-			if(partyId != null){
-                if(partyId.length > 0) {
-                   queryString = queryString +'&pid=' + partyId
-                }
-			}
-			console.log('https://qa1-tsapi.tastefullysimple.com/webhook/order/success?' + queryString);
-			var frmSuccess = document.createElement("iframe");
-			frmSuccess.style.width = '1px';
-			frmSuccess.style.height = '1px';
-			frmSuccess.style.border = '0';
-			frmSuccess.src = 'https://qa1-tsapi.tastefullysimple.com/webhook/order/success?' + queryString
-			document.body.appendChild(frmSuccess);
+        // Display order number in the page
+        const $orderNumber = document.querySelector('#join-confirmation .order-number')
+        $orderNumber.innerHTML = `<strong>Your order number is: ${orderId}</strong>`;
 
-			deleteCookie('cid');
-			deleteCookie('cxid');
-			deleteCookie('name');
-			deleteCookie('pid');
-			deleteCookie('phost');
-			deleteCookie('pdate');
-			deleteCookie('ptime');
-			deleteCookie('ptotal');
-		}
-	}
+        const cid = getCookie('cid');
+        const partyId = getCookie('pid');
 
-	try{
-		SendOrderNotification();
-	}catch(ex){console.log(ex)}
+        var queryString = 'oid=' + orderId + '&cid=' + cid
+        if(partyId != null){
+              if(partyId.length > 0) {
+                 queryString = queryString +'&pid=' + partyId
+              }
+        }
+        console.log('https://qa1-tsapi.tastefullysimple.com/webhook/order/success?' + queryString);
+        var frmSuccess = document.createElement("iframe");
+        frmSuccess.style.width = '1px';
+        frmSuccess.style.height = '1px';
+        frmSuccess.style.border = '0';
+        frmSuccess.src = 'https://qa1-tsapi.tastefullysimple.com/webhook/order/success?' + queryString
+        document.body.appendChild(frmSuccess);
+
+        deleteCookie('cid');
+        deleteCookie('cxid');
+        deleteCookie('name');
+        deleteCookie('pid');
+        deleteCookie('phost');
+        deleteCookie('pdate');
+        deleteCookie('ptime');
+        deleteCookie('ptotal');
+    }
+
+    try{
+      SendOrderNotification();
+    }catch(ex){console.log(ex)}
 </script>

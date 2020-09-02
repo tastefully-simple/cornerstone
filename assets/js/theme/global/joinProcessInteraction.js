@@ -919,6 +919,16 @@ function getData(url = '') {
     });
 }
 
+function deleteData(url = '') {
+    return fetch(url, {
+        method: 'DELETE',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+}
+
 /**
  * This function will grab the BigCommerce unique ID that is passed from the join/login page
  * and use it to validate the form submission to Tastefully Simple's endpoint.
@@ -947,6 +957,31 @@ function createCart() {
         })
         .catch(error => console.error(error));
 }
+
+function deleteBBOKCart() {
+    $(document).ready(() => {
+        getData('/api/storefront/cart')
+            .then(response => response.json())
+            .then(cart => {
+                if (cart.length > 0) {
+                    const physicalItems = cart[0].lineItems.physicalItems;
+
+                    physicalItems.forEach(item => {
+                        // Delete cart if BBOK product is in cart outside the join process
+                        if (item.productId === Number(API_URLS.JOIN_SS_PRODUCT_ID)) {
+                            deleteData(`/api/storefront/carts/${cart[0].id}`);
+                            return;
+                        }
+                    
+                    });
+                }
+            })
+            .catch(err => {
+                console.warn('getData', err);
+            });
+    });
+}
+
 /**
  * Export join process front end functions.
  */
@@ -963,9 +998,18 @@ export default function joinProcessInteraction(themeSettings) {
         $(document).ready(() => {
             getData('/api/storefront/cart')
                 .then(response => response.json())
-                .then(myJson => {
-                    if (myJson.length > 0) {
-                        setLoginFormId(myJson[0].id);
+                .then(cart => {
+                    if (cart.length > 0) {
+                        // Delete prev cart before joining
+                        deleteData(`/api/storefront/carts/${cart[0].id}`)
+                          .then(_res => {
+                              // Create cart with BBOK product
+                              createCart();
+                              setLoginFormId(cart[0].id);
+                          })
+                          .catch(err => {
+                              console.warn('deleteCart', err);
+                          });
                     } else {
                         createCart();
                     }
@@ -1008,5 +1052,15 @@ export default function joinProcessInteraction(themeSettings) {
     if (confirmationPage) {
         removeContainer();
         triggerConfetti();
+    }
+
+    if (!personalInfoPage) {
+        // Don't delete cart if user is in /join or /kit page
+        if (loginPage || kitPage) {
+            return;
+        }
+
+        // Delete cart if BBOK product is in cart outside the join process
+        deleteBBOKCart();
     }
 }

@@ -23,8 +23,6 @@
                 position:relative;
                 overflow-y:hidden;
                 .buy-wide-card {
-                    overflow-y:auto;
-                    max-height:300px;
                     .party-card {
                         width:100%;
                         &:not(.selected) {
@@ -52,37 +50,9 @@
                     }
                 }
             }
-            .party-footer {
-                background-color: $gainsboro;
-                padding:0 10px 0 10px;
-                text-align:center;
-                width:100%;
-                .return-search {
-                    cursor: pointer;
-                    display: flex;
-                    margin-bottom: 10px;
-                    padding-left: 10px;
-                    .icon-system-left-caret {
-                        height: 12px;
-                        margin-right: 5px;
-                        width: 12px;
-                    }
-                }
-                .party-pagination {
-                    background-color:$white;
-                    padding:5px 20px;
-                    margin:20px 0;
-                    @include modal-dropshadow();
-                }
-                .party-selected-next {
-                    padding:5px 20px;
-                    text-align:right;
-                    #you-have-selected {
-                        margin-bottom:.5rem;
-                    }
-                    #party-continue {
-                        width:190px;
-                    }
+            .findmodal-footer {
+                #party-goback {
+                    display: none;
                 }
             }
         }

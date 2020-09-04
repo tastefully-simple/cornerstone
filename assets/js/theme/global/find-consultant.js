@@ -74,7 +74,7 @@ class FindAConsultant {
         $('.cart-affiliate-info button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // Return
-        $('body').on('click', '.return-search', this.returnSearch.bind(this));
+        $('body').on('click', '.search-filter-wrapper .return-search', this.returnSearch.bind(this));
 
         // Search by ZIP
         $('body').on('submit', '#zipcode-search-form', () => {
@@ -167,8 +167,7 @@ class FindAConsultant {
         $('.matching').remove();
         $('.consultant-card').remove();
         $('.consultant-divider').remove();
-        $('.consultant-pagination').remove();
-        $('.consultant-footer').remove();
+        $('.findmodal-pagination').remove();
     }
 
     displayError(err) {
@@ -255,19 +254,22 @@ class FindAConsultant {
             return;
         }
 
+        $('.consultant-header').show();
         $('.alertbox-error').hide();
         const $consultantCard = $(e.target).closest('.consultant-card');
         if (!$consultantCard.hasClass('selected')) {
             this.selectedId = $consultantCard.data('cid');
             $('.selected').toggleClass('selected');
+            $consultantCard.find('.consultant-header').hide();
         } else {
+            $consultantCard.find('.consultant-header').show();
             this.selectedId = null;
         }
 
         $(e.target).closest('.consultant-card').toggleClass('selected');
         const consultantName = $('.selected .consultant-name').text();
-        $('#you-have-selected')
-            .html(`You have selected <span>${consultantName}</span> as your consultant`);
+        $('.next-step-selected-text')
+            .html(`You have selected <strong>${consultantName}</strong> as your consultant`);
     }
 
     continueWithSelection() {
@@ -404,7 +406,7 @@ class FindAConsultant {
 
         const $matchingConsultants = $('<span>', { class: 'system-14 matching' });
         $matchingConsultants.text(`Consultants matching \"${response.TotalRecordCount}\"`);
-        $('#consultant-search-results .buy-wide-card').append($matchingConsultants);
+        $('#consultant-search-results .buy-wide-card .search-filter-wrapper').append($matchingConsultants);
 
         const consultantCard = new ConsultantCard();
         // Get consultant-card template
@@ -419,8 +421,8 @@ class FindAConsultant {
             // Pagination is only needed when searching by zipcode or searching by name
             // Searching by Consultant Id should produce only 1 result
             if (this.searchInfo.mode !== SEARCH_BY_ID) {
-                const $paginationContainer = $('<div>', { class: 'consultant-pagination pagination' });
-                $('#consultant-search-results .genmodal-body').append($paginationContainer);
+                const $paginationContainer = $('<div>', { class: 'findmodal-pagination pagination' });
+                $('#consultant-search-results .findmodal-footer').prepend($paginationContainer);
                 pagination(
                     $paginationContainer,
                     response.CurrentPage,
@@ -429,9 +431,6 @@ class FindAConsultant {
                     ((p) => this.goToPage(p)),
                 );
             }
-
-            $('#consultant-search-results .genmodal-body')
-                .append(this.getResultsFooterHtml());
         });
     }
 
@@ -443,22 +442,12 @@ class FindAConsultant {
             .append(this.getNoResultsFooterHtml());
     }
 
-    getResultsFooterHtml() {
-        const $footerHtml = $('<div>', { class: 'consultant-footer' });
-        const $youHaveSelectedHtml = $('<span>', { id: 'you-have-selected', class: 'system-14' });
-        $footerHtml.append($youHaveSelectedHtml);
-        const $continueHtml = $('<button>', { id: 'consultant-continue', class: 'button-secondary-icon' });
-        $continueHtml.text('continue');
-        $footerHtml.append($continueHtml);
-        return $footerHtml;
-    }
-
     getNoResultsFooterHtml() {
-        const $parent = $('#consultant-search .genmodal-body');
+        const $parent = $('#consultant-search');
 
         // If no footer (i.e. "Shop with TST" button) is found, then return one
-        if ($parent.find('.consultant-footer').length === 0) {
-            const $footerHtml = $('<div>', { class: 'consultant-footer' });
+        if ($parent.find('.findmodal-footer').length === 0) {
+            const $footerHtml = $('<div>', { class: 'findmodal-footer' });
             const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary-icon' });
             $tSimpleBtn.text('Shop with Tastefully Simple');
             $footerHtml.append($tSimpleBtn);

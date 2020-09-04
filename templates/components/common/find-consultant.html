@@ -1,9 +1,9 @@
 <div class="modal-general-alternate find-a-consultant" id="consultant-search">
     <div class="genmodal-header">
         <h2>Find A Consultant</h2>
-        <a href="#" class="modal-close" aria-label="Close" role="button">
+        <button type="button" class="modal-close" aria-label="Close" role="button">
             <span aria-hidden="true" class="close-modal-alternate"></span>
-        </a>
+        </button>
     </div>
     <div class="genmodal-body">
         <div class="alertbox-error">
@@ -74,7 +74,7 @@
         </form>
     </div>
 </div>
-<div class="modal-general-alternate modal-results find-a-consultant" id="consultant-search-results">
+<div class="modal-general-alternate modal-results" id="consultant-search-results">
     <div class="genmodal-header">
         <h2>Choose A Consultant</h2>
         <a href="#" class="modal-close" aria-label="Close" role="button">
@@ -83,11 +83,13 @@
     </div>
     <div class="genmodal-body">
         <article class="buy-wide-card">
-            <div class="return-search">
-                <div class="vertical-center">
-                    <span class="icon-system-left-caret"></span>
+            <div class="search-filter-wrapper">
+                <div class="return-search">
+                    <div class="vertical-center">
+                        <span class="icon-system-left-caret"></span>
+                    </div>
+                    <span class="frame-caption">Refine your search</span>
                 </div>
-                <span class="frame-caption">Refine your search</span>
             </div>
         </article>
         <div class="alertbox-error">
@@ -95,6 +97,14 @@
             <p class="alert-message">
                 <span></span>
             </p>
+        </div>
+    </div>
+    <div class="findmodal-footer">
+        <div class="next-step-wrapper">
+            <p class="next-step-selected-text system-14"></p>
+            <button class="next-step-continue-btn button-secondary-icon" id="consultant-continue">
+                continue
+            </button>
         </div>
     </div>
 </div>

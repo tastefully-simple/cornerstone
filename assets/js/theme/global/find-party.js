@@ -177,7 +177,7 @@ class FindAParty {
         $(e.target).closest('.party-card').toggleClass('selected');
 
         const partyName = $partyCard.data('phost');
-        $('#you-have-selected').html(`You have selected <strong>${partyName}'s</strong> Party`);
+        $('.next-step-selected-text').html(`You have selected <strong>${partyName}'s</strong> Party`);
 
         // Set cookies
         this.setCookies($partyCard);
@@ -228,8 +228,9 @@ class FindAParty {
 
     clearPartyWindow() {
         $('.party-card').remove();
-        $('.party-pagination').remove();
-        $('.party-footer').remove();
+        $('.return-search').remove();
+        $('.findmodal-pagination').remove();
+        $('.next-step-selected-text').remove();
     }
 
     /*
@@ -247,10 +248,8 @@ class FindAParty {
 
         $('#party-search-results').show();
         $('#party-search-results article').show();
-
-        // Footer
-        const $footerHtml = this.getFooterHtml();
-        $('#party-search-results').append($footerHtml);
+        $('#party-continue').show();
+        $('#party-goback').hide();
 
         if (response.Results.length === 0) {
             this.displayError('No party was found.');
@@ -274,8 +273,11 @@ class FindAParty {
             this.setCookies($partyCard);
         }
 
+        // Footer
+        const $footerHtml = $('#party-search-results .findmodal-footer');
+
         // Pagination
-        const $paginationContainer = $('<div>', { class: 'party-pagination pagination' });
+        const $paginationContainer = $('<div>', { class: 'findmodal-pagination pagination' });
         $footerHtml.prepend($paginationContainer);
 
         pagination(
@@ -349,30 +351,6 @@ class FindAParty {
         $infoContainerHtml.append($innerContainerHtml);
 
         return $infoContainerHtml;
-    }
-
-    getFooterHtml() {
-        const $footer = $('<div>', { class: 'party-footer' });
-
-        const $selectedNextContainer = $('<div>', { class: 'party-selected-next' });
-        $footer.append($selectedNextContainer);
-
-        // You have selected <consultant> text
-        const $youHaveSelected = $('<p>', { id: 'you-have-selected', class: 'system-14' });
-        $selectedNextContainer.append($youHaveSelected);
-
-        // Continue button
-        const $continueButton = $('<button>', { id: 'party-continue', class: 'button-secondary-icon' });
-        $continueButton.text('continue');
-        $selectedNextContainer.append($continueButton);
-
-        // Back button
-        const $backButton = $('<button>', { id: 'party-goback', class: 'button-primary' });
-        $selectedNextContainer.append($backButton);
-        $backButton.text('go back');
-        $backButton.hide();
-
-        return $footer;
     }
 }
 

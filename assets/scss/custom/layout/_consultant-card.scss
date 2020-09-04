@@ -2,6 +2,15 @@
 // Tastefully Simple - Consultant Card
 // =============================================================================
 
+@mixin consultant-header {
+    align-items:center;
+    background-color: $teal;
+    color: $white;
+    display: flex;
+    flex-basis: 100%; 
+    padding:10px 0;
+}
+
 .consultant-divider {
     width: 100%;
     border: 1px solid $silver;
@@ -18,6 +27,9 @@
             display: none;
         }
     }
+    .consultant-header {
+        display: none;
+    }
     &.selected {
         margin-top:1rem;
         border:.5rem solid $teal;
@@ -27,12 +39,7 @@
         padding-top: 0;
         position: relative;
         .selected-header {
-            align-items:center;
-            background-color: $teal;
-            color: $white;
-            display: flex;
-            flex-basis: 100%; 
-            padding:10px 0;
+            @include consultant-header;
             .selection-title {
                 color:$white;
                 margin:0;
@@ -91,6 +98,21 @@
             .icon-system-download {
                 margin: 0 10px;
             }
+        }
+    }
+}
+
+// Specific to Find A Consultant modal
+.modal-results .consultant-card {
+    flex-wrap: wrap;
+    .consultant-header {
+        @include consultant-header;
+        background-color: $shady-lady;
+        padding: 10px;
+        margin-bottom: 10px;
+        .fa-circle {
+            font-size: 2rem;
+            margin-right: 1rem;
         }
     }
 }

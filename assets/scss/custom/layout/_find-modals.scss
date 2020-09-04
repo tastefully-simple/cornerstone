@@ -113,6 +113,8 @@
         .modal-results {
             .genmodal-body {
                 .buy-wide-card {
+                    overflow-y: auto;
+                    max-height: 300px;
                     .result-card {
                         cursor:pointer;
                         &:not(.selected) {
@@ -143,6 +145,39 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+            .findmodal-footer {
+                background-color: $gainsboro;
+                padding: 10px;
+                text-align:center;
+                width:100%;
+                .return-search {
+                    cursor: pointer;
+                    display: flex;
+                    margin-bottom: 10px;
+                    padding-left: 10px;
+                    .icon-system-left-caret {
+                        height: 12px;
+                        margin-right: 5px;
+                        width: 12px;
+                    }
+                }
+                .findmodal-pagination {
+                    background-color:$white;
+                    padding:5px 20px;
+                    margin:20px 0;
+                    @include modal-dropshadow();
+                }
+                .next-step-wrapper {
+                    padding:5px 20px;
+                    text-align:right;
+                    .next-step-selected-text {
+                        margin-bottom:.5rem;
+                    }
+                    .next-step-continue-btn {
+                        width:190px;
                     }
                 }
             }

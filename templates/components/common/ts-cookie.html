@@ -2,97 +2,97 @@
     (function(w) {
         w.TSCookie = {
             // Social Bug Affiliate ID
-            SetAffiliateId: function(afid) {
+            setAffiliateId: function(afid) {
                 Cookies.set('afid', afid);
             },
 
-            GetAffiliateId: function() {
+            getAffiliateId: function() {
                 return Cookies.get('afid');
             },
 
             // Consultant ID
-            SetConsultantId: function(cid) {
+            setConsultantId: function(cid) {
                 Cookies.set('cid', cid);
             },
 
-            GetConsultantId: function() {
+            getConsultantId: function() {
                 return Cookies.get('cid');
             },
 
             // Consultant XID
-            SetConsultantXid: function(cxid) {
+            setConsultantXid: function(cxid) {
                 Cookies.set('cxid', cxid);
             },
 
-            GetConsultantXid: function() {
+            getConsultantXid: function() {
                 return Cookies.get('cxid');
             },
 
             // Consultant Image
-            SetConsultantImage: function(cimg) {
+            setConsultantImage: function(cimg) {
                 Cookies.set('cimg', cimg);
             },
 
-            GetConsultantImage: function() {
+            getConsultantImage: function() {
                 return Cookies.get('cimg');
             },
 
-            // Party Date
-            SetConsultantName: function(name) {
+            // Consultant Name
+            setConsultantName: function(name) {
                 Cookies.set('name', name);
             },
 
-            GetConsultantName: function() {
+            getConsultantName: function() {
                 return Cookies.get('name');
             },
 
             // Party Id
-            SetPartyId: function(pid) {
+            setPartyId: function(pid) {
                 Cookies.set('pid', pid);
             },
 
-            GetPartyId: function() {
+            getPartyId: function() {
                 return Cookies.get('pid');
             },
 
             // Party Host
-            SetPartyHost: function(phost) {
+            setPartyHost: function(phost) {
                 Cookies.set('phost', phost);
             },
 
-            GetPartyHost: function() {
+            getPartyHost: function() {
                 return Cookies.get('phost');
             },
 
             // Party Date
-            SetPartyDate: function(pdate) {
+            setPartyDate: function(pdate) {
                 Cookies.set('pdate', pdate);
             },
 
-            GetPartyDate: function() {
+            getPartyDate: function() {
                 return Cookies.get('pdate');
             },
 
             // Party Time
-            SetPartyTime: function(ptime) {
+            setPartyTime: function(ptime) {
                 Cookies.set('ptime', ptime);
             },
 
-            GetPartyTime: function() {
+            getPartyTime: function() {
                 return Cookies.get('ptime');
             },
 
             // Party Total
-            SetPartyTotal: function(ptotal) {
+            setPartyTotal: function(ptotal) {
                 Cookies.set('ptotal', ptotal);
             },
 
-            GetPartyTotal: function() {
+            getPartyTotal: function() {
                 return Cookies.get('ptotal');
             },
 
             // Delete Party cookies
-            DeleteParty: function() {
+            deleteParty: function() {
                 Cookies.remove('pid');
                 Cookies.remove('phost');
                 Cookies.remove('pdate');
@@ -101,11 +101,11 @@
             },
 
             // Debugging
-            GetTest: function() {
+            getTest: function() {
                 return Cookies.get('_test');
             },
 
-            SetTest: function(value) {
+            setTest: function(value) {
                 Cookies.set('_test', value);
             }
         };

@@ -515,6 +515,12 @@ footer{
     width:100px;
     @extend .all-icons;
 }
+.icon-special-plate{
+    background-image:url('../img/icons/icons-special-plate.png');
+    height:105px;
+    width:100px;
+    @extend .all-icons;
+}
 .icon-special-morecash{
     background-image:url('../img/icons/icons-special-morecash@2x.png');
     @extend .more-icons;

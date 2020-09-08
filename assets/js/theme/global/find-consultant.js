@@ -38,16 +38,16 @@ class FindAConsultant {
 
     loadConsultant() {
         return {
-            id: TSCookie.GetConsultantId(),
-            name: TSCookie.GetConsultantName(),
-            image: TSCookie.GetConsultantImage(),
+            id: TSCookie.getConsultantId(),
+            name: TSCookie.getConsultantName(),
+            image: TSCookie.getConsultantImage(),
         };
     }
 
     saveCookie(consultant) {
-        TSCookie.SetConsultantId(consultant.id);
-        TSCookie.SetConsultantName(consultant.name);
-        TSCookie.SetConsultantImage(consultant.image);
+        TSCookie.setConsultantId(consultant.id);
+        TSCookie.setConsultantName(consultant.name);
+        TSCookie.setConsultantImage(consultant.image);
     }
 
     isExternalConsultant() {
@@ -392,7 +392,7 @@ class FindAConsultant {
         const $partyBarText = $('#partybar-find .partybar-text');
         $partyBarText.text('Find a party');
 
-        TSCookie.DeleteParty();
+        TSCookie.deleteParty();
     }
     /*
      * HTML
@@ -434,7 +434,7 @@ class FindAConsultant {
                     response.CurrentPage,
                     Math.ceil(response.TotalRecordCount / response.PageSize),
                     DISPLAY_NUM_PAGES,
-                    ((p) => this.goToPage(p)),
+                    (p) => this.goToPage(p),
                 );
             }
         });

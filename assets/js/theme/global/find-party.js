@@ -23,22 +23,22 @@ class FindAParty {
 
     loadParty() {
         return {
-            id: TSCookie.GetPartyId(),
-            host: TSCookie.GetPartyHost(),
-            date: TSCookie.GetPartyDate(),
-            time: TSCookie.GetPartyTime(),
-            cid: TSCookie.GetConsultantId(),
-            cname: TSCookie.GetConsultantName(),
+            id: TSCookie.getPartyId(),
+            host: TSCookie.getPartyHost(),
+            date: TSCookie.getPartyDate(),
+            time: TSCookie.getPartyTime(),
+            cid: TSCookie.getConsultantId(),
+            cname: TSCookie.getConsultantName(),
         };
     }
 
     saveCookie(party) {
-        TSCookie.SetPartyId(party.id);
-        TSCookie.SetPartyHost(party.host);
-        TSCookie.SetPartyDate(party.date);
-        TSCookie.SetPartyTime(party.time);
-        TSCookie.SetConsultantId(party.cid);
-        TSCookie.SetConsultantName(party.cname);
+        TSCookie.setPartyId(party.id);
+        TSCookie.setPartyHost(party.host);
+        TSCookie.setPartyDate(party.date);
+        TSCookie.setPartyTime(party.time);
+        TSCookie.setConsultantId(party.cid);
+        TSCookie.setConsultantName(party.cname);
     }
 
     /* party = {
@@ -58,7 +58,7 @@ class FindAParty {
     initListeners() {
         // Modal
         this.$findParty.on('click', (e) => {
-            if (!TSCookie.GetPartyId()) {
+            if (!TSCookie.getPartyId()) {
                 this.createModal(e, this.modalTemplate);
             } else {
                 this.openDropdown(this.$findParty);
@@ -230,7 +230,7 @@ class FindAParty {
 
     renderPartyBar($party) {
         // Partybar Greeting Text
-        const hostname = TSCookie.GetPartyHost();
+        const hostname = TSCookie.getPartyHost();
         const $findPartyBarText = this.$findParty.find('.partybar-text');
         $findPartyBarText.html(this.partyGreeting(hostname));
 
@@ -250,6 +250,7 @@ class FindAParty {
             $('.next-step-selected-text').text('');
         }
     }
+
     returnSearch() {
         $('#party-search-results').hide();
         $('.alertbox-error').hide();
@@ -314,7 +315,7 @@ class FindAParty {
             response.CurrentPage,
             Math.ceil(response.TotalRecordCount / response.PageSize),
             DISPLAY_NUM_PAGES,
-            ((p) => this.goToPage(p)),
+            (p) => this.goToPage(p),
         );
 
         // Return search

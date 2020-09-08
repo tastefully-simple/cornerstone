@@ -815,9 +815,9 @@ function triggerSubmit() {
         const afid = $consultantCard.data('afid') || null;
         const name = $consultantCard.data('name') || null;
 
-        TSCookie.SetConsultantId(cid);
-        TSCookie.SetConsultantName(name);
-        TSCookie.SetAffiliateId(afid);
+        TSCookie.setConsultantId(cid);
+        TSCookie.setConsultantName(name);
+        TSCookie.setAffiliateId(afid);
 
         $.ajax({
             type: 'POST',
@@ -925,7 +925,7 @@ function deleteData(url = '') {
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json',
-        }
+        },
     });
 }
 
@@ -972,7 +972,6 @@ function deleteBBOKCart() {
                             deleteData(`/api/storefront/carts/${cart[0].id}`);
                             return;
                         }
-                    
                     });
                 }
             })
@@ -1002,14 +1001,14 @@ export default function joinProcessInteraction(themeSettings) {
                     if (cart.length > 0) {
                         // Delete prev cart before joining
                         deleteData(`/api/storefront/carts/${cart[0].id}`)
-                          .then(_res => {
-                              // Create cart with BBOK product
-                              createCart();
-                              setLoginFormId(cart[0].id);
-                          })
-                          .catch(err => {
-                              console.warn('deleteCart', err);
-                          });
+                            .then(_res => {
+                                // Create cart with BBOK product
+                                createCart();
+                                setLoginFormId(cart[0].id);
+                            })
+                            .catch(err => {
+                                console.warn('deleteCart', err);
+                            });
                     } else {
                         createCart();
                     }

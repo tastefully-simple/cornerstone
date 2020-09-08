@@ -202,8 +202,8 @@ class FindAParty {
 
         $(e.target).closest('.party-card').toggleClass('selected');
 
-        const partyName = $partyCard.data('phost');
-        $('.next-step-selected-text').html(`You have selected <strong>${partyName}'s</strong> Party`);
+        const partyHost = $partyCard.data('phost');
+        this.showSelectedPartyMessage(partyHost);
     }
 
     continueWithSelection() {
@@ -243,10 +243,19 @@ class FindAParty {
         }
     }
 
+    showSelectedPartyMessage(host) {
+        if (this.selectedId) {
+            $('.next-step-selected-text').html(`You have selected <strong>${host}'s</strong> Party`);
+        } else {
+            $('.next-step-selected-text').text('');
+        }
+    }
     returnSearch() {
         $('#party-search-results').hide();
         $('.alertbox-error').hide();
         $('#party-search').show();
+        $('.next-step-selected-text').text('');
+        this.selectedId = null;
     }
 
     clearPartyWindow() {
@@ -289,8 +298,8 @@ class FindAParty {
             this.selectedId = $partyCard.data('pid');
             $partyCard.addClass('selected');
 
-            const partyName = $partyCard.data('phost');
-            $('#you-have-selected').html(`You have selected <strong>${partyName}'s</strong> Party`);
+            const partyHost = $partyCard.data('phost');
+            this.showSelectedPartyMessage(partyHost);
         }
 
         // Footer

@@ -56,13 +56,13 @@ export default class TSRouter {
                 this.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
-                        TSCookie.SetAffiliateId(data.AfId);
-                        TSCookie.SetConsultantId(data.ConsultantId);
-                        TSCookie.SetConsultantName(data.ConsultantName);
-                        TSCookie.SetPartyId(iPid);
-                        TSCookie.SetPartyHost(data.HostName);
-                        TSCookie.SetPartyDate(data.Date);
-                        TSCookie.SetPartyTime(data.Time);
+                        TSCookie.setAffiliateId(data.AfId);
+                        TSCookie.setConsultantId(data.ConsultantId);
+                        TSCookie.setConsultantName(data.ConsultantName);
+                        TSCookie.setPartyId(iPid);
+                        TSCookie.setPartyHost(data.HostName);
+                        TSCookie.setPartyDate(data.Date);
+                        TSCookie.setPartyTime(data.Time);
                         window.location = '/party-details';
                     })
                     .catch(err => {
@@ -86,13 +86,13 @@ export default class TSRouter {
                 this.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
-                        TSCookie.SetAffiliateId(data.AfId);
-                        TSCookie.SetConsultantId(data.ConsultantId);
-                        TSCookie.SetConsultantName(data.ConsultantName);
-                        TSCookie.SetPartyId(iPid);
-                        TSCookie.SetPartyHost(data.HostName);
-                        TSCookie.SetPartyDate(data.Date);
-                        TSCookie.SetPartyTime(data.Time);
+                        TSCookie.setAffiliateId(data.AfId);
+                        TSCookie.setConsultantId(data.ConsultantId);
+                        TSCookie.setConsultantName(data.ConsultantName);
+                        TSCookie.setPartyId(iPid);
+                        TSCookie.setPartyHost(data.HostName);
+                        TSCookie.setPartyDate(data.Date);
+                        TSCookie.setPartyTime(data.Time);
                         window.location = '/host-planner';
                     })
                     .catch(err => {
@@ -108,7 +108,7 @@ export default class TSRouter {
 
     checkUrlForMissingPartyId() {
         const matches = window.location.pathname.match(/^\/party-details/i);
-        if (matches && !TSCookie.GetPartyId()) {
+        if (matches && !TSCookie.getPartyId()) {
             this.showLoading();
             window.location = '/';
             return true;
@@ -157,8 +157,8 @@ export default class TSRouter {
                     window.location = '/web';
 
                     const cname = `${data.FirstName} ${data.LastName}`;
-                    TSCookie.SetConsultantName(cname);
-                    TSCookie.SetConsultantId(data.ConsultantId);
+                    TSCookie.setConsultantName(cname);
+                    TSCookie.setConsultantId(data.ConsultantId);
                     this.deletePartyCookies();
                 })
                 .catch(err => {
@@ -249,6 +249,6 @@ export default class TSRouter {
         const $partyBarText = $('#partybar-find .partybar-text');
         $partyBarText.text('Find a party');
 
-        TSCookie.DeleteParty();
+        TSCookie.deleteParty();
     }
 }

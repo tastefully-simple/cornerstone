@@ -13,42 +13,69 @@ const PAGE_SIZE = 10;
 
 class FindAParty {
     constructor(trigger, template) {
+        this.$findParty = trigger;
+        this.modalTemplate = template;
         this.$findPartyBar = trigger.parent();
-
-        this.$findPartyBarText = trigger.find('.partybar-text');
-
-        this.$findPartyBarArrow = trigger.find('.fa-caret-right');
-
-        this.$findPartyButtons = this.$findPartyBar.find('.partybar-accordion').find('.partybar-button');
-
-        this.$viewPartyButton = $(this.$findPartyButtons[0]);
-
-        this.$switchPartyButton = $(this.$findPartyButtons[1]);
-
-        // Partybar Greeting Text
-        const hostname = TSCookie.GetPartyHost();
-        this.$findPartyBarText.html(this.partyGreeting(hostname));
-
-        // API
         this.api = new TSApi();
+        this.setParty(this.loadParty());
+        this.initListeners();
+    }
 
+    loadParty() {
+        return {
+            id: TSCookie.getPartyId(),
+            host: TSCookie.getPartyHost(),
+            date: TSCookie.getPartyDate(),
+            time: TSCookie.getPartyTime(),
+            cid: TSCookie.getConsultantId(),
+            cname: TSCookie.getConsultantName(),
+        };
+    }
+
+    saveCookie(party) {
+        TSCookie.setPartyId(party.id);
+        TSCookie.setPartyHost(party.host);
+        TSCookie.setPartyDate(party.date);
+        TSCookie.setPartyTime(party.time);
+        TSCookie.setConsultantId(party.cid);
+        TSCookie.setConsultantName(party.cname);
+    }
+
+    /* party = {
+     *     id: null|string,
+     *     host: null|string,
+     *     date: null|string,
+     *     time: null|string,
+     *     cid: null|string,
+     *     cname: null|string,
+     * }
+     */
+    setParty(party) {
+        this.party = party;
+        this.renderPartyBar(this.$findPartyBar);
+    }
+
+    initListeners() {
         // Modal
-        trigger.on('click', (e) => {
-            if (!TSCookie.GetPartyId()) {
-                this.createModal(e, template);
+        this.$findParty.on('click', (e) => {
+            if (!TSCookie.getPartyId()) {
+                this.createModal(e, this.modalTemplate);
             } else {
-                this.openDropdown(trigger);
+                this.openDropdown(this.$findParty);
             }
         });
 
+        const $findPartyButtons = this.$findPartyBar.find('.partybar-accordion').find('.partybar-button');
+        const $viewPartyButton = $($findPartyButtons[0]);
         // View party button
-        this.$viewPartyButton.on('click', () => {
+        $viewPartyButton.on('click', () => {
             window.location.href = '/party-details';
         });
 
+        const $switchPartyButton = $($findPartyButtons[1]);
         // Switch party button
-        this.$switchPartyButton.on('click', (e) => {
-            this.createModal(e, template);
+        $switchPartyButton.on('click', (e) => {
+            this.createModal(e, this.modalTemplate);
         });
 
         // Search by State / Name
@@ -66,15 +93,14 @@ class FindAParty {
         $('body').on('click', '.party-card', (e) => this.selectParty(e));
 
         // Submit
-        $('body').on('click', '#party-continue', () => this.continue());
+        $('body').on('click', '#party-continue', () => this.continueWithSelection());
 
         // Go back to search
         $('body').on('click', '#party-goback', () => this.returnSearch());
         $('body').on('click', '.return-search', () => this.returnSearch());
 
         // Move "Find a Party" bar into the main menu in mobile view
-        this.movePartyElement(this.$findPartyBar);
-        $(window).on('resize', () => this.movePartyElement(this.$findPartyBar));
+        $(window).on('resize', () => this.renderPartyBar(this.$findPartyBar));
     }
 
     createModal(e, template) {
@@ -111,12 +137,13 @@ class FindAParty {
             accord.css('max-height', 0);
         }
 
+        const $findPartyBarArrow = this.$findParty.find('.fa-caret-right');
         if (target.hasClass('active')) {
             // Change arrow pointing down when party bar opened
-            this.$findPartyBarArrow.addClass('fa-caret-down').removeClass('fa-caret-right');
+            $findPartyBarArrow.addClass('fa-caret-down').removeClass('fa-caret-right');
         } else {
             // Default
-            this.$findPartyBarArrow.addClass('fa-caret-right').removeClass('fa-caret-down');
+            $findPartyBarArrow.addClass('fa-caret-right').removeClass('fa-caret-down');
         }
     }
 
@@ -126,7 +153,6 @@ class FindAParty {
         }
         return 'Find a party';
     }
-
 
     modalLoaded(result) {
         this.modal.updateContent(result);
@@ -176,15 +202,20 @@ class FindAParty {
 
         $(e.target).closest('.party-card').toggleClass('selected');
 
-        const partyName = $partyCard.data('phost');
-        $('.next-step-selected-text').html(`You have selected <strong>${partyName}'s</strong> Party`);
-
-        // Set cookies
-        this.setCookies($partyCard);
+        const partyHost = $partyCard.data('phost');
+        this.showSelectedPartyMessage(partyHost);
     }
 
-    continue() {
+    continueWithSelection() {
         if (this.selectedId) {
+            this.continue({
+                id: this.selectedId,
+                host: $('.party-card.selected').data('phost'),
+                date: $('.party-card.selected').data('pdate'),
+                time: $('.party-card.selected').data('ptime'),
+                cid: $('.party-card.selected').data('cid'),
+                cname: $('.party-card.selected').data('cname'),
+            });
             // Redirect
             window.location.href = '/party-details';
         } else {
@@ -192,25 +223,17 @@ class FindAParty {
         }
     }
 
-    setCookies($partyCard) {
-        this.updatePartyCookies($partyCard);
-        this.updateConsultantCookies($partyCard);
+    continue(party) {
+        this.saveCookie(party);
+        this.setParty(party);
     }
 
-    updatePartyCookies($card) {
-        TSCookie.SetPartyId($card.data('pid'));
-        TSCookie.SetPartyHost($card.data('phost'));
-        TSCookie.SetPartyDate($card.data('pdate'));
-        TSCookie.SetPartyTime($card.data('ptime'));
-        TSCookie.SetPartyTotal($card.data('ptotal'));
-    }
+    renderPartyBar($party) {
+        // Partybar Greeting Text
+        const hostname = TSCookie.getPartyHost();
+        const $findPartyBarText = this.$findParty.find('.partybar-text');
+        $findPartyBarText.html(this.partyGreeting(hostname));
 
-    updateConsultantCookies($card) {
-        TSCookie.SetConsultantId($card.data('cid'));
-        TSCookie.SetConsultantName($card.data('cname'));
-    }
-
-    movePartyElement($party) {
         const $navPages = $('.navPages-container .navPages');
 
         if (window.innerWidth >= SCREEN_MIN_WIDTH) {
@@ -220,17 +243,26 @@ class FindAParty {
         }
     }
 
+    showSelectedPartyMessage(host) {
+        if (this.selectedId) {
+            $('.next-step-selected-text').html(`You have selected <strong>${host}'s</strong> Party`);
+        } else {
+            $('.next-step-selected-text').text('');
+        }
+    }
+
     returnSearch() {
         $('#party-search-results').hide();
         $('.alertbox-error').hide();
         $('#party-search').show();
+        $('.next-step-selected-text').text('');
+        this.selectedId = null;
     }
 
     clearPartyWindow() {
         $('.party-card').remove();
         $('.return-search').remove();
         $('.findmodal-pagination').remove();
-        $('.next-step-selected-text').remove();
     }
 
     /*
@@ -267,10 +299,8 @@ class FindAParty {
             this.selectedId = $partyCard.data('pid');
             $partyCard.addClass('selected');
 
-            const partyName = $partyCard.data('phost');
-            $('#you-have-selected').html(`You have selected <strong>${partyName}'s</strong> Party`);
-            // Set cookies
-            this.setCookies($partyCard);
+            const partyHost = $partyCard.data('phost');
+            this.showSelectedPartyMessage(partyHost);
         }
 
         // Footer
@@ -285,7 +315,7 @@ class FindAParty {
             response.CurrentPage,
             Math.ceil(response.TotalRecordCount / response.PageSize),
             DISPLAY_NUM_PAGES,
-            ((p) => this.goToPage(p)),
+            (p) => this.goToPage(p),
         );
 
         // Return search
@@ -307,7 +337,6 @@ class FindAParty {
             'data-phost': `${party.HostFirstName} ${party.HostLastName}`,
             'data-pdate': party.Date,
             'data-ptime': party.Time,
-            'data-ptotal': party.Total,
             'data-cid': party.ConsultantId,
             'data-cname': party.Consultant,
         });

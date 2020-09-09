@@ -161,6 +161,8 @@ class FindAConsultant {
         $('.alertbox-error').hide();
         $('#consultant-search').show();
         this.clearConsultantWindow();
+        this.selectedId = null;
+        $('.next-step-selected-text').text('');
     }
 
     clearConsultantWindow() {
@@ -268,8 +270,12 @@ class FindAConsultant {
 
         $(e.target).closest('.consultant-card').toggleClass('selected');
         const consultantName = $('.selected .consultant-name').text();
-        $('.next-step-selected-text')
-            .html(`You have selected <strong>${consultantName}</strong> as your consultant`);
+        if (this.selectedId) {
+            $('.next-step-selected-text')
+                .html(`You have selected <strong>${consultantName}</strong> as your consultant`);
+        } else {
+            $('.next-step-selected-text').text('');
+        }
     }
 
     continueWithSelection() {

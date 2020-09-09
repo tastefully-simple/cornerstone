@@ -642,6 +642,8 @@ function toggleStyles() {
             lastName.classList.remove('hidden');
             password2.classList.remove('hidden');
             email2.classList.remove('hidden');
+            password2.querySelector('#Password2').setAttribute('tabindex', 0);
+            email2.querySelector('#EmailAddress2').setAttribute('tabindex', 0);
         } else {
             toggleLoginSignUp.logInForm = true;
             toggleLoginSignUp.signUpForm = false;
@@ -651,6 +653,8 @@ function toggleStyles() {
             lastName.classList.add('hidden');
             password2.classList.add('hidden');
             email2.classList.add('hidden');
+            password2.querySelector('#Password2').setAttribute('tabindex', -1);
+            email2.querySelector('#EmailAddress2').setAttribute('tabindex', -1);
         }
     });
 }

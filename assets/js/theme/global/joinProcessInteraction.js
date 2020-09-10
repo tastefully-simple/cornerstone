@@ -630,6 +630,7 @@ function toggleStyles() {
     const lastName = loginPage.querySelector('#lastNameField');
     const password2 = loginPage.querySelector('#password2Field');
     const email2 = loginPage.querySelector('#email2Field');
+    const forgotPassword = loginPage.querySelector('.forgot-password');
 
     checkbox.addEventListener('change', (event) => {
         clearErrorMessages();
@@ -644,6 +645,7 @@ function toggleStyles() {
             email2.classList.remove('hidden');
             password2.querySelector('#Password2').setAttribute('tabindex', 0);
             email2.querySelector('#EmailAddress2').setAttribute('tabindex', 0);
+            forgotPassword.style.display = 'none';
         } else {
             toggleLoginSignUp.logInForm = true;
             toggleLoginSignUp.signUpForm = false;
@@ -655,6 +657,7 @@ function toggleStyles() {
             email2.classList.add('hidden');
             password2.querySelector('#Password2').setAttribute('tabindex', -1);
             email2.querySelector('#EmailAddress2').setAttribute('tabindex', -1);
+            forgotPassword.style.display = 'block';
         }
     });
 }

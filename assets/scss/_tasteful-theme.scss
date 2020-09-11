@@ -647,6 +647,7 @@ textarea{
 }
 .close-tooltip{
     color:$green-apple;
+    cursor:pointer;
     float:right;
     font-size:18px;
     &::after{

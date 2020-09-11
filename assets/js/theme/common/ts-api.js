@@ -92,6 +92,28 @@ export default class TSApi {
         });
     }
 
+    // Get Consultant by username
+    getConsultantByUsername(username) {
+        const uri = `/sb/web/${username}`;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+        });
+    }
+
+    /*
+     * Party Details
+     */
+    getPartyDetails(pid) {
+        const uri = `/party/detail?pid=${pid}`;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+        });
+    }
+
     /*
      * Account Profile Page
      */

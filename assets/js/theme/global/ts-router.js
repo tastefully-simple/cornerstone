@@ -1,9 +1,11 @@
 import querystring from 'querystring';
 import TSCookie from '../common/ts-cookie';
+import TSApi from '../common/ts-api';
 
 export default class TSRouter {
     constructor(settings) {
         this.settings = settings;
+        this.api = new TSApi();
 
         this.checkUrls();
     }
@@ -53,7 +55,7 @@ export default class TSRouter {
             const iPid = parseInt(filterString, 10);
             if (iPid > 0) {
                 this.showLoading();
-                this.getPartyDetails(iPid)
+                this.api.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
                         TSCookie.setAffiliateId(data.AfId);
@@ -83,7 +85,7 @@ export default class TSRouter {
             const iPid = parseInt(matches[1], 10);
             if (iPid > 0) {
                 this.showLoading();
-                this.getPartyDetails(iPid)
+                this.api.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
                         TSCookie.setAffiliateId(data.AfId);
@@ -119,28 +121,28 @@ export default class TSRouter {
 
     // SCID
     checkUrlForConsultantId() {
-        return false;
-    //    const szUrl = window.location.pathname;
-    //    if (szUrl.match(/[Pp]\/\d+/g)) {
-    //        const filterString = szUrl.substring(4);
-    //        const iPid = parseInt(filterString, 10);
-    //        if (iPid > 0) {
-    //            const currentCookie = new TSCookie();
+        const szUrl = window.location.search;
+        const matches = szUrl.match(/scid=\d+/ig);
 
-    //            getPartyDetails(iPid)
-    //                .then(res => res.json())
-    //                .then(data => {
-    //                    currentCookie.SetAffiliateId(data.AfId);
-    //                    currentCookie.SetConsultantId(data.ConsultantId);
-    //                    currentCookie.SetConsultantName(data.ConsultantName);
-    //                    window.location = '/web';
-    //                })
-    //                .catch(err => {
-    //                    console.warn('getPartyDetails', err);
-    //                    //window.location = '/';
-    //                });
-    //        }
-    //    }
+        if (matches) {
+            const consultantId = matches[0].substring(5);
+
+            this.showLoading();
+
+            this.api.getConsultantInfo(consultantId)
+                .then(response => response.json())
+                .then(data => {
+                    TSCookie.setConsultantId(data.ConsultantId);
+                    TSCookie.setConsultantName(data.Name);
+                    TSCookie.setConsultantImage(data.Image);
+
+                    window.location = window.location.pathname;
+                })
+                .catch(err => console.warn('checkUrlForConsultantId', err));
+
+            return true;
+        }
+        return false;
     }
 
     // Consultant Web Slug
@@ -151,7 +153,7 @@ export default class TSRouter {
             this.showLoading();
             const cUsername = szUrl.substring(5);
 
-            this.getConsultantByUsername(cUsername)
+            this.api.getConsultantByUsername(cUsername)
                 .then(res => res.json())
                 .then(data => {
                     window.location = '/web';
@@ -188,22 +190,6 @@ export default class TSRouter {
     //
     // HELPERS
     //
-
-    getPartyDetails(partyId) {
-        const uri = `/party/detail?pid=${partyId}`;
-        return fetch(this.apiUrl(uri), {
-            method: 'GET',
-            headers: { Accept: 'application/json' },
-        });
-    }
-
-    getConsultantByUsername(username) {
-        const uri = `/sb/web/${username}`;
-        return fetch(this.apiUrl(uri), {
-            method: 'GET',
-            headers: { Accept: 'application/json' },
-        });
-    }
 
     /* TST-175
      * commented out sendPartyOrder() as it's not being called anywhere

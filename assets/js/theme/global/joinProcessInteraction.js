@@ -345,6 +345,14 @@ function clearErrorMessages() {
     }
 }
 
+function removeEventHandlers() {
+    // TST-207
+    // Remove click event so that when clicking the search button
+    // in Find a Sponsor, selectConsultant() would not be called
+    // multiple times
+    $('body').off('click', '#sponsorSearchData .consultant-card');
+}
+
 /**
  * This function handles input changes for the login form
  * and the consultant search form in the join process
@@ -402,13 +410,19 @@ function selectConsultant(e) {
         return;
     }
 
+    $('.consultant-header').show();
+
     const $consultantCard = $(e.target).closest('.consultant-card');
 
     if (!$consultantCard.hasClass('selected')) {
         $('#sponsorSearchData .selected').toggleClass('selected');
-        $consultantCard.toggleClass('selected');
+        $consultantCard.addClass('selected');
         const cid = $consultantCard.data('cid') || null;
         $('#SponsorId').val(cid);
+        $consultantCard.find('.consultant-header').hide();
+    } else {
+        $consultantCard.find('.consultant-header').show();
+        $consultantCard.removeClass('selected');
     }
 }
 
@@ -504,6 +518,7 @@ function getConsultantInfoByZip() {
 
 /** Search by consultant ID and display results on dom */
 $('#btnConsIdSearch').on('click', (e) => {
+    removeEventHandlers();
     if (($('#txtConsultantID').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
@@ -521,6 +536,7 @@ $('#btnConsIdSearch').on('click', (e) => {
 /** Search by consultant name and display results on dom */
 $('#btnConsNameSearch').on('click', (e) => {
     clearErrorMessages();
+    removeEventHandlers();
     if (($('#txtConsultantName').val()) === ''
         || (($('#ConsultantState').val()) === '')) {
         $('#sponsorSearchData').empty();
@@ -539,6 +555,7 @@ $('#btnConsNameSearch').on('click', (e) => {
 /** Search by consultant zip code and display results on dom */
 $('#btnConsZipSearch').on('click', (e) => {
     clearErrorMessages();
+    removeEventHandlers();
     if (($('#txtZipCode').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();

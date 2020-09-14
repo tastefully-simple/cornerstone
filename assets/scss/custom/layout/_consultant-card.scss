@@ -21,6 +21,7 @@
     justify-content:space-between;
     padding: 10px 0;
     width: 100%;
+    flex-wrap: wrap;
     &:not(.selected) {
         padding-top:1rem;
         .selected-header {
@@ -28,7 +29,14 @@
         }
     }
     .consultant-header {
-        display: none;
+        @include consultant-header;
+        background-color: $shady-lady;
+        padding: 10px;
+        margin-bottom: 10px;
+        .fa-circle {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
     }
     &.selected {
         margin-top:1rem;
@@ -102,17 +110,3 @@
     }
 }
 
-// Specific to Find A Consultant modal
-.modal-results .consultant-card {
-    flex-wrap: wrap;
-    .consultant-header {
-        @include consultant-header;
-        background-color: $shady-lady;
-        padding: 10px;
-        margin-bottom: 10px;
-        .fa-circle {
-            font-size: 2rem;
-            margin-right: 1rem;
-        }
-    }
-}

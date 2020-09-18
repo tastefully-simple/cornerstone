@@ -279,7 +279,7 @@
             background-color: $gainsboro;
             border-color: $gainsboro;
             box-shadow: 4px 5px 7px rgba(0, 0, 0, 0.2);
-            left: 50% !important;
+            left: calc(100% - 8px) !important;
             max-width: remCalc(128px);
             padding: 0rem 1rem;
             padding-bottom: 0.5rem;
@@ -352,6 +352,7 @@
                 .navUser-item--account {
                     &>.dropdown-menu {
                         top: 45px !important;
+                        left: calc(100% + 20px) !important;
                         transform: translateX(-80%);
                         width: 128px;
                     }

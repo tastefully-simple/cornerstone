@@ -322,6 +322,7 @@
             display: none;
         }
         .header-top-links {
+            align-items: center;
             color: $text-gray;
             display: flex;
             justify-content: flex-end;
@@ -356,9 +357,26 @@
                     }
                 }
                 .navUser-item--cart {
+                    .navUser-action {
+                        align-items:center;
+                        display: flex;
+                    }
                     &>.dropdown-menu {
                         min-width: 350px;
                     }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:801px) and (max-width:865px) {
+    .header {
+        .header-top {
+            .container {
+                padding:0 0.25rem;
+                .header-top-banner {
+                    flex-basis: 44%;
                 }
             }
         }

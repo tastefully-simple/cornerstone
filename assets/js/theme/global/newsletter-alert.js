@@ -70,13 +70,15 @@ class NewsletterSignup {
             if (showPromo) {
                 this.successMessage(
                     'Good things are coming your way!',
-                    'Use promo code: 00000 for 10% off on your $60 purchase.',
+                    'Use promo code: JHUP53 for 10% off on your $60 purchase',
                 );
             } else {
                 this.successMessage('Success!', 'You have been subscribed.');
             }
         } else if (res.url.includes('already_subscribed')) { // BigCommerce says already subscribed
-            this.errorMessage('Error', 'You have already been subscribed.');
+            const message = `Thank you! You're currently opted in to receiving
+                messages from Tastefully Simple`;
+            this.errorMessage('', message);
         } else { // Unknown BigCommerce response
             this.generalError();
         }

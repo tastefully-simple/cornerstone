@@ -29,6 +29,7 @@ class FindAParty {
             time: TSCookie.getPartyTime(),
             cid: TSCookie.getConsultantId(),
             cname: TSCookie.getConsultantName(),
+            cimg: TSCookie.getConsultantImage(),
         };
     }
 
@@ -39,6 +40,7 @@ class FindAParty {
         TSCookie.setPartyTime(party.time);
         TSCookie.setConsultantId(party.cid);
         TSCookie.setConsultantName(party.cname);
+        TSCookie.setConsultantImage(party.cimg);
     }
 
     /* party = {
@@ -48,6 +50,7 @@ class FindAParty {
      *     time: null|string,
      *     cid: null|string,
      *     cname: null|string,
+     *     cimg: string
      * }
      */
     setParty(party) {
@@ -215,6 +218,7 @@ class FindAParty {
                 time: $('.party-card.selected').data('ptime'),
                 cid: $('.party-card.selected').data('cid'),
                 cname: $('.party-card.selected').data('cname'),
+                cimg: $('.party-card.selected').data('cimg'),
             });
             // Redirect
             window.location.href = '/party-details';
@@ -339,6 +343,7 @@ class FindAParty {
             'data-ptime': party.Time,
             'data-cid': party.ConsultantId,
             'data-cname': party.Consultant,
+            'data-cimg': party.Image,
         });
 
         const $selectedHeader = this.getSelectedHeaderHtml();

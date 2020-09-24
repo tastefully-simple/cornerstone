@@ -333,7 +333,7 @@ class FindAConsultant {
 
         // Main consultant DOM rendering
         const defaultConsultantHtml =
-            `<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+            `<span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
                 <span class="headertoplinks-consult-text">Find a Consultant</span>`;
 
         const nameHtml =

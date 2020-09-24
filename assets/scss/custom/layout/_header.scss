@@ -326,10 +326,14 @@
             color: $text-gray;
             display: flex;
             justify-content: flex-end;
-            max-width: 130px;
+            max-width: 125px;
             width: 100%;
+            .fa-lg {
+                font-size:16px;
+            }
             .headertoplinks-consult {
                 color: $text-gray;
+                padding-right:.1rem;
                 &:hover {
                     color: $text-gray;
                 }
@@ -342,11 +346,13 @@
                 padding: 0;
                 ul {
                     &.navUser-section {
+                        align-items: center;
                         display: flex;
                     }
                 }
                 .navUser-action {
                     color: $text-gray;
+                    line-height:1;
                     padding: 1rem 0.5rem;
                 }
                 .navUser-item--account {

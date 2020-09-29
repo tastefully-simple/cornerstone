@@ -32,6 +32,14 @@
             }
         }
     }
+    .cart-total {
+        .shipping-estimator {
+            .form-select {
+                height: auto;
+                padding: 0.4rem 0.75rem;
+            }
+        }
+    }
     .cart-actions {
         .button {
             text-transform:lowercase;

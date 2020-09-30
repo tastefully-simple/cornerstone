@@ -73,7 +73,7 @@ class FindAConsultant {
         // Consultant bar in cart page
         $('.cart-affiliate-info button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
-        // Trigger modal when the modaltrigger-consult class is present 
+        // Trigger modal when the modaltrigger-consult class is present
         $('.modaltrigger-consult').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // Return

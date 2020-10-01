@@ -51,8 +51,9 @@ export default class TSRouter {
     checkUrlForPartyId() {
         const szUrl = window.location.pathname;
         if (szUrl.match(/^\/p\/\d+/ig)) {
-            const filterString = szUrl.substring(4);
-            const iPid = parseInt(filterString, 10);
+            const filterString = szUrl.match(/\d+/g);
+            const iPid = filterString[0];
+
             if (iPid > 0) {
                 this.showLoading();
                 this.api.getPartyDetails(iPid)

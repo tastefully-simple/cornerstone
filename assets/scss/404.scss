@@ -4,6 +4,9 @@ a,p{
     margin: 0;
     line-height: 1.1em;
 }
+.flex-responsive p {
+    display: inline-block;
+}
 
 .body {
     margin-top: 0;
@@ -32,6 +35,10 @@ a,p{
 .ts-phone{
     color: $teal;
     font-weight: $fontWeight-bold;
+    text-decoration: none;
+}
+.ts-phone, a:hover {
+    color: $teal;
 }
 //--- Content Layout ----------------------------------------
 .flex-col {
@@ -50,6 +57,7 @@ a,p{
     margin-top: 1.5%;
     margin-bottom: 1.5%;
 }
+
 
 //--- Icons ----------------------------------------
 .icon-positioned{
@@ -119,7 +127,9 @@ a,p{
         padding-left: 15%;
         padding-right: 10%;
     }
-    a,p {
-      font-size: 14px;
+     a, p {
+        text-align: center;
+        font-size: 14px;
+        display: inline;
     }
 }

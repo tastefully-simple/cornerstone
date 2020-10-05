@@ -176,16 +176,14 @@ export default class TSRouter {
     }
 
     checkUrlForPartyDetailPage() {
-      const szUrl = window.location.pathname;
+        const szUrl = window.location.pathname;
 
-      if (szUrl == '/party-details') {
-          const partyId = TSCookie.getPartyId();
-
-          history.pushState(null, null, `/p/${partyId}`);
-          return true;
-      }
-
-      return false;
+        if (szUrl === '/party-details') {
+            const partyId = TSCookie.getPartyId();
+            history.pushState(null, null, `/p/${partyId}`);
+            return true;
+        }
+        return false;
     }
 
     checkUrlForTest() {

@@ -12,40 +12,37 @@
             display:none;
         }
     }
-    .header-top {
-        .container {
-            &>div {
-                &.header-top-banner {
-                    .banners {
-                        background-color: $text-gray;
-                        color: $white;
-                        text-align: center;
-                        .banner {
-                            display:inline-block;
-                            position:relative;
-                            width:auto;
-                            .dropdown-menu {
-                                a {
-                                    color:$teal;
-                                }
-                            }
-                            p {
-                                &.tst-top-banner {
-                                    display:inline;
-                                }
-                            }
-                            .banner-detail-button {
-                                font-weight: 700;
-                            }
-                            .tooltip-center {
-                                max-width:none;
-                                text-align:left;
-                                width:95%;
-                            }
-                        }
+    .header-top-banner {
+        .banners {
+            color: $white;
+            text-align: center;
+            .banner {
+                display:inline-block;
+                position:relative;
+                width:auto;
+                .dropdown-menu {
+                    a {
+                        color:$teal;
                     }
                 }
+                p {
+                    &.tst-top-banner {
+                        display:inline;
+                    }
+                }
+                .banner-detail-button {
+                    font-weight: 700;
+                }
+                .tooltip-center {
+                    max-width:none;
+                    text-align:left;
+                    width:95%;
+                }
             }
+        }
+    }
+    .header-top {
+        .container {
             .navUser {
                 position:unset;
                 .navUser-item--cart {

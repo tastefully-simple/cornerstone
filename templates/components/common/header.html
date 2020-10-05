@@ -1,4 +1,19 @@
 <header class="header" role="banner">
+    {{!-- @razoyo: hardcoded password reset message --}}
+    <div class="header-top-banner burgundy-background">
+        <div class="banners burgundy-background">
+            <div class="banner banner-hc">
+                <p class="tst-top-banner">Reset your account password <button class="banner-detail-button" type="button" data-dropdown="bannerPasswordResetDropdown">details</button></p>
+                <div id="bannerPasswordResetDropdown" class="dropdown-menu tooltip-content tooltip-center" data-dropdown-content="">
+                    <div>
+                        <span class="close-tooltip">x</span>
+                        <p class="system-14">Your account security is our top priority. If you have a Tastefully Simple account, <a class="color-teal" href="/login.php?action=reset_password">reset your password here</a> to access your account on our new site</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- @razoyo: end hardcoded password reset message --}}
     <div class="header-top textgray-background">
         <div class="container">
             <div class="header-top-banner">

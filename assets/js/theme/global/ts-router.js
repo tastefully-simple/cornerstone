@@ -18,6 +18,7 @@ export default class TSRouter {
             || this.checkUrlForMissingPartyId()
             || this.checkUrlForConsultantId()
             || this.checkUrlForConsultantWebSlug()
+            || this.checkUrlForPartyDetailPage()
             || this.checkUrlForTest();
     }
 
@@ -172,6 +173,19 @@ export default class TSRouter {
             return true;
         }
         return false;
+    }
+
+    checkUrlForPartyDetailPage() {
+      const szUrl = window.location.pathname;
+
+      if (szUrl == '/party-details') {
+          const partyId = TSCookie.getPartyId();
+
+          history.pushState(null, null, `/p/${partyId}`);
+          return true;
+      }
+
+      return false;
     }
 
     checkUrlForTest() {

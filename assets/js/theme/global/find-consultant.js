@@ -73,7 +73,7 @@ class FindAConsultant {
         // Consultant bar in cart page
         $('.cart-affiliate-info button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
-        // Trigger modal when the modaltrigger-consult class is present 
+        // Trigger modal when the modaltrigger-consult class is present
         $('.modaltrigger-consult').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // Return
@@ -306,6 +306,8 @@ class FindAConsultant {
         this.saveCookie(consultant);
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;
+        } else if (this.isOnCartPage()) {
+            window.location = CART_PAGE;
         } else {
             this.setConsultant(consultant);
             this.modal.close();

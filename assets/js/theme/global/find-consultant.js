@@ -135,6 +135,7 @@ class FindAConsultant {
     }
 
     createModal(e, template) {
+        $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
         e.preventDefault();
         this.modal.open({ size: 'large' });
@@ -161,6 +162,7 @@ class FindAConsultant {
 
     returnSearch() {
         $('#consultant-search-results').hide();
+        $('#modal').removeClass('modal-results');
         $('.alertbox-error').hide();
         $('#consultant-search').show();
         this.clearConsultantWindow();
@@ -428,6 +430,7 @@ class FindAConsultant {
             });
 
             $('#consultant-search-results').show();
+            $('#modal').addClass('modal-results');
 
             // Pagination is only needed when searching by zipcode or searching by name
             // Searching by Consultant Id should produce only 1 result

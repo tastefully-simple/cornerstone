@@ -302,6 +302,7 @@ class FindAConsultant {
             name: 'Tastefully Simple',
             image: null,
         });
+        this.deletePartyCookies();
     }
 
     continue(consultant) {

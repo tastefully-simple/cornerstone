@@ -7,11 +7,13 @@
         align-items:center;
         background-color: $cream;
         display:flex;
-        justify-content:center;
         flex-direction: column;
-        margin-top:42px;
-        padding:.5rem  0;
-        padding-bottom: 0;
+        justify-content:center;
+        margin-top:5.5rem;
+        padding:.5rem 0 0;
+        &+.body {
+            margin-top:0;
+        }
         .cart-affiliate-consultant {
             display: flex;
             margin-bottom: 1rem;

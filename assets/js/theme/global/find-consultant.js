@@ -306,6 +306,8 @@ class FindAConsultant {
         this.saveCookie(consultant);
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;
+        } else if (this.isOnCartPage()) {
+            window.location = CART_PAGE;
         } else {
             this.setConsultant(consultant);
             this.modal.close();

@@ -173,12 +173,13 @@
                  queryString = queryString +'&pid=' + partyId
               }
         }
-        console.log('https://qa1-tsapi.tastefullysimple.com/webhook/order/success?' + queryString);
+        var url = `${window.theme_settings.ts_tsapi_base_url}/webhook/order/success?${queryString}`
+        console.log(url);
         var frmSuccess = document.createElement("iframe");
         frmSuccess.style.width = '1px';
         frmSuccess.style.height = '1px';
         frmSuccess.style.border = '0';
-        frmSuccess.src = 'https://qa1-tsapi.tastefullysimple.com/webhook/order/success?' + queryString
+        frmSuccess.src = url
         document.body.appendChild(frmSuccess);
 
         deleteCookie('cid');

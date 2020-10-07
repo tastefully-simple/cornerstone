@@ -441,7 +441,7 @@
         ]
       },
       "settings": {
-        "ts_current_store_base_url": "https://shoptastefullysimple.com",
+        "ts_current_store_base_url": "https://www.tastefullysimple.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://tsapi.tastefullysimple.com",
         "ts_join_ss_product_id": 661

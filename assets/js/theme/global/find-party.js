@@ -116,6 +116,7 @@ class FindAParty {
     }
 
     createModal(e, template) {
+        $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
         e.preventDefault();
         this.modal.open({ size: 'small' });
@@ -290,6 +291,7 @@ class FindAParty {
 
     returnSearch() {
         $('#party-search-results').hide();
+        $('#modal').removeClass('modal-results');
         $('.alertbox-error').hide();
         $('#party-search').show();
         $('.next-step-selected-text').text('');
@@ -316,6 +318,7 @@ class FindAParty {
         });
 
         $('#party-search-results').show();
+        $('#modal').addClass('modal-results');
         $('#party-search-results article').show();
         $('#party-continue').show();
         $('#party-goback').hide();

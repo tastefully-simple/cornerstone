@@ -7,6 +7,9 @@
     max-height:none;
     min-height:0;
     width: 100%;
+    &.modal-results {
+        height:100%;
+    }
     .modal-close {
         display: none;
     }
@@ -15,6 +18,7 @@
         filter:grayscale(1%);
     }
     .modal-content {
+        height:100%;
         .vertical-bottom {
             display: flex;
             flex-direction: column;
@@ -43,7 +47,7 @@
         .genmodal-body {
             padding: 15px 10px 0 10px;
             overflow-y: auto;
-            max-height: 430px;
+            max-height: 330px;
             .alertbox-error {
                 background-color: $utility-error;
                 display: none;
@@ -112,10 +116,10 @@
             }
         }
         .modal-results {
+            height:100%;
             .genmodal-body {
                 .buy-wide-card {
                     overflow-y: auto;
-                    max-height: 300px;
                     .result-card {
                         cursor:pointer;
                         &:not(.selected) {
@@ -151,7 +155,9 @@
             }
             .findmodal-footer {
                 background-color: $gainsboro;
+                bottom:0;
                 padding: 10px;
+                position: absolute;
                 text-align:center;
                 width:100%;
                 .return-search {
@@ -180,6 +186,46 @@
                     .next-step-continue-btn {
                         width:190px;
                     }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:341px) and (max-width:440px) {
+    #modal {
+        .modal-content {
+            .genmodal-body {
+                max-height:400px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:361px) {
+    #modal {
+        .modal-content {
+            .genmodal-body {
+                max-height:430px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-height:660px) {
+    #modal {
+        &.modal-results {
+            height:auto;
+        }
+        .modal-content {
+            height:auto;
+            .modal-results {
+                height:auto;
+                .genmoda-body {
+                    max-height:430px;
+                }
+                .findmodal-footer {
+                    position:relative;
                 }
             }
         }

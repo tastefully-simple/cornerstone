@@ -4,6 +4,17 @@
 /* Choose A Consultant Styles  */
 #modal {
     #consultant-search {
+        .genmodal-body {
+            max-height:none;
+            .buy-wide-card.name-search {
+                .card-form {
+                    flex-wrap:wrap;
+                    button {
+                        margin-top:.5rem;
+                    }
+                }
+            }
+        }
         .findmodal-footer {
             background: none;
             box-shadow: none;
@@ -15,6 +26,7 @@
     }
     #consultant-search-results {
         display: none;
+        height:100%;
         .frameheading-5 {
             font-family: stencilFontFamily("headings-font");
         }

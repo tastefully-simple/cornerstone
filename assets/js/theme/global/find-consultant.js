@@ -381,7 +381,7 @@ class FindAConsultant {
     }
 
     isOnConsultantPage() {
-        return document.location.pathname === CONSULTANT_PAGE;
+        return document.location.pathname.includes(CONSULTANT_PAGE);
     }
 
     isOnPartyDetailsPage() {

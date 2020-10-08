@@ -151,14 +151,14 @@ export class Collapsible {
 
     toggleByState(state, ...args) {
         switch (state) {
-        case CollapsibleState.open:
-            return this.open.apply(this, args);
+            case CollapsibleState.open:
+                return this.open.apply(this, args);
 
-        case CollapsibleState.closed:
-            return this.close.apply(this, args);
+            case CollapsibleState.closed:
+                return this.close.apply(this, args);
 
-        default:
-            return undefined;
+            default:
+                return undefined;
         }
     }
 

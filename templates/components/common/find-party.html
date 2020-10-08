@@ -1,0 +1,57 @@
+<div class="modal-general-alternate" id="party-search">
+    <div class="genmodal-header">
+        <h2>find a host or party</h2>
+        <button type="button"  class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true" class="close-modal-alternate"></span>
+        </button>
+    </div>
+    <div class="genmodal-body">
+        <form onsubmit="return false" id="state-search-form">
+            <article class="state-search buy-wide-card">
+                <div class="card-form system-12">
+                    <div class="simple-dropdown">
+                        <label for="partystate-dropdown">Search by state</label>
+                        <select name="partystate-dropdown" class="search-dropdown" required>
+                            <option disabled selected value>Select State</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-form">
+                    <label class="input-label">
+                        <span class="system-12">Search host or fundraiser name (optional)</span>
+                        <input type="text">
+                    </label>
+                </div>
+                <div class="card-form">
+                    <button class="button-alternate" type="submit">search</button>
+                </div>
+            </article>
+        </form>
+    </div>
+</div>
+<div class="modal-general-alternate modal-results" id="party-search-results">
+    <div class="genmodal-header">
+        <h2>choose your party</h2>
+        <a href="#" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true" class="close-modal-alternate"></span>
+        </a>
+    </div>
+    <div class="genmodal-body">
+        <article class="buy-wide-card"></article>
+        <div class="alertbox-error">
+            <h2 class="alert-title">Error</h2>
+            <p class="alert-message">
+                <span></span>
+            </p>
+        </div>
+    </div>
+    <div class="findmodal-footer">
+        <div class="next-step-wrapper">
+            <p class="next-step-selected-text system-14"></p>
+            <button class="next-step-continue-btn button-secondary-icon" id="party-continue">
+                continue
+            </button>
+            <button class="button-primary" id="party-goback">go back</button>
+        </div>
+    </div>
+</div>

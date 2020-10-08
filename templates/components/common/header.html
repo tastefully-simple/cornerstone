@@ -1,31 +1,68 @@
-{{#if banners.top}}
-<div class="banners" data-banner-location="top">
-    {{#each (limit banners.top_metadata 1)}}
-    <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
-        <div data-event-type="promotion-click">
-            {{{this.content}}}
+<header class="header" role="banner">
+    {{!-- @razoyo: hardcoded password reset message --}}
+    <div class="header-top-banner burgundy-background">
+        <div class="banners burgundy-background">
+            <div class="banner banner-hc">
+                <p class="tst-top-banner">Reset your account password <button class="banner-detail-button" type="button" data-dropdown="bannerPasswordResetDropdown">details</button></p>
+                <div id="bannerPasswordResetDropdown" class="dropdown-menu tooltip-content tooltip-center" data-dropdown-content="">
+                    <div>
+                        <span class="close-tooltip">x</span>
+                        <p class="system-14">Your account security is our top priority. If you have a Tastefully Simple account, <a class="color-teal" href="/login.php?action=reset_password">reset your password here</a> to access your account on our new site</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    {{/each}}
-</div>
-{{/if}}
-<header class="header" role="banner">
-    {{!-- <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
-        <span class="mobileMenu-toggleIcon">Toggle menu</span>
-    </a> --}}
-    {{!-- {{> components/common/navigation}} --}}
-
-    {{#if page_type '===' 'default'}}
-        <h1 class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
-            {{> components/common/store-logo}}
-        </h1>
-    {{else}}
-        <div class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
-            {{> components/common/store-logo}}
+    {{!-- @razoyo: end hardcoded password reset message --}}
+    <div class="header-top textgray-background">
+        <div class="container">
+            <div class="header-top-banner">
+                {{#if banners.top}}
+                <div class="banners" data-banner-location="top">
+                    {{#each (limit banners.top_metadata 1)}}
+                    <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
+                        <div data-event-type="promotion-click">
+                            {{{this.content}}}
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
+            </div>
+            <div class="header-top-links">
+                <button type="button" class="headertoplinks-consult">
+                    <span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
+                    <span class="headertoplinks-consult-text">Find a Consultant</span>
+                </button>
+                <div class="headertoplinks-nav">
+                    {{> components/common/navigation}}
+                </div>
+            </div>
         </div>
-    {{/if}}
-    <div class="navPages-container" id="menu" data-menu>
-       {{!-- {{> components/common/navigation-menu}} --}}
+    </div>
+    <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
+        <span class="mobileMenu-toggleIcon">Toggle menu</span>
+    </a>
+
+    <div class="header-main" id="headerMain">
+        <div class="container">
+            {{#if page_type '===' 'default'}}
+                <h1 class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
+                    {{> components/common/store-logo}}
+                </h1>
+            {{else}}
+                <div class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
+                    {{> components/common/store-logo}}
+                </div>
+            {{/if}}
+            <div class="navPages-container" id="menu" data-menu>
+               {{> components/common/navigation-menu-custom}}
+            </div>
+            <div class="nav-search">
+                {{> components/common/search-box}}
+            </div>
+        </div>
     </div>
 </header>
 {{{region name="header_bottom"}}}
+

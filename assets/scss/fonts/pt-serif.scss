@@ -1,0 +1,8 @@
+@mixin pt-serif {
+    @font-face {
+        font-family: "PT Serif";
+        font-style: normal;
+        font-weight: 400;
+        src: url("../fonts/PTSerif-Regular.ttf") format("ttf");
+    }
+}

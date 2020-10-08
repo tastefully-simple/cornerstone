@@ -2,16 +2,6 @@
 <section class="toggle productReviews" id="product-reviews" data-product-reviews>
     <h4 class="toggle-title">
         {{lang 'products.reviews.header' total=reviews.total}}
-        {{#if theme_settings.show_product_reviews_tabs '!==' true}}
-            <a class="toggleLink is-open" data-collapsible href="#productReviews-content">
-                <span class="toggleLink-text toggleLink-text--on">
-                    {{lang 'products.reviews.hide'}}
-                </span>
-                <span class="toggleLink-text toggleLink-text--off">
-                    {{lang 'products.reviews.show'}}
-                </span>
-            </a>
-        {{/if}}
     </h4>
     <div class="toggle-content is-open" id="productReviews-content" aria-hidden="false">
         <ul class="productReviews-list" id="productReviews-list">
@@ -23,11 +13,11 @@
                             {{> components/products/ratings rating=rating}}
                             <span class="productReview-ratingNumber" itemprop="ratingValue">{{ rating }}</span>
                         </span>
-                        <h5 itemprop="name" class="productReview-title">{{ title }}</h5>
+                        <h5 itemprop="name" class="productReview-title">{{{ sanitize title }}}</h5>
                         {{#if name}}
                             <meta itemprop="author" content="{{name}}">
                             <p class="productReview-author">
-                                {{lang 'products.reviews.post_on_by' date=date name=name }}
+                                {{{lang 'products.reviews.post_on_by' date=date name=(sanitize name) }}}
                             </p>
                         {{else}}
                             <p class="productReview-author">
@@ -35,7 +25,7 @@
                             </p>
                         {{/if}}
                     </header>
-                    <p itemprop="reviewBody" class="productReview-body">{{nl2br text}}</p>
+                    <p itemprop="reviewBody" class="productReview-body">{{{ sanitize text }}}</p>
                 </article>
             </li>
             {{/each}}

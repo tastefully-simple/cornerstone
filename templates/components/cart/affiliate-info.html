@@ -1,12 +1,9 @@
-<div class="cart-NoAffiliateInfo">
-    <h4 id="cart-tastefully-simple-name">You are shopping with Tastefully Simple.</h4>
-</div>
-
-<div class="cart-affiliateInfo" id="cart-affiliate-info">
-
-    <h4 id="cart-affiliate-name">You are shopping with independent consultant <b id="affiliate-name"></b>.</h4>
-    <h4 id="cart-no-affiliate-name">You are shopping with an independent consultant.</h4>
-    <a href="#" href="#find-affiliate-modal" data-reveal-id="find-affiliate-modal">
-        {{lang 'cart.find_affiliate.button'}}
-    </a>
+<div class="cart-affiliate">
+    <img class="cart-affiliate-img grid-card" src="{{ cdn 'assets/img/noconsultantphoto.png' }}" alt="Photograph thumbnail of Tastefully Simple"/>
+    <div class="cart-affiliate-info">
+        <p class="cart-affiliate-name">You are shopping with <br/> <strong class="affiliate-name">Tastefully Simple</strong></p>
+        <button type="button" class="modal-button">
+            <span><small class="cart-affiliate-btn">(Find a Consultant)</small></span>
+        </button>
+    </div>
 </div>

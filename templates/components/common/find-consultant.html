@@ -1,0 +1,110 @@
+<div class="modal-general-alternate find-a-consultant" id="consultant-search">
+    <div class="genmodal-header">
+        <h2>Find A Consultant</h2>
+        <button type="button" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true" class="close-modal-alternate"></span>
+        </button>
+    </div>
+    <div class="genmodal-body">
+        <div class="alertbox-error">
+            <h2 class="alert-title">Error</h2>
+            <p class="alert-message">
+                <span></span>
+            </p>
+        </div>
+        <form onsubmit="return false" id="zipcode-search-form">
+            <article class="buy-wide-card zip-search">
+                <span class="form-title system-14">Search by zip code</span>
+                <div class="card-form system-12">
+                    <label class="input-label">
+                        <span>zip code</span>
+                        <input type="text" placeholder="Enter zip code" pattern="(\d{5}([\-]\d{4})?)" required>
+                    </label>
+                    <div class="simple-dropdown">
+                        <label for="consultradius-dropdown">Search Radius</label>
+                        <select name="consultradius-dropdown" class="search-dropdown">
+                            <option selected="selected" value="0">Exact Match</option>
+                            <option value="25">25 Miles</option>
+                            <option value="50">50 Miles</option>
+                            <option value="75">75 Miles</option>
+                            <option value="100">100 Miles</option>
+                            <option value="150">150 Miles</option>
+                            <option value="200">200 Miles</option>
+                        </select>
+                    </div>
+                    <div class="vertical-bottom">
+                        <button class="button-alternate" type="submit">search</button>
+                    </div>
+                </div>
+            </article>
+        </form>
+        <form onsubmit="return false" id="name-search-form">
+            <article class="buy-wide-card name-search">
+                <span class="form-title system-14">Search by consultant name</span>
+                <div class="card-form system-12">
+                    <div class="simple-dropdown">
+                        <label for="consultstate-dropdown">State</label>
+                        <select name="consultstate-dropdown" class="search-dropdown" required>
+                            <option disabled selected value>Select State</option>
+                        </select>
+                    </div>
+                    <label class="input-label">
+                        <span>First or Last Name</span>
+                        <input type="text" placeholder="Enter first or last name" required>
+                    </label>
+                    <div class="vertical-bottom">
+                        <button class="button-alternate" type="submit">search</button>
+                    </div>
+                </div>
+            </article>
+        </form>
+        <form onsubmit="return false" id="id-search-form">
+            <article class="buy-wide-card id-search">
+                <span class="form-title system-14">Search by consultant ID</span>
+                <div class="card-form system-12">
+                    <label class="input-label">
+                        <span>ID</span>
+                        <input type="text" placeholder="Enter consultant ID" required>
+                    </label>
+                    <div class="vertical-bottom" >
+                        <button class="button-alternate" type="submit">search</button>
+                    </div>
+                </div>
+            </article>
+        </form>
+    </div>
+</div>
+<div class="modal-general-alternate modal-results" id="consultant-search-results">
+    <div class="genmodal-header">
+        <h2>Choose A Consultant</h2>
+        <a href="#" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true" class="close-modal-alternate"></span>
+        </a>
+    </div>
+    <div class="genmodal-body">
+        <article class="buy-wide-card">
+            <div class="search-filter-wrapper">
+                <div class="return-search">
+                    <div class="vertical-center">
+                        <span class="icon-system-left-caret"></span>
+                    </div>
+                    <span class="frame-caption">Refine your search</span>
+                </div>
+            </div>
+        </article>
+        <div class="alertbox-error">
+            <h2 class="alert-title">Error</h2>
+            <p class="alert-message">
+                <span></span>
+            </p>
+        </div>
+    </div>
+    <div class="findmodal-footer">
+        <div class="next-step-wrapper">
+            <p class="next-step-selected-text system-14"></p>
+            <button class="next-step-continue-btn button-secondary-icon" id="consultant-continue">
+                continue
+            </button>
+        </div>
+    </div>
+</div>

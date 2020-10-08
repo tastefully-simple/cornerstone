@@ -1,6 +1,5 @@
 <nav class="navUser">
     {{> components/common/currency-selector}}
-
     <ul class="navUser-section navUser-section--alt">
         {{#if customer.store_credit.value '>' 0}}
             <li class="navUser-item">
@@ -24,23 +23,33 @@
             </li>
             <li class="navUser-item navUser-item--divider">|</li>
         {{/if}}
+        {{!-- @razoyo: remove quicksearch
         <li class="navUser-item">
-            <a class="navUser-action navUser-action--quickSearch" href="#" data-search="quickSearch" aria-controls="quickSearch" aria-expanded="false">{{lang 'common.search'}}</a>
+            <a class="navUser-action navUser-action--quickSearch" href="#" data-search="quickSearch" aria-controls="quickSearch" aria-expanded="false"><span class="fas fa-search"></span><span>{{lang 'common.search'}}</span></a>
         </li>
-        {{#if settings.gift_certificates_enabled}}
-            <li class="navUser-item">
-                <a class="navUser-action" href="{{urls.gift_certificate.purchase}}">{{lang 'common.gift_cert'}}</a>
-            </li>
-        {{/if}}
+        --}}
         <li class="navUser-item navUser-item--account">
             {{#if customer}}
-                <a class="navUser-action" href="{{urls.account.index}}">{{lang 'common.account'}}</a>
-                <a class="navUser-action" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
+                <a class="navUser-action"
+                   href="{{urls.account.index}}"
+                   data-dropdown="user-preview-dropdown"
+                   aria-expanded="false">
+                  <span class="fas fa-user-circle fa-lg" aria-hidden="true"></span>
+                  <span class="navUser-action--account-text">Hi, {{ first (split customer.name " ") }}</span>
+                  <span class="fas fa-caret-down fa-lg" aria-hidden="true"></span>
+                </a>
+                <div class="dropdown-menu" id="user-preview-dropdown" aria-hidden="true">
+                  <ul>
+                    <li><a class="textgray-text" href="{{urls.account.details}}">Profile</a></li>
+                    <li><a class="textgray-text" href="{{urls.account.wishlists.all}}">Wish List</a></li>
+                    <li><a class="textgray-text" href="{{urls.auth.logout}}">Logout</a></li>
+                  </ul>
+                </div>
             {{else}}
-                <a class="navUser-action" href="{{urls.auth.login}}">{{lang 'common.login'}}</a>
-                {{#if settings.account_creation_enabled}}
-                    <span class="navUser-or">{{lang 'common.or'}}</span> <a class="navUser-action" href="{{urls.auth.create_account}}">{{lang 'common.sign_up'}}</a>
-                {{/if}}
+                <a class="navUser-action" href="{{urls.auth.login}}">
+                  <span class="fas fa-user-circle fa-lg" aria-hidden="true"></span>
+                  <span class="navUser-action--account-text">{{lang 'common.login'}}</span>
+                </a>
             {{/if}}
         </li>
         <li class="navUser-item navUser-item--cart">
@@ -50,7 +59,7 @@
                 data-dropdown="cart-preview-dropdown"
                 data-options="align:right"
                 href="{{urls.cart}}">
-                <span class="navUser-item-cartLabel">{{lang 'common.cart'}}</span> <span class="countPill cart-quantity"></span>
+                <span class="navUser-item-cartLabel fas fa-shopping-cart"></span> <span class="countPill cart-quantity"></span>
             </a>
 
             <div class="dropdown-menu" id="cart-preview-dropdown" data-dropdown-content aria-hidden="true"></div>

@@ -30,6 +30,7 @@ category:
 {{/unless}}
 {{{category.description}}}
 <div class="page">
+    {{!-- @razoyo: remove sidebar
     {{#if category.faceted_search_enabled}}
         <aside class="page-sidebar" id="faceted-search-container">
             {{> components/category/sidebar}}
@@ -45,6 +46,7 @@ category:
             </aside>
         {{/if}}
     {{/if}}
+    --}}
 
     <main class="page-content" id="product-listing-container">
         {{#if category.products}}

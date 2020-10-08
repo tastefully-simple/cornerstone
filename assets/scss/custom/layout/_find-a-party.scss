@@ -1,0 +1,168 @@
+// =============================================================================
+// Tastefully Simple Party Search Styles
+// =============================================================================
+
+#modal {
+    .modal-content {
+        #party-search {
+            .genmodal-body {
+                .buy-wide-card {
+                    .card-form {
+                        margin-top:.5rem;
+                        .simple-dropdown,
+                        .input-label {
+                            flex-basis:100%;
+                        }
+                    }
+                }
+            }
+        }
+        #party-search-results {
+            display: none;
+            .genmodal-body {
+                position:relative;
+                overflow-y:hidden;
+                .buy-wide-card {
+                    .party-card {
+                        width:100%;
+                        &:not(.selected) {
+                            &::after {
+                                border-top:1px solid $text-gray;
+                                content:'';
+                                display:inline-block;
+                                margin-top:1rem;
+                                width:100%;
+                            }
+                        }
+                        &.selected {
+                            .party-info {
+                                padding:0 20px .5rem;
+                                .party-name {
+                                    margin:.5rem 0;
+                                }
+                            }
+                        }
+                        .party-info {
+                            .party-name {
+                                margin-top:0;
+                            }
+                        }
+                    }
+                }
+            }
+            .findmodal-footer {
+                #party-goback {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+// Find a Party bar
+.partybar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $green-apple;
+    color: white;
+    p {
+      margin: 0 auto;
+    }
+    &-container {
+        max-width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        padding: 0.6rem 1.5rem;
+        .fa-caret-right,
+        .fa-caret-down {
+            transition: rotate 0.2s ease-in-out;
+            width: .25rem;
+            margin-left: 0.75rem;
+        }
+        &.active {
+            .fa-caret-right {
+                rotate: 90deg;
+            }
+        }
+    }
+    &-button {
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        padding: 0.6rem;
+    }
+    &-accordion {
+      max-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: max-height 0.2s ease-out;
+    }
+    &-text {
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width:801px) {
+    #modal {
+        .modal-content {
+            #party-search {
+                .genmodal-body {
+                    /* stacked
+                    .buy-wide-card {
+                        .card-form {
+                            align-items:center;
+                            justify-content:center;
+                            .simple-dropdown,
+                            .input-label {
+                            align-items:center;
+                            justify-content:center;
+                            }
+                        }
+                    }
+                    */
+                    .buy-wide-card {
+                        align-items:flex-end;
+                        justify-content:space-between;
+                        .card-form {
+                            flex-basis:33.333%;
+                            justify-content:center;
+                            margin-top:.5rem;
+                            &:last-child {
+                                flex-basis:20.5%;
+                            }
+                        }
+                    }
+                }
+            }
+            #party-search-results {
+                .genmodal-body {
+                    .buy-wide-card {
+                        .party-card {
+                            &::after {
+                                width:85%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .partybar {
+        display: flex;
+        flex-direction: column;
+        &-container {
+            display: flex;
+            margin: 0 auto;
+            text-align: center;
+        }
+        &-text {
+            font-weight: unset;
+        }
+    }
+}

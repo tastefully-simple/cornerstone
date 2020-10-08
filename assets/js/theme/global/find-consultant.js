@@ -1,0 +1,482 @@
+import utils from '@bigcommerce/stencil-utils';
+import { defaultModal } from '../global/modal';
+import TSApi from '../common/ts-api';
+import TSCookie from '../common/ts-cookie';
+import StatesSelect from '../common/directory/states';
+import pagination from '../common/pagination';
+import ConsultantCard from '../common/consultant-card';
+
+
+// Consultants
+const TST_CONSULTANT_ID = '0160785';
+
+// Search mode
+const NO_SEARCH = 0;
+const SEARCH_BY_ZIP = 1;
+const SEARCH_BY_NAME = 2;
+const SEARCH_BY_ID = 3;
+
+// Pagination
+const DISPLAY_NUM_PAGES = 6;
+
+// Redirect
+const CONSULTANT_PAGE = '/web';
+const PARTY_DETAILS_PAGE = '/party-details';
+const CART_PAGE = '/cart.php';
+
+class FindAConsultant {
+    constructor(trigger, template) {
+        this.$findConsultant = trigger;
+        this.modalTemplate = template;
+        this.searchInfo = { mode: NO_SEARCH };
+        this.pageSize = 10;
+        this.screenMinWidth = 801;
+        this.api = new TSApi();
+        this.setConsultant(this.loadConsultant());
+        this.initListeners();
+    }
+
+    loadConsultant() {
+        return {
+            id: TSCookie.getConsultantId(),
+            name: TSCookie.getConsultantName(),
+            image: TSCookie.getConsultantImage(),
+        };
+    }
+
+    saveCookie(consultant) {
+        TSCookie.setConsultantId(consultant.id);
+        TSCookie.setConsultantName(consultant.name);
+        TSCookie.setConsultantImage(consultant.image);
+    }
+
+    isExternalConsultant() {
+        return this.consultant.id
+            && this.consultant.id !== TST_CONSULTANT_ID;
+    }
+
+    initListeners() {
+        // Trigger modal or go to consultant page if clicking on
+        // consultant name
+        this.$findConsultant.addEventListener('click', (e) => {
+            // Github issue #179, go to consultant page
+            if (this.consultant.id
+                && this.consultant.id !== TST_CONSULTANT_ID
+                && e.target.tagName !== 'SMALL'
+            ) {
+                window.location = CONSULTANT_PAGE;
+            } else {
+                this.createModal(e, this.modalTemplate);
+            }
+        });
+
+        // Consultant bar in cart page
+        $('.cart-affiliate-info button').on('click', (e) => this.createModal(e, this.modalTemplate));
+
+        // Trigger modal when the modaltrigger-consult class is present
+        $('.modaltrigger-consult').on('click', (e) => this.createModal(e, this.modalTemplate));
+
+        // Return
+        $('body').on('click', '.search-filter-wrapper .return-search', this.returnSearch.bind(this));
+
+        // Search by ZIP
+        $('body').on('submit', '#zipcode-search-form', () => {
+            this.searchInfo = {
+                mode: SEARCH_BY_ZIP,
+                zip: $('#consultant-search .zip-search input').val(),
+                radius: $('#consultant-search .zip-search select').val(),
+                page: 1,
+            };
+
+            this.search();
+        });
+
+        // Search by Name
+        $('body').on('submit', '#name-search-form', () => {
+            this.searchInfo = {
+                mode: SEARCH_BY_NAME,
+                name: $('#consultant-search .name-search input').val(),
+                state: $('#consultant-search .name-search select').val(),
+                page: 1,
+            };
+
+            this.search();
+        });
+
+        // Search by ID
+        $('body').on('submit', '#id-search-form', () => {
+            this.searchInfo = {
+                mode: SEARCH_BY_ID,
+                id: $('#consultant-search .id-search input').val(),
+                page: 1,
+            };
+
+            this.search();
+        });
+
+        // Select consultant result
+        $('body').on(
+            'click',
+            '#consultant-search-results .consultant-card',
+            this.highlightConsultant.bind(this),
+        );
+
+        // Submit with consultant
+        $('body').on('click', '#consultant-continue', () => this.continueWithSelection());
+
+        // Submit with Tastefully Simple
+        $('body').on('click', '#no-consultants-continue', () => this.continueWithInternal());
+
+        // Account for window resize
+        $(window).on('resize', () => this.renderConsultantInHeader());
+
+        // Account for sticky header
+        $(window).on('scroll', () => this.renderConsultantInHeader());
+    }
+
+    createModal(e, template) {
+        this.modal = defaultModal();
+        e.preventDefault();
+        this.modal.open({ size: 'large' });
+        const options = { template };
+        utils.api.getPage('/', options, (err, res) => {
+            if (err) {
+                console.error('Failed to get common/find-consultant. Error:', err);
+                return false;
+            } else if (res) {
+                this.modalLoaded(res);
+            }
+        });
+    }
+
+    modalLoaded(result) {
+        this.modal.updateContent(result);
+        this.renderStatesSelect();
+    }
+
+    renderStatesSelect() {
+        const $statesSelect = document.querySelector('#consultant-search .name-search select');
+        return new StatesSelect($statesSelect);
+    }
+
+    returnSearch() {
+        $('#consultant-search-results').hide();
+        $('.alertbox-error').hide();
+        $('#consultant-search').show();
+        this.clearConsultantWindow();
+        this.selectedId = null;
+        $('.next-step-selected-text').text('');
+    }
+
+    clearConsultantWindow() {
+        $('.matching').remove();
+        $('.consultant-card').remove();
+        $('.consultant-divider').remove();
+        $('.findmodal-pagination').remove();
+    }
+
+    displayError(err) {
+        $('.alertbox-error span').text(err);
+        $('.alertbox-error').show();
+    }
+
+    search() {
+        switch (this.searchInfo.mode) {
+            case SEARCH_BY_ZIP:
+                this.api.searchConsultantsByZip(
+                    this.searchInfo.zip,
+                    this.searchInfo.radius,
+                    this.searchInfo.page,
+                    this.pageSize,
+                )
+                    .then(res => res.json())
+                    .then(data => {
+                        this.renderResults(data);
+                    })
+                    .catch(err => {
+                        console.warn('searchByZip', err);
+                        this.displayError(err);
+                    });
+                break;
+
+            case SEARCH_BY_NAME:
+                this.api.searchConsultantsByName(
+                    this.searchInfo.name,
+                    this.searchInfo.state,
+                    this.searchInfo.page,
+                    this.pageSize,
+                )
+                    .then(res => res.json())
+                    .then(data => {
+                        this.renderResults(data);
+                    })
+                    .catch(err => {
+                        console.warn('searchByName', err);
+                        this.displayError(err);
+                    });
+                break;
+
+            case SEARCH_BY_ID:
+                this.api.getConsultant(this.searchInfo.id)
+                    .then(res => res.json())
+                    .then(data => {
+                        this.renderResults(data);
+                    })
+                    .catch(err => {
+                        console.warn('searchById', err);
+                        this.displayError(err);
+                    });
+                break;
+
+            default:
+                console.error('SearchInfo.mode:', this.searchInfo.mode);
+                break;
+        }
+    }
+
+    goToPage(p) {
+        this.searchInfo.page = p;
+
+        switch (this.searchInfo.mode) {
+            case SEARCH_BY_ZIP:
+                this.search();
+                break;
+
+            case SEARCH_BY_NAME:
+                this.search();
+                break;
+
+            default:
+                console.error('SearchInfo.mode:', this.searchInfo.mode);
+                break;
+        }
+    }
+
+    highlightConsultant(e) {
+        // If "View my TS page" link is clicked,
+        // do nothing. Don't select the consultant
+        if ($(e.target).is('.ts-page-link .framelink-lg')) {
+            return;
+        }
+
+        $('.consultant-header').show();
+        $('.alertbox-error').hide();
+        const $consultantCard = $(e.target).closest('.consultant-card');
+        if (!$consultantCard.hasClass('selected')) {
+            this.selectedId = $consultantCard.data('cid');
+            $('.selected').toggleClass('selected');
+            $consultantCard.find('.consultant-header').hide();
+        } else {
+            $consultantCard.find('.consultant-header').show();
+            this.selectedId = null;
+        }
+
+        $(e.target).closest('.consultant-card').toggleClass('selected');
+        const consultantName = $('.selected .consultant-name').text();
+        if (this.selectedId) {
+            $('.next-step-selected-text')
+                .html(`You have selected <strong>${consultantName}</strong> as your consultant`);
+        } else {
+            $('.next-step-selected-text').text('');
+        }
+    }
+
+    continueWithSelection() {
+        if (this.selectedId) {
+            this.continue({
+                id: this.selectedId,
+                name: $('.selected .consultant-name').text(),
+                image: $('.selected .consultant-image img').attr('src'),
+            });
+            this.deletePartyCookies();
+        } else {
+            this.displayError('Please select a consultant before continuing');
+        }
+    }
+
+    continueWithInternal() {
+        this.continue({
+            id: TST_CONSULTANT_ID,
+            name: 'Tastefully Simple',
+            image: null,
+        });
+    }
+
+    continue(consultant) {
+        this.saveCookie(consultant);
+        if (this.isOnConsultantPage()) {
+            window.location = CONSULTANT_PAGE;
+        } else {
+            this.setConsultant(consultant);
+            this.modal.close();
+        }
+    }
+
+    // consultant = { id: string, name: null|string, image: string }
+    setConsultant(consultant) {
+        this.consultant = consultant;
+        this.renderConsultantInHeader();
+        if (this.isOnCartPage()) {
+            this.renderConsultantInCart();
+        }
+    }
+
+    renderConsultantInHeader() {
+        // Put consultant trigger in header or nav depending on if mobile device
+        if (window.innerWidth >= this.screenMinWidth) {
+            // Put back consultant in the top header
+            $('.header-top .header-top-links').prepend(this.$findConsultant);
+        } else {
+            // Add consultant to mobile main menu
+            $('.navPages-container .navPages').prepend(this.$findConsultant);
+        }
+
+        // Main consultant DOM rendering
+        const defaultConsultantHtml =
+            `<span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
+                <span class="headertoplinks-consult-text">Find a Consultant</span>`;
+
+        const nameHtml =
+            `<span>
+                <strong>${this.consultant.name}</strong> is your Consultant
+                <small>(edit)</small>
+            </span>`;
+
+        // Consultant in the sticky header
+        const $header = $('#headerMain');
+        const offsetTop = $header.offset().top;
+        const isStickyHeader = $header.hasClass('sticky-header');
+        const isStickyHeaderDisabled = !isStickyHeader && !(window.pageYOffset === offsetTop);
+
+        if (this.isExternalConsultant() && isStickyHeaderDisabled) {
+            this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
+            this.$findConsultant.innerHTML = nameHtml;
+        } else {
+            this.$findConsultant.innerHTML = defaultConsultantHtml;
+        }
+    }
+
+    renderConsultantInCart() {
+        const $consultantImg = $('.cart-affiliate-img');
+
+        if (this.isExternalConsultant()) {
+            $('.cart-affiliate').css('height', 'initial');
+            $('.cart-affiliate-btn').text('(edit)');
+            $consultantImg.css('display', 'initial');
+            $consultantImg.attr('src', this.consultant.image);
+            $consultantImg.attr('alt', `Photograph thumbnail of ${this.consultant.name}`);
+        } else {
+            $('.cart-affiliate').css('height', '83px');
+            $('.cart-affiliate-btn').text('(Find a Consultant)');
+            $consultantImg.css('display', 'none');
+        }
+
+        // Update the displayed consultant name in the banner
+        $('.cart-affiliate-info .affiliate-name').text(this.consultant.name);
+    }
+
+    isOnConsultantPage() {
+        return document.location.pathname === CONSULTANT_PAGE;
+    }
+
+    isOnPartyDetailsPage() {
+        return document.location.pathname === PARTY_DETAILS_PAGE;
+    }
+
+    isOnCartPage() {
+        return document.location.pathname === CART_PAGE;
+    }
+
+    deletePartyCookies() {
+        if (this.isOnPartyDetailsPage()) {
+            document.location = PARTY_DETAILS_PAGE;
+        }
+
+        const $partyBarText = $('#partybar-find .partybar-text');
+        $partyBarText.text('Find a party');
+
+        TSCookie.deleteParty();
+    }
+    /*
+     * HTML
+     */
+    renderResults(response) {
+        if (response.Results) {
+            this.renderHasResults(response);
+        } else {
+            this.renderNoResults();
+        }
+    }
+
+    renderHasResults(response) {
+        $('#consultant-search').hide();
+        $('.alertbox-error').hide();
+        this.clearConsultantWindow();
+
+        const $matchingConsultants = $('<span>', { class: 'system-14 matching' });
+        $matchingConsultants.text(`Consultants matching \"${response.TotalRecordCount}\"`);
+        $('#consultant-search-results .buy-wide-card .search-filter-wrapper').append($matchingConsultants);
+
+        const consultantCard = new ConsultantCard();
+        // Get consultant-card template
+        consultantCard.getTemplate().then(template => {
+            response.Results.forEach((consultant) => {
+                const consultantCardHtml = consultantCard.insertConsultantData(template, consultant);
+                $('#consultant-search-results .buy-wide-card').append(consultantCardHtml);
+            });
+
+            $('#consultant-search-results').show();
+
+            // Pagination is only needed when searching by zipcode or searching by name
+            // Searching by Consultant Id should produce only 1 result
+            if (this.searchInfo.mode !== SEARCH_BY_ID) {
+                const $paginationContainer = $('<div>', { class: 'findmodal-pagination pagination' });
+                $('#consultant-search-results .findmodal-footer').prepend($paginationContainer);
+                pagination(
+                    $paginationContainer,
+                    response.CurrentPage,
+                    Math.ceil(response.TotalRecordCount / response.PageSize),
+                    DISPLAY_NUM_PAGES,
+                    (p) => this.goToPage(p),
+                );
+            }
+        });
+    }
+
+    renderNoResults() {
+        this.displayError('No consultant was found.'
+            + ' Search again or shop directly with Tastefully Simple, Inc.');
+
+        $('#consultant-search .genmodal-body')
+            .append(this.getNoResultsFooterHtml());
+    }
+
+    getNoResultsFooterHtml() {
+        const $parent = $('#consultant-search');
+
+        // If no footer (i.e. "Shop with TST" button) is found, then return one
+        if ($parent.find('.findmodal-footer').length === 0) {
+            const $footerHtml = $('<div>', { class: 'findmodal-footer' });
+            const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary-icon' });
+            $tSimpleBtn.text('Shop with Tastefully Simple');
+            $footerHtml.append($tSimpleBtn);
+            return $footerHtml;
+        }
+    }
+}
+
+/**
+ * Creates a Cornerstone popup modal for Find A Consultant.
+ * A second view is available once the user hits search. The modal is then
+ * populated with data from the user's search parameters
+ */
+export default function () {
+    $(document).ready(() => {
+        const consultant = new FindAConsultant(
+            document.querySelector('.headertoplinks-consult'),
+            'common/find-consultant',
+        );
+
+        return consultant;
+    });
+}

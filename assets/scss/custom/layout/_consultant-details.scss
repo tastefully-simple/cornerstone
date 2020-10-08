@@ -1,0 +1,178 @@
+/* Consultant Details Styles */
+
+/* Remove the space between the party bar
+ * and hero image
+ */
+.consultant-page {
+    margin-top: 0;
+
+    .container {
+        padding-top: 0;
+    }
+
+    .page .page-content > p {
+        margin-bottom: 0;
+    }
+}
+
+/* Basic Info Section */
+.cdetails-hero {
+    width: 100%;
+    margin-top: 40px;
+}
+
+.cdetails {
+    display: flex;
+    justify-content: center;
+
+    .cdetails-wrapper {
+        background: white;
+        border-radius: 5px;
+        box-shadow: $silver 0 0 6px 4px;
+        margin-top: -75px;
+        width: 75%;
+        word-break: break-word;
+
+        .cdetails-more-info {
+            background-color: $wan-white;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    }
+}
+
+// COL-1 & 2
+.cdetails-summary,
+.cdetails-more-info {
+    max-width: 365px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+
+    h2 {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+
+    p {
+        margin-bottom: 0.4rem;
+    }
+}
+
+// COLUMN 1
+.cdetails-summary {
+    .cdetails-img {
+        border-radius: 2px;
+        padding: 0.75rem;
+    }
+}
+
+// COLUMN 2
+.cdetails-more-info {
+    .cdetails-heading {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    button {
+        display: block;
+        max-width: 253px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+}
+
+/* My Story Section */
+.consultant-story {
+    text-align: center;
+}
+
+/* Become a Consultant Section */
+.becomeconsultant-join-team {
+    margin-top: 1rem;
+    a {
+        max-width: 300px;
+        width: 100%;
+    }
+}
+
+/* learn more links */
+.consultant-details-learn-more {
+    text-decoration: none;
+}
+
+/* My Parties Section */
+.consultant-parties {
+
+    h2 {
+        text-align: center;
+    }
+
+    .tabs {
+        width: 100%;
+        border-bottom: 1px solid $silver;
+        .tab.is-active {
+            border: 0;
+            border-bottom: 4px solid $green-hover;
+            .tab-title {
+                outline: none;
+            }
+        }
+
+        .tab {
+            border-top: none;
+            width: 50%;
+            float: left;
+            .tab-title {
+                text-align: center;
+            }
+        }
+    }
+
+    .tab-contents {
+        .party-card {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            .party-info {
+                //border: 1px solid blue;
+                h4,
+                p {
+                    margin: 0;
+                }
+            }
+            .party-shop {
+                .party-shop-link {
+                    color: $green-hover;
+                    font-size: 1rem;
+                    font-weight: 800;
+                    text-decoration: none;
+                }
+            }
+        }
+        .party-divider {
+            border-bottom: 1px solid $silver;
+            margin: 1rem 0;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (min-width:801px) {
+    .cdetails-hero {
+        margin-top: 0;
+    }
+    .cdetails {
+        .cdetails-wrapper {
+            display: flex;
+            margin-top: -200px;
+            width: auto;
+
+            .cdetails-more-info {
+                border-bottom-left-radius: 0;
+                border-top-right-radius: 5px;
+            }
+        }
+    }
+}

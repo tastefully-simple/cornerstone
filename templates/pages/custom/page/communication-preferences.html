@@ -1,0 +1,25 @@
+{{#partial "page"}}
+
+{{inject 'customerEmail' customer.email}}
+{{inject 'customerId' customer.id}}
+
+{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
+<h1 class="page-heading">{{lang 'account.preferences.heading' }}</h1>
+{{> components/account/navigation account_page='communication-preferences'}}
+
+<main class="account account--fixed">
+    <div class="account-head">
+        {{#unless customer.email}}
+            <h2><strong>No user logged in</strong></h2>
+        {{/unless}}
+    </div>
+    <div class="account-body">
+        <section class="account-content">
+        </section>
+    </div>
+    <p class="support-message">If you need further assistance, please contact our Customer Service team at<br/>
+    <strong><a href="tel:{{settings.phone_number}}" title="Call us">{{settings.phone_number}}</a></strong> or email <strong><a href="mailto:{{theme_settings.ts_help_email}}" title="Email us">{{theme_settings.ts_help_email}}</a></strong></p>
+</main>
+
+{{/partial}}
+{{> layout/base}}

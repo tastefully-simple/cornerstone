@@ -387,8 +387,7 @@ class FindAConsultant {
     isOnPartyDetailsPage() {
         const url = document.location.pathname;
 
-        // match() returns either an array or null
-        return (url.match(/^\/p\/\d+/ig)) ? true : false;
+        return url.match(/^\/p\/\d+/ig) !== null;
     }
 
     isOnCartPage() {

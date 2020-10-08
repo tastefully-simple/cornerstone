@@ -101,9 +101,11 @@
             .headertoplinks-consult {
                 background: $gainsboro;
                 color: $burgundy;
-                font-weight: 800;
                 padding: 10px;
                 text-align: center;
+            }
+            .headertoplinks-consult-text {
+                font-weight:700;
             }
         }
         // Have "Shop" open by default

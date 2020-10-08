@@ -381,11 +381,14 @@ class FindAConsultant {
     }
 
     isOnConsultantPage() {
-        return document.location.pathname === CONSULTANT_PAGE;
+        return document.location.pathname.includes(CONSULTANT_PAGE);
     }
 
     isOnPartyDetailsPage() {
-        return document.location.pathname === PARTY_DETAILS_PAGE;
+        const url = document.location.pathname;
+
+        // match() returns either an array or null
+        return (url.match(/^\/p\/\d+/ig)) ? true : false;
     }
 
     isOnCartPage() {

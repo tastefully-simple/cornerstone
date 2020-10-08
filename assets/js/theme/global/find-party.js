@@ -10,6 +10,8 @@ const SCREEN_MIN_WIDTH = 801;
 // Number of page numbers to show in pagination
 const DISPLAY_NUM_PAGES = 6;
 const PAGE_SIZE = 10;
+// Redirect
+const CART_PAGE = '/cart.php';
 
 class FindAParty {
     constructor(trigger, template) {
@@ -56,6 +58,10 @@ class FindAParty {
     setParty(party) {
         this.party = party;
         this.renderPartyBar(this.$findPartyBar);
+
+        if (this.isOnCartPage()) {
+            this.renderPartyInCart();
+        }
     }
 
     initListeners() {
@@ -80,6 +86,9 @@ class FindAParty {
         $switchPartyButton.on('click', (e) => {
             this.createModal(e, this.modalTemplate);
         });
+
+        // Consultant bar in cart page
+        $('.cart-affiliate-party button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // Search by State / Name
         $('body').on('submit', '#state-search-form', () => {
@@ -107,6 +116,7 @@ class FindAParty {
     }
 
     createModal(e, template) {
+        $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
         e.preventDefault();
         this.modal.open({ size: 'small' });
@@ -232,6 +242,30 @@ class FindAParty {
         this.setParty(party);
     }
 
+    isOnCartPage() {
+        return document.location.pathname === CART_PAGE;
+    }
+
+    renderPartyInCart() {
+        const phost = this.party.host;
+        const $cartHeader = $('.cart-affiliate');
+        const $partyBar = $('<div>', { class: 'cart-affiliate-party' });
+
+        if (phost) {
+            $partyBar.html(`<p><strong>${phost}</strong> is your host</p>
+                <button><span><small>(edit)</small></span></button>`);
+        } else {
+            const softRed = '#FFDDDD';
+            const grey = '#2D2D2D';
+            $partyBar.css('background-color', softRed);
+            $partyBar.css('color', grey);
+            $partyBar.html(`<p>You have not selected a party</p>
+                <button><span><small>(Find a Party)</small></span></button>`);
+        }
+
+        $cartHeader.append($partyBar);
+    }
+
     renderPartyBar($party) {
         // Partybar Greeting Text
         const hostname = TSCookie.getPartyHost();
@@ -257,6 +291,7 @@ class FindAParty {
 
     returnSearch() {
         $('#party-search-results').hide();
+        $('#modal').removeClass('modal-results');
         $('.alertbox-error').hide();
         $('#party-search').show();
         $('.next-step-selected-text').text('');
@@ -283,6 +318,7 @@ class FindAParty {
         });
 
         $('#party-search-results').show();
+        $('#modal').addClass('modal-results');
         $('#party-search-results article').show();
         $('#party-continue').show();
         $('#party-goback').hide();

@@ -8,7 +8,7 @@
     color: $white;
     display: flex;
     flex-basis: 100%; 
-    padding:10px 0;
+    padding: 10px 0;
 }
 
 .consultant-divider {
@@ -31,7 +31,7 @@
     .consultant-header {
         @include consultant-header;
         background-color: $shady-lady;
-        padding: 10px;
+        padding: 5px;
         margin-bottom: 10px;
         .fa-circle {
             font-size: 2rem;
@@ -110,3 +110,11 @@
     }
 }
 
+
+@media only screen and (min-width:361px) {
+    .consultant-card {
+        .consultant-header {
+            padding:10px;
+        }
+    }
+}

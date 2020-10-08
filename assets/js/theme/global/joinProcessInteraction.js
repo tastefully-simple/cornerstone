@@ -434,6 +434,7 @@ function displayConsultantInformation(data) {
     consultantCard.getTemplate().then(template => {
         data.Results.forEach((consultant) => {
             const consultantCardHtml = consultantCard.insertConsultantData(template, consultant);
+            $('#sponsorSearchData').removeClass('sponsor-result--error');
             $('#sponsorSearchData').append(consultantCardHtml);
             if (data.Results.length < 3) {
                 $('#sponsorSearchData').addClass('no-scroll');
@@ -461,12 +462,17 @@ function getConsultantInfoByName() {
             }
         },
         error: () => {
-            $('#sponsorSearchData').append(`
-           <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
-           <ul class="sponsor-result--error">
-            <li>Contact your consultant</li>
-            <li>Contact HQ at 1.866.448.6446 or <a href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a></li>
-           </ul>`);
+            const $responseWrapper = $('#sponsorSearchData');
+            $responseWrapper.addClass('sponsor-result--error');
+            $responseWrapper.append(`
+                <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
+                <ul>
+                    <li>Contact your consultant</li>
+                    <li>Contact HQ at 1.866.448.6446 or
+                        <a class="textgray-text" href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a>
+                    </li>
+                </ul>
+            `);
         },
     });
 }

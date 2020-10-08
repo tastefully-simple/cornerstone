@@ -275,6 +275,13 @@
             margin: 0 auto;
         }
     }
+    #sponsorSearchData.sponsor-result--error {
+        background-color: $COLOR_GRAY_150;
+
+        li a {
+            font-size: $FONT_SIZE_BASE;
+        }
+    }
 
     //Terms box styling
     form .join__terms {

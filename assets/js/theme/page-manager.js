@@ -1,6 +1,9 @@
+import TSRouter from './global/ts-router';
+
 export default class PageManager {
     constructor(context) {
         this.context = context;
+        this.router = new TSRouter(context.themeSettings);
     }
 
     type() {

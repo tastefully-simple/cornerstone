@@ -1,0 +1,8 @@
+@mixin jomolhari {
+    @font-face {
+        font-family: "Jomolhari";
+        font-style: normal;
+        font-weight: 400;
+        src: url("../fonts/Muli-Regular.ttf") format("ttf");
+    }
+}

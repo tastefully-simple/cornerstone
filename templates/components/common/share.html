@@ -1,15 +1,14 @@
 {{#if settings.add_this.buttons}}
     <div class="addthis_toolbox addthis_32x32_style" addthis:url="{{url}}"
          addthis:title="{{title}}">
-        <ul class="socialLinks">
+        <div class="socialLinks-title">
+            <span class="socialLinks-titleText teal-text frameheading-3">Share</span>
+        </div>
+        <ul class="socialLinks social-links">
             {{#each settings.add_this.buttons}}
                 <li class="socialLinks-item socialLinks-item--{{service}}">
-                    <a class="addthis_button_{{service}} icon icon--{{service}}" {{{annotation}}}>
-                        {{#if service '===' 'facebook'}}
-                            <svg>
-                                <use xlink:href="#icon-facebook"/>
-                            </svg>
-                        {{else if service '===' 'email'}}
+                    <a class="icon-social-{{service}} addthis_button_{{service}} icon icon--{{service}}" {{{annotation}}}>
+                        {{#if service '===' 'email'}}
                             <svg>
                                 <use xlink:href="#icon-envelope"/>
                             </svg>
@@ -17,26 +16,13 @@
                             <svg>
                                 <use xlink:href="#icon-print"/>
                             </svg>
-                        {{else if service '===' 'twitter'}}
-                            <svg>
-                                <use xlink:href="#icon-twitter"/>
-                            </svg>
-                        {{else if service '===' 'linkedin'}}
-                            <svg>
-                                <use xlink:href="#icon-linkedin"/>
-                            </svg>
-                        {{else if service '===' 'google'}}
-                            <svg>
-                                <use xlink:href="#icon-google"/>
-                            </svg>
-                        {{else if service '===' 'pinterest'}}
-                            <svg>
-                                <use xlink:href="#icon-pinterest"/>
-                            </svg>
                         {{/if}}
                     </a>
                 </li>
             {{/each}}
+            <li>
+                <button class="button-secondary socialLinks-copy" type="button">Copy Link</button>
+            </li>
         </ul>
         <script type="text/javascript"
                 defer src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e94ed470ee51e32"></script>
@@ -48,6 +34,8 @@
             });
         </script>
     </div>
+    <!-- Copy link to clipboard notification. Hidden by default -->
+    <p class="link-copied-text subhead-14 teal-text">Copied to clipboard</p>
 {{/if}}
 {{#if settings.facebook_like_button.enabled}}
     <iframe

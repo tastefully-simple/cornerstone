@@ -1,7 +1,11 @@
-@import "clear-sans";
+@import "muli-sans";
+@import "jomolhari";
 
 $fonts: $fontFamily-sans $fontFamily-serif $fontFamily-mono $fontFamily-headings $fontFamily-hero;
 
-@if contains($fonts, "'Clear Sans', sans-serif") {
-    @include clear-sans;
+@if contains($fonts, 'Jomolhari') {
+    @include jomolhari;
+}
+@if contains($fonts, 'Muli') {
+    @include muli-sans;
 }

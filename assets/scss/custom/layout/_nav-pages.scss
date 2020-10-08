@@ -1,0 +1,407 @@
+// =============================================================================
+// Tastefully Simple Navigation Styles
+// =============================================================================
+
+.header {
+    .header-main {
+        .container {
+            .navPages-container {
+                .navPages {
+                    background-color: $white;
+                    display:flex;
+                    flex-direction:column;
+                    padding:0;
+                    .headertoplinks-consult {
+                        order:3;
+                    }
+                    .partybar {
+                        order:4;
+                    }
+                }
+                .navPages-list {
+                    &:not(.navPages-list--user) {
+                        order:1;
+                        display:flex;
+                        flex-wrap:wrap;
+                        justify-content:space-between;
+                        padding-top:0;
+                        position:relative;
+                        .navPages-item {
+                            &.navPages-item-recipes,
+                            &.navPages-item-blog {
+                                display:none;
+                            }
+                            &.navPages-item-shop {
+                                padding:0 1.5rem 1.5rem;
+                                width:100%;
+                                &>.navPages-action {
+                                    left:50%;
+                                    position:absolute;
+                                    border-bottom:3px solid $wan-white;
+                                    padding-bottom:0;
+                                    top:0;
+                                    transform:translateX(-50%);
+                                    &::after {
+                                        border-bottom:3px solid $burgundy;
+                                        width:90px;
+                                    }
+                                }
+                            }
+                            &>.navPages-action {
+                                text-align:center;
+                                &::after {
+                                    border-bottom:6px solid $wan-white;
+                                    content:'';
+                                    display:block;
+                                    margin:6px auto 0;
+                                    padding-top:.15rem;
+                                    width:150px;
+                                }
+                            }
+                            .navPages-action {
+                                @extend .framelink-xl;
+                                &:not(.navPage-childList-action) {
+                                    &.navPage-subMenu-action {
+                                        @extend .subhead-16;
+                                    }
+                                }
+                                &.navPage-childList-action {
+                                    @extend .subhead-14;
+                                    margin-bottom:.5rem;
+                                }
+                            }
+                        }
+                    }
+                    &.navPages-list--user {
+                        order:2;
+                        background-color:$wan-white;
+                        border-top:none;
+                        padding:0 .5rem;
+                        margin:1.5rem;
+                        .navPages-item {
+                            .navPages-action {
+                                @extend .subhead-16;
+                                &.navPage-subMenu-action {
+                                    padding:.25rem 0;
+                                }
+                            }
+                            .navPage-subMenu-list {
+                                @extend .is-open;
+                                @extend .navPage-childList;
+                                .navPage-subMenu-action {
+                                    @extend .navPage-childList-action;
+                                }
+                            }
+                        }
+                    }
+                    .navPages-item {
+                        .navPages-action {
+                            &:not(.title-case) {
+                                text-transform:lowercase;
+                            }
+                            &.title-case {
+                                text-transform:capitalize;
+                            }
+                        }
+                        .navPage-childList {
+                            border-left:none;
+                        }
+                        .navPages-action-account,
+                        .navPage-subMenu-action {
+                            &.has-subMenu {
+                                display:flex;
+                                justify-content:space-between;
+                                &::after {
+                                    content:'\f0da';
+                                    font-family:'Font Awesome 5 Free';
+                                    font-size:1.2em;
+                                }
+                                &.is-open {
+                                    &::after {
+                                        content:'\f0d7';
+                                    }
+                                }
+                            }
+                            &>br {
+                                display:none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (min-width:801px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages {
+                        display:block;
+                    }
+                    .navPages-list {
+                        &:not(.navPages-list--user) {
+                            align-items:center;
+                            flex-direction:row;
+                            justify-content:flex-end;
+                            flex-wrap:nowrap;
+                            .navPages-item {
+                                &.navPages-item-shop {
+                                    order:1;
+                                    padding:0;
+                                    width:auto;
+                                    &>.navPages-action {
+                                        border:none;
+                                        left:unset;
+                                        position:unset;
+                                        top:unset;
+                                        text-align:left;
+                                        transform:unset;
+                                    }
+                                }
+                                &.navPages-item-join {
+                                    order:2;
+                                }
+                                &.navPages-item-host {
+                                    order:3;
+                                }
+                                &.navPages-item-recipes {
+                                    display:block;
+                                    order:4;
+                                }
+                                &.navPages-item-blog {
+                                    display:block;
+                                    order:5;
+                                }
+                                &>.navPages-action {
+                                    border:none;
+                                    &::after {
+                                        display:none;
+                                    }
+                                }
+                                .navPages-action {
+                                    &:active,
+                                    &:focus,
+                                    &:hover,
+                                    &.activePage {
+                                        color: $caramel;
+                                    }
+                                    &:not(.navPage-childList-action) {
+                                        &.navPage-subMenu-action {
+                                            @extend .framelink-xl;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        &navPages-list-main {
+                            display:flex;
+                            justify-content:flex-end;
+                        }
+                        .navPages-item {
+                            position:relative;
+                            .navPages-action {
+                                border:none;
+                                font-size:fontSize("base");
+                                padding:0 1.125rem;
+                                &.is-open {
+                                    &:not(.navPage-subMenu-action) {
+                                        background-color:$white;
+                                    }
+                                }
+                            }
+                            &.frame-text {
+                                .navPages-action {
+                                    font-weight:400;
+                                }
+                            }
+                        }
+                        .navPage-subMenu {
+                            &.is-open {
+                                left:50%;
+                                min-width:760px;
+                                max-width:960px;
+                                top:30px;
+                                transform:translateX(-50%);
+                                width:900%;
+                                &::before {
+                                    border-left: 5px solid transparent;
+                                    border-right: 5px solid transparent;
+                                    border-bottom: 5px solid $gainsboro;
+                                    content:'';
+                                    height: 0px;
+                                    left:36%;
+                                    position:absolute;
+                                    top:-5px;
+                                    transform:translateX(-50%);
+                                    width: 0px;
+                                    z-index:99;
+                                }
+                            }
+                            .navPage-subMenu-item {
+                                float:none;
+                                padding:0 !important; //!important required to override !important
+                                width:30%;
+                                &:nth-child(5){
+                                    width:12%;
+                                }
+                                &:nth-child(1){
+                                    margin-left:0.25rem;
+                                }
+                                &>.navPage-subMenu-action {
+                                    margin-bottom:.2rem;
+                                    padding:0;
+                                    &::after {
+                                        display:none;
+                                    }
+                                    &>br {
+                                        display:block;
+                                    }
+                                }
+                            }
+                            .navPage-subMenu-list {
+                                display:flex;
+                                .navPage-childList {
+                                    .navPage-childList-item {
+                                        margin:.5rem 0;
+                                        .navPage-childList-action{
+                                            line-height:inherit;
+                                            margin:0;
+                                            padding:0;
+                                            @extend .frametext-body;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (min-width:801px) and (max-width:920px){
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                left:245%;
+                                &::before{
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:921px){
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                left:200%;
+                                &::before{
+                                    left:38%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:801px) and (max-width:962px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPages-item {
+                            .navPages-action {
+                                padding:0 .5rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:1020px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                min-width:920px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:963px) and (max-width:1019px) {
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-list {
+                        .navPage-subMenu {
+                            &.is-open{
+                                left:150%;
+                                &::before {
+                                    left:40%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* iPhone-specific media queries to deal with webkit's scroll issue on the mobile menu */
+@media not all and (min-resolution:.001dpcm) {
+    .navPages-container {
+        overflow-y:scroll;
+        -webkit-overflow-scrolling:auto;
+        &>* {
+            -webkit-transform: translateZ(0);
+        }
+        .navPages {
+            height:auto;
+            -webkit-overflow-scrolling:auto;
+        }
+    }
+    header {
+        &.is-open {
+            .mobileMenu-toggle,
+            .header-logo-image-container {
+                background-color: $white;
+            }
+        }
+    }
+}

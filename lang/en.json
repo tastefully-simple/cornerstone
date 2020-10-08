@@ -35,8 +35,8 @@
   "cart": {
     "continue_shopping": "Click here to continue shopping",
     "shop_more": {
-      "button": "Shop more",
-      "title": "Click here to shop more"
+      "button": "Continue Shopping",
+      "title": "Click here to continue shopping"
     },
     "items": "{NUM, plural, =0{(0 items)} one {(# item)} other {(# items)}}",
     "checkout": {
@@ -130,7 +130,7 @@
     },
     "find_affiliate": {
       "modal_title": "Change independent consultant",
-      "button": "change"
+      "button": "edit"
     }
   },
   "common": {
@@ -156,7 +156,7 @@
     "compare": "Compare",
     "sign_up": "Register",
     "login": "Sign in",
-    "logout": "Sign out",
+    "logout": "Logout",
     "account": "Account",
     "cart": "Cart",
     "search": "Search",
@@ -280,9 +280,10 @@
       "messages": "Messages ({num_new_messages})",
       "wishlists": "Wish Lists ({num_wishlists})",
       "recently_viewed": "Recently Viewed",
-      "settings": "Account Settings",
+      "settings": "Profile",
       "addresses": "Addresses",
-      "payment_methods": "Payment Methods"
+      "payment_methods": "Payment Methods",
+      "preferences": "Communication Preferences"
     },
     "mobile_nav": {
       "messages": "Messages",
@@ -397,6 +398,9 @@
         "zip_postcode": "Zip/Postcode"
       }
     },
+    "preferences": {
+      "heading": "Communication Preferences"
+    },
     "returns": {
       "heading": "Returns",
       "instructions": "Return Instructions",
@@ -427,7 +431,7 @@
       }
     },
     "settings": {
-      "heading": "Account Settings",
+      "heading": "Profile",
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email Address",
@@ -681,13 +685,13 @@
   },
   "products": {
     "current_stock": "Current Stock:",
-    "quantity": "Quantity:",
+    "quantity": "Qty",
     "quantity_decrease": "Decrease Quantity:",
     "quantity_increase": "Increase Quantity:",
     "purchase_units": "{quantity, plural, =0{0 units} one {# unit} other {# units}}",
     "max_purchase_quantity": "Maximum Purchase:",
     "min_purchase_quantity": "Minimum Purchase:",
-    "related_products": "Related Products",
+    "related_products": "Carefully Curated",
     "top": "Most Popular Products",
     "similar_by_views": "Customers Also Viewed",
     "featured": "Featured Products",
@@ -794,10 +798,10 @@
     "comments": "Comments"
   },
   "newsletter": {
-    "subscribe": "Subscribe to our newsletter",
+    "subscribe": "add flavor to your inbox",
     "subscribe_intro": "Get the latest updates on new products and upcoming sales",
-    "subscribe_submit": "Subscribe",
-    "email_placeholder": "Your email address",
+    "subscribe_submit": "submit",
+    "email_placeholder": "email",
     "subscribed_heading": "Thanks for Subscribing!",
     "subscribed_heading_error": "Oops...",
     "subscribed_message": "Thank you for joining our mailing list. You'll be sent the next issue of our newsletter shortly",

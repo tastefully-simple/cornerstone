@@ -1,4 +1,6 @@
 import { confetti } from 'dom-confetti';
+import TSCookie from '../common/ts-cookie';
+import ConsultantCard from '../common/consultant-card';
 
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
@@ -25,9 +27,6 @@ const toggleLoginSignUp = {
     signUpForm: false,
 };
 
-/** Variables used to associate sponsor selected with SocialBug and create hidden iframe */
-const frame = document.createElement('iframe');
-
 /**
  * This object will hold the consultant search information
  * on the Tell Us About Yourself page
@@ -38,24 +37,18 @@ const consultantSearchParams = {
     consultantZipCode: null,
 };
 
-const sponsorImage = 'https://cdn11.bigcommerce.com/s-o55vb7mkz/product_images/uploaded_images/noconsultantphoto.png?t=1580312119&_ga=2.203167573.593569075.1580160573-1791376761.1579809387';
-const defaultConsultantSearchMarkup = `
-    <div data-consid='0160785' data-afid='1' class="sponsor-wrapper">
-        <div data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-one'>
-            <img src='${sponsorImage}' class="sponsor-img-wrapper"/>
-        </div><div  data-consid='0160785' data-afid='1' class='display-inline-block sponsor-cell-two'>
-            <ul>
-                <li class="sponsor-name">Tastefully Simple</li>
-                <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>866.448.6446</li>
-                <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>help@tastefullysimple.com</li>
-                <li>Alexandria, MN</li>
-                <li><a href='https://www.tastefullysimple.com/web/htstoyou' target='_blank' class="sponsor-link">Shop With Me</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
-            </ul>
-            <div class="checkmark"></div>
-        <div>
-    </div>
-    <div class="sponsor-divider"></div>
-`;
+const defaultConsultantData = {
+    Results: [{
+        ConsultantId: '0160785',
+        EmailAddress: 'help@tastefullysimple.com',
+        Location: 'Alexandria, MN',
+        Name: 'Tastefully Simple',
+        PhoneNumber: '866.448.6446',
+        WebUrl: 'https://www.tastefullysimple.com/web/htstoyou',
+        AfId: '1',
+    }],
+};
+
 
 /**
  * This variables will hold parameters for GET calls to
@@ -63,7 +56,9 @@ const defaultConsultantSearchMarkup = `
  */
 let apiParams = '';
 let consultantState = '';
-let locationDisplay = '';
+// TST-175 Commenting out locationDisplay because it's not
+// being used. Not sure if it's needed anywhere
+// let locationDisplay = '';
 
 /** API URLs used throughout the join process */
 const API_URLS = {
@@ -71,8 +66,6 @@ const API_URLS = {
     TELL_US: '',
     CHECKOUT: '',
     TSAPI_BASE: '',
-    SOCIAL_BUG: '',
-    CHECKOUT_REDIRECT_PID: 0,
     JOIN_SS_PRODUCT_ID: 0,
 };
 
@@ -145,19 +138,6 @@ const formatToSSN = (event) => {
         target.value = `${zip}`;
     }
 };
-
-// Initialize Social Bug Functionality
-function initializeSocialBug(affiliateId) {
-    frame.style.display = 'none';
-    frame.src = `${API_URLS.SOCIAL_BUG}${affiliateId}`;
-
-    document.body.appendChild(frame);
-}
-
-// Update Social Bug Functionality
-function associateSocialBugAffiliate(socialBugAfId) {
-    frame.src = `${API_URLS.SOCIAL_BUG}${socialBugAfId}`;
-}
 
 /**
  * This function displays an error message on the login form.
@@ -284,14 +264,6 @@ function populateFormFields(data) {
     });
 }
 
-function waitForSocialBug(callback) {
-    if ($('#affiliatediv').length) {
-        callback();
-    } else {
-        setTimeout(() => waitForSocialBug(callback), 500);
-    }
-}
-
 /**
 * This function checks the URL for a link id from sitecore-tso
 * If the link is valid redirect the user to the kit selection page.
@@ -311,7 +283,7 @@ function checkLinkId(formIdValue = '') {
                 url: `${API_URLS.TSAPI_BASE}/users/scauth/check/?id=${szLinkId}`,
                 cache: true,
                 success: () => {
-                    location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
+                    window.location.href = `${API_URLS.BLAST_OFF}?id=${formIdValue}&xfid=${szLinkId}`;
                     setTimeout(() => { document.getElementById('divOverlayLinkLookup').remove(); }, 3000);
                 },
                 error: () => {
@@ -373,6 +345,14 @@ function clearErrorMessages() {
     }
 }
 
+function removeEventHandlers() {
+    // TST-207
+    // Remove click event so that when clicking the search button
+    // in Find a Sponsor, selectConsultant() would not be called
+    // multiple times
+    $('body').off('click', '#sponsorSearchData .consultant-card');
+}
+
 /**
  * This function handles input changes for the login form
  * and the consultant search form in the join process
@@ -411,7 +391,7 @@ function submitLoginInfo() {
         data: $('#frmJoinLoginTest').serialize(),
         cache: false,
         success: (data) => {
-            location.href = `${API_URLS.BLAST_OFF}?id=${data.Id}`;
+            window.location.href = `${API_URLS.BLAST_OFF}?id=${data.Id}`;
         },
         error: (error) => {
             displayLoginErrorMessage(error);
@@ -420,81 +400,52 @@ function submitLoginInfo() {
 }
 
 /**
- * Display consultant information returned from Tastefully Simple API when searching by ID or name
- */
-function displayConsultantInformation(data) {
-    $.each(data.Results, (i) => {
-        const results = data.Results[i];
-        const {
-            AfId,
-            ConsultantId,
-            Image,
-            Name,
-            Title,
-            PhoneNumber,
-            EmailAddress,
-            Location,
-            WebUrl,
-            Distance,
-        } = results;
-        if (Distance !== 0) {
-            locationDisplay = `${Location} (${Distance} mi)`;
-        } else {
-            locationDisplay = Location;
-        }
-        $('#sponsorSearchData').append(`
-            <div data-consid='${ConsultantId}' data-afid='${AfId}' class="sponsor-wrapper">
-                <div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-one'>
-                    <img src='${Image}' class='sponsor-img-wrapper'/>
-                </div><div data-consid='${ConsultantId}' data-afid='${AfId}' class='display-inline-block sponsor-cell-two'>
-                    <ul>
-                        <li class="sponsor-name">${Name}</li>
-                        <li>${Title}</li>
-                        <li class="sponsor-phone"><svg><use xlink:href="#icon-phone"/></svg>${PhoneNumber}</li>
-                        <li class="sponsor-email"><svg><use xlink:href="#icon-email"/></svg>${EmailAddress}</li>
-                        <li>${locationDisplay}</li>
-                        <li><a href='${WebUrl}' target='_blank' class="sponsor-link">View my TS page</a><svg><use xlink:href="#icon-new-page_outlined"/></svg></li>
-                    </ul>
-                    <div class="checkmark"></div>
-                </div>
-            </div>
-            <div class="sponsor-divider"></div>
-    `);
-        if (data.Results.length < 3) {
-            $('#sponsorSearchData').addClass('no-scroll');
-        } else {
-            $('#sponsorSearchData').removeClass('no-scroll');
-        } if (!PhoneNumber) {
-            $('.sponsor-phone').addClass('hidden');
-        } if (!EmailAddress) {
-            $('.sponsor-email').addClass('hidden');
-        } if (data.Results.length > 0) {
-            $('.sponsorSearchData-wrapper').addClass('active');
-            $('#sponsorSearchData').addClass('active');
-        }
-    });
-}
-
-/**
  * This function will allow us to select a sponsor from the data
  * that is returned from Tastefully Simple's API.
  */
-function selectSponsor(array, type, func) {
-    for (let i = 0; i < array.length; i++) {
-        $(array[i]).bind(type, func);
+function selectConsultant(e) {
+    // If "View my TS page" link is clicked,
+    // do nothing. Don't select the consultant
+    if ($(e.target).is('.ts-page-link .framelink-lg')) {
+        return;
+    }
+
+    $('.consultant-header').show();
+
+    const $consultantCard = $(e.target).closest('.consultant-card');
+
+    if (!$consultantCard.hasClass('selected')) {
+        $('#sponsorSearchData .selected').toggleClass('selected');
+        $consultantCard.addClass('selected');
+        const cid = $consultantCard.data('cid') || null;
+        $('#SponsorId').val(cid);
+        $consultantCard.find('.consultant-header').hide();
+    } else {
+        $consultantCard.find('.consultant-header').show();
+        $consultantCard.removeClass('selected');
     }
 }
 
-const sponsorSearchData = $('#sponsorSearchData');
-
-selectSponsor(sponsorSearchData, 'click', (event) => {
-    $('.sponsor-wrapper').removeClass('sponsor-wrapper--active');
-    document.getElementById('SponsorId').value = $(event.target).closest('div').data('consid');
-    $(event.target).closest('.sponsor-wrapper').addClass('sponsor-wrapper--active');
-
-    const socialBugAfId = ($(event.target).closest('div').data('afid'));
-    associateSocialBugAffiliate(socialBugAfId);
-});
+/**
+ * Display consultant information returned from Tastefully Simple API when searching by ID or name
+ */
+function displayConsultantInformation(data) {
+    const consultantCard = new ConsultantCard();
+    consultantCard.getTemplate().then(template => {
+        data.Results.forEach((consultant) => {
+            const consultantCardHtml = consultantCard.insertConsultantData(template, consultant);
+            $('#sponsorSearchData').append(consultantCardHtml);
+            if (data.Results.length < 3) {
+                $('#sponsorSearchData').addClass('no-scroll');
+            } else {
+                $('#sponsorSearchData').removeClass('no-scroll');
+            }
+        });
+        $('body').on('click', '#sponsorSearchData .consultant-card', (e) => {
+            selectConsultant(e);
+        });
+    });
+}
 
 /**
  * Get consultant information from Tastefully Simple's API by name.
@@ -560,13 +511,14 @@ function getConsultantInfoByZip() {
         },
         error: () => {
             document.getElementById('divTsConsFound').style.display = 'block';
-            $('#sponsorSearchData').append(defaultConsultantSearchMarkup);
+            displayConsultantInformation(defaultConsultantData);
         },
     });
 }
 
 /** Search by consultant ID and display results on dom */
 $('#btnConsIdSearch').on('click', (e) => {
+    removeEventHandlers();
     if (($('#txtConsultantID').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
@@ -584,6 +536,7 @@ $('#btnConsIdSearch').on('click', (e) => {
 /** Search by consultant name and display results on dom */
 $('#btnConsNameSearch').on('click', (e) => {
     clearErrorMessages();
+    removeEventHandlers();
     if (($('#txtConsultantName').val()) === ''
         || (($('#ConsultantState').val()) === '')) {
         $('#sponsorSearchData').empty();
@@ -602,6 +555,7 @@ $('#btnConsNameSearch').on('click', (e) => {
 /** Search by consultant zip code and display results on dom */
 $('#btnConsZipSearch').on('click', (e) => {
     clearErrorMessages();
+    removeEventHandlers();
     if (($('#txtZipCode').val()) === '') {
         $('#sponsorSearchData').empty();
         e.preventDefault();
@@ -616,6 +570,15 @@ $('#btnConsZipSearch').on('click', (e) => {
     }
 });
 
+/**
+ * This function checks to see if the join form email and confirmation email match
+ */
+function isConfirmEmailMatch() {
+    const email = document.getElementById('EmailAddress').value;
+    const confirmEmail = document.getElementById('EmailAddress2').value;
+    return (email === confirmEmail);
+}
+
 // Join Page Event Listeners
 $('#frmJoinLoginTest').submit((e) => {
     e.preventDefault();
@@ -629,9 +592,12 @@ $('#frmJoinLoginTest').submit((e) => {
         if (($('#FirstName').val()) === ''
             || ($('#LastName').val()) === ''
             || ($('#EmailAddress').val()) === ''
+            || ($('#EmailAddress2').val()) === ''
             || ($('#Password').val()) === ''
             || ($('#Password2').val()) === '') {
             $('#loginErrors').append('<h5>Please make sure all inputs are filled in.</h5>');
+        } else if (!isConfirmEmailMatch()) {
+            $('#loginErrors').append('<h5>Email Addresses Must Match.</h5>');
         } else {
             localStorage.setItem('isJoin', true);
             submitLoginInfo();
@@ -657,9 +623,9 @@ $('#kit-page-next').on('click', () => {
             const szLinkId = encodeURIComponent(params.get('xfid'));
             szUrl = `${szUrl}&xfid=${szLinkId}`;
         }
-        location.href = szUrl;
+        window.location.href = szUrl;
     } else {
-        location.href = '/join';
+        window.location.href = '/join';
     }
 });
 
@@ -680,6 +646,8 @@ function toggleStyles() {
     const firstName = loginPage.querySelector('#firstNameField');
     const lastName = loginPage.querySelector('#lastNameField');
     const password2 = loginPage.querySelector('#password2Field');
+    const email2 = loginPage.querySelector('#email2Field');
+    const forgotPassword = loginPage.querySelector('.forgot-password');
 
     checkbox.addEventListener('change', (event) => {
         clearErrorMessages();
@@ -691,6 +659,10 @@ function toggleStyles() {
             firstName.classList.remove('hidden');
             lastName.classList.remove('hidden');
             password2.classList.remove('hidden');
+            email2.classList.remove('hidden');
+            password2.querySelector('#Password2').setAttribute('tabindex', 0);
+            email2.querySelector('#EmailAddress2').setAttribute('tabindex', 0);
+            forgotPassword.style.display = 'none';
         } else {
             toggleLoginSignUp.logInForm = true;
             toggleLoginSignUp.signUpForm = false;
@@ -699,6 +671,10 @@ function toggleStyles() {
             firstName.classList.add('hidden');
             lastName.classList.add('hidden');
             password2.classList.add('hidden');
+            email2.classList.add('hidden');
+            password2.querySelector('#Password2').setAttribute('tabindex', -1);
+            email2.querySelector('#EmailAddress2').setAttribute('tabindex', -1);
+            forgotPassword.style.display = 'block';
         }
     });
 }
@@ -857,14 +833,23 @@ function triggerSubmit() {
         const disabled = oForm.find(':input:disabled').removeAttr('disabled');
         const serialized = oForm.serialize();
         disabled.attr('disabled', 'disabled');
-        const iSponsorID = document.getElementById('SponsorId').value;
+
+        const $consultantCard = $('.consultant-card.selected');
+        const cid = $consultantCard.data('cid') || null;
+        const afid = $consultantCard.data('afid') || null;
+        const name = $consultantCard.data('name') || null;
+
+        TSCookie.setConsultantId(cid);
+        TSCookie.setConsultantName(name);
+        TSCookie.setAffiliateId(afid);
+
         $.ajax({
             type: 'POST',
             url: `${API_URLS.TSAPI_BASE}/join/user`,
             data: serialized,
             cache: true,
             success: () => {
-                location.href = `${API_URLS.SOCIAL_BUG}${iSponsorID}?PID=${API_URLS.CHECKOUT_REDIRECT_PID}`;
+                window.location.href = '/checkout.php';
             },
             error: (error) => {
                 displayErrorMessage(error);
@@ -929,6 +914,7 @@ function triggerConfetti() {
     confettiRoots.forEach(confettiRoot => {
         confetti(confettiRoot);
     });
+    localStorage.removeItem('isJoin');
 }
 
 /**
@@ -957,6 +943,16 @@ function getData(url = '') {
     });
 }
 
+function deleteData(url = '') {
+    return fetch(url, {
+        method: 'DELETE',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
+
 /**
  * This function will grab the BigCommerce unique ID that is passed from the join/login page
  * and use it to validate the form submission to Tastefully Simple's endpoint.
@@ -966,7 +962,7 @@ function getUrlParams() {
     if (params.has('id')) {
         setInfoFormId(params.get('id'));
     } else {
-        location.href = '/join';
+        window.location.href = '/join';
     }
 }
 
@@ -983,17 +979,39 @@ function createCart() {
         .then(data => {
             setLoginFormId(data.id);
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
 }
+
+function deleteBBOKCart() {
+    $(document).ready(() => {
+        getData('/api/storefront/cart')
+            .then(response => response.json())
+            .then(cart => {
+                if (cart.length > 0) {
+                    const physicalItems = cart[0].lineItems.physicalItems;
+
+                    physicalItems.forEach(item => {
+                        // Delete cart if BBOK product is in cart outside the join process
+                        if (item.productId === Number(API_URLS.JOIN_SS_PRODUCT_ID)) {
+                            deleteData(`/api/storefront/carts/${cart[0].id}`);
+                            return;
+                        }
+                    });
+                }
+            })
+            .catch(err => {
+                console.warn('getData', err);
+            });
+    });
+}
+
 /**
  * Export join process front end functions.
  */
 export default function joinProcessInteraction(themeSettings) {
-    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-ss2020/`;
+    API_URLS.BLAST_OFF = `${themeSettings.ts_current_store_base_url}/business-blast-off-kit-fw2020/`;
     API_URLS.TELL_US = `${themeSettings.ts_current_store_base_url}/tell-us-about-yourself`;
     API_URLS.TSAPI_BASE = themeSettings.ts_tsapi_base_url;
-    API_URLS.SOCIAL_BUG = `${themeSettings.social_bug_affiliate_url}`;
-    API_URLS.CHECKOUT_REDIRECT_PID = `${themeSettings.social_bug_redirect_to_checkout_product_id}`;
     API_URLS.JOIN_SS_PRODUCT_ID = `${themeSettings.ts_join_ss_product_id}`;
 
     // call functions on join page
@@ -1003,9 +1021,18 @@ export default function joinProcessInteraction(themeSettings) {
         $(document).ready(() => {
             getData('/api/storefront/cart')
                 .then(response => response.json())
-                .then(myJson => {
-                    if (myJson.length > 0) {
-                        setLoginFormId(myJson[0].id);
+                .then(cart => {
+                    if (cart.length > 0) {
+                        // Delete prev cart before joining
+                        deleteData(`/api/storefront/carts/${cart[0].id}`)
+                            .then(_res => {
+                                // Create cart with BBOK product
+                                createCart();
+                                setLoginFormId(cart[0].id);
+                            })
+                            .catch(err => {
+                                console.warn('deleteCart', err);
+                            });
                     } else {
                         createCart();
                     }
@@ -1029,10 +1056,6 @@ export default function joinProcessInteraction(themeSettings) {
         triggerTermsApprove();
         triggerTextOptIn();
         getUrlParams();
-        waitForSocialBug(() => {
-            const affiliateId = $('#affiliatediv').data('affiliateid');
-            initializeSocialBug(affiliateId);
-        });
 
         $(document).ready(() => {
             const inputElement = document.getElementById('CellPhone');
@@ -1052,5 +1075,15 @@ export default function joinProcessInteraction(themeSettings) {
     if (confirmationPage) {
         removeContainer();
         triggerConfetti();
+    }
+
+    if (!personalInfoPage) {
+        // Don't delete cart if user is in /join or /kit page
+        if (loginPage || kitPage) {
+            return;
+        }
+
+        // Delete cart if BBOK product is in cart outside the join process
+        deleteBBOKCart();
     }
 }

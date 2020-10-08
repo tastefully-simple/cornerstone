@@ -1,0 +1,113 @@
+<script type="text/javascript">
+    (function(w) {
+        w.TSCookie = {
+            // Social Bug Affiliate ID
+            setAffiliateId: function(afid) {
+                Cookies.set('afid', afid);
+            },
+
+            getAffiliateId: function() {
+                return Cookies.get('afid');
+            },
+
+            // Consultant ID
+            setConsultantId: function(cid) {
+                Cookies.set('cid', cid);
+            },
+
+            getConsultantId: function() {
+                return Cookies.get('cid');
+            },
+
+            // Consultant XID
+            setConsultantXid: function(cxid) {
+                Cookies.set('cxid', cxid);
+            },
+
+            getConsultantXid: function() {
+                return Cookies.get('cxid');
+            },
+
+            // Consultant Image
+            setConsultantImage: function(cimg) {
+                Cookies.set('cimg', cimg);
+            },
+
+            getConsultantImage: function() {
+                return Cookies.get('cimg');
+            },
+
+            // Consultant Name
+            setConsultantName: function(name) {
+                Cookies.set('name', name);
+            },
+
+            getConsultantName: function() {
+                return Cookies.get('name');
+            },
+
+            // Party Id
+            setPartyId: function(pid) {
+                Cookies.set('pid', pid);
+            },
+
+            getPartyId: function() {
+                return Cookies.get('pid');
+            },
+
+            // Party Host
+            setPartyHost: function(phost) {
+                Cookies.set('phost', phost);
+            },
+
+            getPartyHost: function() {
+                return Cookies.get('phost');
+            },
+
+            // Party Date
+            setPartyDate: function(pdate) {
+                Cookies.set('pdate', pdate);
+            },
+
+            getPartyDate: function() {
+                return Cookies.get('pdate');
+            },
+
+            // Party Time
+            setPartyTime: function(ptime) {
+                Cookies.set('ptime', ptime);
+            },
+
+            getPartyTime: function() {
+                return Cookies.get('ptime');
+            },
+
+            // Party Total
+            setPartyTotal: function(ptotal) {
+                Cookies.set('ptotal', ptotal);
+            },
+
+            getPartyTotal: function() {
+                return Cookies.get('ptotal');
+            },
+
+            // Delete Party cookies
+            deleteParty: function() {
+                Cookies.remove('pid');
+                Cookies.remove('phost');
+                Cookies.remove('pdate');
+                Cookies.remove('ptime');
+                Cookies.remove('ptotal');
+            },
+
+            // Debugging
+            getTest: function() {
+                return Cookies.get('_test');
+            },
+
+            setTest: function(value) {
+                Cookies.set('_test', value);
+            }
+        };
+    })(window);
+</script>

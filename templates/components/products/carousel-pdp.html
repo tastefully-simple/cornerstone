@@ -1,0 +1,32 @@
+<section class="productCarousel"
+    data-list-name="{{list}}"
+    data-slick='{
+        "dots": true,
+        "infinite": false,
+        "mobileFirst": true,
+        "slidesToShow": 1,
+        "slidesToScroll": 1,
+        "responsive": [
+            {
+                "breakpoint": 800,
+                "settings": {
+                    "slidesToShow": 4,
+                    "slidesToScroll": 4
+                }
+            },
+            {
+                "breakpoint": 540,
+                "settings": {
+                    "slidesToShow": 2,
+                    "slidesToScroll": 2
+                }
+            }
+        ]
+    }'
+>
+    {{#each products}}
+    <div class="productCarousel-slide">
+        {{> components/products/card-pdp show_rating=true settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
+    </div>
+    {{/each}}
+</section>

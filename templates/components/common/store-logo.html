@@ -1,4 +1,4 @@
-<div>
+<a href="{{urls.home}}">
     {{#if settings.store_logo.image}}
         {{#if theme_settings.logo_size '===' 'original'}}
             <img class="header-logo-image-unknown-size" src="{{getImage settings.store_logo.image 'logo_size'}}" alt="{{settings.store_logo.title}}" title="{{settings.store_logo.title}}">
@@ -10,4 +10,4 @@
     {{else}}
         <span class="header-logo-text">{{settings.store_logo.title}}</span>
     {{/if}}
-</div>
+</a>

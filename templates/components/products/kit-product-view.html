@@ -1,4 +1,4 @@
-<div class="productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
+<div class="productView kit-productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
 {{#each product.reviews.messages}}
 {{#if error}}
 {{> components/common/alert-error error}}
@@ -11,7 +11,7 @@
     <main class="page kit" id="kit">
         <div class="join__banner">
             <div class="join__banner-title-wrapper">
-                <h1 class="heading--1">What comes in your kit</h1>
+                <h1 class="white-text">What comes in your kit</h1>
                     {{> components/common/responsive-img
                     image=image
                     class="progress-bar"
@@ -32,7 +32,7 @@
                     }}
                 </div>
                 <div class="kit-content">
-                    <h1 class="heading--1">What comes in your kit?</h1>
+                    <h1 class="teal-text">What comes in your kit?</h1>
                     <div>{{> components/products/kit-description}}</div>
                     <div class="kit-price-sticker">
                         {{#if product.price.sale_price_without_tax.formatted}}
@@ -66,20 +66,20 @@
                             </div>
                             <div class="kit-price-table-total">
                                 <div class="price-table-total-title">
-                                    <h3 class="heading--3">Total</h3>
+                                    <h3 class="teal-text">Total</h3>
                                 </div>
                                 <div class="price-table-total-price">
                                     {{#if product.price.sale_price_without_tax.formatted}}
-                                        <h3 class="heading--3 price">{{product.price.sale_price_without_tax.formatted}}</h3>
+                                        <h3 class="teal-text price">{{product.price.sale_price_without_tax.formatted}}</h3>
                                     {{else}}
-                                        <h3 class="heading--3 price">{{product.price.without_tax.formatted}}</h3>
+                                        <h3 class="teal-text price">{{product.price.without_tax.formatted}}</h3>
                                     {{/if}}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="kit-button-wrapper">
-                        <button id="kit-page-next" class="button--secondary">next<svg><use xlink:href="#icon-chevron-right" /></svg></button>
+                        <button id="kit-page-next" class="button-secondary-icon">next</button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,108 @@
+// =============================================================================
+// Tastefully Simple Search Modal Styles
+// =============================================================================
+/* Choose A Consultant Styles  */
+#modal {
+    #consultant-search {
+        .findmodal-footer {
+            background: none;
+            box-shadow: none;
+            text-align: right;
+        }
+    }
+    #no-consultants-continue {
+        width: 60%;
+    }
+    #consultant-search-results {
+        display: none;
+        .frameheading-5 {
+            font-family: stencilFontFamily("headings-font");
+        }
+        .genmodal-body {
+            .buy-wide-card {
+                .return-search {
+                    margin: 10px 0;
+                    display: flex;
+                    .icon-system-left-caret {
+                        height: 12px;
+                        width: 12px;
+                        margin-right: 5px;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                #consultants-qty {
+                    margin: 10px 0;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width:801px) {
+    #modal {
+        width: 550px;
+        .modal-content {
+            .genmodal-body {
+                .consultant-footer {
+                    .button-secondary-icon {
+                        width: 40%; 
+                    }
+                }
+                .buy-wide-card {
+                    .consultant-card {
+                        .consultant-image {
+                            min-width: 100px;
+                        }
+                        .consultant-info {
+                            padding-left:0;
+                            .system-14 {
+                                font-size: 14px;
+                                .consultant-phone {
+                                    span {
+                                        font-size: 14px;
+                                    }
+                                }
+                                .consultant-email {
+                                    span {
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.selected {
+                        .consultant-image {
+                            padding-left: 10px;
+                        }
+                        .consultant-info {
+                            padding-left:10px;
+                            padding-right: 10px;
+                        }
+                    }
+                    .card-form {
+                        .input-label {
+                            flex-basis: unset;
+                            input {
+                                width: 160px;
+                            }
+                        }
+                        .simple-dropdown {
+                            flex-basis: unset;
+                            select {
+                                width: 160px;
+                                height: 35px;
+                                background-color: $wan-white;
+                                border-radius: 3px;
+                            }
+                        }
+                        .button-alternate {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

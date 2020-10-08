@@ -2,6 +2,10 @@
 // JOIN (CSS)
 // =============================================================================
 
+.kit-productView {
+    margin:0 auto;
+}
+
 .join {
     &__error {
         color: #D0021B;
@@ -61,6 +65,9 @@
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
             width: 100%;
+            form {
+                margin-top: $SPACING_2;
+            }
 
             @include breakpoint($BREAKPOINT_MEDIUM) {
                 padding: 0 2rem 2rem;
@@ -122,12 +129,35 @@
             @include disabledField();
         }
 
-        label {
-            @include formLabel();
+        &#consultantSearchForm {
+            .input-label {
+                display:inline-flex;
+                width:65%;
+                input {
+                    margin-bottom:0;
+                    width:100%;
+                }
+            }
+            .input-dropdown {
+                display:flex;
+                justify-content:space-between;
+                .simple-dropdown {
+                    display:inline-flex;
+                    width:30%;
+                }
+            }
+            button {
+                margin-bottom:0;
+                vertical-align:bottom;
+            }
         }
 
-        input[type=text], select, input[type=tel], input[type=date], input[type=email], input[type=password] {
+        input[type=text], input[type=tel], input[type=date], input[type=email], input[type=password] {
             @include formInput();
+        }
+
+        select {
+            margin-bottom: $SPACING_2;
         }
 
         input[type=checkbox] {
@@ -160,15 +190,11 @@
             }
         }
 
-        #ConsultantState {
-            width: 34%;
-        }
-
         .join__field--subtext {
             margin-left: $SPACING_1;
             margin-top: -1 * $SPACING_2;
             color: $COLOR_GRAY_200;
-            font-size: 12px;
+            font-size: 13px;
         }
 
         #SSNField {
@@ -214,10 +240,49 @@
             margin-bottom: $SPACING_5;
         }
     }
+    
+    //Consultant List Container
+    #sponsorSearchData{
+        background-color: white;
+        max-height: 500px;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 7px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, .5);
+            box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+        }
+
+        .consultant-card {
+            .selected-header {
+                margin-bottom: 10px;
+            }
+            .consultant-image {
+                padding-left: 0.5rem;
+            }
+            .consultant-info {
+                .consultant-name {
+                    color: $COLOR_GRAY_300;
+                }
+            }
+        }
+
+        .consultant-divider {
+            width: 96%;
+            margin: 0 auto;
+        }
+    }
+
     //Terms box styling
     form .join__terms {
         padding: 0 $SPACING_3 0 $SPACING_3;
         border: 1px solid $COLOR_GRAY_200;
+        h4 {
+            text-align:center;
+        }
 
         label {
             @include checkboxLabel();

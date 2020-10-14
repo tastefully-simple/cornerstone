@@ -128,10 +128,10 @@ class FindAConsultant {
         $('body').on('click', '#no-consultants-continue', () => this.continueWithInternal());
 
         // Account for window resize
-        $(window).on('resize', () => this.renderConsultantInHeader());
+        $(window).on('resize', () => this.renderConsultant());
 
         // Account for sticky header
-        $(window).on('scroll', () => this.renderConsultantInHeader());
+        $(window).on('scroll', () => this.renderConsultant());
     }
 
     createModal(e, template) {
@@ -320,34 +320,48 @@ class FindAConsultant {
     // consultant = { id: string, name: null|string, image: string }
     setConsultant(consultant) {
         this.consultant = consultant;
-        this.renderConsultantInHeader();
+
+        this.renderConsultant();
+
         if (this.isOnCartPage()) {
             this.renderConsultantInCart();
         }
     }
 
-    renderConsultantInHeader() {
-        // Put consultant trigger in header or nav depending on if mobile device
-        if (window.innerWidth >= this.screenMinWidth) {
-            // Put back consultant in the top header
-            $('.header-top .header-top-links').prepend(this.$findConsultant);
-        } else {
-            // Add consultant to mobile main menu
-            $('.navPages-container .navPages').prepend(this.$findConsultant);
-        }
-
+    renderConsultant() {
         // Main consultant DOM rendering
-        const defaultConsultantHtml =
+        this.defaultConsultantHtml =
             `<span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
                 <span class="headertoplinks-consult-text">Find a Consultant</span>`;
 
-        const nameHtml =
+        this.consultantHtml =
             `<span>
                 <strong>${this.consultant.name}</strong> is your Consultant
                 <small>(edit)</small>
             </span>`;
 
-        // Consultant in the sticky header
+        if (window.innerWidth <= this.screenMinWidth) {
+            this.renderConsultantInMobileMenu();
+        } else {
+            this.renderConsultantInHeader();
+        }
+    }
+
+    renderConsultantInMobileMenu() {
+        $('.navPages-container .navPages').prepend(this.$findConsultant);
+
+        if (this.isExternalConsultant()) {
+            this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
+            this.$findConsultant.innerHTML = this.consultantHtml;
+        } else {
+            this.$findConsultant.innerHTML = this.defaultConsultantHtml;
+        }
+    }
+
+    renderConsultantInHeader() {
+        $('.header-top .header-top-links').prepend(this.$findConsultant);
+
+        // Account for consultant in the sticky header
         const $header = $('#headerMain');
         const offsetTop = $header.offset().top;
         const isStickyHeader = $header.hasClass('sticky-header');
@@ -355,9 +369,9 @@ class FindAConsultant {
 
         if (this.isExternalConsultant() && isStickyHeaderDisabled) {
             this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
-            this.$findConsultant.innerHTML = nameHtml;
+            this.$findConsultant.innerHTML = this.consultantHtml;
         } else {
-            this.$findConsultant.innerHTML = defaultConsultantHtml;
+            this.$findConsultant.innerHTML = this.defaultConsultantHtml;
         }
     }
 

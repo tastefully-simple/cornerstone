@@ -6,6 +6,26 @@
     .header-main {
         .container {
             .navPages-container {
+                &.is-open {
+                    padding-bottom:55px;
+                    padding-top:0;
+                    top:55px;
+                    .navPages {
+                        .headertoplinks-consult {
+                            background: $gainsboro;
+                            color: $burgundy;
+                            padding: 10px;
+                            text-align: center;
+                        }
+                        .headertoplinks-consult-text {
+                            font-weight:700;
+                        }
+                    }
+                    // Have "Shop" open by default
+                    #navPages-catShop {
+                        display: block;
+                    }
+                }
                 .navPages {
                     background-color: $white;
                     display:flex;

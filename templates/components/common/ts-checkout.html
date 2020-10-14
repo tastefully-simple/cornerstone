@@ -20,19 +20,26 @@
 
         mutationCallback(mutations) {
             mutations.forEach(mutation => {
-                const $phoneInput = document.querySelector('#phoneInput');
+                const $phoneNumberWrapper = document.querySelector('.dynamic-form-field--phone');
                 const allowedChars = '0123456789';
                 const isCharAllowed = keyValue => allowedChars.indexOf(keyValue) > -1;
+                const handleInputChange =
+                    (e) => !isCharAllowed(e.key) && e.key.length === 1 ? e.preventDefault() : null;
 
                 // TST-242
                 // Only allow numbers and period characters
-                // in the phone number input field
-                if ($phoneInput) {
-                    $phoneInput.addEventListener('keydown', (e) => {
-                        if (!isCharAllowed(e.key) && e.key.length === 1) {
-                            e.preventDefault();
-                        }
-                    });
+                // in the phone number and mobile phone input fields
+                if ($phoneNumberWrapper) {
+                    const $phoneNumberInput = $phoneNumberWrapper.querySelector('#phoneInput');
+                    $phoneNumberInput.addEventListener('keydown', (e) => handleInputChange(e));
+
+                    const $mobilePhoneWrapper = $phoneNumberWrapper.nextElementSibling;
+                    const $mobilePhoneLabel = $mobilePhoneWrapper.querySelector('label').textContent;
+                    // To make sure we're targeting the mobile phone field
+                    if ($mobilePhoneLabel.includes('Mobile Phone')) {
+                        const $mobilePhoneInput = $mobilePhoneWrapper.querySelector('.form-field input');
+                        $mobilePhoneInput.addEventListener('keydown', (e) => handleInputChange(e));
+                    }
                 }
             });
         }

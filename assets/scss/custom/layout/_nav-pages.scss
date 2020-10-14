@@ -32,10 +32,10 @@
                     flex-direction:column;
                     padding:0;
                     .headertoplinks-consult {
-                        order:3;
+                        order:2;
                     }
                     .partybar {
-                        order:4;
+                        order:3;
                     }
                 }
                 .navPages-list {
@@ -93,7 +93,7 @@
                         }
                     }
                     &.navPages-list--user {
-                        order:2;
+                        order:4;
                         background-color:$wan-white;
                         border-top:none;
                         padding:0 .5rem;

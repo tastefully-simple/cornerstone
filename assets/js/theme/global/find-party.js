@@ -407,7 +407,7 @@ class FindAParty {
         const $infoContainerHtml = $('<div>', { class: 'party-info' });
 
         const $nameHtml = $('<h5>', { class: 'party-name' });
-        $nameHtml.text(`${party.HostFirstName} ${party.HostLastName}'s Party`);
+        $nameHtml.text(party.PartyTitle);
         $infoContainerHtml.append($nameHtml);
 
         const $innerContainerHtml = $('<div>', { class: 'system-12' });

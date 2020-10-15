@@ -96,6 +96,7 @@ class FindAParty {
                 state: $('#party-search .state-search select').val(),
                 name: $('#party-search .state-search input').val(),
                 page: 1,
+                sid: TSCookie.getConsultantId(),
             };
 
             this.search();
@@ -183,6 +184,7 @@ class FindAParty {
             this.searchInfo.name,
             this.searchInfo.page,
             PAGE_SIZE,
+            this.searchInfo.sid,
         )
             .then(res => res.json())
             .then(data => this.renderResults(data))

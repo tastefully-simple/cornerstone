@@ -49,8 +49,8 @@ export default class TSApi {
     /*
      * Find a Party
      */
-    searchPartyByState(state, name, page, size) {
-        const uri = `/search/party/${state}/${page}/${size}?name=${name}`;
+    searchPartyByState(state, name, page, size, sid) {
+        const uri = `/search/party/${state}/${page}/${size}?name=${name}&sid=${sid}`;
 
         return fetch(this.fullUrl(uri), {
             method: 'GET',

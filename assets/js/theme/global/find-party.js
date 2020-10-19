@@ -11,6 +11,7 @@ const SCREEN_MIN_WIDTH = 801;
 const DISPLAY_NUM_PAGES = 6;
 const PAGE_SIZE = 10;
 // Redirect
+const PARTY_DETAILS_PAGE = '/party-details';
 const CART_PAGE = '/cart.php';
 
 class FindAParty {
@@ -86,6 +87,10 @@ class FindAParty {
         $switchPartyButton.on('click', (e) => {
             this.createModal(e, this.modalTemplate);
         });
+
+        const $deletePartyButton = $($findPartyButtons[2]);
+        // Delete party button
+        $deletePartyButton.on('click', () => this.deletePartyCookies());
 
         // Consultant bar in cart page
         $('.cart-affiliate-party button').on('click', (e) => this.createModal(e, this.modalTemplate));
@@ -244,6 +249,12 @@ class FindAParty {
         this.setParty(party);
     }
 
+    isOnPartyDetailsPage() {
+        const url = document.location.pathname;
+
+        return url.match(/^\/p\/\d+/ig) !== null;
+    }
+
     isOnCartPage() {
         return document.location.pathname === CART_PAGE;
     }
@@ -304,6 +315,21 @@ class FindAParty {
         $('.party-card').remove();
         $('.return-search').remove();
         $('.findmodal-pagination').remove();
+    }
+
+    deletePartyCookies() {
+        if (this.isOnPartyDetailsPage()) {
+            document.location = PARTY_DETAILS_PAGE;
+        }
+
+        if (this.isOnCartPage()) {
+            document.location = CART_PAGE;
+        }
+
+        const $partyBarText = $('#partybar-find .partybar-text');
+        $partyBarText.text('Find a party');
+
+        TSCookie.deleteParty();
     }
 
     /*

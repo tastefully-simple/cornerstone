@@ -94,6 +94,8 @@ class FindAParty {
 
         // Consultant bar in cart page
         $('.cart-affiliate-party button').on('click', (e) => this.createModal(e, this.modalTemplate));
+        // Party bar in cart page (desktop)
+        $('.partybar button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // Search by State / Name
         $('body').on('submit', '#state-search-form', () => {
@@ -262,21 +264,19 @@ class FindAParty {
     renderPartyInCart() {
         const phost = this.party.host;
         const $cartHeader = $('.cart-affiliate');
-        const $partyBar = $('<div>', { class: 'cart-affiliate-party' });
+        const $findPartyBarMobile = $('<div>', { class: 'cart-affiliate-party' });
 
         if (phost) {
-            $partyBar.html(`<p><strong>${phost}</strong> is your host</p>
+            $findPartyBarMobile.html(`<p><strong>${phost}</strong> is your host</p>
                 <button><span><small>(edit)</small></span></button>`);
         } else {
-            const softRed = '#FFDDDD';
-            const grey = '#2D2D2D';
-            $partyBar.css('background-color', softRed);
-            $partyBar.css('color', grey);
-            $partyBar.html(`<p>You have not selected a party</p>
-                <button><span><small>(Find a Party)</small></span></button>`);
+            // no party selected (mobile)
+            this.renderNoPartySelected($findPartyBarMobile);
+            // no party selected (desktop)
+            this.renderNoPartySelected(this.$findPartyBar);
         }
 
-        $cartHeader.append($partyBar);
+        $cartHeader.append($findPartyBarMobile);
     }
 
     renderPartyBar($party) {
@@ -292,6 +292,17 @@ class FindAParty {
         } else {
             $navPages.append($party);
         }
+    }
+
+    renderNoPartySelected($partyBar) {
+        const softRed = '#FFDDDD';
+        const grey = '#2D2D2D';
+
+        $partyBar.addClass('no-party-selected');
+        $partyBar.css('background-color', softRed);
+        $partyBar.css('color', grey);
+        $partyBar.html(`<p>You have not selected a party</p>
+            <button><span><small>(Find a Party)</small></span></button>`);
     }
 
     showSelectedPartyMessage(host) {

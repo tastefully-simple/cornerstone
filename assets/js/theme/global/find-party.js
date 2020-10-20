@@ -11,6 +11,7 @@ const SCREEN_MIN_WIDTH = 801;
 const DISPLAY_NUM_PAGES = 6;
 const PAGE_SIZE = 10;
 // Redirect
+const PARTY_DETAILS_PAGE = '/party-details';
 const CART_PAGE = '/cart.php';
 
 class FindAParty {
@@ -87,8 +88,14 @@ class FindAParty {
             this.createModal(e, this.modalTemplate);
         });
 
-        // Consultant bar in cart page
+        const $deletePartyButton = $($findPartyButtons[2]);
+        // Delete party button
+        $deletePartyButton.on('click', () => this.deletePartyCookies());
+
+        // Party bar in cart page (mobile)
         $('.cart-affiliate-party button').on('click', (e) => this.createModal(e, this.modalTemplate));
+        // Party bar in cart page (desktop)
+        $('.partybar button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // Search by State / Name
         $('body').on('submit', '#state-search-form', () => {
@@ -244,6 +251,12 @@ class FindAParty {
         this.setParty(party);
     }
 
+    isOnPartyDetailsPage() {
+        const url = document.location.pathname;
+
+        return url.match(/^\/p\/\d+/ig) !== null;
+    }
+
     isOnCartPage() {
         return document.location.pathname === CART_PAGE;
     }
@@ -251,21 +264,19 @@ class FindAParty {
     renderPartyInCart() {
         const phost = this.party.host;
         const $cartHeader = $('.cart-affiliate');
-        const $partyBar = $('<div>', { class: 'cart-affiliate-party' });
+        const $findPartyBarMobile = $('<div>', { class: 'cart-affiliate-party' });
 
         if (phost) {
-            $partyBar.html(`<p><strong>${phost}</strong> is your host</p>
+            $findPartyBarMobile.html(`<p><strong>${phost}</strong> is your host</p>
                 <button><span><small>(edit)</small></span></button>`);
         } else {
-            const softRed = '#FFDDDD';
-            const grey = '#2D2D2D';
-            $partyBar.css('background-color', softRed);
-            $partyBar.css('color', grey);
-            $partyBar.html(`<p>You have not selected a party</p>
-                <button><span><small>(Find a Party)</small></span></button>`);
+            // no party selected (mobile)
+            this.renderNoPartySelected($findPartyBarMobile);
+            // no party selected (desktop)
+            this.renderNoPartySelected(this.$findPartyBar);
         }
 
-        $cartHeader.append($partyBar);
+        $cartHeader.append($findPartyBarMobile);
     }
 
     renderPartyBar($party) {
@@ -281,6 +292,17 @@ class FindAParty {
         } else {
             $navPages.append($party);
         }
+    }
+
+    renderNoPartySelected($partyBar) {
+        const softRed = '#FFDDDD';
+        const grey = '#2D2D2D';
+
+        $partyBar.addClass('no-party-selected');
+        $partyBar.css('background-color', softRed);
+        $partyBar.css('color', grey);
+        $partyBar.html(`<p>You have not selected a party</p>
+            <button><span><small>(Find a Party)</small></span></button>`);
     }
 
     showSelectedPartyMessage(host) {
@@ -304,6 +326,21 @@ class FindAParty {
         $('.party-card').remove();
         $('.return-search').remove();
         $('.findmodal-pagination').remove();
+    }
+
+    deletePartyCookies() {
+        if (this.isOnPartyDetailsPage()) {
+            document.location = PARTY_DETAILS_PAGE;
+        }
+
+        if (this.isOnCartPage()) {
+            document.location = CART_PAGE;
+        }
+
+        const $partyBarText = $('#partybar-find .partybar-text');
+        $partyBarText.text('Find a party');
+
+        TSCookie.deleteParty();
     }
 
     /*

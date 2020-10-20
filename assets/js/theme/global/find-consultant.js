@@ -24,6 +24,11 @@ const CONSULTANT_PAGE = '/web';
 const PARTY_DETAILS_PAGE = '/party-details';
 const CART_PAGE = '/cart.php';
 
+// API error message
+const API_ERROR_MESSAGE = {
+    errorMessage: 'An error has occurred.',
+};
+
 class FindAConsultant {
     constructor(trigger, template) {
         this.$findConsultant = trigger;
@@ -191,9 +196,16 @@ class FindAConsultant {
                     this.searchInfo.page,
                     this.pageSize,
                 )
-                    .then(res => res.json())
+                    .then(res => {
+                        const statusCode = res.status.toString();
+                        const newResponse = (statusCode[0] === '5') ? API_ERROR_MESSAGE : res.json();
+                        return newResponse;
+                    })
                     .then(data => {
-                        this.renderResults(data);
+                        const newData = data.errorMessage
+                            ? this.displayError(data.errorMessage)
+                            : this.renderResults(data);
+                        return newData;
                     })
                     .catch(err => {
                         console.warn('searchByZip', err);
@@ -208,9 +220,16 @@ class FindAConsultant {
                     this.searchInfo.page,
                     this.pageSize,
                 )
-                    .then(res => res.json())
+                    .then(res => {
+                        const statusCode = res.status.toString();
+                        const newResponse = (statusCode[0] === '5') ? API_ERROR_MESSAGE : res.json();
+                        return newResponse;
+                    })
                     .then(data => {
-                        this.renderResults(data);
+                        const newData = data.errorMessage
+                            ? this.displayError(data.errorMessage)
+                            : this.renderResults(data);
+                        return newData;
                     })
                     .catch(err => {
                         console.warn('searchByName', err);
@@ -220,9 +239,16 @@ class FindAConsultant {
 
             case SEARCH_BY_ID:
                 this.api.getConsultant(this.searchInfo.id)
-                    .then(res => res.json())
+                    .then(res => {
+                        const statusCode = res.status.toString();
+                        const newResponse = (statusCode[0] === '5') ? API_ERROR_MESSAGE : res.json();
+                        return newResponse;
+                    })
                     .then(data => {
-                        this.renderResults(data);
+                        const newData = data.errorMessage
+                            ? this.displayError(data.errorMessage)
+                            : this.renderResults(data);
+                        return newData;
                     })
                     .catch(err => {
                         console.warn('searchById', err);

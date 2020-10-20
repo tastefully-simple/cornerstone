@@ -462,6 +462,12 @@ function sponsorOptedOutErrorMessage() {
     `);
 }
 
+function displayAPIErrorMessage() {
+    const $responseWrapper = $('#sponsorSearchData');
+    $responseWrapper.addClass('sponsor-result--error');
+    $responseWrapper.append('<p>An error has occurred.</p>');
+}
+
 /**
  * Get consultant information from Tastefully Simple's API by name.
  */
@@ -475,7 +481,14 @@ function getConsultantInfoByName() {
                 displayConsultantInformation(data);
             }
         },
-        error: () => sponsorOptedOutErrorMessage(),
+        error: (err) => {
+            const statusCode = err.status.toString();
+            if (statusCode[0] === '5') {
+                displayAPIErrorMessage();
+            } else {
+                sponsorOptedOutErrorMessage();
+            }
+        },
     });
 }
 
@@ -492,7 +505,14 @@ function getConsultantInfoByID() {
                 displayConsultantInformation(data);
             }
         },
-        error: () => sponsorOptedOutErrorMessage(),
+        error: (err) => {
+            const statusCode = err.status.toString();
+            if (statusCode[0] === '5') {
+                displayAPIErrorMessage();
+            } else {
+                sponsorOptedOutErrorMessage();
+            }
+        },
     });
 }
 
@@ -510,9 +530,14 @@ function getConsultantInfoByZip() {
                 displayConsultantInformation(data);
             }
         },
-        error: () => {
-            document.getElementById('divTsConsFound').style.display = 'block';
-            displayConsultantInformation(defaultConsultantData);
+        error: (err) => {
+            const statusCode = err.status.toString();
+            if (statusCode[0] === '5') {
+                displayAPIErrorMessage();
+            } else {
+                document.getElementById('divTsConsFound').style.display = 'block';
+                displayConsultantInformation(defaultConsultantData);
+            }
         },
     });
 }

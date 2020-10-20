@@ -92,7 +92,7 @@ class FindAParty {
         // Delete party button
         $deletePartyButton.on('click', () => this.deletePartyCookies());
 
-        // Consultant bar in cart page
+        // Party bar in cart page (mobile)
         $('.cart-affiliate-party button').on('click', (e) => this.createModal(e, this.modalTemplate));
         // Party bar in cart page (desktop)
         $('.partybar button').on('click', (e) => this.createModal(e, this.modalTemplate));

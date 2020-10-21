@@ -386,7 +386,7 @@ class FindAParty {
 
         // If only one party is found,
         // select that party automatically
-        if (response.Results.length === 1) {
+        if (response.Results.length === 1 && response.CurrentPage === 1) {
             const $partyCard = $('.party-card');
             this.selectedId = $partyCard.data('pid');
             $partyCard.addClass('selected');

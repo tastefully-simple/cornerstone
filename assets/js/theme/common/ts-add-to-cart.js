@@ -23,6 +23,10 @@ export default class TSAddToCart {
                 return;
             }
 
+            // TST-262 Update quantity of Cart's count indicator
+            const quantity = Number(localStorage.getItem('cart-quantity'));
+            $('body').trigger('cart-quantity-update', quantity + 1);
+
             this.$addToCartBtn.innerHTML = 'Added to Cart';
             // Revert back to "Add to Cart" after 3sec
             setTimeout(() => {

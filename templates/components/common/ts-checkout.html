@@ -1,0 +1,50 @@
+{{!-- TST-242 --}}
+<script type="text/javascript">
+    class TSCheckout {
+        constructor(app) {
+            this.observeApp(app);
+        }
+
+        observeApp(app) {
+            this.observer = new MutationObserver(this.mutationCallback);
+
+            if (app) {
+                this.observer.observe(app, {
+                    attributes: true,
+                    subtree: true
+                });
+            } else {
+                this.observer.disconnect();
+            }
+        }
+
+        mutationCallback(mutations) {
+            mutations.forEach(mutation => {
+                const $phoneNumberWrapper = document.querySelector('.dynamic-form-field--phone');
+                const allowedChars = '0123456789';
+                const isCharAllowed = keyValue => allowedChars.indexOf(keyValue) > -1;
+                const handleInputChange =
+                    (e) => !isCharAllowed(e.key) && e.key.length === 1 ? e.preventDefault() : null;
+
+                // TST-242
+                // Only allow numbers and period characters
+                // in the phone number and mobile phone input fields
+                if ($phoneNumberWrapper) {
+                    const $phoneNumberInput = $phoneNumberWrapper.querySelector('#phoneInput');
+                    $phoneNumberInput.addEventListener('keydown', (e) => handleInputChange(e));
+
+                    const $mobilePhoneWrapper = $phoneNumberWrapper.nextElementSibling;
+                    const $mobilePhoneLabel = $mobilePhoneWrapper.querySelector('label').textContent;
+                    // To make sure we're targeting the mobile phone field
+                    if ($mobilePhoneLabel.includes('Mobile Phone')) {
+                        const $mobilePhoneInput = $mobilePhoneWrapper.querySelector('.form-field input');
+                        $mobilePhoneInput.addEventListener('keydown', (e) => handleInputChange(e));
+                    }
+                }
+            });
+        }
+    }
+
+    const checkoutApp = document.getElementById('checkout-app');
+    const customCheckout = new TSCheckout(checkoutApp);
+</script>

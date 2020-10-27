@@ -6,16 +6,36 @@
     .header-main {
         .container {
             .navPages-container {
+                &.is-open {
+                    padding-bottom:55px;
+                    padding-top:0;
+                    top:55px;
+                    .navPages {
+                        .headertoplinks-consult {
+                            background: $gainsboro;
+                            color: $burgundy;
+                            padding: 10px;
+                            text-align: center;
+                        }
+                        .headertoplinks-consult-text {
+                            font-weight:700;
+                        }
+                    }
+                    // Have "Shop" open by default
+                    #navPages-catShop {
+                        display: block;
+                    }
+                }
                 .navPages {
                     background-color: $white;
                     display:flex;
                     flex-direction:column;
                     padding:0;
                     .headertoplinks-consult {
-                        order:3;
+                        order:2;
                     }
                     .partybar {
-                        order:4;
+                        order:3;
                     }
                 }
                 .navPages-list {
@@ -73,7 +93,7 @@
                         }
                     }
                     &.navPages-list--user {
-                        order:2;
+                        order:4;
                         background-color:$wan-white;
                         border-top:none;
                         padding:0 .5rem;

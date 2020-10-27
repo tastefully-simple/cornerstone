@@ -16,6 +16,17 @@ export default class TSApi {
     }
 
     /*
+     * Check Customer last login
+     */
+    lastLoginCheck(email) {
+        return fetch(this.fullUrl('/users/welcome/lastLogin'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+        });
+    }
+
+    /*
      * Find a Consultant
      */
     searchConsultantsByZip(zip, radius, page, size) {

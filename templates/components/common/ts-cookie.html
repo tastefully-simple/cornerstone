@@ -100,6 +100,14 @@
                 Cookies.remove('ptotal');
             },
 
+            setLoginStateChecker: function(loginState) {
+                Cookies.set('loginStateChecker', loginState);
+            },
+
+            getLoginStateChecker: function() {
+                return Cookies.get('loginStateChecker');
+            },
+
             // Debugging
             getTest: function() {
                 return Cookies.get('_test');

@@ -3,7 +3,7 @@
         w.TSCookie = {
             // Social Bug Affiliate ID
             setAffiliateId: function(afid) {
-                Cookies.set('afid', afid);
+                Cookies.set('afid', afid, { expires: 365 });
             },
 
             getAffiliateId: function() {
@@ -12,7 +12,7 @@
 
             // Consultant ID
             setConsultantId: function(cid) {
-                Cookies.set('cid', cid);
+                Cookies.set('cid', cid, { expires: 365 });
             },
 
             getConsultantId: function() {
@@ -21,7 +21,7 @@
 
             // Consultant XID
             setConsultantXid: function(cxid) {
-                Cookies.set('cxid', cxid);
+                Cookies.set('cxid', cxid, { expires: 365 });
             },
 
             getConsultantXid: function() {
@@ -30,7 +30,7 @@
 
             // Consultant Image
             setConsultantImage: function(cimg) {
-                Cookies.set('cimg', cimg);
+                Cookies.set('cimg', cimg, { expires: 365 });
             },
 
             getConsultantImage: function() {
@@ -39,7 +39,7 @@
 
             // Consultant Name
             setConsultantName: function(name) {
-                Cookies.set('name', name);
+                Cookies.set('name', name, { expires: 365 });
             },
 
             getConsultantName: function() {
@@ -48,7 +48,7 @@
 
             // Party Id
             setPartyId: function(pid) {
-                Cookies.set('pid', pid);
+                Cookies.set('pid', pid, { expires: 30 });
             },
 
             getPartyId: function() {
@@ -57,7 +57,7 @@
 
             // Party Host
             setPartyHost: function(phost) {
-                Cookies.set('phost', phost);
+                Cookies.set('phost', phost, { expires: 30 });
             },
 
             getPartyHost: function() {
@@ -66,7 +66,7 @@
 
             // Party Date
             setPartyDate: function(pdate) {
-                Cookies.set('pdate', pdate);
+                Cookies.set('pdate', pdate, { expires: 30 });
             },
 
             getPartyDate: function() {
@@ -75,7 +75,7 @@
 
             // Party Time
             setPartyTime: function(ptime) {
-                Cookies.set('ptime', ptime);
+                Cookies.set('ptime', ptime, { expires: 30 });
             },
 
             getPartyTime: function() {
@@ -84,7 +84,7 @@
 
             // Party Total
             setPartyTotal: function(ptotal) {
-                Cookies.set('ptotal', ptotal);
+                Cookies.set('ptotal', ptotal, { expires: 30 });
             },
 
             getPartyTotal: function() {

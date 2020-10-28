@@ -165,4 +165,12 @@
             font-weight: unset;
         }
     }
+    .partybar.no-party-selected {
+        flex-direction: row;
+        padding: 1rem;
+
+        p {
+            margin: 0;
+        }
+    }
 }

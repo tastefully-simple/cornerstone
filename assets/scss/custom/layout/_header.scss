@@ -96,21 +96,6 @@
             }
         }
     }
-    .navPages-container.is-open {
-        .navPages {
-            .headertoplinks-consult {
-                background: $gainsboro;
-                color: $burgundy;
-                font-weight: 800;
-                padding: 10px;
-                text-align: center;
-            }
-        }
-        // Have "Shop" open by default
-        #navPages-catShop {
-            display: block;
-        }
-    }
     .headertoplinks-consult {
         cursor: pointer;
         color: white;

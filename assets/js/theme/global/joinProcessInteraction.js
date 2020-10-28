@@ -434,6 +434,7 @@ function displayConsultantInformation(data) {
     consultantCard.getTemplate().then(template => {
         data.Results.forEach((consultant) => {
             const consultantCardHtml = consultantCard.insertConsultantData(template, consultant);
+            $('#sponsorSearchData').removeClass('sponsor-result--error');
             $('#sponsorSearchData').append(consultantCardHtml);
             if (data.Results.length < 3) {
                 $('#sponsorSearchData').addClass('no-scroll');
@@ -445,6 +446,26 @@ function displayConsultantInformation(data) {
             selectConsultant(e);
         });
     });
+}
+
+function sponsorOptedOutErrorMessage() {
+    const $responseWrapper = $('#sponsorSearchData');
+    $responseWrapper.addClass('sponsor-result--error');
+    $responseWrapper.append(`
+        <p>The consultant you are searching for is not currently sponsoring. In order to continue:</p>
+        <ul>
+            <li>Contact your consultant</li>
+            <li>Contact HQ at 1.866.448.6446 or
+                <a class="textgray-text" href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a>
+            </li>
+        </ul>
+    `);
+}
+
+function displayAPIErrorMessage() {
+    const $responseWrapper = $('#sponsorSearchData');
+    $responseWrapper.addClass('sponsor-result--error');
+    $responseWrapper.append('<p>An error has occurred.</p>');
 }
 
 /**
@@ -460,13 +481,13 @@ function getConsultantInfoByName() {
                 displayConsultantInformation(data);
             }
         },
-        error: () => {
-            $('#sponsorSearchData').append(`
-           <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
-           <ul class="sponsor-result--error">
-            <li>Contact your consultant</li>
-            <li>Contact HQ at 1.866.448.6446 or <a href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a></li>
-           </ul>`);
+        error: (err) => {
+            const statusCode = err.status.toString();
+            if (statusCode[0] === '5') {
+                displayAPIErrorMessage();
+            } else {
+                sponsorOptedOutErrorMessage();
+            }
         },
     });
 }
@@ -484,13 +505,13 @@ function getConsultantInfoByID() {
                 displayConsultantInformation(data);
             }
         },
-        error: () => {
-            $('#sponsorSearchData').append(`
-           <p>The consultant you are searching for does not have a Tastefully Simple website. In order to continue:</p>
-           <ul class="sponsor-result--error">
-            <li>Contact your consultant</li>
-            <li>Contact HQ at 1.866.448.6446 or <a href="mailto:help@tastefullysimple.com">help@tastefullysimple.com</a></li>
-           </ul>`);
+        error: (err) => {
+            const statusCode = err.status.toString();
+            if (statusCode[0] === '5') {
+                displayAPIErrorMessage();
+            } else {
+                sponsorOptedOutErrorMessage();
+            }
         },
     });
 }
@@ -509,15 +530,21 @@ function getConsultantInfoByZip() {
                 displayConsultantInformation(data);
             }
         },
-        error: () => {
-            document.getElementById('divTsConsFound').style.display = 'block';
-            displayConsultantInformation(defaultConsultantData);
+        error: (err) => {
+            const statusCode = err.status.toString();
+            if (statusCode[0] === '5') {
+                displayAPIErrorMessage();
+            } else {
+                document.getElementById('divTsConsFound').style.display = 'block';
+                displayConsultantInformation(defaultConsultantData);
+            }
         },
     });
 }
 
 /** Search by consultant ID and display results on dom */
 $('#btnConsIdSearch').on('click', (e) => {
+    clearErrorMessages();
     removeEventHandlers();
     if (($('#txtConsultantID').val()) === '') {
         $('#sponsorSearchData').empty();

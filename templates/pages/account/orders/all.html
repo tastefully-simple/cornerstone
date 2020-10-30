@@ -30,6 +30,8 @@ customer:
     </div>
     <p class="support-message">If you need further assistance, please contact our Customer Service team at<br/>
     <strong><a href="tel:{{settings.phone_number}}" title="Call us">{{settings.phone_number}}</a></strong> or email <strong><a href="mailto:{{theme_settings.ts_help_email}}" title="Email us">{{theme_settings.ts_help_email}}</a></strong></p>
+    {{!-- TST-264 Check user last login date API --}}
+    <input type="hidden" class="customer-email" value="{{customer.email}}" />
 </main>
 
 {{/partial}}

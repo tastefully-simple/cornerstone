@@ -22,7 +22,7 @@
                         }
                     }
                     // Have "Shop" open by default
-                    #navPages-catShop {
+                    #navPages-catshop {
                         display: block;
                     }
                 }
@@ -253,7 +253,7 @@
                                     border-bottom: 5px solid $gainsboro;
                                     content:'';
                                     height: 0px;
-                                    left:36%;
+                                    left:43%;
                                     position:absolute;
                                     top:-5px;
                                     transform:translateX(-50%);
@@ -313,7 +313,7 @@
                     .navPages-list {
                         .navPage-subMenu {
                             &.is-open{
-                                left:245%;
+                                left:145%;
                                 &::before{
                                 }
                             }
@@ -333,9 +333,9 @@
                     .navPages-list {
                         .navPage-subMenu {
                             &.is-open{
-                                left:200%;
+                                left:100%;
                                 &::before{
-                                    left:38%;
+                                    left:46%;
                                 }
                             }
                         }

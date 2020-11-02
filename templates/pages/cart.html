@@ -56,6 +56,8 @@ cart: true
         {{else}}
             <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
         {{/if}}
+        {{!-- TST-264 Check user last login date API --}}
+        <input type="hidden" class="customer-email" value="{{customer.email}}" />
     </main>
 
     {{> components/cart/modals/find-affiliate}}

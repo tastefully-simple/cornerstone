@@ -277,7 +277,8 @@ class FindAParty {
     renderPartyInCart() {
         const phost = this.party.host;
         const $cartHeader = $('.cart-affiliate');
-        const $findPartyBarMobile = $('<div>', { class: 'cart-affiliate-party' });
+        const $findPartyBarMobile = $('<div>', { class: 'cart-affiliate-party no-party-selected' });
+        const $findPartyBarDesktop = $('<div>', { class: 'partybar no-party-selected' });
 
         if (phost) {
             $findPartyBarMobile.html(`<p><strong>${phost}</strong> is your host</p>
@@ -285,8 +286,25 @@ class FindAParty {
         } else {
             // no party selected (mobile)
             this.renderNoPartySelected($findPartyBarMobile);
-            // no party selected (desktop)
-            this.renderNoPartySelected(this.$findPartyBar);
+            // initial no party selected (desktop)
+            if (window.innerWidth >= SCREEN_MIN_WIDTH) {
+                this.$findPartyBar.hide();
+                $('header.header').append($findPartyBarDesktop);
+                this.renderNoPartySelected($findPartyBarDesktop);
+            }
+
+            $(window).resize(() => {
+                if (window.innerWidth >= SCREEN_MIN_WIDTH) {
+                    this.$findPartyBar.hide();
+                    $findPartyBarDesktop.show();
+                    $('header.header').append($findPartyBarDesktop);
+                    this.renderNoPartySelected($findPartyBarDesktop);
+                } else {
+                    // Show default party bar in mobile menu
+                    this.$findPartyBar.show();
+                    $findPartyBarDesktop.hide();
+                }
+            });
         }
 
         $cartHeader.append($findPartyBarMobile);
@@ -311,7 +329,6 @@ class FindAParty {
         const softRed = '#FFDDDD';
         const grey = '#2D2D2D';
 
-        $partyBar.addClass('no-party-selected');
         $partyBar.css('background-color', softRed);
         $partyBar.css('color', grey);
         $partyBar.html(`<p>You have not selected a party</p>

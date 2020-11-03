@@ -253,7 +253,7 @@ class FindAParty {
                 cimg: $('.party-card.selected').data('cimg'),
             });
             // Redirect
-            window.location.href = '/party-details';
+            window.location.href = `/p/${this.selectedId}`;
         } else {
             this.displayError('Please select a party before continuing');
         }

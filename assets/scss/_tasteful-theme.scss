@@ -703,6 +703,16 @@ textarea{
     @extend .alertbox;
     @extend .alertBox--error;
 }
+.alertBox--info {
+    background-color:$gainsboro;
+    color:$text-gray;
+    a {
+        font-weight:700;
+    }
+    svg {
+        fill:$teal;
+    }
+}
 
 // Modals
 // -----------------------------------------------------------------------------

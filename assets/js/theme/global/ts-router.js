@@ -63,6 +63,7 @@ export default class TSRouter {
                         TSCookie.setAffiliateId(data.AfId);
                         TSCookie.setConsultantId(data.ConsultantId);
                         TSCookie.setConsultantName(data.ConsultantName);
+                        TSCookie.setConsultantImage(data.Image);
                         TSCookie.setPartyId(iPid);
                         TSCookie.setPartyHost(data.HostName);
                         TSCookie.setPartyDate(data.Date);

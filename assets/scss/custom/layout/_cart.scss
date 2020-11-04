@@ -85,3 +85,14 @@
         }
     }
 }
+
+// Cart Preview (cart icon)
+// TST-279 Hide 'checkout now' button
+.previewCartAction {
+    .previewCartAction-checkout {
+        display: none;
+    }
+    .previewCartAction-viewCart {
+        width: 100%;
+    }
+}

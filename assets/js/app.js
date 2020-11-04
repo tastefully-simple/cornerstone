@@ -54,6 +54,7 @@ const pageClasses = {
 
 const customClasses = {
     'pages/custom/page/communication-preferences': () => import('./theme/communication-preferences'),
+    'pages/cart': () => import('./theme/common/ts-affiliation-check.js'),
 };
 
 /**

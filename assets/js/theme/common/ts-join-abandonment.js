@@ -1,20 +1,19 @@
-import PageManager from '../page-manager';
 import TSApi from '../common/ts-api';
 import utils from '@bigcommerce/stencil-utils';
 
 const JOIN_PAGE = '/join';
 const CART_PAGE = '/cart.php';
 
-export default class TSJoinAbandonment extends PageManager {
+export default class TSJoinAbandonment {
     constructor(context) {
-        super(context);
-
-        this.BBOK_PRODUCT_ID = this.context.themeSettings.ts_join_ss_product_id;
+        this.BBOK_PRODUCT_ID = context.themeSettings.ts_join_ss_product_id;
         this.api = new TSApi();
         this.modalTemplate = 'common/join-abandonment-modal';
+
+        this.init();
     }
 
-    onReady() {
+    init() {
         utils.api.cart.getCart({}, (err, cart) => {
             if (err) {
                 console.error('utils.api.cart.getCart::error', err);

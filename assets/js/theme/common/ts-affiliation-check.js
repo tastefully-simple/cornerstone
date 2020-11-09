@@ -1,15 +1,14 @@
-import PageManager from '../page-manager';
 import TSApi from './ts-api';
 import TSCookie from './ts-cookie';
 
-export default class TSAffiliationCheck extends PageManager {
-    constructor(context) {
-        super(context);
-
+export default class TSAffiliationCheck {
+    constructor() {
         this.api = new TSApi();
+
+        this.init();
     }
 
-    onReady() {
+    init() {
         this.getCartData()
             .then(cart => {
                 if (cart.length > 0) {

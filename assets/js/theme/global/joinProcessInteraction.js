@@ -385,6 +385,14 @@ function handleFormChange(event) {
 *   on the join/login page.
 */
 function submitLoginInfo() {
+    // prevent autoform fillers from causeing problems.
+    if (toggleLoginSignUp.logInForm === true) {
+        document.getElementById('FirstName').value = '';
+        document.getElementById('LastName').value = '';
+        document.getElementById('EmailAddress2').value = '';
+        document.getElementById('Password2').value = '';
+    }
+
     $.ajax({
         type: 'POST',
         accepts: 'json',

@@ -152,4 +152,16 @@ export default class TSApi {
         return fetch(this.fullUrl(uri))
             .then(response => response.json());
     }
+
+    /*
+     * Join Process Signup Check
+     */
+    checkJoinSignup(cartId, email) {
+        const uri = `/join/check/?cartid=${cartId}&email=${email}`;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+        });
+    }
 }

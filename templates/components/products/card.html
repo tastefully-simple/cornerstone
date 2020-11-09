@@ -60,10 +60,9 @@
                               - Added add-to-cart-btn class
                               - Added a hidden input with its product_id value to be used
                                 in assets/js/theme/common/ts-add-to-cart.js
-                            @razoyo: hide add-to-cart for now
+                            --}}
                             <a href="{{add_to_cart_url}}" data-event-type="product-click" class="button-primary button--small add-to-cart-btn">{{lang 'products.add_to_cart'}}</a>
                             <input type="hidden" name="product_id" value="{{product_id}}">
-                            --}}
                         {{/if}}
                         {{#if out_of_stock_message }}
                             <a href="{{url}}" data-event-type="product-click" class="out-of-stock-button card-figcaption-button" data-product-id="{{id}}">

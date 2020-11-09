@@ -9,6 +9,7 @@ export default class TSAddToCart {
     }
 
     addProductToCart(e) {
+        this.$addToCartBtn.removeAttribute('href'); // to bypass BC's GA event
         e.preventDefault();
 
         const formData = new FormData();

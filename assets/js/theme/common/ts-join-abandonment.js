@@ -79,11 +79,14 @@ export default class TSJoinAbandonment {
         } else {
             let errorMessage;
             if (this.signupInfo.redirectPage === -3) {
-                errorMessage = `This email address is associated with an active consultant account.
-                    Enter a new email address.`;
+                errorMessage = `<p>This email address is associated with an active consultant account.
+                    Enter a new email address.</p>`;
             } else {
                 // case -2
-                errorMessage = 'Active join in process, no more client input requested at this moment.';
+                errorMessage =
+                    `<p>You're on your way!</p>
+                    <p>Your application to join Tastefully Simple is already in process and we are
+                    creating your consultant account. You will receive more information via email soon.</p>`;
             }
 
             $wrapper.innerHTML = this.renderErrorHTMLBlock(errorMessage);
@@ -117,13 +120,13 @@ export default class TSJoinAbandonment {
 
     renderErrorHTMLBlock(message) {
         return `<div class="jam-container">
-            <div class="jam-title">
-                <h1 class="frameheading-1 wanwhite-text">Error</h1>
+            <div class="jam-title" style="padding:1.4rem;">
+                <span class="close-modal-secondary jam-close" style="cursor:pointer;"></span>
             </div>
             <div class="jam-body">
                 <div class="jam-body-wrapper">
-                    <p>${message}</p>
-                    <button class='jam-close'>close</button>
+                    <span class="icon-special-confetti"></span>
+                    ${message}
                 </div>
             </div>
         </div>`;

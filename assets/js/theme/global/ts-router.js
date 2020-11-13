@@ -68,16 +68,22 @@ export default class TSRouter {
                     })
                     .then(data => {
                         if (typeof data !== 'number') {
-                            TSCookie.setAffiliateId(data.AfId);
-                            TSCookie.setConsultantId(data.ConsultantId);
-                            TSCookie.setConsultantName(data.ConsultantName);
-                            TSCookie.setConsultantImage(data.Image);
-                            TSCookie.setPartyId(iPid);
-                            TSCookie.setPartyHost(data.HostName);
-                            TSCookie.setPartyDate(data.Date);
-                            TSCookie.setPartyTime(data.Time);
-                            localStorage.setItem('partyDetails', JSON.stringify(data));
-                            window.location = '/party-details';
+                            if (data.IsClosed) {
+                                TSCookie.setPartyId(iPid);
+                                localStorage.setItem('partyDetails', data);
+                                window.location = '/closed-party';
+                            } else {
+                                TSCookie.setAffiliateId(data.AfId);
+                                TSCookie.setConsultantId(data.ConsultantId);
+                                TSCookie.setConsultantName(data.ConsultantName);
+                                TSCookie.setConsultantImage(data.Image);
+                                TSCookie.setPartyId(iPid);
+                                TSCookie.setPartyHost(data.HostName);
+                                TSCookie.setPartyDate(data.Date);
+                                TSCookie.setPartyTime(data.Time);
+                                localStorage.setItem('partyDetails', JSON.stringify(data));
+                                window.location = '/party-details';
+                            }
                         } else {
                             TSCookie.setPartyId(iPid);
                             localStorage.setItem('partyDetails', data);

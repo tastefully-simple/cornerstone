@@ -104,6 +104,8 @@ export default class TSJoinAbandonment {
             if (err) {
                 console.error('utils.api.cart.itemRemove::error', err);
             }
+
+            window.location = CART_PAGE;
         });
     }
 
@@ -115,7 +117,7 @@ export default class TSJoinAbandonment {
         const $hideModal = $modal;
         $hideModal.style.display = 'none';
         this.deleteBBOKItem();
-        window.location = CART_PAGE;
+        localStorage.removeItem('isJoin');
     }
 
     renderErrorHTMLBlock(message) {

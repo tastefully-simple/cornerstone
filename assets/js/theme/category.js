@@ -2,7 +2,6 @@ import { hooks } from '@bigcommerce/stencil-utils';
 import CatalogPage from './catalog';
 import compareProducts from './global/compare-products';
 import FacetedSearch from './common/faceted-search';
-import TSAddToCart from './common/ts-add-to-cart';
 
 export default class Category extends CatalogPage {
     onReady() {
@@ -14,14 +13,6 @@ export default class Category extends CatalogPage {
             this.onSortBySubmit = this.onSortBySubmit.bind(this);
             hooks.on('sortBy-submitted', this.onSortBySubmit);
         }
-
-        this.initTSAddToCart();
-    }
-
-    // TST-244 Stop add to cart button from redirecting to cart page
-    initTSAddToCart() {
-        const $products = document.querySelectorAll('ul.productGrid li');
-        $products.forEach($product => new TSAddToCart($product));
     }
 
     initFacetedSearch() {

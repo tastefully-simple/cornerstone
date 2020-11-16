@@ -23,6 +23,7 @@ import findConsultant from './global/find-consultant';
 import findParty from './global/find-party';
 import tooltip from './global/tooltip';
 import tsCheckUserLogin from './global/ts-check-user-login';
+import tsAddToCart from './global/ts-add-to-cart';
 
 
 export default class Global extends PageManager {
@@ -49,5 +50,6 @@ export default class Global extends PageManager {
         findParty();
         tooltip();
         tsCheckUserLogin();
+        tsAddToCart();
     }
 }

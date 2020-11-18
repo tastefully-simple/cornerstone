@@ -13,7 +13,8 @@ export default function (context) {
 
         const productId = $(event.currentTarget).data('productId');
 
-        modal.open({ size: 'large' });
+        // TST-295 Set the size of the modal to normal
+        modal.open({ size: '' });
 
         utils.api.product.getById(productId, { template: 'products/quick-view' }, (err, response) => {
             modal.updateContent(response);

@@ -58,20 +58,40 @@ export default class TSRouter {
             if (iPid > 0) {
                 this.showLoading();
                 this.api.getPartyDetails(iPid)
-                    .then(res => res.json())
+                    .then(res => {
+                        /* TST-267 Closed party (HTTP 410) or other
+                         * non-200 responses are being handled in
+                         * Party Detail Widget script in Shogun
+                         */
+                        const newResponse = res.ok ? res.json() : res.status;
+                        return newResponse;
+                    })
                     .then(data => {
-                        TSCookie.setAffiliateId(data.AfId);
-                        TSCookie.setConsultantId(data.ConsultantId);
-                        TSCookie.setConsultantName(data.ConsultantName);
-                        TSCookie.setConsultantImage(data.Image);
-                        TSCookie.setPartyId(iPid);
-                        TSCookie.setPartyHost(data.HostName);
-                        TSCookie.setPartyDate(data.Date);
-                        TSCookie.setPartyTime(data.Time);
-                        window.location = '/party-details';
+                        if (typeof data !== 'number') {
+                            if (data.IsClosed) {
+                                TSCookie.setPartyId(iPid);
+                                localStorage.setItem('partyDetails', data);
+                                window.location = '/closed-party';
+                            } else {
+                                TSCookie.setAffiliateId(data.AfId);
+                                TSCookie.setConsultantId(data.ConsultantId);
+                                TSCookie.setConsultantName(data.ConsultantName);
+                                TSCookie.setConsultantImage(data.Image);
+                                TSCookie.setPartyId(iPid);
+                                TSCookie.setPartyHost(data.HostName);
+                                TSCookie.setPartyDate(data.Date);
+                                TSCookie.setPartyTime(data.Time);
+                                localStorage.setItem('partyDetails', JSON.stringify(data));
+                                window.location = '/party-details';
+                            }
+                        } else {
+                            TSCookie.setPartyId(iPid);
+                            localStorage.setItem('partyDetails', data);
+                            window.location = '/closed-party';
+                        }
                     })
                     .catch(err => {
-                        console.warn('getPartyDetails', err);
+                        console.warn('TSApi::getPartyDetails()', err);
                     });
 
                 return true;
@@ -179,9 +199,14 @@ export default class TSRouter {
     checkUrlForPartyDetailPage() {
         const szUrl = window.location.pathname;
 
-        if (szUrl === '/party-details') {
+        if (szUrl === '/party-details' || szUrl === '/closed-party') {
             const partyId = TSCookie.getPartyId();
             history.pushState(null, null, `/p/${partyId}`);
+
+            if (szUrl === '/closed-party') {
+                TSCookie.deleteParty();
+            }
+
             return true;
         }
         return false;

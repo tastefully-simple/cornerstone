@@ -14,7 +14,7 @@ import carousel from './common/carousel';
 import loadingProgressBar from './global/loading-progress-bar';
 import svgInjector from './global/svg-injector';
 import objectFitImages from './global/object-fit-polyfill';
-import joinProcessInteraction from './global/joinProcessInteraction';
+import tsJoinProcess from './global/ts-join-process';
 import shippingModalInteraction from './global/shippingModalInteraction';
 import accordian from './global/accordian';
 import newsletterAlert from './global/newsletter-alert';
@@ -41,7 +41,7 @@ export default class Global extends PageManager {
         loadingProgressBar();
         svgInjector();
         objectFitImages();
-        joinProcessInteraction(this.context.themeSettings);
+        tsJoinProcess(this.context.themeSettings);
         shippingModalInteraction(this.context.themeSettings);
         accordian();
         newsletterAlert();

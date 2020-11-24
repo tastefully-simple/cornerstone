@@ -875,6 +875,13 @@ function triggerSubmit() {
         const afid = $consultantCard.data('afid') || null;
         const name = $consultantCard.data('name') || null;
 
+        const tmpConsultant = {
+            id: TSCookie.getConsultantId(),
+            name: TSCookie.getConsultantName(),
+        };
+
+        localStorage.setItem('tmpConsultant', JSON.stringify(tmpConsultant));
+
         TSCookie.setConsultantId(cid);
         TSCookie.setConsultantName(name);
         TSCookie.setAffiliateId(afid);
@@ -1002,6 +1009,25 @@ function addBBOKItem() {
     });
 }
 
+// TST-301 make sure to affiliate previous consultant
+// when user does not complete the join process
+function checkTmpConsultant() {
+    const tmpConsultant = localStorage.getItem('tmpConsultant');
+
+    if (tmpConsultant) {
+        const consultant = JSON.parse(tmpConsultant);
+
+        if (consultant.id) {
+            TSCookie.setConsultantId(consultant.id);
+            TSCookie.setConsultantName(consultant.name);
+        } else {
+            TSCookie.deleteConsultant();
+        }
+
+        localStorage.removeItem('tmpConsultant');
+    }
+}
+
 /**
  * Export join process front end functions.
  */
@@ -1074,4 +1100,6 @@ export default function joinProcessInteraction(themeSettings) {
         removeContainer();
         triggerConfetti();
     }
+
+    checkTmpConsultant();
 }

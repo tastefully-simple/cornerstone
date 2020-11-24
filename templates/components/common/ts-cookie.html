@@ -100,6 +100,13 @@
                 Cookies.remove('ptotal');
             },
 
+            deleteConsultant: function() {
+                Cookies.remove('cid');
+                Cookies.remove('name');
+                Cookies.remove('cimg');
+                Cookies.remove('afid');
+            },
+
             setLoginStateChecker: function(loginState) {
                 Cookies.set('loginStateChecker', loginState);
             },

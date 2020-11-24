@@ -51,6 +51,18 @@ export default function (secureBaseUrl, cartId) {
                 .html(response);
             $cartLoading
                 .hide();
+
+            // TST-296 disable body scroll when
+            // preview cart is open and screen's height
+            // is less than/equal to 600px
+            const hideBodyScroll = () => $('body').css('overflow', 'hidden');
+            const showBodyScroll = () => $('body').css('overflow', '');
+
+            if (window.innerHeight <= 600) {
+                $('.previewCart')
+                    .on('mouseover', hideBodyScroll)
+                    .on('mouseout', showBodyScroll);
+            }
         });
     });
 

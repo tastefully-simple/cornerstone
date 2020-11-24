@@ -27,6 +27,22 @@ export default class TSApi {
     }
 
     /*
+     * Cart - Affiliation check
+     * var affiliations {}
+     * - CartID
+     * - Email
+     * - ConsultantID
+     * - PartyID
+     */
+    affiliationCheck(affiliations) {
+        return fetch(this.fullUrl('/cart/affiliationcheck'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(affiliations),
+        });
+    }
+
+    /*
      * Find a Consultant
      */
     searchConsultantsByZip(zip, radius, page, size) {
@@ -135,5 +151,17 @@ export default class TSApi {
 
         return fetch(this.fullUrl(uri))
             .then(response => response.json());
+    }
+
+    /*
+     * Join Process Signup Check
+     */
+    checkJoinSignup(cartId, email) {
+        const uri = `/join/check/?cartid=${cartId}&email=${email}`;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+        });
     }
 }

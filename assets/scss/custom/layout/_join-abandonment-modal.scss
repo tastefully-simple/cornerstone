@@ -1,0 +1,85 @@
+.join-abandonment-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+    .jam-container {
+         background-color: $gainsboro;
+         border-top-left-radius: 20px;
+         border-top-right-radius: 20px;
+         margin: 30% auto;
+         width: 90%;
+         padding-bottom: 0.3rem;
+         position: relative;
+
+         .jam-title {
+             background-color: $teal;
+             border-radius: 3px;
+             padding: 0.5rem;
+
+             h1 {
+                 margin: 0;
+             }
+         }
+
+         .jam-body {
+             background-color: $wan-white;
+             box-shadow: 4px 4px 2px $shady-lady;
+             margin: 0.7rem;
+             text-align: center;
+
+             .jam-body-wrapper {
+                 margin: 0 auto;
+                 max-width: 260px;
+                 padding: 1rem 0;
+
+                 .icon-special-confetti {
+                     height: 90px;
+                     width: 70px;
+                 }
+
+                 .jam-complete-signup {
+                     width: 90%;
+                 }
+
+                 .jam-close {
+                     font-size: 0.9rem;
+                     text-decoration: underline;
+                 }
+             }
+         }
+    }
+}
+
+@media only screen and (min-width:801px) {
+    .join-abandonment-modal {
+        .jam-container {
+            font-size: 1.2rem;
+            margin: 10% auto;
+            max-width: 550px;
+            width: 100%;
+
+            .jam-title h1 {
+                font-size: 1.2rem;
+            }
+
+            .jam-body .jam-body-wrapper {
+                max-width: 310px;
+
+                .jam-complete-signup {
+                    font-size: 1.2rem;
+                }
+
+                .jam-close {
+                    font-size: 1.1rem;
+                }
+            }
+        }
+    }
+}

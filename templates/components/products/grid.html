@@ -1,10 +1,7 @@
 <ul class="productGrid">
     {{#each products}}
     <li class="product">
-            {{!-- TST-244 Stop add to cart button from redirecting to cart page
-                - Passed in product_id to be used in components/products/card.html
-            --}}
-            {{>components/products/card product_id=this.id settings=../settings show_compare=../show_compare show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event=../event position=(add @index 1)}}
+        {{>components/products/card settings=../settings show_compare=../show_compare show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event=../event position=(add @index 1)}}
     </li>
     {{/each}}
 </ul>

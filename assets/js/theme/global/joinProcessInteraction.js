@@ -1,6 +1,7 @@
 import { confetti } from 'dom-confetti';
 import TSCookie from '../common/ts-cookie';
 import ConsultantCard from '../common/consultant-card';
+import utils from '@bigcommerce/stencil-utils';
 
 const loginPage = document.getElementById('join-login');
 const personalInfoPage = document.getElementById('personal-info');
@@ -957,27 +958,6 @@ function triggerConfetti() {
 * to add the consultant kit to the cart and associate the user who is joining with a unique ID
 * from BigCommerce.
 */
-function postData(url = '', cartItems = {}) {
-    return fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(cartItems),
-    });
-}
-
-function getData(url = '') {
-    return fetch(url, {
-        method: 'GET',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-}
-
 function deleteData(url = '') {
     return fetch(url, {
         method: 'DELETE',
@@ -1001,42 +981,24 @@ function getUrlParams() {
     }
 }
 
-function createCart() {
-    postData('/api/storefront/cart', {
-        lineItems: [
-            {
-                quantity: 1,
-                productId: API_URLS.JOIN_SS_PRODUCT_ID,
-            },
-        ],
-    })
-        .then(response => response.json())
-        .then(data => {
-            setLoginFormId(data.id);
-        })
-        .catch(error => console.error(error));
-}
+function addBBOKItem() {
+    const formData = new FormData();
+    formData.append('action', 'add');
+    formData.append('product_id', API_URLS.JOIN_SS_PRODUCT_ID);
+    formData.append('qty[]', '1');
 
-function deleteBBOKCart() {
-    $(document).ready(() => {
-        getData('/api/storefront/cart')
-            .then(response => response.json())
-            .then(cart => {
-                if (cart.length > 0) {
-                    const physicalItems = cart[0].lineItems.physicalItems;
+    utils.api.cart.itemAdd(formData, (itemAddErr, _res) => {
+        if (itemAddErr) {
+            console.error('utils.api.cart.itemAdd::error', itemAddErr);
+        }
 
-                    physicalItems.forEach(item => {
-                        // Delete cart if BBOK product is in cart outside the join process
-                        if (item.productId === Number(API_URLS.JOIN_SS_PRODUCT_ID)) {
-                            deleteData(`/api/storefront/carts/${cart[0].id}`);
-                            return;
-                        }
-                    });
-                }
-            })
-            .catch(err => {
-                console.warn('getData', err);
-            });
+        utils.api.cart.getCart({}, (getCartErr, cart) => {
+            if (getCartErr) {
+                console.error('utils.api.cart.getCart::error', getCartErr);
+            }
+
+            setLoginFormId(cart.id);
+        });
     });
 }
 
@@ -1054,24 +1016,25 @@ export default function joinProcessInteraction(themeSettings) {
         removeContainer();
         toggleStyles();
         $(document).ready(() => {
-            getData('/api/storefront/cart')
-                .then(response => response.json())
-                .then(cart => {
-                    if (cart.length > 0) {
-                        // Delete prev cart before joining
-                        deleteData(`/api/storefront/carts/${cart[0].id}`)
-                            .then(_res => {
-                                // Create cart with BBOK product
-                                createCart();
-                                setLoginFormId(cart[0].id);
-                            })
-                            .catch(err => {
-                                console.warn('deleteCart', err);
-                            });
-                    } else {
-                        createCart();
-                    }
-                });
+            utils.api.cart.getCart({}, (getCartErr, cart) => {
+                if (getCartErr) {
+                    console.error('utils.api.cart.getCart::error', getCartErr);
+                    return;
+                }
+
+                if (cart) {
+                    // Delete existing cart (to get rid of other items)
+                    // and re-add BBOK item if it's been added before
+                    deleteData(`/api/storefront/carts/${cart.id}`)
+                        .then(_res => {
+                            addBBOKItem();
+                        })
+                        .catch(deleteErr => console.error('storefrontAPI::deleteCart', deleteErr));
+                } else {
+                    // cart is undefined. add BBOK item
+                    addBBOKItem();
+                }
+            });
         });
     }
     // call functions on kit page
@@ -1110,15 +1073,5 @@ export default function joinProcessInteraction(themeSettings) {
     if (confirmationPage) {
         removeContainer();
         triggerConfetti();
-    }
-
-    if (!personalInfoPage) {
-        // Don't delete cart if user is in /join or /kit page
-        if (loginPage || kitPage) {
-            return;
-        }
-
-        // Delete cart if BBOK product is in cart outside the join process
-        deleteBBOKCart();
     }
 }

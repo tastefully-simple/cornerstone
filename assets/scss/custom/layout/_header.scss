@@ -7,6 +7,10 @@
     .container{
         padding:0;
     }
+    .previewCart {
+        height:85vh;
+        overflow-y:scroll;
+    }
     &.is-open {
         .header-top-banner {
             display:none;
@@ -103,6 +107,15 @@
         font-size: 1rem;
         &:hover {
             color: white;
+        }
+    }
+}
+
+@media only screen and (min-height:600px) {
+    .header {
+        .previewCart {
+            height:auto;
+            overflow-y:unset;
         }
     }
 }

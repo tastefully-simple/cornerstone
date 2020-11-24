@@ -83,7 +83,7 @@ class FindAParty {
         const $viewPartyButton = $($findPartyButtons[0]);
         // View party button
         $viewPartyButton.on('click', () => {
-            window.location.href = '/party-details';
+            window.location.href = `/p/${this.party.id}`;
         });
 
         const $switchPartyButton = $($findPartyButtons[1]);

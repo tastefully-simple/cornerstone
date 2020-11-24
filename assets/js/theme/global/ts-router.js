@@ -70,7 +70,7 @@ export default class TSRouter {
                         if (typeof data !== 'number') {
                             if (data.IsClosed) {
                                 TSCookie.setPartyId(iPid);
-                                localStorage.setItem('partyDetails', data);
+                                localStorage.removeItem('partyDetails');
                                 window.location = '/closed-party';
                             } else {
                                 TSCookie.setAffiliateId(data.AfId);
@@ -86,7 +86,7 @@ export default class TSRouter {
                             }
                         } else {
                             TSCookie.setPartyId(iPid);
-                            localStorage.setItem('partyDetails', data);
+                            localStorage.removeItem('partyDetails');
                             window.location = '/closed-party';
                         }
                     })

@@ -408,8 +408,10 @@ class FindAConsultant {
             $('.cart-affiliate').css('height', 'initial');
             $('.cart-affiliate-btn').text('(edit)');
             $consultantImg.css('display', 'initial');
-            $consultantImg.attr('src', this.consultant.image);
             $consultantImg.attr('alt', `Photograph thumbnail of ${this.consultant.name}`);
+            if (this.consultant.image) {
+                $consultantImg.attr('src', this.consultant.image);
+            }
         } else {
             $('.cart-affiliate').css('height', '83px');
             $('.cart-affiliate-btn').text('(Find a Consultant)');

@@ -3,7 +3,7 @@ import TSApi from '../common/ts-api';
 import ConsultantCard from '../common/consultant-card';
 
 const JOIN_PAGE = '/join';
-const KIT_PAGE = '/business-blast-off-kit-fw2020/';
+const KIT_PAGE = '/join-kit/';
 const PERSONAL_INFO_PAGE = '/tell-us-about-yourself/';
 
 // Indicate which tab to be displayed in the join form
@@ -16,6 +16,7 @@ class TSJoinProcess {
     constructor(themeSettings) {
         this.themeSettings = themeSettings;
         this.bbokProductId = this.themeSettings.ts_join_ss_product_id;
+        this.bbokProducts = this.themeSettings.ts_join_kits;
         this.tsApiBaseUrl = this.themeSettings.ts_tsapi_base_url;
         this.api = new TSApi();
 
@@ -70,7 +71,9 @@ class TSJoinProcess {
 
     renderKit() {
         this.removeClassContainer();
-        $('#kit-page-next').on('click', this.handleKitPageNext);
+        $('body').on('click', '.kit-card', (e) => this.selectKit(e));
+        $('.kit-next-btn').on('click', () => this.handleKitPageNext());
+
         console.log('KIT RENDERED');
     }
 
@@ -212,7 +215,7 @@ class TSJoinProcess {
               window.location.href = `${KIT_PAGE}?id=${data.Id}`;
           },
           error: (error) => {
-              displayLoginErrorMessage(error);
+              this.displayLoginErrorMessage(error);
           },
       });
     }
@@ -242,6 +245,25 @@ class TSJoinProcess {
     /*
      * Kit functions
      */
+
+    selectKit(e) {
+        console.log('selected', e.target);
+        const $kitCard = $(e.target).closest('.kit-card');
+        console.log("KIT CARD", $kitCard);
+        $('.kit-card-header').show();
+        if (!$kitCard.hasClass('selected')) {
+            this.selectedKitId = $kitCard.data('product-id');
+            console.log("thisSelectedKitId", this.selectedKitId);
+            $('.selected').toggleClass('selected');
+            $kitCard.find('.kit-card-header').hide();
+        } else {
+            this.selectedKitId = null;
+            $kitCard.find('.kit-card-header').show();
+        }
+
+        $(e.target).closest('.kit-card').toggleClass('selected');
+    }
+
     handleKitPageNext() {
         const params = new URLSearchParams(window.location.search);
         if (params.has('id')) {
@@ -253,11 +275,42 @@ class TSJoinProcess {
                 const linkId = encodeURIComponent(params.get('xfid'));
                 url = `${url}&xfid=${linkId}`;
             }
-            console.log("URL", url);
-            window.location.href = url;
+
+            // Add selected kit to cart
+            if (this.selectedKitId) {
+                console.log('KIT ADD TO CART', this.selectedKitId);
+                this.addSelectedKitToCart();
+                console.log("URL", url);
+                window.location.href = url;
+            } else {
+                console.log('NO KIT SELECTED', this.selectedKitId);
+            }
         } else {
             window.location.href = '/join';
         }
+    }
+
+    addSelectedKitToCart() {
+        const formData = new FormData();
+        formData.append('action', 'add');
+        formData.append('product_id', this.selectedKitId);
+        formData.append('qty[]', '1');
+
+        utils.api.cart.itemAdd(formData, (itemAddErr, _res) => {
+            console.log('addbbokitem this', this);
+            if (itemAddErr) {
+                console.error('utils.api.cart.itemAdd::error', itemAddErr);
+            }
+
+            utils.api.cart.getCart({}, (getCartErr, cart) => {
+                if (getCartErr) {
+                    console.error('utils.api.cart.getCart::error', getCartErr);
+                }
+
+                console.log("CART IN KIT", cart);
+                //this.setLoginFormId(cart.id);
+            });
+        });
     }
 
     /*

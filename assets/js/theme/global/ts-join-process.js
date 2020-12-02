@@ -1,5 +1,6 @@
 import utils from '@bigcommerce/stencil-utils';
 import TSApi from '../common/ts-api';
+import TSCookie from '../common/ts-cookie';
 import ConsultantCard from '../common/consultant-card';
 
 const JOIN_PAGE = '/join';
@@ -27,71 +28,53 @@ class TSJoinProcess {
         switch (document.location.pathname) {
             case JOIN_PAGE:
                 this.renderJoin();
-                return;
+                break;
             case KIT_PAGE:
                 this.renderKit();
-                return;
+                break;
             case PERSONAL_INFO_PAGE:
                 this.renderPersonalInfo();
-                return;
+                break;
             default:
-                return;
+                break;
         }
     }
 
     renderJoin() {
-        console.log('JOIN RENDERED');
         this.$login = document.getElementById('join-login');
         this.removeClassContainer();
         this.toggleFormTabs();
         $('#joinLoginForm').submit(e => this.handleSubmitLogin(e));
-
-        // @TODO: Update this when the new TSAPI comes in
-        utils.api.cart.getCart({}, (getCartErr, cart) => {
-            if (getCartErr) {
-                console.error('utils.api.cart.getCart::error', getCartErr);
-                return;
-            }
-
-            if (cart) {
-                const self = this;
-                // Delete existing cart (to get rid of other items)
-                // and re-add BBOK item if it's been added before
-                this.deleteCart(cart.id)
-                    .then(_res => {
-                        self.addBBOKItem();
-                    })
-                    .catch(deleteErr => console.error('storefrontAPI::deleteCart', deleteErr));
-            } else {
-                // cart is undefined. add BBOK item
-                this.addBBOKItem();
-            }
-        });
     }
 
     renderKit() {
-        this.removeClassContainer();
-        $('body').on('click', '.kit-card', (e) => this.selectKit(e));
-        $('.kit-next-btn').on('click', () => this.handleKitPageNext());
-
-        console.log('KIT RENDERED');
+        if (this.getUrlIdentifier()) {
+            this.removeClassContainer();
+            $('body').on('click', '.kit-card', (e) => this.selectKit(e));
+            $('.kit-next-btn').on('click', () => this.continueWithKitSelection());
+        } else {
+            window.location.href = JOIN_PAGE;
+        }
     }
 
     renderPersonalInfo() {
-        this.$personalInfo = document.getElementById('personal-info');
+        if (this.getUrlIdentifier()) {
+            this.$personalInfo = document.getElementById('personal-info');
 
-        this.removeClassContainer();
-        //this.styleSelectValue();
-        this.toggleCheckboxes();
-        this.formatInputFields();
-        this.renderFindSponsor();
-        this.openTsTermsModal();
-        this.closeTsTermsModal();
-        this.getTsTermsAndCondition();
-        this.goToCheckout();
+            this.removeClassContainer();
+            this.toggleCheckboxes();
+            this.formatInputFields();
+            this.renderFindSponsor();
+            this.openJoinTermsModal();
+            this.closeJoinTermsModal();
+
+            $('#checkout').on('click', (e) => this.goToCheckout(e));
+        } else {
+            window.location.href = JOIN_PAGE;
+        }
     }
 
-    /*
+    /**
      * Join functions
      */
 
@@ -105,9 +88,9 @@ class TSJoinProcess {
         const email2 = this.$login.querySelector('#email2Field');
         const forgotPassword = this.$login.querySelector('.forgot-password');
 
-        checkbox.addEventListener('change', (event) => {
+        checkbox.addEventListener('change', (e) => {
             this.clearErrorMessages();
-            if (event.target.checked) {
+            if (e.target.checked) {
                 JOIN_FORM_TABS.signup = true;
                 JOIN_FORM_TABS.login = false;
                 login.classList.remove('active');
@@ -135,32 +118,6 @@ class TSJoinProcess {
         });
     }
 
-    addBBOKItem() {
-        const formData = new FormData();
-        formData.append('action', 'add');
-        formData.append('product_id', this.bbokProductId);
-        formData.append('qty[]', '1');
-
-        utils.api.cart.itemAdd(formData, (itemAddErr, _res) => {
-            console.log('addbbokitem this', this);
-            if (itemAddErr) {
-                console.error('utils.api.cart.itemAdd::error', itemAddErr);
-            }
-
-            utils.api.cart.getCart({}, (getCartErr, cart) => {
-                if (getCartErr) {
-                    console.error('utils.api.cart.getCart::error', getCartErr);
-                }
-
-                this.setLoginFormId(cart.id);
-            });
-        });
-    }
-
-    setLoginFormId(id = '') {
-        $('#joinLoginForm > #Id').val(id);
-    }
-
     handleSubmitLogin(e) {
         e.preventDefault();
 
@@ -177,9 +134,9 @@ class TSJoinProcess {
         if (JOIN_FORM_TABS.login && (email1 === '' || password1 === '')) {
             $loginErrors.append(emptyFieldsErrorMessage);
         } else if (JOIN_FORM_TABS.signup) {
-            const emptyFields = $('#joinLoginForm input').filter(function() {
-                $.trim($(this).val()).length === 0;
-            });
+            const emptyFields = $('#joinLoginForm input').filter(() => (
+                $.trim($(this).val()).length === 0
+            ));
 
             if (emptyFields.length > 0) {
                 $loginErrors.append(emptyFieldsErrorMessage);
@@ -204,20 +161,15 @@ class TSJoinProcess {
             $('#Password2').val('');
         }
 
-      const userInfo = $('#joinLoginForm').serialize();
-      $.ajax({
-          type: 'POST',
-          accepts: 'json',
-          url: `${this.tsApiBaseUrl}/join/login`,
-          data: userInfo,
-          cache: false,
-          success: (data) => {
-              window.location.href = `${KIT_PAGE}?id=${data.Id}`;
-          },
-          error: (error) => {
-              this.displayLoginErrorMessage(error);
-          },
-      });
+        const userInfo = $('#joinLoginForm').serialize();
+        this.api.createJoinSession(userInfo)
+            .done(data => {
+                console.log("createJoinSession data", data);
+                // @TODO: get the email URL identifier from API response
+                const hardCodedId = 'hardcoded@example.com';
+                window.location.href = `${KIT_PAGE}?id=${hardCodedId}`;
+            })
+            .fail(error => this.displayLoginErrorMessage(error));
     }
 
     /**
@@ -241,19 +193,17 @@ class TSJoinProcess {
         }
     }
 
-
-    /*
+    /**
      * Kit functions
      */
 
     selectKit(e) {
-        console.log('selected', e.target);
         const $kitCard = $(e.target).closest('.kit-card');
-        console.log("KIT CARD", $kitCard);
+
         $('.kit-card-header').show();
+
         if (!$kitCard.hasClass('selected')) {
             this.selectedKitId = $kitCard.data('product-id');
-            console.log("thisSelectedKitId", this.selectedKitId);
             $('.selected').toggleClass('selected');
             $kitCard.find('.kit-card-header').hide();
         } else {
@@ -264,29 +214,36 @@ class TSJoinProcess {
         $(e.target).closest('.kit-card').toggleClass('selected');
     }
 
-    handleKitPageNext() {
-        const params = new URLSearchParams(window.location.search);
-        if (params.has('id')) {
-            const formId = params.get('id');
-            let url = `${PERSONAL_INFO_PAGE}?id=${formId}`;
+    continueWithKitSelection() {
+        // Add selected kit to cart
+        if (this.selectedKitId) {
+            // Store selectedKitId cookie to track which kit was selected
+            // in join kit cart abandonment
+            TSCookie.setSelectedKitId(this.selectedKitId);
 
-            // if we are here with a link id, we should have passed through step 1 which creates a cart.
-            if (params.has('xfid')) {
-                const linkId = encodeURIComponent(params.get('xfid'));
-                url = `${url}&xfid=${linkId}`;
-            }
+            utils.api.cart.getCart({}, (getCartErr, cart) => {
+                if (getCartErr) {
+                    console.error('utils.api.cart.getCart::error', getCartErr);
+                    return;
+                }
 
-            // Add selected kit to cart
-            if (this.selectedKitId) {
-                console.log('KIT ADD TO CART', this.selectedKitId);
-                this.addSelectedKitToCart();
-                console.log("URL", url);
-                window.location.href = url;
-            } else {
-                console.log('NO KIT SELECTED', this.selectedKitId);
-            }
+                if (cart) {
+                    // Delete existing cart (to get rid of other items)
+                    // and re-add kit if it's been added before
+                    this.deleteCart(cart.id)
+                        .then(_res => {
+                            this.addSelectedKitToCart();
+                        })
+                        .catch(deleteErr => console.error('storefrontAPI::deleteCart', deleteErr));
+                } else {
+                    // Cart is undefined, add kit
+                    this.addSelectedKitToCart();
+                }
+            });
         } else {
-            window.location.href = '/join';
+            // @TODO: what should the error message look like
+            // when user did not select a kit?
+            console.error('NO KIT SELECTED', this.selectedKitId);
         }
     }
 
@@ -297,7 +254,6 @@ class TSJoinProcess {
         formData.append('qty[]', '1');
 
         utils.api.cart.itemAdd(formData, (itemAddErr, _res) => {
-            console.log('addbbokitem this', this);
             if (itemAddErr) {
                 console.error('utils.api.cart.itemAdd::error', itemAddErr);
             }
@@ -307,43 +263,36 @@ class TSJoinProcess {
                     console.error('utils.api.cart.getCart::error', getCartErr);
                 }
 
-                console.log("CART IN KIT", cart);
-                //this.setLoginFormId(cart.id);
+                const selectedKit = cart.lineItems.physicalItems[0];
+                const userInfo = {
+                    Id: this.getUrlIdentifier(),
+                    cartId: cart.id,
+                    kitSku: selectedKit.sku,
+                };
+
+                this.api.updateJoinSession(userInfo)
+                    .done(() => {
+                        const url = `${PERSONAL_INFO_PAGE}?id=${this.getUrlIdentifier()}`;
+                        window.location.href = url;
+                    })
+                    .fail(error => {
+                        console.error('TSApi::updateJoinSession()', error);
+                    });
             });
         });
     }
 
-    /*
+    /**
      * Personal Info functions
      */
-
-    // @TODO: find out what is the purpose of this, I don't currently
-    // see the effect when removing the class "empty". Then rename the
-    // function
-    // This function will change value styling once a value is selected.
-    styleSelectValue() {
-        const $dates = this.$personalInfo.querySelectorAll('[type="date"]');
-        const $selectors = this.$personalInfo.querySelectorAll('[type="select"]');
-
-        // @TODO: put this function outside of styleSelectValue
-        function addChangeHandler(elementArray) {
-            elementArray.forEach((element) => {
-                element.addEventListener('change', () => {
-                    element.classList.remove('empty');
-                });
-            });
-        }
-        if ($dates) { addChangeHandler(dates); }
-        if ($selectors) { addChangeHandler(selectors); }
-    }
 
     togglePrimaryPhoneCheckbox() {
         const $phoneCheckbox = this.$personalInfo.querySelector('#MobilePhoneCheckbox');
         const $primaryPhone = this.$personalInfo.querySelector('#PrimaryPhone');
         const $primaryPhoneDiv = this.$personalInfo.querySelector('#primaryPhoneField');
 
-        $phoneCheckbox.addEventListener('change', (event) => {
-            if (!event.target.checked) {
+        $phoneCheckbox.addEventListener('change', (e) => {
+            if (!e.target.checked) {
                 $primaryPhoneDiv.classList.remove('disabled');
                 $primaryPhone.removeAttribute('disabled');
             } else {
@@ -357,8 +306,8 @@ class TSJoinProcess {
     toggleTextOptInCheckbox() {
         const $optInText = this.$personalInfo.querySelector('#OptInText');
 
-        $optInText.addEventListener('change', () => {
-            if (OptInText.checked === true) {
+        $optInText.addEventListener('change', (e) => {
+            if (e.target.checked) {
                 document.getElementById('OptInText').checked = true;
             } else {
                 document.getElementById('OptInText').checked = false;
@@ -370,8 +319,8 @@ class TSJoinProcess {
         const addressCheckbox = this.$personalInfo.querySelector('#AddressCheckbox');
         const shippingFieldset = this.$personalInfo.querySelector('#shipping-address');
 
-        addressCheckbox.addEventListener('change', (event) => {
-            if (!event.target.checked) {
+        addressCheckbox.addEventListener('change', (e) => {
+            if (!e.target.checked) {
                 shippingFieldset.classList.remove('hidden');
             } else {
                 $('#shipping-address input').val('');
@@ -395,17 +344,19 @@ class TSJoinProcess {
         });
     }
 
-    openTsTermsModal() {
+    openJoinTermsModal() {
         const $termsModal = this.$personalInfo.querySelector('#terms-modal');
         const $modalLink = this.$personalInfo.querySelector('#openTermsModal');
 
-        $modalLink.addEventListener('click', (event) => {
-            event.preventDefault();
+        this.getJoinTermsAndConditions();
+
+        $modalLink.addEventListener('click', (e) => {
+            e.preventDefault();
             $termsModal.classList.add('modal-overlay--active');
         });
     }
 
-    closeTsTermsModal() {
+    closeJoinTermsModal() {
         const $termsModal = this.$personalInfo.querySelector('#terms-modal');
         const $closeIcons = this.$personalInfo.querySelectorAll('.terms-close');
 
@@ -416,32 +367,27 @@ class TSJoinProcess {
         });
     }
 
-    getTsTermsAndCondition() {
-        $.ajax({
-            type: 'GET',
-            accepts: 'json',
-            url: `${this.tsApiBaseUrl}/join/tc`,
-            success: (data) => {
+    getJoinTermsAndConditions() {
+        this.api.getJoinTermsAndConditions()
+            .done(data => {
                 if (data !== null) {
                     document.getElementById('TermsConditionsVersion').value = data.Version;
                     $('#terms-conditions').append(`
                         <div>${data.HtmlMarkup}</div>
                     `);
                 }
-            },
-            error: () => {
+            })
+            .fail(() => {
                 $('#terms-conditions-backup').removeClass('hidden');
-            },
-        });
+            });
     }
 
     toggleTermsCheckbox() {
         const $visibleCheckbox = this.$personalInfo.querySelector('#TermsCheckboxVisible');
         const $termsConditionsOptIn = this.$personalInfo.querySelector('#TermsConditionsOptIn');
-        console.log("TERMS CONDITION", $termsConditionsOptIn);
 
-        $visibleCheckbox.addEventListener('change', () => {
-            if ($visibleCheckbox.checked === true) {
+        $visibleCheckbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
                 $termsConditionsOptIn.checked = true;
             } else {
                 $termsConditionsOptIn.checked = false;
@@ -449,61 +395,33 @@ class TSJoinProcess {
         });
     }
 
-    goToCheckout() {
-        this.validateCheckout();
-        const $checkoutButton = this.$personalInfo.querySelector('#checkout');
+    goToCheckout(e) {
+        e.preventDefault();
 
-        $checkoutButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.setSubmissionDefaults();
-            this.clearErrorMessages();
-            localStorage.setItem('isJoin', true);
-            const $form = $('#frmJoinPersonalInfo');
-            const disabled = $form.find(':input:disabled').removeAttr('disabled');
-            const serialized = $form.serialize();
-            disabled.attr('disabled', 'disabled');
+        this.setSubmissionDefaults();
+        this.clearErrorMessages();
+        localStorage.setItem('isJoin', true);
+        const $form = $('#frmJoinPersonalInfo');
+        // Insert URL identifier to #Id input field
+        $($form).find('#Id').val(this.getUrlIdentifier());
+        const disabled = $form.find(':input:disabled').removeAttr('disabled');
+        const userInfo = $form.serialize();
+        disabled.attr('disabled', 'disabled');
 
-            const $consultantCard = $('.consultant-card.selected');
-            const cid = $consultantCard.data('cid') || null;
-            const afid = $consultantCard.data('afid') || null;
-            const name = $consultantCard.data('name') || null;
+        const $consultantCard = $('.consultant-card.selected');
+        const cid = $consultantCard.data('cid') || null;
+        const afid = $consultantCard.data('afid') || null;
+        const name = $consultantCard.data('name') || null;
 
-            TSCookie.setConsultantId(cid);
-            TSCookie.setConsultantName(name);
-            TSCookie.setAffiliateId(afid);
+        TSCookie.setConsultantId(cid);
+        TSCookie.setConsultantName(name);
+        TSCookie.setAffiliateId(afid);
 
-            const self = this;
-            $.ajax({
-                type: 'POST',
-                url: `${this.tsApiBaseUrl}/join/user`,
-                data: serialized,
-                cache: true,
-                success: () => {
-                    window.location.href = '/checkout.php';
-                },
-                error: (error) => {
-                    self.displayErrorMessage(error);
-                },
-            });
-        });
-    }
-
-    /**
-    * This function will grab the BigCommerce unique ID that is passed from the join/login page
-    * and use it to validate the form submission to Tastefully Simple's endpoint.
-    */
-    validateCheckout() {
-        const params = new URLSearchParams(window.location.search);
-
-        if (params.has('id')) {
-            this.setPersonalInfoFormId(params.get('id'));
-        } else {
-            window.location.href = '/join';
-        }
-    }
-
-    setPersonalInfoFormId(id = '') {
-        $('#frmJoinPersonalInfo > #Id').val(id);
+        this.api.updateJoinSession(userInfo)
+            .done(() => {
+                window.location.href = '/checkout.php';
+            })
+            .fail(error => this.displayCheckoutErrorMessage(error));
     }
 
     setSubmissionDefaults() {
@@ -518,7 +436,7 @@ class TSJoinProcess {
         if (this.$personalInfo.querySelector('#AddressCheckbox').checked) {
             const $billingLine1 = this.$personalInfo.querySelector('#BillingAddressLine1');
             const $billingLine2 = this.$personalInfo.querySelector('#BillingAddressLine2');
-            const $billingCity = this.personalInfo.querySelector('#BillingCity');
+            const $billingCity = this.$personalInfo.querySelector('#BillingCity');
             const $billingState = this.$personalInfo.querySelector('#BillingState');
             const $billingZip = this.$personalInfo.querySelector('#BillingZip');
 
@@ -526,7 +444,7 @@ class TSJoinProcess {
                 this.$personalInfo.querySelector('#ShippingAddressLine1').value = $billingLine1.value;
             }
 
-            if (value) {
+            if ($billingLine2.value) {
                 this.$personalInfo.querySelector('#ShippingAddressLine2').value = $billingLine2.value;
             }
 
@@ -552,13 +470,13 @@ class TSJoinProcess {
             const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
             const year = DOB.getFullYear();
             DOB = `${month}/${day}/${year}`;
-            this.$personalInfo.querySelector('DateOfBirth').value = DOB;
+            this.$personalInfo.querySelector('#DateOfBirth').value = DOB;
         } else {
-            this.$personalInfo.querySelector('DateOfBirth').value = '';
+            this.$personalInfo.querySelector('#DateOfBirth').value = '';
         }
     }
 
-    displayPersonalInfoErrorMessage(error) {
+    displayCheckoutErrorMessage(error) {
         if (error.responseJSON.errors) {
             $.each(error.responseJSON.errors, (i) => {
                 const errors = error.responseJSON.errors[i];
@@ -574,9 +492,9 @@ class TSJoinProcess {
                 }
             });
             $('#formErrorMessages').append(`
-            <h5 class="join__error" >If you continue to experience issues, please contact the 
-            Customer Services team at 866.448.6446.</li>
-        `);
+                <h5 class="join__error" >If you continue to experience issues, please contact the 
+                Customer Services team at 866.448.6446.</li>
+            `);
         } else if (error) {
             $('#formErrorMessages').append(`
                 <h4 class="join__error">${error.responseJSON}</h4>
@@ -591,6 +509,7 @@ class TSJoinProcess {
     /**
      * Personal info - Sponsor search
      */
+
     renderFindSponsor() {
         this.sponsorSearchParams = {
             consultantId: null,
@@ -618,7 +537,7 @@ class TSJoinProcess {
         $('#btnConsZipSearch').on('click', (e) => this.searchSponsorByZip(e));
     }
 
-    handleSponsorSearchFormChange(e, event) {
+    handleSponsorSearchFormChange(e, _event) {
         const target = e.target;
         if (e.srcElement.form.id === 'consultantSearchForm'
             && target.name !== 'ConsultantState'
@@ -643,8 +562,7 @@ class TSJoinProcess {
             $('#txtConsultantName').val('');
             $('#txtZipCode').val('');
             const apiParams = `cid/${this.sponsorSearchParams.consultantId}`;
-            console.log("API PARAMS", this.sponsorSearchParams);
-            this.getSponsorById(apiParams);
+            this.getSponsor(apiParams);
         }
     }
 
@@ -662,7 +580,7 @@ class TSJoinProcess {
             $('#txtConsultantID').val('');
             $('#txtZipCode').val('');
             const apiParams = `name/${this.sponsorSearchParams.consultantName}/${this.sponsorStateLocation}/1`;
-            this.getSponsorByName(apiParams);
+            this.getSponsor(apiParams);
         }
     }
 
@@ -683,72 +601,40 @@ class TSJoinProcess {
         }
     }
 
-    getSponsorById(apiParams) {
-        const self = this;
-        $.ajax({
-            type: 'GET',
-            accepts: 'json',
-            url: `${self.tsApiBaseUrl}/search/join/${apiParams}`,
-            success: (data) => {
+    /**
+     * Get Sponsor by ID or Name
+     */
+    getSponsor(apiParams) {
+        this.api.getSponsor(apiParams)
+            .done(data => {
                 if (data.Results !== null) {
-                    console.log("DATA", data);
-                    self.renderSponsorResult(data);
+                    this.renderSponsorResult(data);
                 }
-            },
-            error: (err) => {
-                const statusCode = err.status.toString();
-                if (statusCode[0] === '5') {
-                    self.renderSponsorErrorMessage();
+            })
+            .fail(error => {
+                if (error.status >= 500 && error.status < 600) {
+                    this.renderSponsorErrorMessage();
                 } else {
-                    self.sponsorOptedOutErrorMessage();
+                    this.sponsorOptedOutErrorMessage();
                 }
-            },
-        });
-    }
-
-    getSponsorByName(apiParams) {
-        const self = this;
-        $.ajax({
-            type: 'GET',
-            accepts: 'json',
-            url: `${self.tsApiBaseUrl}/search/join/${apiParams}`,
-            success: (data) => {
-                if (data.Results !== null) {
-                    self.renderSponsorResult(data);
-                }
-            },
-            error: (err) => {
-                const statusCode = err.status.toString();
-                if (statusCode[0] === '5') {
-                    self.renderSponsorErrorMessage();
-                } else {
-                    self.sponsorOptedOutErrorMessage();
-                }
-            },
-        });
+            });
     }
 
     getSponsorByZip(apiParams) {
-        const self = this;
-        $.ajax({
-            type: 'GET',
-            accepts: 'json',
-            url: `${self.tsApiBaseUrl}/search/join/${apiParams}`,
-            success: (data) => {
+        this.api.getSponsor(apiParams)
+            .done(data => {
                 if (data.Results !== null) {
-                    self.renderSponsorResult(data);
+                    this.renderSponsorResult(data);
                 }
-            },
-            error: (err) => {
-                const statusCode = err.status.toString();
-                if (statusCode[0] === '5') {
-                    self.renderSponsorErrorMessage();
+            })
+            .fail(error => {
+                if (error.status >= 500 && error.status < 600) {
+                    this.renderSponsorErrorMessage();
                 } else {
                     document.getElementById('divTsConsFound').style.display = 'block';
-                    self.renderSponsorResult(self.defaultSponsorData);
+                    this.renderSponsorResult(this.defaultSponsorData);
                 }
-            },
-        });
+            });
     }
 
     renderSponsorResult(data) {
@@ -765,7 +651,6 @@ class TSJoinProcess {
                 }
             });
             $('body').on('click', '#sponsorSearchData .consultant-card', (e) => {
-                console.log("THISSPONSOR", this);
                 this.selectSponsor(e);
             });
         });
@@ -818,6 +703,18 @@ class TSJoinProcess {
      * Common
      */
 
+    /**
+     * This function is used in Kit page and Personal Info page
+     * to fetch the email URL Identifier
+     */
+    getUrlIdentifier() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('id') !== 'undefined') {
+            return urlParams.get('id');
+        }
+    }
+
     deleteCart(cartId) {
         return fetch(`/api/storefront/carts/${cartId}`, {
             method: 'DELETE',
@@ -856,7 +753,7 @@ class TSJoinProcess {
      */
     formatInputFields() {
         const $cellPhone = document.getElementById('CellPhone');
-        $cellPhone.addEventListener('keydown', (e) =>this.enforceFormat(e));
+        $cellPhone.addEventListener('keydown', (e) => this.enforceFormat(e));
         $cellPhone.addEventListener('keyup', (e) => this.formatToPhone(e));
 
         const $primaryPhone = document.getElementById('PrimaryPhone');
@@ -883,7 +780,7 @@ class TSJoinProcess {
 
     enforceFormat(e) {
         // Input must be of a valid number format or a modifier key, and not longer than ten digits
-        if (!isNumericInput(e) && !this.isModifierKey(e)) {
+        if (!this.isNumericInput(e) && !this.isModifierKey(e)) {
             e.preventDefault();
         }
     }
@@ -895,7 +792,23 @@ class TSJoinProcess {
 
         const target = e.target;
         const input = target.value.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
-        target.value = formatToPhoneSub(input);
+        target.value = this.formatToPhoneSub(input);
+    }
+
+    formatToPhoneSub(inputValue) {
+        const input = inputValue.replace(/\D/g, '').substring(0, 10); // First ten digits of input only
+        const zip = input.substring(0, 3);
+        const middle = input.substring(3, 6);
+        const last = input.substring(6, 10);
+
+        if (input.length > 6) {
+            return `${zip}-${middle}-${last}`;
+        } else if (input.length > 3) {
+            return `${zip}-${middle}`;
+        } else if (input.length > 0) {
+            return `${zip}`;
+        }
+        return inputValue;
     }
 
     formatToSSN(e) {
@@ -946,7 +859,7 @@ class TSJoinProcess {
     }
 }
 
-export default function(themeSettings) {
+export default function (themeSettings) {
     $(document).ready(() => {
         const joinProcess = new TSJoinProcess(themeSettings);
 

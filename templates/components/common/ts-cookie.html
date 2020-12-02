@@ -115,6 +115,14 @@
                 return Cookies.get('loginStateChecker');
             },
 
+            setSelectedKitId: function(id) {
+                Cookies.set('selectedKitId', id);
+            },
+
+            getSelectedKitId: function() {
+                return Cookies.get('selectedKitId');
+            },
+
             // Debugging
             getTest: function() {
                 return Cookies.get('_test');

@@ -154,14 +154,55 @@ export default class TSApi {
     }
 
     /*
-     * Join Process Signup Check
+     * Join Process
      */
+
     checkJoinSignup(cartId, email) {
         const uri = `/join/check/?cartid=${cartId}&email=${email}`;
 
         return fetch(this.fullUrl(uri), {
             method: 'GET',
             headers: { Accept: 'application/json' },
+        });
+    }
+
+    createJoinSession(payload) {
+        return $.ajax({
+            type: 'POST',
+            accepts: 'json',
+            url: this.fullUrl('/join-sessions'),
+            data: payload,
+        });
+    }
+
+    updateJoinSession(payload) {
+        const uri = `/join-sessions/${payload.email}`;
+
+        return $.ajax({
+            type: 'PATCH',
+            accepts: 'json',
+            url: this.fullUrl(uri),
+            data: payload,
+        });
+    }
+
+    // Get Sponsor
+    getSponsor(params) {
+        const uri = `/search/join/${params}`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
+        });
+    }
+
+    // Get TS Join Terms and Conditions
+    getJoinTermsAndConditions() {
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl('/join/tc'),
         });
     }
 }

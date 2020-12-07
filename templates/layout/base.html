@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html class="no-js" lang="{{ locale_name }}">
     <head>
+        {{> components/common/gtm-datalayer }}
+        
         <title>{{ head.title }}</title>
         {{{ resourceHints }}}
         {{{ head.meta_tags }}}
@@ -44,6 +46,11 @@
         {{> components/common/ts-cookie }}
     </head>
     <body>
+        <!-- Google Tag Manager (noscript) installed by Razoyo 11/24 to theme template layout base.html-->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PD7HGB2"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        
         <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
 
         {{~#and settings.privacy_cookie settings.is_eu_ip_address}}

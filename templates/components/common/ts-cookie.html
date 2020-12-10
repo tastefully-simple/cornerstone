@@ -47,8 +47,9 @@
             },
 
             // Party Id
-            setPartyId: function(pid) {
-                Cookies.set('pid', pid, { expires: 30 });
+            setPartyId: function(pid, expirationDate) {
+                expirationDate = expirationDate || 30;
+                Cookies.set('pid', pid, { expires: expirationDate });
             },
 
             getPartyId: function() {
@@ -56,8 +57,9 @@
             },
 
             // Party Host
-            setPartyHost: function(phost) {
-                Cookies.set('phost', phost, { expires: 30 });
+            setPartyHost: function(phost, expirationDate) {
+                expirationDate = expirationDate || 30;
+                Cookies.set('phost', phost, { expires: expirationDate });
             },
 
             getPartyHost: function() {
@@ -65,8 +67,9 @@
             },
 
             // Party Date
-            setPartyDate: function(pdate) {
-                Cookies.set('pdate', pdate, { expires: 30 });
+            setPartyDate: function(pdate, expirationDate) {
+                expirationDate = expirationDate || 30;
+                Cookies.set('pdate', pdate, { expires: expirationDate });
             },
 
             getPartyDate: function() {
@@ -74,8 +77,9 @@
             },
 
             // Party Time
-            setPartyTime: function(ptime) {
-                Cookies.set('ptime', ptime, { expires: 30 });
+            setPartyTime: function(ptime, expirationDate) {
+                expirationDate = expirationDate || 30;
+                Cookies.set('ptime', ptime, { expires: expirationDate });
             },
 
             getPartyTime: function() {
@@ -83,8 +87,9 @@
             },
 
             // Party Total
-            setPartyTotal: function(ptotal) {
-                Cookies.set('ptotal', ptotal, { expires: 30 });
+            setPartyTotal: function(ptotal, expirationDate) {
+                expirationDate = expirationDate || 30;
+                Cookies.set('ptotal', ptotal, { expires: expirationDate });
             },
 
             getPartyTotal: function() {

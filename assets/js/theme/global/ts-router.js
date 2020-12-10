@@ -67,9 +67,12 @@ export default class TSRouter {
                         return newResponse;
                     })
                     .then(data => {
+                        var date = new Date(data.Date);
+                        date.setDate(date.getDate() + 1);
+
                         if (typeof data !== 'number') {
                             if (data.IsClosed) {
-                                TSCookie.setPartyId(iPid);
+                                TSCookie.setPartyId(iPid, date);
                                 localStorage.removeItem('partyDetails');
                                 window.location = '/closed-party';
                             } else {
@@ -77,15 +80,15 @@ export default class TSRouter {
                                 TSCookie.setConsultantId(data.ConsultantId);
                                 TSCookie.setConsultantName(data.ConsultantName);
                                 TSCookie.setConsultantImage(data.Image);
-                                TSCookie.setPartyId(iPid);
-                                TSCookie.setPartyHost(data.HostName);
-                                TSCookie.setPartyDate(data.Date);
-                                TSCookie.setPartyTime(data.Time);
+                                TSCookie.setPartyId(iPid, date);
+                                TSCookie.setPartyHost(data.HostName, date);
+                                TSCookie.setPartyDate(data.Date, date);
+                                TSCookie.setPartyTime(data.Time, date);
                                 localStorage.setItem('partyDetails', JSON.stringify(data));
                                 window.location = '/party-details';
                             }
                         } else {
-                            TSCookie.setPartyId(iPid);
+                            TSCookie.setPartyId(iPid, date);
                             localStorage.removeItem('partyDetails');
                             window.location = '/closed-party';
                         }
@@ -111,13 +114,16 @@ export default class TSRouter {
                 this.api.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
+                        var date = new Date(data.Date);
+                        date.setDate(date.getDate() + 1);
+
                         TSCookie.setAffiliateId(data.AfId);
                         TSCookie.setConsultantId(data.ConsultantId);
                         TSCookie.setConsultantName(data.ConsultantName);
-                        TSCookie.setPartyId(iPid);
-                        TSCookie.setPartyHost(data.HostName);
-                        TSCookie.setPartyDate(data.Date);
-                        TSCookie.setPartyTime(data.Time);
+                        TSCookie.setPartyId(iPid, date);
+                        TSCookie.setPartyHost(data.HostName, date);
+                        TSCookie.setPartyDate(data.Date, date);
+                        TSCookie.setPartyTime(data.Time, date);
                         window.location = '/host-planner';
                     })
                     .catch(err => {

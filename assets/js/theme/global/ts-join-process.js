@@ -120,6 +120,7 @@ class TSJoinProcess {
 
     handleSubmitLogin(e) {
         e.preventDefault();
+        this.clearErrorMessages();
 
         const email1 = $('#EmailAddress').val();
         const email2 = $('#EmailAddress2').val();
@@ -135,7 +136,7 @@ class TSJoinProcess {
             $loginErrors.append(emptyFieldsErrorMessage);
         } else if (JOIN_FORM_TABS.signup) {
             const emptyFields = $('#joinLoginForm input').filter(function() {
-                return $.trim($(this).val()).length === 0
+                return $.trim($(this).val()).length === 0;
             });
 
             if (emptyFields.length > 0) {

@@ -10,7 +10,7 @@
         <img class="progress-bar-img" src="{{ cdn 'assets/img/JoinProgressBar1.png' }}"/>
     </div>
     <div class="starter-kit-container">
-        <h1 class="teal-text">Choose Your Starter Kit</h1>
+        <h1 class="teal-text">Choose Your Kit</h1>
         <div class="kit-selector">
             {{#each theme_settings.ts_join_kits}}
                 <div class="kit-card" data-product-id="{{this.id}}">
@@ -31,7 +31,6 @@
                         <h3 class="textgray-text">{{ this.name }}</h3>
                         <h4 class="textgray-text"><strong>{{ this.price }}</strong></h4>
                         <h5 class="textgray-text">($200 Value!)</h5>
-                        <button class="teal-text"><strong>View Kit Details</strong></button>
                     </div>
                 </div>
             {{/each}}

@@ -62,6 +62,7 @@ class TSJoinProcess {
             this.$personalInfo = document.getElementById('personal-info');
 
             this.removeClassContainer();
+            this.changeSelectValueStyling();
             this.toggleCheckboxes();
             this.formatInputFields();
             this.renderFindSponsor();
@@ -285,6 +286,26 @@ class TSJoinProcess {
     /**
      * Personal Info functions
      */
+
+    /**
+     * This function will change value styling once a value is selected and
+     * handles display issues on apple devices.
+     */
+    changeSelectValueStyling() {
+        const dates = this.$personalInfo.querySelectorAll('[type="date"]');
+        const selectors = this.$personalInfo.querySelectorAll('[type="select"]');
+
+        const addChangeHandler = (elementArray) => {
+            elementArray.forEach((element) => {
+                element.addEventListener('change', () => {
+                    element.classList.remove('empty');
+                });
+            });
+        };
+
+        if (dates) { addChangeHandler(dates); }
+        if (selectors) { addChangeHandler(selectors); }
+    }
 
     togglePrimaryPhoneCheckbox() {
         const $phoneCheckbox = this.$personalInfo.querySelector('#MobilePhoneCheckbox');

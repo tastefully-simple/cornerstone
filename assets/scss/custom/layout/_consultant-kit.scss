@@ -87,15 +87,16 @@
 
             .kit-card-body {
                 text-align: center;
+                margin: 1rem 0;
                 h3, h4, h5 {
                     margin: 0;
                     letter-spacing: 1px;
                 }
+                h3 {
+                    margin: 0 1rem;
+                }
                 h5 {
                     text-transform: capitalize;
-                }
-                button {
-                    margin: 1rem 0;
                 }
             }
         }

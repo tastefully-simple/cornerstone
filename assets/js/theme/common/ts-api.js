@@ -170,7 +170,7 @@ export default class TSApi {
         return $.ajax({
             type: 'POST',
             accepts: 'json',
-            url: this.fullUrl('/join-sessions'),
+            url: this.fullUrl('/join/join-session'),
             data: payload,
         });
     }

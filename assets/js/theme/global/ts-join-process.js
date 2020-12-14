@@ -135,7 +135,7 @@ class TSJoinProcess {
         if (JOIN_FORM_TABS.login && (email1 === '' || password1 === '')) {
             $loginErrors.append(emptyFieldsErrorMessage);
         } else if (JOIN_FORM_TABS.signup) {
-            const emptyFields = $('#joinLoginForm input').filter(function() {
+            const emptyFields = $('#joinLoginForm input').filter(function fn() {
                 return $.trim($(this).val()).length === 0;
             });
 
@@ -165,8 +165,7 @@ class TSJoinProcess {
         const userInfo = $('#joinLoginForm').serialize();
         this.api.createJoinSession(userInfo)
             .done(data => {
-                console.log("createJoinSession data", data);
-                if (data.Success == true) {
+                if (data.Success) {
                     window.location.href = `${KIT_PAGE}?id=${data.Email}`;
                 }
             })

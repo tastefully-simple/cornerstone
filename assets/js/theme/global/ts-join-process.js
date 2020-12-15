@@ -101,7 +101,7 @@ class TSJoinProcess {
                 password2.classList.remove('hidden');
                 email2.classList.remove('hidden');
                 password2.querySelector('#Password2').setAttribute('tabindex', 0);
-                email2.querySelector('#EmailAddress2').setAttribute('tabindex', 0);
+                email2.querySelector('#Email2').setAttribute('tabindex', 0);
                 forgotPassword.style.display = 'none';
             } else {
                 JOIN_FORM_TABS.signup = false;
@@ -113,7 +113,7 @@ class TSJoinProcess {
                 password2.classList.add('hidden');
                 email2.classList.add('hidden');
                 password2.querySelector('#Password2').setAttribute('tabindex', -1);
-                email2.querySelector('#EmailAddress2').setAttribute('tabindex', -1);
+                email2.querySelector('#Email2').setAttribute('tabindex', -1);
                 forgotPassword.style.display = 'block';
             }
         });
@@ -168,6 +168,8 @@ class TSJoinProcess {
             .done(data => {
                 if (data.Success) {
                     window.location.href = `${KIT_PAGE}?id=${data.Email}`;
+                } else {
+                    this.displayLoginErrorMessage(data);
                 }
             })
             .fail(error => this.displayLoginErrorMessage(error));
@@ -179,7 +181,12 @@ class TSJoinProcess {
     * message from Tastefully Simple's API exists, that will display.
     */
     displayLoginErrorMessage(error) {
-        if (error.responseJSON.errors) {
+        if (error.errors) {
+            const { id, message } = error.errors[0];
+            $('#loginErrors').append(`
+                <li data-errorid="${id}">${message}</h4>
+            `);
+        } else if (error.responseJSON.errors) {
             $.each(error.responseJSON.errors, (i) => {
                 const errors = error.responseJSON.errors[i];
                 const { id, message } = errors;

@@ -19,7 +19,7 @@
                 <input type="hidden" id="SponsorId" name="SponsorId" value="">
                 <div id="prefixField" class="simple-dropdown">
                     <label for="Prefix">Prefix</label>
-                    <select type="select" id="Prefix" name="Prefix" value="">
+                    <select type="select" id="Prefix" name="Prefix" value="" class="empty">
                         <option value=""> Select </option>
                         <option value="Mr"> Mr. </option>
                         <option value="Ms"> Ms </option>
@@ -55,7 +55,7 @@
                 <div id="DOBField" class="">
                     <label for="DOB" class="input-label">
                         <span>Date of Birth</span>
-                        <input type="date" id="BirthDate" name="BirthDate" value="mm-dd-yyyy" placeholder="mm-dd-yyyy">
+                        <input type="date" id="BirthDate" name="BirthDate" value="mm-dd-yyyy" placeholder="mm-dd-yyyy" class="empty">
                         <input type="hidden" id="DateOfBirth" name="DateOfBirth" value="">
                     </label>
                 </div>
@@ -100,7 +100,7 @@
                     </div>
                     <div id="billingStateField" class="simple-dropdown">
                         <label for="BillingState">State</label>
-                        <select type="select" id="BillingState" name="BillingState" value="">
+                        <select type="select" id="BillingState" name="BillingState" value="" class="empty">
                             <option disabled selected value>Select State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -192,7 +192,7 @@
                     </div>
                     <div id="shippingStateField" class="simple-dropdown">
                         <label for="ShippingState">State</label>
-                        <select type="select" id="ShippingState" name="ShippingState" value="">
+                        <select type="select" id="ShippingState" name="ShippingState" value="" class="empty">
                             <option disabled selected value>Select State</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -261,7 +261,7 @@
                 <div id="tsCashOption" class="">
                     <div class="simple-dropdown">
                         <label for="TsCashOption">How will you be using your TS Cash?</label>
-                        <select id="TsCashOption" type="select" name="TsCashOption">
+                        <select id="TsCashOption" type="select" name="TsCashOption" class="empty">
                             <option value="" selected="selected">Please select</option>
                             <option value="1">Pay Bills</option>
                             <option value="2">Fun money (date night, travel, furniture, etc.)</option>

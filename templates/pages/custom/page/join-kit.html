@@ -13,7 +13,7 @@
         <h1 class="teal-text">Choose Your Kit</h1>
         <div class="kit-selector">
             {{#each theme_settings.ts_join_kits}}
-                <div class="kit-card" data-product-id="{{this.id}}">
+                <div class="kit-card" data-product-id="{{this.id}}" data-bbok-product="bbok-{{@index}}">
                     <div class="selected-kit-card-header"> {{!-- display none by default --}}
                         <span class="icon-system-check"></span>
                         <div class="vertical-center">
@@ -35,8 +35,15 @@
                 </div>
             {{/each}}
         </div>
-        <div class="kit-next-btn-wrapper">
-            <button class="kit-next-btn button-secondary-icon">continue</button>
+        <div class="kit-content" style="display:none;">
+            <h2 class="bbok-title teal-text">{bbok-title}</h2>
+            <p class="bbok-description">{bbok-description}</p>
+
+            <h3 class="teal-text">Kit includes:</h3>
+            <div class="kit-includes"></div>
+        </div>
+        <div class="kit-continue-btn-wrapper">
+            <button class="kit-continue-btn button-secondary-icon">continue</button>
         </div>
     </div>
 </div>

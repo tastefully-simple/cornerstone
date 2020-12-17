@@ -299,14 +299,13 @@ class TSJoinProcess {
 
                 const selectedKit = cart.lineItems.physicalItems[0];
                 const userInfo = {
-                    Id: this.getUrlIdentifier(),
                     cartId: cart.id,
                     kitSku: selectedKit.sku,
                 };
 
-                this.api.updateJoinSession(userInfo)
+                this.api.updateJoinSession(userInfo, this.getUrlIdentifier())
                     .done(() => {
-                        const url = `${PERSONAL_INFO_PAGE}?id=${this.getUrlIdentifier()}`;
+                        const url = `${PERSONAL_INFO_PAGE}?email=${this.getUrlIdentifier()}&id=${cart.id}`;
                         window.location.href = url;
                     })
                     .fail(error => {
@@ -341,7 +340,7 @@ class TSJoinProcess {
     }
 
     togglePrimaryPhoneCheckbox() {
-        const $phoneCheckbox = this.$personalInfo.querySelector('#MobilePhoneCheckbox');
+        const $phoneCheckbox = this.$personalInfo.querySelector('#PhoneIsMobile');
         const $primaryPhone = this.$personalInfo.querySelector('#PrimaryPhone');
         const $primaryPhoneDiv = this.$personalInfo.querySelector('#primaryPhoneField');
 
@@ -358,13 +357,13 @@ class TSJoinProcess {
     }
 
     toggleTextOptInCheckbox() {
-        const $optInText = this.$personalInfo.querySelector('#OptInText');
+        const $optInText = this.$personalInfo.querySelector('#SmsOptIn');
 
         $optInText.addEventListener('change', (e) => {
             if (e.target.checked) {
-                document.getElementById('OptInText').checked = true;
+                document.getElementById('SmsOptIn').checked = true;
             } else {
-                document.getElementById('OptInText').checked = false;
+                document.getElementById('SmsOptIn').checked = false;
             }
         });
     }
@@ -385,7 +384,7 @@ class TSJoinProcess {
     }
 
     toggleTsCashOtherCheckbox() {
-        const $cashOption = this.$personalInfo.querySelector('#TsCashOption');
+        const $cashOption = this.$personalInfo.querySelector('#CashOption');
         const $otherField = this.$personalInfo.querySelector('#tsCashOptionTextField');
 
         $cashOption.addEventListener('change', () => {
@@ -425,7 +424,7 @@ class TSJoinProcess {
         this.api.getJoinTermsAndConditions()
             .done(data => {
                 if (data !== null) {
-                    document.getElementById('TermsConditionsVersion').value = data.Version;
+                    document.getElementById('TermsVersion').value = data.Version;
                     $('#terms-conditions').append(`
                         <div>${data.HtmlMarkup}</div>
                     `);
@@ -438,7 +437,7 @@ class TSJoinProcess {
 
     toggleTermsCheckbox() {
         const $visibleCheckbox = this.$personalInfo.querySelector('#TermsCheckboxVisible');
-        const $termsConditionsOptIn = this.$personalInfo.querySelector('#TermsConditionsOptIn');
+        const $termsConditionsOptIn = this.$personalInfo.querySelector('#TermsOptIn');
 
         $visibleCheckbox.addEventListener('change', (e) => {
             if (e.target.checked) {
@@ -457,7 +456,7 @@ class TSJoinProcess {
         localStorage.setItem('isJoin', true);
         const $form = $('#frmJoinPersonalInfo');
         // Insert URL identifier to #Id input field
-        $($form).find('#Id').val(this.getUrlIdentifier());
+        $($form).find('#CartId').val(this.getUrlCartIdentifier());
         const disabled = $form.find(':input:disabled').removeAttr('disabled');
         const userInfo = $form.serialize();
         disabled.attr('disabled', 'disabled');
@@ -471,7 +470,7 @@ class TSJoinProcess {
         TSCookie.setConsultantName(name);
         TSCookie.setAffiliateId(afid);
 
-        this.api.updateJoinSession(userInfo)
+        this.api.updateJoinSession(userInfo, this.getUrlIdentifier())
             .done(() => {
                 window.location.href = '/checkout.php';
             })
@@ -479,8 +478,8 @@ class TSJoinProcess {
     }
 
     setSubmissionDefaults() {
-        if (this.$personalInfo.querySelector('#MobilePhoneCheckbox').checked) {
-            const $cellPhone = this.$personalInfo.querySelector('#CellPhone');
+        if (this.$personalInfo.querySelector('#PhoneIsMobile').checked) {
+            const $cellPhone = this.$personalInfo.querySelector('#Phone');
 
             if ($cellPhone.value) {
                 this.$personalInfo.querySelector('#PrimaryPhone').value = $cellPhone.value;
@@ -488,18 +487,18 @@ class TSJoinProcess {
         }
 
         if (this.$personalInfo.querySelector('#AddressCheckbox').checked) {
-            const $billingLine1 = this.$personalInfo.querySelector('#BillingAddressLine1');
-            const $billingLine2 = this.$personalInfo.querySelector('#BillingAddressLine2');
+            const $billingLine1 = this.$personalInfo.querySelector('#BillingStreet1');
+            const $billingLine2 = this.$personalInfo.querySelector('#BillingStreet2');
             const $billingCity = this.$personalInfo.querySelector('#BillingCity');
             const $billingState = this.$personalInfo.querySelector('#BillingState');
             const $billingZip = this.$personalInfo.querySelector('#BillingZip');
 
             if ($billingLine1.value) {
-                this.$personalInfo.querySelector('#ShippingAddressLine1').value = $billingLine1.value;
+                this.$personalInfo.querySelector('#ShippingStreet1').value = $billingLine1.value;
             }
 
             if ($billingLine2.value) {
-                this.$personalInfo.querySelector('#ShippingAddressLine2').value = $billingLine2.value;
+                this.$personalInfo.querySelector('#ShippingStreet2').value = $billingLine2.value;
             }
 
             if ($billingCity.value) {
@@ -524,9 +523,9 @@ class TSJoinProcess {
             const day = (String(DOB.getDate()).length > 1) ? (DOB.getDate()) : `0${(DOB.getDate())}`;
             const year = DOB.getFullYear();
             DOB = `${month}/${day}/${year}`;
-            this.$personalInfo.querySelector('#DateOfBirth').value = DOB;
+            this.$personalInfo.querySelector('#Birthday').value = DOB;
         } else {
-            this.$personalInfo.querySelector('#DateOfBirth').value = '';
+            this.$personalInfo.querySelector('#Birthday').value = '';
         }
     }
 
@@ -541,7 +540,7 @@ class TSJoinProcess {
                 $('#formErrorMessages').append(`
                     <li class="join__error" data-errorid='${id}'>${message}</li>
                 `);
-                if (id === 'SponsorId' && $('#sponsorSearchData').children.length > 0) {
+                if (id === 'ConsultantId' && $('#sponsorSearchData').children.length > 0) {
                     document.getElementById('sponsorSearchData').style.border = '1px solid #D0021B';
                 }
             });
@@ -725,7 +724,7 @@ class TSJoinProcess {
             $('#sponsorSearchData .selected').toggleClass('selected');
             $consultantCard.addClass('selected');
             const cid = $consultantCard.data('cid') || null;
-            $('#SponsorId').val(cid);
+            $('#ConsultantId').val(cid);
             $consultantCard.find('.consultant-header').hide();
         } else {
             $consultantCard.find('.consultant-header').show();
@@ -762,6 +761,14 @@ class TSJoinProcess {
      * to fetch the email URL Identifier
      */
     getUrlIdentifier() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('email') !== 'undefined') {
+            return urlParams.get('email');
+        }
+    }
+
+    getUrlCartIdentifier() {
         const urlParams = new URLSearchParams(window.location.search);
 
         if (urlParams.get('id') !== 'undefined') {
@@ -806,7 +813,7 @@ class TSJoinProcess {
      * and can be reused on other pages
      */
     formatInputFields() {
-        const $cellPhone = document.getElementById('CellPhone');
+        const $cellPhone = document.getElementById('Phone');
         $cellPhone.addEventListener('keydown', (e) => this.enforceFormat(e));
         $cellPhone.addEventListener('keyup', (e) => this.formatToPhone(e));
 

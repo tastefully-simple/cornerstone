@@ -15,8 +15,8 @@
         <div class="join__form">
             <h2 class="textgray-text">1. Enter Personal Information</h2>
             <form id="frmJoinPersonalInfo" style="" runat="server" method="post" action="#">
-                <input type="hidden" id="Id" name="Id" value="">
-                <input type="hidden" id="SponsorId" name="SponsorId" value="">
+                <input type="hidden" id="CartId" name="CartId" value="">
+                <input type="hidden" id="ConsultantId" name="ConsultantId" value="">
                 <div id="prefixField" class="simple-dropdown">
                     <label for="Prefix">Prefix</label>
                     <select type="select" id="Prefix" name="Prefix" value="" class="empty">
@@ -56,40 +56,40 @@
                     <label for="DOB" class="input-label">
                         <span>Date of Birth</span>
                         <input type="date" id="BirthDate" name="BirthDate" value="mm-dd-yyyy" placeholder="mm-dd-yyyy" class="empty">
-                        <input type="hidden" id="DateOfBirth" name="DateOfBirth" value="">
+                        <input type="hidden" id="Birthday" name="Birthday" value="">
                     </label>
                 </div>
                 <div id="cellPhoneField" class="">
-                    <label for="CellPhone" class="input-label">
+                    <label for="Phone" class="input-label">
                         <span>Mobile Phone Number</span>
-                        <input type="tel" id="CellPhone" name="CellPhone" value="">
+                        <input type="tel" id="Phone" name="Phone" value="">
                     </label>
                 </div>
                 <div id="mobilePhoneCheckboxField" class="" style="margin-bottom:16px;">
-                    <input type="checkbox" id="MobilePhoneCheckbox" name="MobilePhoneCheckbox" value="true" checked>
-                    <label for="MobilePhoneCheckbox" class="join__form--checkbox-label">My mobile number is my primary</label>
+                    <input type="checkbox" id="PhoneIsMobile" name="PhoneIsMobile" value="true" checked>
+                    <label for="PhoneIsMobile" class="join__form--checkbox-label">My mobile number is my primary</label>
                 </div>
                 <div id="primaryPhoneField" class="disabled">
                     <label for="PrimaryPhone">Primary Phone</label>
                     <input type="tel" id="PrimaryPhone" name="PrimaryPhone" value="" disabled>
                 </div>
                 <div id="textingCheckboxField" class="" style="margin-bottom:16px;">
-                    <input type="checkbox" id="OptInText" name="OptInText" value="true" checked>
-                    <label for="OptInText" class="join__form--checkbox-label">Text message opt-in</label>
+                    <input type="checkbox" id="SmsOptIn" name="SmsOptIn" value="true" checked>
+                    <label for="SmsOptIn" class="join__form--checkbox-label">Text message opt-in</label>
                 </div>
                 
                 <fieldset>
                     <legend>Billing Address</legend>
                     <div id="billingAddress1Field">
-                        <label for="BillingAddressLine1" class="input-label">
+                        <label for="BillingStreet1" class="input-label">
                             <span>Address Line 1</span>
-                            <input type="text" id="BillingAddressLine1" name="BillingAddressLine1" value="" placeholder="ex. 1234 S Example St.">
+                            <input type="text" id="BillingStreet1" name="BillingStreet1" value="" placeholder="ex. 1234 S Example St.">
                         </label>
                     </div>
                     <div id="billingAddress2Field">
-                        <label for="BillingAddressLine2" class="input-label">
+                        <label for="BillingStreet2" class="input-label">
                             <span>Address Line 2</span>
-                            <input type="text" id="BillingAddressLine2" name="BillingAddressLine2" value="">
+                            <input type="text" id="BillingStreet2" name="BillingStreet2" value="">
                         </label>
                     </div>
                     <div id="billingCityField" class="">
@@ -173,15 +173,15 @@
                 <fieldset id="shipping-address" class="hidden">
                     <legend>Shipping Address</legend>
                     <div id="shippingAddress1Field" class="">
-                        <label for="ShippingAddressLine1" class="input-label">
+                        <label for="ShippingStreet1" class="input-label">
                             <span>Address Line 1</span>
-                            <input type="text" id="ShippingAddressLine1" name="ShippingAddressLine1" value="">
+                            <input type="text" id="ShippingStreet1" name="ShippingStreet1" value="">
                         </label>
                     </div>
                     <div id="shippingAddress2Field" class="">
-                        <label for="ShippingAddressLine2" class="input-label">
+                        <label for="ShippingStreet2" class="input-label">
                             <span>Address Line 2</span>
-                            <input type="text" id="ShippingAddressLine2" name="ShippingAddressLine2" value="">
+                            <input type="text" id="ShippingStreet2" name="ShippingStreet2" value="">
                         </label>
                     </div>
                     <div id="shippingCityField" class="">
@@ -260,8 +260,8 @@
                 </fieldset>
                 <div id="tsCashOption" class="">
                     <div class="simple-dropdown">
-                        <label for="TsCashOption">How will you be using your TS Cash?</label>
-                        <select id="TsCashOption" type="select" name="TsCashOption" class="empty">
+                        <label for="CashOption">How will you be using your TS Cash?</label>
+                        <select id="CashOption" type="select" name="CashOption" class="empty">
                             <option value="" selected="selected">Please select</option>
                             <option value="1">Pay Bills</option>
                             <option value="2">Fun money (date night, travel, furniture, etc.)</option>
@@ -271,19 +271,19 @@
                     </div>
                 </div>
                 <div id="tsCashOptionTextField" class="hidden">
-                    <label for="TsCashOptionText" class="input-label">
+                    <label for="CashOptionText" class="input-label">
                         <span>TS Cash Option Other</span>
-                        <input type="text" id="TsCashOptionText" name="TsCashOptionText" value="">
+                        <input type="text" id="CashOptionText" name="CashOptionText" value="">
                     </label>
                 </div>
                 <div id="termsCheckboxHiddenField" class="hidden">
-                    <input type="checkbox" id="TermsConditionsOptIn" name="TermsConditionsOptIn" value="true">
+                    <input type="checkbox" id="TermsOptIn" name="TermsOptIn" value="true">
                     <label for="TermsCheckbox" class="join__form--checkbox-label">Terms &amp; Conditions opt-in</label>
                 </div>
                 <div id="termsVersion" class="hidden">
-                    <label for="TermsConditionsVersion" class="input-label">
+                    <label for="TermsVersion" class="input-label">
                         <span>Sponsor</span>
-                        <input type="text" id="TermsConditionsVersion" name="TermsConditionsVersion" value="">
+                        <input type="text" id="TermsVersion" name="TermsVersion" value="">
                     </label>
                 </div>
                 <div id="sponsorSelectionField" class="hidden">

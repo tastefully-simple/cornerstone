@@ -175,8 +175,8 @@ export default class TSApi {
         });
     }
 
-    updateJoinSession(payload) {
-        const uri = `/join-sessions/${payload.email}`;
+    updateJoinSession(payload, email) {
+        const uri = `/join/join-session?email=${email}`;
 
         return $.ajax({
             type: 'PATCH',

@@ -147,7 +147,7 @@ class TSJoinProcess {
             } else if (!isEmailMatch) {
                 $loginErrors.append(emailNotMatchErrorMessage);
             } else {
-                this.loginSuccess();
+                this.signupSuccess();
             }
         } else {
             this.loginSuccess();
@@ -155,20 +155,30 @@ class TSJoinProcess {
     }
 
     loginSuccess() {
-        localStorage.setItem('isJoin', true);
+        $('#FirstName').val('');
+        $('#LastName').val('');
+        $('#EmailAddress2').val('');
+        $('#Password2').val('');
 
-        // Prevent autoform fillers from causing problems
-        if (JOIN_FORM_TABS.login) {
-            $('#FirstName').val('');
-            $('#LastName').val('');
-            $('#EmailAddress2').val('');
-            $('#Password2').val('');
-        }
+        const userInfo = $('#joinLoginForm').serialize();
+        this.api.joinLogin(userInfo)
+            .done(data => {
+                if (data.Success) {
+                    localStorage.setItem('isJoin', true);
+                    window.location.href = `${KIT_PAGE}?email=${data.Email}`;
+                } else {
+                    this.displayLoginErrorMessage(data);
+                }
+            })
+            .fail(error => this.displayLoginErrorMessage(error));
+    }
 
+    signupSuccess() {
         const userInfo = $('#joinLoginForm').serialize();
         this.api.createJoinSession(userInfo)
             .done(data => {
                 if (data.Success) {
+                    localStorage.setItem('isJoin', true);
                     window.location.href = `${KIT_PAGE}?email=${data.Email}`;
                 } else {
                     this.displayLoginErrorMessage(data);

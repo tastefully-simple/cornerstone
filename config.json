@@ -565,7 +565,25 @@
         "ts_current_store_base_url": "https://tastefully-simple-sandbox-1.mybigcommerce.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://stage-tsapi.tastefullysimple.com",
-        "ts_join_ss_product_id": 566
+        "ts_join_ss_product_id": 566,
+        "ts_join_kits": [
+          {
+            "id": 566,
+            "name": "Business Blast Off Kit",
+            "price": "$99.99",
+            "real_value": "($200 Value!)",
+            "image": "img/join-kit/BusinessBlastOffKit.jpg",
+            "url": "/business-blast-off-kit-fw2020"
+          },
+          {
+            "id": 571,
+            "name": "Starter Business Blast Off Kit",
+            "price": "$49.00",
+            "real_value": "($200 Value!)",
+            "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
+            "url": "/starter-business-blast-off-kit"
+          }
+        ]
       }
     },
     {
@@ -590,7 +608,25 @@
         "ts_current_store_base_url": "https://www.tastefullysimple.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://tsapi.tastefullysimple.com",
-        "ts_join_ss_product_id": 661
+        "ts_join_ss_product_id": 661,
+        "ts_join_kits": [
+          {
+            "id": 661,
+            "name": "Business Blast Off Kit",
+            "price": "$99.99",
+            "real_value": "($200 Value!)",
+            "image": "img/join-kit/BusinessBlastOffKit.jpg",
+            "url": "/business-blast-off-kit-fw2020"
+          },
+          {
+            "id": 974,
+            "name": "Starter Business Blast Off Kit",
+            "price": "$49.00",
+            "real_value": "($200 Value!)",
+            "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
+            "url": "/starter-business-blast-off-kit"
+          }
+        ]
       }
     }
   ]

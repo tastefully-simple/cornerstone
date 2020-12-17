@@ -166,6 +166,15 @@ export default class TSApi {
         });
     }
 
+    joinLogin(payload) {
+        return $.ajax({
+            type: 'POST',
+            accepts: 'json',
+            url: this.fullUrl('/join/login'),
+            data: payload,
+        });
+    }
+
     createJoinSession(payload) {
         return $.ajax({
             type: 'POST',

@@ -101,12 +101,36 @@
             }
         }
     }
-    .kit-next-btn-wrapper {
+
+    // Kit Content Included Items
+    .kit-content {
+        .kit-includes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .join-kit-content-card {
+                display: flex;
+                max-width: 50%;
+                padding: 1rem;
+
+                .join-kit-content-info {
+                    margin-left: 1rem;
+                    h2, p {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    // Continue button
+    .kit-continue-btn-wrapper {
         margin: 0 auto;
         margin-top: 2rem;
         max-width: 616px;
         width: 100%;
-        text-align: right;
+        text-align: center;
     }
 }
 

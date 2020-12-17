@@ -2,6 +2,7 @@ import utils from '@bigcommerce/stencil-utils';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
 import ConsultantCard from '../common/consultant-card';
+import JoinKitContentCard from '../common/join-kit-content-card';
 
 const JOIN_PAGE = '/join';
 const KIT_PAGE = '/join-kit/';
@@ -19,6 +20,7 @@ class TSJoinProcess {
         this.bbokProductId = this.themeSettings.ts_join_ss_product_id;
         this.bbokProducts = this.themeSettings.ts_join_kits;
         this.tsApiBaseUrl = this.themeSettings.ts_tsapi_base_url;
+        this.kitContent = this.themeSettings.ts_join_kit_content;
         this.api = new TSApi();
 
         this.init();
@@ -51,7 +53,7 @@ class TSJoinProcess {
         if (this.getUrlIdentifier()) {
             this.removeClassContainer();
             $('body').on('click', '.kit-card', (e) => this.selectKit(e));
-            $('.kit-next-btn').on('click', () => this.continueWithKitSelection());
+            $('.kit-continue-btn').on('click', () => this.continueWithKitSelection());
         } else {
             window.location.href = JOIN_PAGE;
         }
@@ -167,7 +169,7 @@ class TSJoinProcess {
         this.api.createJoinSession(userInfo)
             .done(data => {
                 if (data.Success) {
-                    window.location.href = `${KIT_PAGE}?id=${data.Email}`;
+                    window.location.href = `${KIT_PAGE}?email=${data.Email}`;
                 } else {
                     this.displayLoginErrorMessage(data);
                 }
@@ -214,12 +216,36 @@ class TSJoinProcess {
             this.selectedKitId = $kitCard.data('product-id');
             $('.selected').toggleClass('selected');
             $kitCard.find('.kit-card-header').hide();
+            $('.kit-includes').empty();
+            this.showKitContent($kitCard.data('bbok-product'));
         } else {
             this.selectedKitId = null;
+            $('.kit-includes').empty();
             $kitCard.find('.kit-card-header').show();
         }
 
         $(e.target).closest('.kit-card').toggleClass('selected');
+    }
+
+    showKitContent(selectedKit) {
+        const kitContent = this.kitContent[selectedKit];
+        const kitName = kitContent.name;
+        const kitDescription = kitContent.description;
+        const itemsIncluded = kitContent.items_included;
+
+        $('.kit-content .bbok-title').text(kitName);
+        $('.kit-content .bbok-description').text(kitDescription);
+
+        const joinKitContentCard = new JoinKitContentCard();
+        joinKitContentCard.getTemplate()
+            .then((template) => {
+                itemsIncluded.forEach(item => {
+                    const card = joinKitContentCard.insertCard(template, item);
+                    $('.starter-kit-container .kit-includes').append(card);
+                });
+            });
+
+        $('.kit-content').show();
     }
 
     continueWithKitSelection() {
@@ -481,11 +507,11 @@ class TSJoinProcess {
             }
 
             if ($billingState.value) {
-                this.personalInfo.querySelector('#ShippingState').value = $billingState.value;
+                this.$personalInfo.querySelector('#ShippingState').value = $billingState.value;
             }
 
             if ($billingZip.value) {
-                this.personalInfo.querySelector('#ShippingZip').value = $billingZip.value;
+                this.$personalInfo.querySelector('#ShippingZip').value = $billingZip.value;
             }
         }
 

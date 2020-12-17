@@ -53,17 +53,147 @@
         "id": 783,
         "name": "Starter Business Blast Off Kit",
         "price": "$49.00",
-        "image": "img/ProductDefault.gif",
+        "real_value": "($200 Value!)",
+        "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
         "url": "/starter-business-blast-off-kit"
       },
       {
         "id": 532,
         "name": "Business Blast Off Kit",
         "price": "$99.99",
-        "image": "img/ProductDefault.gif",
+        "real_value": "($200 Value!)",
+        "image": "img/join-kit/BusinessBlastOffKit.jpg",
         "url": "/business-blast-off-kit-fw2020"
       }
     ],
+    "ts_join_kit_content": {
+      "bbok-0": {
+        "name": "Starter Business Blast Off Kit",
+        "description": "Choose the Starter Business Blast Off Kit if you plan to work your business primarily online. You will be ready to party online with this kit. You also receive one Party Food Kit to be used with an online party host or at a tasting party.",
+        "items_included": [
+          {
+            "img": "WelcomeBook.jpg",
+            "name": "Welcome Book",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "SomethingMoreBrochure.jpg",
+            "name": "Something More Brochure",
+            "qty": "2",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "FamilyFavesKit.jpg",
+            "name": "Family Faves 5-Meal Kit",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "SimplyShine.jpg",
+            "name": "Simply Shine: Stories that Stirred the Fire book",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "PartyFoodKit.jpg",
+            "name": "Party Food Kit 3",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "TSConnectedPropay.jpg",
+            "name": "TS Connected & ProPay two-month free trial",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "Catalog.jpg",
+            "name": "Catalogs",
+            "qty": "10",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          }
+        ]
+      },
+      "bbok-1": {
+        "name": "Business Blast Off Kit",
+        "description": "Choose the Business Blast Off Kit if you plan to offer a variety of party options, including in-person tastings, online parties, catalog parties, expo events and more. This option also includes several party display items and other team-building tools.",
+        "items_included": [
+          {
+            "img": "WelcomeBook.jpg",
+            "name": "Welcome Book",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "PreviewInvite.jpg",
+            "name": "Preview Invitations",
+            "qty": "30",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "CuttingCarbs10MealKit.jpg",
+            "name": "Cutting Carbs 10-Meal Kit",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "SomethingMoreBrochure.jpg",
+            "name": "Something More Brochure",
+            "qty": "10",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "TriFoldDisplayPiece.jpg",
+            "name": "Host, join & meal kit display piece",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "SampleSupplies.jpg",
+            "name": "Supply Kits",
+            "qty": "2",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "DisplayProducts.jpg",
+            "name": "Products for Display",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "SimplyShine.jpg",
+            "name": "Simply Shine: Stories that Stirred the Fire book",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "PartyFoodKit.jpg",
+            "name": "Party Food Kit 3",
+            "qty": "2",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "TSConnectedPropay.jpg",
+            "name": "TS Connected & ProPay two-month free trial",
+            "qty": "1",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "Catalog.jpg",
+            "name": "Catalogs",
+            "qty": "25",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          },
+          {
+            "img": "OrderForms.jpg",
+            "name": "Order Forms",
+            "qty": "25",
+            "description": "Short Description of product that is cut off with ellipsis ..."
+          }
+        ]
+      }
+    },
     "ts_help_email": "help@tastefullysimple.com",
     "hide_breadcrumbs": false,
     "hide_page_heading": false,

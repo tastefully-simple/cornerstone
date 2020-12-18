@@ -14,6 +14,17 @@ const JOIN_FORM_TABS = {
     signup: false,
 };
 
+/**
+ * To store the kit included items when
+ * join-kit-content-card template is loaded
+ * for faster loading after it loads the
+ * template for the first time
+ */
+const KIT_CONTENT = {
+    'bbok-0': null,
+    'bbok-1': null,
+};
+
 class TSJoinProcess {
     constructor(themeSettings) {
         this.themeSettings = themeSettings;
@@ -52,6 +63,14 @@ class TSJoinProcess {
     renderKit() {
         if (this.getUrlIdentifier()) {
             this.removeClassContainer();
+
+            // Auto-select the first BBOK
+            const bbok0 = 'bbok-0';
+            const $kitCard = $(`.kit-card[data-bbok-product="${bbok0}"]`);
+            $kitCard.addClass('selected');
+            $kitCard.find('.kit-card-header').hide();
+            this.showKitContent(bbok0);
+
             $('body').on('click', '.kit-card', (e) => this.selectKit(e));
             $('.kit-continue-btn').on('click', () => this.continueWithKitSelection());
         } else {
@@ -222,17 +241,11 @@ class TSJoinProcess {
 
         $('.kit-card-header').show();
 
-        if (!$kitCard.hasClass('selected')) {
-            this.selectedKitId = $kitCard.data('product-id');
-            $('.selected').toggleClass('selected');
-            $kitCard.find('.kit-card-header').hide();
-            $('.kit-includes').empty();
-            this.showKitContent($kitCard.data('bbok-product'));
-        } else {
-            this.selectedKitId = null;
-            $('.kit-includes').empty();
-            $kitCard.find('.kit-card-header').show();
-        }
+        this.selectedKitId = $kitCard.data('product-id');
+        $('.selected').toggleClass('selected');
+        $kitCard.find('.kit-card-header').hide();
+        $('.kit-includes').empty();
+        this.showKitContent($kitCard.data('bbok-product'));
 
         $(e.target).closest('.kit-card').toggleClass('selected');
     }
@@ -246,14 +259,20 @@ class TSJoinProcess {
         $('.kit-content .bbok-title').text(kitName);
         $('.kit-content .bbok-description').text(kitDescription);
 
-        const joinKitContentCard = new JoinKitContentCard();
-        joinKitContentCard.getTemplate()
-            .then((template) => {
-                itemsIncluded.forEach(item => {
-                    const card = joinKitContentCard.insertCard(template, item);
-                    $('.starter-kit-container .kit-includes').append(card);
+        if (KIT_CONTENT[selectedKit]) {
+            $('.starter-kit-container .kit-includes').append(KIT_CONTENT[selectedKit]);
+        } else {
+            const joinKitContentCard = new JoinKitContentCard();
+            joinKitContentCard.getTemplate()
+                .then((template) => {
+                    const cards = itemsIncluded.map(item => {
+                        const card = joinKitContentCard.insertCard(template, item);
+                        $('.starter-kit-container .kit-includes').append(card);
+                        return card;
+                    });
+                    KIT_CONTENT[selectedKit] = cards;
                 });
-            });
+        }
 
         $('.kit-content').show();
     }

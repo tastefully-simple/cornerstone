@@ -252,24 +252,39 @@ class TSJoinProcess {
 
     showKitContent(selectedKit) {
         const kitContent = this.kitContent[selectedKit];
+
         const kitName = kitContent.name;
         const kitDescription = kitContent.description;
-        const itemsIncluded = kitContent.items_included;
+        $('.kit-content .bbok-title').html(kitName);
+        $('.kit-content .bbok-description').html(kitDescription);
 
-        $('.kit-content .bbok-title').text(kitName);
-        $('.kit-content .bbok-description').text(kitDescription);
+        const $itemsIncludedCol1 = $('<div>', { class: 'items-included-col1' });
+        const $itemsIncludedCol2 = $('<div>', { class: 'items-included-col1' });
+        $('.kit-includes').append($itemsIncludedCol1);
+        $('.kit-includes').append($itemsIncludedCol2);
+
+        const itemsIncludedCol1 = kitContent.items_included.col_1;
+        const itemsIncludedCol2 = kitContent.items_included.col_2;
 
         if (KIT_CONTENT[selectedKit]) {
-            $('.starter-kit-container .kit-includes').append(KIT_CONTENT[selectedKit]);
+            $itemsIncludedCol1.append(KIT_CONTENT[selectedKit].col_1);
+            $itemsIncludedCol2.append(KIT_CONTENT[selectedKit].col_2);
         } else {
             const joinKitContentCard = new JoinKitContentCard();
             joinKitContentCard.getTemplate()
                 .then((template) => {
-                    const cards = itemsIncluded.map(item => {
+                    const cards1 = itemsIncludedCol1.map(item => {
                         const card = joinKitContentCard.insertCard(template, item);
-                        $('.starter-kit-container .kit-includes').append(card);
+                        $itemsIncludedCol1.append(card);
                         return card;
                     });
+                    const cards2 = itemsIncludedCol2.map(item => {
+                        const card = joinKitContentCard.insertCard(template, item);
+                        $itemsIncludedCol2.append(card);
+                        return card;
+                    });
+
+                    const cards = { col_1: cards1, col_2: cards2 };
                     KIT_CONTENT[selectedKit] = cards;
                 });
         }

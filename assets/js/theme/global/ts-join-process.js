@@ -67,6 +67,7 @@ class TSJoinProcess {
             // Auto-select the first BBOK
             const bbok0 = 'bbok-0';
             const $kitCard = $(`.kit-card[data-bbok-product="${bbok0}"]`);
+            this.selectedKitId = $kitCard.data('product-id');
             $kitCard.addClass('selected');
             $kitCard.find('.kit-card-header').hide();
             this.showKitContent(bbok0);
@@ -319,8 +320,6 @@ class TSJoinProcess {
                 }
             });
         } else {
-            // @TODO: what should the error message look like
-            // when user did not select a kit?
             console.error('NO KIT SELECTED', this.selectedKitId);
         }
     }

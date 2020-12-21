@@ -104,6 +104,15 @@
 
     // Kit Content Included Items
     .kit-content {
+        .bbok-title {
+            line-height: 1;
+            margin-bottom: 0;
+        }
+
+        .bbok-description {
+            line-height: 1.2;
+        }
+
         .kit-includes {
             display: flex;
             justify-content: space-between;

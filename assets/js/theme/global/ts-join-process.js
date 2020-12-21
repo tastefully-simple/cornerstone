@@ -259,8 +259,8 @@ class TSJoinProcess {
         $('.kit-content .bbok-title').html(kitName);
         $('.kit-content .bbok-description').html(kitDescription);
 
-        const $itemsIncludedCol1 = $('<div>', { class: 'items-included-col1' });
-        const $itemsIncludedCol2 = $('<div>', { class: 'items-included-col1' });
+        const $itemsIncludedCol1 = $('<div>', { class: 'items-included-col' });
+        const $itemsIncludedCol2 = $('<div>', { class: 'items-included-col' });
         $('.kit-includes').append($itemsIncludedCol1);
         $('.kit-includes').append($itemsIncludedCol2);
 

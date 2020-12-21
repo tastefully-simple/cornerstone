@@ -117,9 +117,17 @@
             display: flex;
             justify-content: space-between;
 
+            .items-included-col {
+                max-width: 50%;
+            }
+
             .join-kit-content-card {
                 display: flex;
                 padding: 1rem;
+
+                img {
+                    max-width: 99px;
+                }
 
                 .join-kit-content-info {
                     margin-left: 1rem;

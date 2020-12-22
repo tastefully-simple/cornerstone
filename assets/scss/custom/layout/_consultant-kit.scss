@@ -115,15 +115,15 @@
 
         .kit-includes {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
 
             .items-included-col {
-                max-width: 50%;
+                max-width: 100%;
             }
 
             .join-kit-content-card {
                 display: flex;
-                padding: 1rem;
+                padding: 1rem 0;
 
                 img {
                     max-width: 99px;
@@ -148,6 +148,22 @@
         text-align: center;
     }
 }
+
+// Desktop - New Business Kit Page with Selector
+@media only screen and (min-width:801px) {
+    .join-business-kit .kit-content .kit-includes {
+        flex-direction: row;
+
+        .items-included-col {
+            max-width: 50%;
+        }
+
+        .join-kit-content-card {
+            padding: 1rem;
+        }
+    }
+}
+
 
 // FW2020 BBOK 1 product kit
 .kit {

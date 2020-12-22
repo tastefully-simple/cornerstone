@@ -509,12 +509,12 @@ class TSJoinProcess {
         const afid = $consultantCard.data('afid') || null;
         const name = $consultantCard.data('name') || null;
 
-        TSCookie.setConsultantId(cid);
-        TSCookie.setConsultantName(name);
-        TSCookie.setAffiliateId(afid);
-
         this.api.updateJoinSession(userInfo, this.getUrlIdentifier())
             .done(() => {
+                TSCookie.setConsultantId(cid);
+                TSCookie.setConsultantName(name);
+                TSCookie.setAffiliateId(afid);
+
                 window.location.href = '/checkout.php';
             })
             .fail(error => this.displayCheckoutErrorMessage(error));

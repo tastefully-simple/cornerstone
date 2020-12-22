@@ -1,4 +1,5 @@
 import utils from '@bigcommerce/stencil-utils';
+import { confetti } from 'dom-confetti';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
 import ConsultantCard from '../common/consultant-card';
@@ -7,6 +8,7 @@ import JoinKitContentCard from '../common/join-kit-content-card';
 const JOIN_PAGE = '/join';
 const KIT_PAGE = '/join-kit/';
 const PERSONAL_INFO_PAGE = '/tell-us-about-yourself/';
+const CONFIRMATION_PAGE = '/welcome/';
 
 // Indicate which tab to be displayed in the join form
 const JOIN_FORM_TABS = {
@@ -48,6 +50,8 @@ class TSJoinProcess {
             case PERSONAL_INFO_PAGE:
                 this.renderPersonalInfo();
                 break;
+            case CONFIRMATION_PAGE:
+                this.renderCheckoutConfirmation();
             default:
                 break;
         }
@@ -95,6 +99,12 @@ class TSJoinProcess {
         } else {
             window.location.href = JOIN_PAGE;
         }
+    }
+
+    renderCheckoutConfirmation() {
+        this.removeClassContainer();
+        this.triggerConfetti();
+        localStorage.removeItem('isJoin');
     }
 
     /**
@@ -793,6 +803,17 @@ class TSJoinProcess {
                 </li>
             </ul>
         `);
+    }
+
+    /**
+     * Checkout Confirmation functions
+     */
+
+    triggerConfetti() {
+        const confettiRoots = document.querySelectorAll('[data-fun]');
+        confettiRoots.forEach(confettiRoot => {
+            confetti(confettiRoot);
+        });
     }
 
     /**

@@ -51,7 +51,7 @@
     "ts_join_kits": [
       {
         "id": 532,
-        "name": "Business Blast Off Kit",
+        "name": "Business Blast Off Kit<span>&reg;</span>",
         "price": "$99.99",
         "real_value": "(Over $180.00 Value!)",
         "image": "img/join-kit/BusinessBlastOffKit.jpg",
@@ -59,7 +59,7 @@
       },
       {
         "id": 783,
-        "name": "Starter Business Blast Off Kit",
+        "name": "Starter Business Blast Off Kit<span>&reg;</span>",
         "price": "$49.00",
         "real_value": "(Over $100.00 Value!)",
         "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
@@ -577,7 +577,7 @@
         "ts_join_kits": [
           {
             "id": 566,
-            "name": "Business Blast Off Kit",
+            "name": "Business Blast Off Kit<span>&reg;</span>",
             "price": "$99.99",
             "real_value": "($200 Value!)",
             "image": "img/join-kit/BusinessBlastOffKit.jpg",
@@ -585,7 +585,7 @@
           },
           {
             "id": 571,
-            "name": "Starter Business Blast Off Kit",
+            "name": "Starter Business Blast Off Kit<span>&reg;</span>",
             "price": "$49.00",
             "real_value": "($200 Value!)",
             "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
@@ -620,7 +620,7 @@
         "ts_join_kits": [
           {
             "id": 661,
-            "name": "Business Blast Off Kit",
+            "name": "Business Blast Off Kit<span>&reg;</span>",
             "price": "$99.99",
             "real_value": "($200 Value!)",
             "image": "img/join-kit/BusinessBlastOffKit.jpg",
@@ -628,7 +628,7 @@
           },
           {
             "id": 974,
-            "name": "Starter Business Blast Off Kit",
+            "name": "Starter Business Blast Off Kit<span>&reg;</span>",
             "price": "$49.00",
             "real_value": "($200 Value!)",
             "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",

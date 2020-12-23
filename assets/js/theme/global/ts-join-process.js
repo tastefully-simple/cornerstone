@@ -54,6 +54,7 @@ class TSJoinProcess {
                 break;
             case CONFIRMATION_PAGE:
                 this.renderCheckoutConfirmation();
+                break;
             default:
                 break;
         }
@@ -141,7 +142,7 @@ class TSJoinProcess {
         const firstName = this.$login.querySelector('#firstNameField');
         const lastName = this.$login.querySelector('#lastNameField');
         const password2 = this.$login.querySelector('#password2Field');
-        const email2 = this.$login.querySelector('#email2Field');
+        const email2 = this.$login.querySelector('#emailAddress2Field');
         const forgotPassword = this.$login.querySelector('.forgot-password');
 
         checkbox.addEventListener('change', (e) => {
@@ -156,7 +157,7 @@ class TSJoinProcess {
                 password2.classList.remove('hidden');
                 email2.classList.remove('hidden');
                 password2.querySelector('#Password2').setAttribute('tabindex', 0);
-                email2.querySelector('#Email2').setAttribute('tabindex', 0);
+                email2.querySelector('#EmailAddress2').setAttribute('tabindex', 0);
                 forgotPassword.style.display = 'none';
             } else {
                 JOIN_FORM_TABS.signup = false;
@@ -168,7 +169,7 @@ class TSJoinProcess {
                 password2.classList.add('hidden');
                 email2.classList.add('hidden');
                 password2.querySelector('#Password2').setAttribute('tabindex', -1);
-                email2.querySelector('#Email2').setAttribute('tabindex', -1);
+                email2.querySelector('#EmailAddress2').setAttribute('tabindex', -1);
                 forgotPassword.style.display = 'block';
             }
         });
@@ -179,7 +180,7 @@ class TSJoinProcess {
         this.clearErrorMessages();
 
         const email1 = $('#Email').val();
-        const email2 = $('#Email2').val();
+        const email2 = $('#EmailAddress2').val();
         const password1 = $('#Password').val();
 
         const $loginErrors = $('#loginErrors');
@@ -210,7 +211,7 @@ class TSJoinProcess {
     loginSuccess() {
         $('#FirstName').val('');
         $('#LastName').val('');
-        $('#Email2').val('');
+        $('#EmailAddress2').val('');
         $('#Password2').val('');
 
         const userInfo = $('#joinLoginForm').serialize();

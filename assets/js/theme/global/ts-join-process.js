@@ -1,4 +1,5 @@
 import utils from '@bigcommerce/stencil-utils';
+import { confetti } from 'dom-confetti';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
 import ConsultantCard from '../common/consultant-card';
@@ -7,6 +8,7 @@ import JoinKitContentCard from '../common/join-kit-content-card';
 const JOIN_PAGE = '/join';
 const KIT_PAGE = '/join-kit/';
 const PERSONAL_INFO_PAGE = '/tell-us-about-yourself/';
+const CONFIRMATION_PAGE = '/welcome/';
 
 // Indicate which tab to be displayed in the join form
 const JOIN_FORM_TABS = {
@@ -38,6 +40,8 @@ class TSJoinProcess {
     }
 
     init() {
+        this.checkTmpConsultant();
+
         switch (document.location.pathname) {
             case JOIN_PAGE:
                 this.renderJoin();
@@ -48,8 +52,31 @@ class TSJoinProcess {
             case PERSONAL_INFO_PAGE:
                 this.renderPersonalInfo();
                 break;
+            case CONFIRMATION_PAGE:
+                this.renderCheckoutConfirmation();
             default:
                 break;
+        }
+    }
+
+    /**
+     * TST-301 make sure to affiliate previous consultant
+     * when user does not complete the join process
+     */
+    checkTmpConsultant() {
+        const tmpConsultant = localStorage.getItem('tmpConsultant');
+
+        if (tmpConsultant) {
+            const consultant = JSON.parse(tmpConsultant);
+
+            if (consultant.id) {
+                TSCookie.setConsultantId(consultant.id);
+                TSCookie.setConsultantName(consultant.name);
+            } else {
+                TSCookie.deleteConsultant();
+            }
+
+            localStorage.removeItem('tmpConsultant');
         }
     }
 
@@ -95,6 +122,12 @@ class TSJoinProcess {
         } else {
             window.location.href = JOIN_PAGE;
         }
+    }
+
+    renderCheckoutConfirmation() {
+        this.removeClassContainer();
+        this.triggerConfetti();
+        localStorage.removeItem('isJoin');
     }
 
     /**
@@ -145,8 +178,8 @@ class TSJoinProcess {
         e.preventDefault();
         this.clearErrorMessages();
 
-        const email1 = $('#EmailAddress').val();
-        const email2 = $('#EmailAddress2').val();
+        const email1 = $('#Email').val();
+        const email2 = $('#Email2').val();
         const password1 = $('#Password').val();
 
         const $loginErrors = $('#loginErrors');
@@ -177,7 +210,7 @@ class TSJoinProcess {
     loginSuccess() {
         $('#FirstName').val('');
         $('#LastName').val('');
-        $('#EmailAddress2').val('');
+        $('#Email2').val('');
         $('#Password2').val('');
 
         const userInfo = $('#joinLoginForm').serialize();
@@ -509,6 +542,13 @@ class TSJoinProcess {
         const afid = $consultantCard.data('afid') || null;
         const name = $consultantCard.data('name') || null;
 
+        const tmpConsultant = {
+            id: TSCookie.getConsultantId(),
+            name: TSCookie.getConsultantName(),
+        };
+
+        localStorage.setItem('tmpConsultant', JSON.stringify(tmpConsultant));
+
         this.api.updateJoinSession(userInfo, this.getUrlIdentifier())
             .done(() => {
                 TSCookie.setConsultantId(cid);
@@ -772,6 +812,7 @@ class TSJoinProcess {
         } else {
             $consultantCard.find('.consultant-header').show();
             $consultantCard.removeClass('selected');
+            $('#ConsultantId').val('');
         }
     }
 
@@ -793,6 +834,17 @@ class TSJoinProcess {
                 </li>
             </ul>
         `);
+    }
+
+    /**
+     * Checkout Confirmation functions
+     */
+
+    triggerConfetti() {
+        const confettiRoots = document.querySelectorAll('[data-fun]');
+        confettiRoots.forEach(confettiRoot => {
+            confetti(confettiRoot);
+        });
     }
 
     /**

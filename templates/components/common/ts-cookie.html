@@ -100,12 +100,27 @@
                 Cookies.remove('ptotal');
             },
 
+            deleteConsultant: function() {
+                Cookies.remove('cid');
+                Cookies.remove('name');
+                Cookies.remove('cimg');
+                Cookies.remove('afid');
+            },
+
             setLoginStateChecker: function(loginState) {
                 Cookies.set('loginStateChecker', loginState);
             },
 
             getLoginStateChecker: function() {
                 return Cookies.get('loginStateChecker');
+            },
+
+            setSelectedKitId: function(id) {
+                Cookies.set('selectedKitId', id);
+            },
+
+            getSelectedKitId: function() {
+                return Cookies.get('selectedKitId');
             },
 
             // Debugging

@@ -1,12 +1,13 @@
 import TSApi from '../common/ts-api';
+import TSCookie from '../common/ts-cookie';
 import utils from '@bigcommerce/stencil-utils';
 
 const JOIN_PAGE = '/join';
 const CART_PAGE = '/cart.php';
 
 export default class TSJoinAbandonment {
-    constructor(context) {
-        this.BBOK_PRODUCT_ID = context.themeSettings.ts_join_ss_product_id;
+    constructor() {
+        this.BBOK_PRODUCT_ID = Number(TSCookie.getSelectedKitId());
         this.api = new TSApi();
         this.modalTemplate = 'common/join-abandonment-modal';
 

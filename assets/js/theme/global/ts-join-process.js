@@ -40,6 +40,8 @@ class TSJoinProcess {
     }
 
     init() {
+        this.checkTmpConsultant();
+
         switch (document.location.pathname) {
             case JOIN_PAGE:
                 this.renderJoin();
@@ -54,6 +56,27 @@ class TSJoinProcess {
                 this.renderCheckoutConfirmation();
             default:
                 break;
+        }
+    }
+
+    /**
+     * TST-301 make sure to affiliate previous consultant
+     * when user does not complete the join process
+     */
+    checkTmpConsultant() {
+        const tmpConsultant = localStorage.getItem('tmpConsultant');
+
+        if (tmpConsultant) {
+            const consultant = JSON.parse(tmpConsultant);
+
+            if (consultant.id) {
+                TSCookie.setConsultantId(consultant.id);
+                TSCookie.setConsultantName(consultant.name);
+            } else {
+                TSCookie.deleteConsultant();
+            }
+
+            localStorage.removeItem('tmpConsultant');
         }
     }
 
@@ -519,6 +542,13 @@ class TSJoinProcess {
         const afid = $consultantCard.data('afid') || null;
         const name = $consultantCard.data('name') || null;
 
+        const tmpConsultant = {
+            id: TSCookie.getConsultantId(),
+            name: TSCookie.getConsultantName(),
+        };
+
+        localStorage.setItem('tmpConsultant', JSON.stringify(tmpConsultant));
+
         this.api.updateJoinSession(userInfo, this.getUrlIdentifier())
             .done(() => {
                 TSCookie.setConsultantId(cid);
@@ -782,6 +812,7 @@ class TSJoinProcess {
         } else {
             $consultantCard.find('.consultant-header').show();
             $consultantCard.removeClass('selected');
+            $('#ConsultantId').val('');
         }
     }
 

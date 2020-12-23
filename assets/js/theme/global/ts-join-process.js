@@ -155,8 +155,8 @@ class TSJoinProcess {
         e.preventDefault();
         this.clearErrorMessages();
 
-        const email1 = $('#EmailAddress').val();
-        const email2 = $('#EmailAddress2').val();
+        const email1 = $('#Email').val();
+        const email2 = $('#Email2').val();
         const password1 = $('#Password').val();
 
         const $loginErrors = $('#loginErrors');
@@ -187,7 +187,7 @@ class TSJoinProcess {
     loginSuccess() {
         $('#FirstName').val('');
         $('#LastName').val('');
-        $('#EmailAddress2').val('');
+        $('#Email2').val('');
         $('#Password2').val('');
 
         const userInfo = $('#joinLoginForm').serialize();

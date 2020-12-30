@@ -116,7 +116,7 @@
             },
 
             setSelectedKitId: function(id) {
-                Cookies.set('selectedKitId', id);
+                Cookies.set('selectedKitId', id, { expires: 365 });
             },
 
             getSelectedKitId: function() {

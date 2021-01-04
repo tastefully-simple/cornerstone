@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {{> components/common/gtm-datalayer }}
+    
     <title>{{ head.title }}</title>
     {{{ head.meta_tags }}}
     {{{ head.config }}}
@@ -9,6 +11,10 @@
     {{#block "head"}}{{/block}}
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) installed by Razoyo 11/24 to theme template layout empty.html-->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PD7HGB2"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
     {{#block "page"}}{{/block}}
 </body>
 </html>

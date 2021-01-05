@@ -179,10 +179,6 @@ class TSJoinProcess {
         e.preventDefault();
         this.clearErrorMessages();
 
-        const email1 = $('#Email').val();
-        const email2 = $('#EmailAddress2').val();
-        const password1 = $('#Password').val();
-
         const $loginErrors = $('#loginErrors');
         const emptyFieldsErrorMessage = '<li class="join__error">Please make sure all inputs are filled in.</li>';
 

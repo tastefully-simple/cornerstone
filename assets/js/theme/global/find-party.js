@@ -41,7 +41,7 @@ class FindAParty {
     }
 
     saveCookie(party) {
-        var date = new Date(party.date);
+        const date = new Date(party.date);
         date.setDate(date.getDate() + 1);
 
         TSCookie.setPartyId(party.id, date);

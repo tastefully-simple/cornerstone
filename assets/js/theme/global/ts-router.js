@@ -67,7 +67,7 @@ export default class TSRouter {
                         return newResponse;
                     })
                     .then(data => {
-                        var date = new Date(data.Date);
+                        const date = new Date(data.Date);
                         date.setDate(date.getDate() + 1);
 
                         if (typeof data !== 'number') {
@@ -114,7 +114,7 @@ export default class TSRouter {
                 this.api.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(data => {
-                        var date = new Date(data.Date);
+                        const date = new Date(data.Date);
                         date.setDate(date.getDate() + 1);
 
                         TSCookie.setAffiliateId(data.AfId);

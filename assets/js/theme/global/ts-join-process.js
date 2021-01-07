@@ -41,6 +41,7 @@ class TSJoinProcess {
 
     init() {
         this.checkTmpConsultant();
+        this.checkBBOKOutsideJoin();
 
         switch (document.location.pathname) {
             case JOIN_PAGE:
@@ -78,6 +79,33 @@ class TSJoinProcess {
             }
 
             localStorage.removeItem('tmpConsultant');
+        }
+    }
+
+    /**
+     * TST-323 check and delete if a BBOK item
+     * is added outside the join process
+     */
+    checkBBOKOutsideJoin() {
+        const selectedKit = TSCookie.getSelectedKitId();
+        const bbokIds = this.bbokProducts.map(product => product.id);
+
+        if (!selectedKit) {
+            utils.api.cart.getCart({}, (getCartErr, cart) => {
+                if (cart) {
+                    const bbokItemsInCart = cart.lineItems.physicalItems.filter(item => (
+                        item.productId === bbokIds[0] || item.productId === bbokIds[1]
+                    ));
+
+                    bbokItemsInCart.forEach(item => {
+                        utils.api.cart.itemRemove(item.id, (err, _res) => {
+                            if (err) {
+                                console.error('JoinProcess::utils.api.cart.itemRemove:error', err);
+                            }
+                        });
+                    });
+                }
+            });
         }
     }
 

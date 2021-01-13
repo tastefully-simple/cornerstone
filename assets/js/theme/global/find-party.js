@@ -41,10 +41,13 @@ class FindAParty {
     }
 
     saveCookie(party) {
-        TSCookie.setPartyId(party.id);
-        TSCookie.setPartyHost(party.host);
-        TSCookie.setPartyDate(party.date);
-        TSCookie.setPartyTime(party.time);
+        const date = new Date(party.date);
+        date.setDate(date.getDate() + 1);
+
+        TSCookie.setPartyId(party.id, date);
+        TSCookie.setPartyHost(party.host, date);
+        TSCookie.setPartyDate(party.date, date);
+        TSCookie.setPartyTime(party.time, date);
         TSCookie.setConsultantId(party.cid);
         TSCookie.setConsultantName(party.cname);
         TSCookie.setConsultantImage(party.cimg);

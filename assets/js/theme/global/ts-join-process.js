@@ -41,6 +41,7 @@ class TSJoinProcess {
 
     init() {
         this.checkTmpConsultant();
+        this.checkBBOKOutsideJoin();
 
         switch (document.location.pathname) {
             case JOIN_PAGE:
@@ -78,6 +79,33 @@ class TSJoinProcess {
             }
 
             localStorage.removeItem('tmpConsultant');
+        }
+    }
+
+    /**
+     * TST-323 check and delete if a BBOK item
+     * is added outside the join process
+     */
+    checkBBOKOutsideJoin() {
+        const selectedKit = TSCookie.getSelectedKitId();
+        const bbokIds = this.bbokProducts.map(product => product.id);
+
+        if (!selectedKit) {
+            utils.api.cart.getCart({}, (getCartErr, cart) => {
+                if (cart) {
+                    const bbokItemsInCart = cart.lineItems.physicalItems.filter(item => (
+                        item.productId === bbokIds[0] || item.productId === bbokIds[1]
+                    ));
+
+                    bbokItemsInCart.forEach(item => {
+                        utils.api.cart.itemRemove(item.id, (err, _res) => {
+                            if (err) {
+                                console.error('JoinProcess::utils.api.cart.itemRemove:error', err);
+                            }
+                        });
+                    });
+                }
+            });
         }
     }
 
@@ -179,32 +207,21 @@ class TSJoinProcess {
         e.preventDefault();
         this.clearErrorMessages();
 
-        const email1 = $('#Email').val();
-        const email2 = $('#EmailAddress2').val();
-        const password1 = $('#Password').val();
-
         const $loginErrors = $('#loginErrors');
-        const emptyFieldsErrorMessage = '<h5>Please make sure all inputs are filled in.</h5>';
-        const emailNotMatchErrorMessage = '<h5>Email Addresses Must Match.</h5>';
+        const emptyFieldsErrorMessage = '<li class="join__error">Please make sure all inputs are filled in.</li>';
 
-        const isEmailMatch = email1 === email2;
-
-        if (JOIN_FORM_TABS.login && (email1 === '' || password1 === '')) {
-            $loginErrors.append(emptyFieldsErrorMessage);
-        } else if (JOIN_FORM_TABS.signup) {
-            const emptyFields = $('#joinLoginForm input').filter(function fn() {
-                return $.trim($(this).val()).length === 0;
-            });
-
-            if (emptyFields.length > 0) {
-                $loginErrors.append(emptyFieldsErrorMessage);
-            } else if (!isEmailMatch) {
-                $loginErrors.append(emailNotMatchErrorMessage);
-            } else {
-                this.signupSuccess();
-            }
-        } else {
+        if (JOIN_FORM_TABS.login) {
             this.loginSuccess();
+        } else {
+            this.signupSuccess();
+        }
+
+        const emptyFields = $('#joinLoginForm input').filter(function fn() {
+            return $.trim($(this).val()).length === 0;
+        });
+
+        if (emptyFields.length > 0) {
+            $loginErrors.append(emptyFieldsErrorMessage);
         }
     }
 
@@ -250,14 +267,14 @@ class TSJoinProcess {
         if (error.errors) {
             const { id, message } = error.errors[0];
             $('#loginErrors').append(`
-                <li data-errorid="${id}">${message}</h4>
+                <li class="join__error" data-errorid="${id}">${message}</li>
             `);
         } else if (error.responseJSON.errors) {
             $.each(error.responseJSON.errors, (i) => {
                 const errors = error.responseJSON.errors[i];
                 const { id, message } = errors;
                 $('#loginErrors').append(`
-                    <li data-errorid="${id}">${message}</li>
+                    <li class="join__error" data-errorid="${id}">${message}</li>
                 `);
             });
         } else if (error) {

@@ -101,14 +101,18 @@ class TSJoinProcess {
                     if (bboks.length > 1) {
                         this.showLoading();
                         this.deleteBBOKItem(cart[0].id, bboks[0].id)
-                            .then(_cart => {
-                                this.deleteBBOKItem(cart.id, bboks[1].id);
-                                window.location = CART_PAGE;
+                            .then(updatedCart => {
+                                this.deleteBBOKItem(updatedCart.id, bboks[1].id)
+                                    .then(_ => {
+                                        window.location = CART_PAGE;
+                                    });
                             });
                     } else if (bboks.length > 0) {
                         this.showLoading();
-                        this.deleteBBOKItem(cart[0].id, bboks[0].id);
-                        window.location = CART_PAGE;
+                        this.deleteBBOKItem(cart[0].id, bboks[0].id)
+                            .then(_ => {
+                                window.location = CART_PAGE;
+                            });
                     }
                 });
         }

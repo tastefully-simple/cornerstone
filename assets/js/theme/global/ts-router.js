@@ -66,29 +66,24 @@ export default class TSRouter {
                         const newResponse = res.ok ? res.json() : res.status;
                         return newResponse;
                     })
-                    .then(data => {
-                        const date = new Date(data.Date);
-                        date.setDate(date.getDate() + 1);
-
-                        if (typeof data !== 'number') {
-                            if (data.IsClosed) {
-                                TSCookie.setPartyId(iPid, date);
+                    .then(party => {
+                        if (typeof party !== 'number') {
+                            if (party.IsClosed) {
+                                this.setPartyCookies(party);
                                 localStorage.removeItem('partyDetails');
                                 window.location = '/closed-party';
                             } else {
-                                TSCookie.setAffiliateId(data.AfId);
-                                TSCookie.setConsultantId(data.ConsultantId);
-                                TSCookie.setConsultantName(data.ConsultantName);
-                                TSCookie.setConsultantImage(data.Image);
-                                TSCookie.setPartyId(iPid, date);
-                                TSCookie.setPartyHost(data.HostName, date);
-                                TSCookie.setPartyDate(data.Date, date);
-                                TSCookie.setPartyTime(data.Time, date);
-                                localStorage.setItem('partyDetails', JSON.stringify(data));
+                                TSCookie.setAffiliateId(party.AfId);
+                                TSCookie.setConsultantId(party.ConsultantId);
+                                TSCookie.setConsultantName(party.ConsultantName);
+                                TSCookie.setConsultantImage(party.Image);
+                                this.setPartyCookies(party);
+
+                                localStorage.setItem('partyDetails', JSON.stringify(party));
                                 window.location = '/party-details';
                             }
                         } else {
-                            TSCookie.setPartyId(iPid, date);
+                            TSCookie.setPartyCookies(party);
                             localStorage.removeItem('partyDetails');
                             window.location = '/closed-party';
                         }
@@ -113,17 +108,11 @@ export default class TSRouter {
                 this.showLoading();
                 this.api.getPartyDetails(iPid)
                     .then(res => res.json())
-                    .then(data => {
-                        const date = new Date(data.Date);
-                        date.setDate(date.getDate() + 1);
-
-                        TSCookie.setAffiliateId(data.AfId);
-                        TSCookie.setConsultantId(data.ConsultantId);
-                        TSCookie.setConsultantName(data.ConsultantName);
-                        TSCookie.setPartyId(iPid, date);
-                        TSCookie.setPartyHost(data.HostName, date);
-                        TSCookie.setPartyDate(data.Date, date);
-                        TSCookie.setPartyTime(data.Time, date);
+                    .then(party => {
+                        TSCookie.setAffiliateId(party.AfId);
+                        TSCookie.setConsultantId(party.ConsultantId);
+                        TSCookie.setConsultantName(party.ConsultantName);
+                        this.setPartyCookies(party);
                         window.location = '/host-planner';
                     })
                     .catch(err => {
@@ -235,6 +224,21 @@ export default class TSRouter {
     //
     // HELPERS
     //
+
+    setPartyCookies(party) {
+        const closedDate = new Date();
+        closedDate.setDate(closedDate.getDate() - 1);
+
+        const partyDate = new Date(party.Date);
+        partyDate.setDate(partyDate.getDate() + 30);
+
+        const date = party.IsClosed ? closedDate : partyDate;
+
+        TSCookie.setPartyId(party.PartyId, date);
+        TSCookie.setPartyHost(party.HostName, date);
+        TSCookie.setPartyDate(party.Date, date);
+        TSCookie.setPartyTime(party.Time, date);
+    }
 
     /* TST-175
      * commented out sendPartyOrder() as it's not being called anywhere

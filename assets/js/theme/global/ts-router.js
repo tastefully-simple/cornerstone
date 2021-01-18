@@ -230,7 +230,7 @@ export default class TSRouter {
         closedDate.setDate(closedDate.getDate() - 1);
 
         const partyDate = new Date(party.Date);
-        partyDate.setDate(partyDate.getDate() + 30);
+        partyDate.setDate(partyDate.getDate() + 31);
 
         const date = party.IsClosed ? closedDate : partyDate;
 

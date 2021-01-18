@@ -101,6 +101,7 @@ class TSJoinProcess {
                     if (bboks.length > 1) {
                         this.showLoading();
                         this.deleteBBOKItem(cart[0].id, bboks[0].id)
+                            .then(data => data.json())
                             .then(updatedCart => {
                                 this.deleteBBOKItem(updatedCart.id, bboks[1].id)
                                     .then(_ => {
@@ -927,7 +928,7 @@ class TSJoinProcess {
             headers: {
                 'Content-Type': 'application/json',
             },
-        }).then(res => res.json());
+        });
     }
 
     showLoading() {

@@ -226,18 +226,25 @@ export default class TSRouter {
     //
 
     setPartyCookies(party) {
+        const now = new Date();
+
         const closedDate = new Date();
         closedDate.setDate(closedDate.getDate() - 1);
 
         const partyDate = new Date(party.Date);
         partyDate.setDate(partyDate.getDate() + 31);
 
-        const date = party.IsClosed ? closedDate : partyDate;
+        let expiration;
+        if (party.IsClosed) {
+            expiration = closedDate;
+        } else if (partyDate > now) {
+            expiration = partyDate;
+        }
 
-        TSCookie.setPartyId(party.PartyId, date);
-        TSCookie.setPartyHost(party.HostName, date);
-        TSCookie.setPartyDate(party.Date, date);
-        TSCookie.setPartyTime(party.Time, date);
+        TSCookie.setPartyId(party.PartyId, expiration);
+        TSCookie.setPartyHost(party.HostName, expiration);
+        TSCookie.setPartyDate(party.Date, expiration);
+        TSCookie.setPartyTime(party.Time, expiration);
     }
 
     /* TST-175

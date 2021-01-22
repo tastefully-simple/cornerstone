@@ -217,21 +217,10 @@ class TSJoinProcess {
         e.preventDefault();
         this.clearErrorMessages();
 
-        const $loginErrors = $('#loginErrors');
-        const emptyFieldsErrorMessage = '<li class="join__error">Please make sure all inputs are filled in.</li>';
-
         if (JOIN_FORM_TABS.login) {
             this.loginSuccess();
         } else {
             this.signupSuccess();
-        }
-
-        const emptyFields = $('#joinLoginForm input').filter(function fn() {
-            return $.trim($(this).val()).length === 0;
-        });
-
-        if (emptyFields.length > 0) {
-            $loginErrors.append(emptyFieldsErrorMessage);
         }
     }
 

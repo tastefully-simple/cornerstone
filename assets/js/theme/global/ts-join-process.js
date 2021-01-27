@@ -9,6 +9,7 @@ const JOIN_PAGE = '/join';
 const KIT_PAGE = '/join-kit/';
 const PERSONAL_INFO_PAGE = '/tell-us-about-yourself/';
 const CONFIRMATION_PAGE = '/welcome/';
+const CART_PAGE = '/cart.php';
 
 // Indicate which tab to be displayed in the join form
 const JOIN_FORM_TABS = {
@@ -90,22 +91,31 @@ class TSJoinProcess {
         const selectedKit = TSCookie.getSelectedKitId();
         const bbokIds = this.bbokProducts.map(product => product.id);
 
-        if (!selectedKit) {
-            utils.api.cart.getCart({}, (getCartErr, cart) => {
-                if (cart) {
-                    const bbokItemsInCart = cart.lineItems.physicalItems.filter(item => (
+        if (!selectedKit && document.location.pathname === CART_PAGE) {
+            this.getCart()
+                .then(cart => {
+                    const bboks = cart[0].lineItems.physicalItems.filter(item => (
                         item.productId === bbokIds[0] || item.productId === bbokIds[1]
                     ));
 
-                    bbokItemsInCart.forEach(item => {
-                        utils.api.cart.itemRemove(item.id, (err, _res) => {
-                            if (err) {
-                                console.error('JoinProcess::utils.api.cart.itemRemove:error', err);
-                            }
-                        });
-                    });
-                }
-            });
+                    if (bboks.length > 1) {
+                        this.showLoading();
+                        this.deleteBBOKItem(cart[0].id, bboks[0].id)
+                            .then(data => data.json())
+                            .then(updatedCart => {
+                                this.deleteBBOKItem(updatedCart.id, bboks[1].id)
+                                    .then(_ => {
+                                        window.location = CART_PAGE;
+                                    });
+                            });
+                    } else if (bboks.length > 0) {
+                        this.showLoading();
+                        this.deleteBBOKItem(cart[0].id, bboks[0].id)
+                            .then(_ => {
+                                window.location = CART_PAGE;
+                            });
+                    }
+                });
         }
     }
 
@@ -207,21 +217,10 @@ class TSJoinProcess {
         e.preventDefault();
         this.clearErrorMessages();
 
-        const $loginErrors = $('#loginErrors');
-        const emptyFieldsErrorMessage = '<li class="join__error">Please make sure all inputs are filled in.</li>';
-
         if (JOIN_FORM_TABS.login) {
             this.loginSuccess();
         } else {
             this.signupSuccess();
-        }
-
-        const emptyFields = $('#joinLoginForm input').filter(function fn() {
-            return $.trim($(this).val()).length === 0;
-        });
-
-        if (emptyFields.length > 0) {
-            $loginErrors.append(emptyFieldsErrorMessage);
         }
     }
 
@@ -896,6 +895,48 @@ class TSJoinProcess {
             headers: {
                 'Content-Type': 'application/json',
             },
+        });
+    }
+
+    getCart() {
+        return fetch('/api/storefront/carts', {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(res => res.json());
+    }
+
+    deleteBBOKItem(cartId, itemId) {
+        const url = `/api/storefront/carts/${cartId}/items/${itemId}`;
+
+        return fetch(url, {
+            method: 'DELETE',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+
+    showLoading() {
+        $(() => {
+            const docHeight = $(document).height();
+            $('#page-wrapper').html(`
+                <div class="loader-icon">
+                    <div class="sk-chase">
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                    </div>
+                </div>
+                <div id='overlay' class='body-overlay'></div>
+            `);
+            $('#overlay').height(docHeight);
         });
     }
 

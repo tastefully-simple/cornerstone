@@ -171,6 +171,12 @@
 
         p {
             margin: 0;
+            strong {
+                font-weight: 900;
+            }
+        }
+        button.framelink-md {
+            font-weight: 700;
         }
     }
 }

@@ -50,7 +50,7 @@
     "ts_join_ss_product_id": 532,
     "ts_join_kits": [
       {
-        "id": 532,
+        "id": 824,
         "name": "Business Blast Off Kit<span>&reg;</span>",
         "price": "$99.99",
         "real_value": "(Over $180.00 Value!)",
@@ -58,7 +58,7 @@
         "url": "/business-blast-off-kit-fw2020"
       },
       {
-        "id": 783,
+        "id": 825,
         "name": "Starter Business Blast Off Kit<span>&reg;</span>",
         "price": "$49.00",
         "real_value": "(Over $100.00 Value!)",
@@ -576,7 +576,7 @@
         "ts_join_ss_product_id": 566,
         "ts_join_kits": [
           {
-            "id": 566,
+            "id": 613,
             "name": "Business Blast Off Kit<span>&reg;</span>",
             "price": "$99.99",
             "real_value": "(Over $180 Value!)",
@@ -584,7 +584,7 @@
             "url": "/business-blast-off-kit-fw2020"
           },
           {
-            "id": 571,
+            "id": 612,
             "name": "Starter Business Blast Off Kit<span>&reg;</span>",
             "price": "$49.00",
             "real_value": "(Over $100 Value!)",
@@ -619,7 +619,7 @@
         "ts_join_ss_product_id": 661,
         "ts_join_kits": [
           {
-            "id": 661,
+            "id": 1072,
             "name": "Business Blast Off Kit<span>&reg;</span>",
             "price": "$99.99",
             "real_value": "(Over $180 Value!)",
@@ -627,7 +627,7 @@
             "url": "/business-blast-off-kit-fw2020"
           },
           {
-            "id": 974,
+            "id": 1073,
             "name": "Starter Business Blast Off Kit<span>&reg;</span>",
             "price": "$49.00",
             "real_value": "(Over $100 Value!)",

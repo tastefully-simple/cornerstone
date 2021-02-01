@@ -326,7 +326,9 @@ class FindAParty {
 
         const $navPages = $('.navPages-container .navPages');
 
-        if (window.innerWidth >= SCREEN_MIN_WIDTH) {
+        if (window.innerWidth >= SCREEN_MIN_WIDTH && this.isOnCartPage()) {
+            $('.cart-affiliate').append($party);
+        } else if (window.innerWidth >= SCREEN_MIN_WIDTH) {
             $('header.header').append($party);
         } else {
             $navPages.append($party);

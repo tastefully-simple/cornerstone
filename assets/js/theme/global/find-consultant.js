@@ -406,7 +406,6 @@ class FindAConsultant {
 
         if (this.isExternalConsultant()) {
             $('.cart-affiliate').css('height', 'initial');
-            $('.cart-affiliate-btn').text('(edit)');
             $consultantImg.css('display', 'initial');
             $consultantImg.attr('alt', `Photograph thumbnail of ${this.consultant.name}`);
             if (this.consultant.image) {
@@ -414,12 +413,21 @@ class FindAConsultant {
             }
         } else {
             $('.cart-affiliate').css('height', '83px');
-            $('.cart-affiliate-btn').text('(Find a Consultant)');
             $consultantImg.css('display', 'none');
         }
 
-        // Update the displayed consultant name in the banner
-        $('.cart-affiliate-info .affiliate-name').text(this.consultant.name);
+        // Update the displayed verbiage and consultant name in the banner
+        const bannerText = this.consultant.name
+            ? `You are shopping with <br/> <strong class="affiliate-name">${this.consultant.name}</strong>
+               <button type="button" class="modal-button">
+                  <span><small class="cart-affiliate-btn">(edit)</small></span>
+               </button>`
+            : `Are you shopping with a <br/> <strong class="affiliate-name">consultant?</strong>
+               <button type="button" class="modal-button cart-affiliate-btn framelink-md teal-text">
+                   Find Them Here
+               </button>`;
+
+        $('.cart-affiliate-info .cart-affiliate-name').html(bannerText);
     }
 
     isOnConsultantPage() {

@@ -9,6 +9,7 @@ const JOIN_PAGE = '/join';
 const KIT_PAGE = '/join-kit/';
 const PERSONAL_INFO_PAGE = '/tell-us-about-yourself/';
 const CONFIRMATION_PAGE = '/welcome/';
+const CART_PAGE = '/cart.php';
 
 // Indicate which tab to be displayed in the join form
 const JOIN_FORM_TABS = {
@@ -41,6 +42,7 @@ class TSJoinProcess {
 
     init() {
         this.checkTmpConsultant();
+        this.checkBBOKOutsideJoin();
 
         switch (document.location.pathname) {
             case JOIN_PAGE:
@@ -78,6 +80,42 @@ class TSJoinProcess {
             }
 
             localStorage.removeItem('tmpConsultant');
+        }
+    }
+
+    /**
+     * TST-323 check and delete if a BBOK item
+     * is added outside the join process
+     */
+    checkBBOKOutsideJoin() {
+        const selectedKit = TSCookie.getSelectedKitId();
+        const bbokIds = this.bbokProducts.map(product => product.id);
+
+        if (!selectedKit && document.location.pathname === CART_PAGE) {
+            this.getCart()
+                .then(cart => {
+                    const bboks = cart[0].lineItems.physicalItems.filter(item => (
+                        item.productId === bbokIds[0] || item.productId === bbokIds[1]
+                    ));
+
+                    if (bboks.length > 1) {
+                        this.showLoading();
+                        this.deleteBBOKItem(cart[0].id, bboks[0].id)
+                            .then(data => data.json())
+                            .then(updatedCart => {
+                                this.deleteBBOKItem(updatedCart.id, bboks[1].id)
+                                    .then(_ => {
+                                        window.location = CART_PAGE;
+                                    });
+                            });
+                    } else if (bboks.length > 0) {
+                        this.showLoading();
+                        this.deleteBBOKItem(cart[0].id, bboks[0].id)
+                            .then(_ => {
+                                window.location = CART_PAGE;
+                            });
+                    }
+                });
         }
     }
 
@@ -179,32 +217,10 @@ class TSJoinProcess {
         e.preventDefault();
         this.clearErrorMessages();
 
-        const email1 = $('#Email').val();
-        const email2 = $('#EmailAddress2').val();
-        const password1 = $('#Password').val();
-
-        const $loginErrors = $('#loginErrors');
-        const emptyFieldsErrorMessage = '<h5>Please make sure all inputs are filled in.</h5>';
-        const emailNotMatchErrorMessage = '<h5>Email Addresses Must Match.</h5>';
-
-        const isEmailMatch = email1 === email2;
-
-        if (JOIN_FORM_TABS.login && (email1 === '' || password1 === '')) {
-            $loginErrors.append(emptyFieldsErrorMessage);
-        } else if (JOIN_FORM_TABS.signup) {
-            const emptyFields = $('#joinLoginForm input').filter(function fn() {
-                return $.trim($(this).val()).length === 0;
-            });
-
-            if (emptyFields.length > 0) {
-                $loginErrors.append(emptyFieldsErrorMessage);
-            } else if (!isEmailMatch) {
-                $loginErrors.append(emailNotMatchErrorMessage);
-            } else {
-                this.signupSuccess();
-            }
-        } else {
+        if (JOIN_FORM_TABS.login) {
             this.loginSuccess();
+        } else {
+            this.signupSuccess();
         }
     }
 
@@ -250,14 +266,14 @@ class TSJoinProcess {
         if (error.errors) {
             const { id, message } = error.errors[0];
             $('#loginErrors').append(`
-                <li data-errorid="${id}">${message}</h4>
+                <li class="join__error" data-errorid="${id}">${message}</li>
             `);
         } else if (error.responseJSON.errors) {
             $.each(error.responseJSON.errors, (i) => {
                 const errors = error.responseJSON.errors[i];
                 const { id, message } = errors;
                 $('#loginErrors').append(`
-                    <li data-errorid="${id}">${message}</li>
+                    <li class="join__error" data-errorid="${id}">${message}</li>
                 `);
             });
         } else if (error) {
@@ -879,6 +895,48 @@ class TSJoinProcess {
             headers: {
                 'Content-Type': 'application/json',
             },
+        });
+    }
+
+    getCart() {
+        return fetch('/api/storefront/carts', {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(res => res.json());
+    }
+
+    deleteBBOKItem(cartId, itemId) {
+        const url = `/api/storefront/carts/${cartId}/items/${itemId}`;
+
+        return fetch(url, {
+            method: 'DELETE',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+
+    showLoading() {
+        $(() => {
+            const docHeight = $(document).height();
+            $('#page-wrapper').html(`
+                <div class="loader-icon">
+                    <div class="sk-chase">
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                    </div>
+                </div>
+                <div id='overlay' class='body-overlay'></div>
+            `);
+            $('#overlay').height(docHeight);
         });
     }
 

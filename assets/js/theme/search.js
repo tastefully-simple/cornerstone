@@ -2,11 +2,14 @@ import { hooks } from '@bigcommerce/stencil-utils';
 import CatalogPage from './catalog';
 import FacetedSearch from './common/faceted-search';
 import compareProducts from './global/compare-products';
-import urlUtils from './common/url-utils';
+import urlUtils from './common/utils/url-utils';
 import Url from 'url';
 import collapsibleFactory from './common/collapsible';
 import 'jstree';
 import nod from './common/nod';
+
+const leftArrowKey = 37;
+const rightArrowKey = 39;
 
 export default class Search extends CatalogPage {
     formatCategoryTreeForJSTree(node) {
@@ -33,14 +36,10 @@ export default class Search extends CatalogPage {
         return nodeData;
     }
 
-    showProducts() {
-        const url = urlUtils.replaceParams(window.location.href, {
-            section: 'product',
-        });
-
-        this.$productListingContainer.removeClass('u-hiddenVisually');
-        this.$facetedSearchContainer.removeClass('u-hiddenVisually');
-        this.$contentResultsContainer.addClass('u-hiddenVisually');
+    showProducts(navigate = true) {
+        this.$productListingContainer.removeClass('u-hidden');
+        this.$facetedSearchContainer.removeClass('u-hidden');
+        this.$contentResultsContainer.addClass('u-hidden');
 
         $('[data-content-results-toggle]').removeClass('navBar-action-color--active');
         $('[data-content-results-toggle]').addClass('navBar-action');
@@ -48,17 +47,24 @@ export default class Search extends CatalogPage {
         $('[data-product-results-toggle]').removeClass('navBar-action');
         $('[data-product-results-toggle]').addClass('navBar-action-color--active');
 
+        this.activateTab($('[data-product-results-toggle]'));
+
+        if (!navigate) {
+            return;
+        }
+
+        const searchData = $('#search-results-product-count span').data();
+        const url = (searchData.count > 0) ? searchData.url : urlUtils.replaceParams(searchData.url, {
+            page: 1,
+        });
+
         urlUtils.goToUrl(url);
     }
 
-    showContent() {
-        const url = urlUtils.replaceParams(window.location.href, {
-            section: 'content',
-        });
-
-        this.$contentResultsContainer.removeClass('u-hiddenVisually');
-        this.$productListingContainer.addClass('u-hiddenVisually');
-        this.$facetedSearchContainer.addClass('u-hiddenVisually');
+    showContent(navigate = true) {
+        this.$contentResultsContainer.removeClass('u-hidden');
+        this.$productListingContainer.addClass('u-hidden');
+        this.$facetedSearchContainer.addClass('u-hidden');
 
         $('[data-product-results-toggle]').removeClass('navBar-action-color--active');
         $('[data-product-results-toggle]').addClass('navBar-action');
@@ -66,11 +72,97 @@ export default class Search extends CatalogPage {
         $('[data-content-results-toggle]').removeClass('navBar-action');
         $('[data-content-results-toggle]').addClass('navBar-action-color--active');
 
+        this.activateTab($('[data-content-results-toggle]'));
+
+        if (!navigate) {
+            return;
+        }
+
+        const searchData = $('#search-results-content-count span').data();
+        const url = (searchData.count > 0) ? searchData.url : urlUtils.replaceParams(searchData.url, {
+            page: 1,
+        });
+
         urlUtils.goToUrl(url);
+    }
+
+    activateTab($tabToActivate) {
+        const $tabsCollection = $('[data-search-page-tabs]').find('[role="tab"]');
+
+        $tabsCollection.each((idx, tab) => {
+            const $tab = $(tab);
+
+            if ($tab.is($tabToActivate)) {
+                $tab.removeAttr('tabindex');
+                $tab.attr('aria-selected', true);
+                return;
+            }
+
+            $tab.attr('tabindex', '-1');
+            $tab.attr('aria-selected', false);
+        });
+    }
+
+    onTabChangeWithArrows(event) {
+        const eventKey = event.which;
+        const isLeftOrRightArrowKeydown = eventKey === leftArrowKey
+            || eventKey === rightArrowKey;
+        if (!isLeftOrRightArrowKeydown) return;
+
+        const $tabsCollection = $('[data-search-page-tabs]').find('[role="tab"]');
+
+        const isActiveElementNotTab = $tabsCollection.index($(document.activeElement)) === -1;
+        if (isActiveElementNotTab) return;
+
+        const $activeTab = $(`#${document.activeElement.id}`);
+        const activeTabIdx = $tabsCollection.index($activeTab);
+        const lastTabIdx = $tabsCollection.length - 1;
+
+        let nextTabIdx;
+        switch (eventKey) {
+        case leftArrowKey:
+            nextTabIdx = activeTabIdx === 0 ? lastTabIdx : activeTabIdx - 1;
+            break;
+        case rightArrowKey:
+            nextTabIdx = activeTabIdx === lastTabIdx ? 0 : activeTabIdx + 1;
+            break;
+        default: break;
+        }
+
+        $($tabsCollection.get(nextTabIdx)).focus().trigger('click');
+    }
+
+    getUrlParameter(queryParam) {
+        const regex = new RegExp(`[\\?&]${queryParam}=([^&#]*)`);
+        const results = regex.exec(window.location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    setupSortByQuerySearchParam() {
+        const searchQuery = this.getUrlParameter('search_query');
+
+        if (searchQuery.length === 0) return;
+
+        const $baseInput = $('<input/>').attr('type', 'hidden');
+
+        $('[data-sort-by]').each((idx, form) => {
+            const $form = $(form);
+            $form.append(
+                $baseInput.clone().attr({
+                    name: 'search_query',
+                    value: searchQuery,
+                }),
+                $baseInput.clone().attr({
+                    name: 'section',
+                    value: $form.data('sort-by'),
+                }),
+            );
+        });
     }
 
     onReady() {
         compareProducts(this.context.urls);
+        this.setupSortByQuerySearchParam();
 
         const $searchForm = $('[data-advanced-search-form]');
         const $categoryTreeContainer = $searchForm.find('[data-search-category-tree]');
@@ -101,10 +193,12 @@ export default class Search extends CatalogPage {
             this.showContent();
         });
 
+        $('[data-search-page-tabs]').on('keyup', this.onTabChangeWithArrows);
+
         if (this.$productListingContainer.find('li.product').length === 0 || url.query.section === 'content') {
-            this.showContent();
+            this.showContent(false);
         } else {
-            this.showProducts();
+            this.showProducts(false);
         }
 
         const validator = this.initValidation($searchForm)
@@ -136,6 +230,10 @@ export default class Search extends CatalogPage {
                 $searchForm.append(input);
             }
         });
+
+        setTimeout(() => {
+            $('[data-search-aria-message]').removeClass('u-hidden');
+        }, 100);
     }
 
     loadTreeNodes(node, cb) {
@@ -187,17 +285,23 @@ export default class Search extends CatalogPage {
     }
 
     initFacetedSearch() {
+        // eslint-disable-next-line object-curly-newline
+        const { onMinPriceError, onMaxPriceError, minPriceNotEntered, maxPriceNotEntered, onInvalidPrice } = this.context;
         const $productListingContainer = $('#product-listing-container');
+        const $contentListingContainer = $('#search-results-content');
         const $facetedSearchContainer = $('#faceted-search-container');
         const $searchHeading = $('#search-results-heading');
         const $searchCount = $('#search-results-product-count');
+        const $contentCount = $('#search-results-content-count');
         const productsPerPage = this.context.searchProductsPerPage;
         const requestOptions = {
             template: {
                 productListing: 'search/product-listing',
+                contentListing: 'search/content-listing',
                 sidebar: 'search/sidebar',
                 heading: 'search/heading',
                 productCount: 'search/product-count',
+                contentCount: 'search/content-count',
             },
             config: {
                 product_results: {
@@ -208,14 +312,32 @@ export default class Search extends CatalogPage {
         };
 
         this.facetedSearch = new FacetedSearch(requestOptions, (content) => {
-            $productListingContainer.html(content.productListing);
-            $facetedSearchContainer.html(content.sidebar);
             $searchHeading.html(content.heading);
-            $searchCount.html(content.productCount);
+
+            const url = Url.parse(window.location.href, true);
+            if (url.query.section === 'content') {
+                $contentListingContainer.html(content.contentListing);
+                $contentCount.html(content.contentCount);
+                this.showContent(false);
+            } else {
+                $productListingContainer.html(content.productListing);
+                $facetedSearchContainer.html(content.sidebar);
+                $searchCount.html(content.productCount);
+                this.showProducts(false);
+            }
+
             $('body').triggerHandler('compareReset');
             $('html, body').animate({
                 scrollTop: 0,
             }, 100);
+        }, {
+            validationErrorMessages: {
+                onMinPriceError,
+                onMaxPriceError,
+                minPriceNotEntered,
+                maxPriceNotEntered,
+                onInvalidPrice,
+            },
         });
     }
 

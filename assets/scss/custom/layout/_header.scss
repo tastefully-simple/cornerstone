@@ -50,6 +50,9 @@
             .navUser {
                 position:unset;
                 .navUser-item--cart {
+                    &__hidden-s {
+                        display: block;
+                    }
                     position:absolute;
                     right:0;
                     top:50%;
@@ -238,8 +241,11 @@
                         text-align:left;
                     }
                     .header-logo-image-container {
+                        min-height: unset;
                         .header-logo-image {
+                            display: inline-block;
                             left:unset;
+                            margin: auto;
                             position:relative;
                             transform:unset;
                         }

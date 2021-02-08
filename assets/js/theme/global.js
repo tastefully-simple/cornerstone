@@ -15,7 +15,6 @@ import adminBar from './global/adminBar';
 import carousel from './common/carousel';
 import loadingProgressBar from './global/loading-progress-bar';
 import svgInjector from './global/svg-injector';
-import objectFitImages from './global/object-fit-polyfill';
 import tsJoinProcess from './global/ts-join-process';
 import shippingModalInteraction from './global/shippingModalInteraction';
 import accordian from './global/accordian';
@@ -30,7 +29,7 @@ import tsAddToCart from './global/ts-add-to-cart';
 export default class Global extends PageManager {
     onReady() {
         const {
-            channelId, cartId, productId, categoryId, secureBaseUrl, maintenanceModeSettings, adminBarLanguage, showAdminBar,
+            channelId, cartId, productId, categoryId, secureBaseUrl, maintenanceModeSettings, adminBarLanguage, showAdminBar, themeSettings
         } = this.context;
         cartPreview(secureBaseUrl, cartId);
         quickSearch();
@@ -46,9 +45,8 @@ export default class Global extends PageManager {
         }
         loadingProgressBar();
         svgInjector();
-        objectFitImages();
-        tsJoinProcess(this.context.themeSettings);
-        shippingModalInteraction(this.context.themeSettings);
+        tsJoinProcess(themeSettings);
+        shippingModalInteraction(themeSettings);
         accordian();
         newsletterAlert();
         stickyHeader();

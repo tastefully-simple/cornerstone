@@ -21,20 +21,21 @@ export default class CommunicationPreferences extends PageManager {
         }
     }
 
-    async iframeData() {
-        try {
-            const src = await this.api.getCommunicationPreferences(this.email, this.cid);
-            const iframe = document.createElement('iframe');
+    iframeData() {
+        this.api.getCommunicationPreferences(this.email, this.cid)
+            .then(src => {
+                const iframe = document.createElement('iframe');
 
-            iframe.id = 'iframe';
-            iframe.src = src;
-            iframe.setAttribute('width', '800px');
-            iframe.setAttribute('height', '600px');
-            this.container.textContent = '';
-            this.container.append(iframe);
-        } catch (err) {
-            this.container.textContent = 'Error handling request';
-            console.warn('getCommunicationPreferences', err);
-        }
+                iframe.id = 'iframe';
+                iframe.src = src;
+                iframe.setAttribute('width', '800px');
+                iframe.setAttribute('height', '600px');
+                this.container.textContent = '';
+                this.container.append(iframe);
+            })
+            .catch(err => {
+                this.container.textContent = 'Error handling request';
+                console.warn('getCommunicationPreferences', err);
+            });
     }
 }

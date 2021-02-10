@@ -2,8 +2,8 @@ import utils from '@bigcommerce/stencil-utils';
 
 export default class ConsultantCard {
     /* Returns Promise that returns the consultant-card template */
-    async getTemplate() {
-        const promise = new Promise((resolve, _reject) => {
+    getTemplate() {
+        const template = new Promise((resolve, _reject) => {
             utils.api.getPage('/', {
                 template: 'common/consultant-card',
             }, (err, res) => {
@@ -11,10 +11,10 @@ export default class ConsultantCard {
                     console.error('Error getting consultant-card template');
                     throw new Error(err);
                 }
+
                 resolve(res);
             });
         });
-        const template = await promise;
 
         return template;
     }

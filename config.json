@@ -1,6 +1,7 @@
 {
   "name": "Tastefully Simple Cornerstone",
-  "version": "4.3.0",
+  "version": "5.1.0",
+  "template_engine": "handlebars_v4",
   "meta": {
     "price": 0,
     "documentation_url": "https://support.bigcommerce.com/articles/Public/Cornerstone-Theme-Manual",
@@ -50,19 +51,19 @@
     "ts_join_ss_product_id": 532,
     "ts_join_kits": [
       {
-        "id": 824,
+        "id": 532,
         "name": "Business Blast Off Kit<span>&reg;</span>",
         "price": "$99.99",
         "real_value": "(Over $180.00 Value!)",
-        "image": "img/join-kit/spring-summer/BBOK.jpg",
+        "image": "img/join-kit/BusinessBlastOffKit.jpg",
         "url": "/business-blast-off-kit-fw2020"
       },
       {
-        "id": 825,
+        "id": 783,
         "name": "Starter Business Blast Off Kit<span>&reg;</span>",
         "price": "$49.00",
         "real_value": "(Over $100.00 Value!)",
-        "image": "img/join-kit/spring-summer/StarterBBOK.jpg",
+        "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
         "url": "/starter-business-blast-off-kit"
       }
     ],
@@ -79,49 +80,49 @@
               "description": "Includes information and resources to help you get your business off to a strong start."
             },
             {
-              "img": "spring-summer/CuttingCarbsKit.jpg",
+              "img": "CuttingCarbs10MealKit.jpg",
               "name": "Cutting Carbs 10-Meal Kit",
               "qty": "1",
               "description": "Includes products and recipes for 10 simple, delicious and low-carb meals. Include it on your display tables at in-person and online parties and reference it when you talk about meal kits."
             },
             {
-              "img": "spring-summer/TriFoldDisplayPiece.jpg",
+              "img": "TriFoldDisplayPiece.jpg",
               "name": "Host, join & meal kit display piece",
               "qty": "1",
-              "description": "Place these in a prominent place on your display table and encourage guests to review them before and after the party."
+              "description": "Place these in prominent place on your display table and encourage guests to review them before and after the party."
             },
             {
               "img": "DisplayProducts.jpg",
               "name": "Products for Display",
               "qty": "1",
-              "description": "Display these products on your party display table to showcase the variety of versatile products you offer."
+              "description": "Include these products on your party display table to showcase the variety of versatile products you offer. "
             },
             {
               "img": "PartyFoodKit.jpg",
-              "name": "Party Food Kit<span>&trade;</span> 1",
+              "name": "Party Food Kit<span>&trade;</span> 3",
               "qty": "2",
               "description": "Includes products and recipes to share with your host for in-home tasting parties. You may also wish to provide a Party Food Kit to online hosts and ask them to prepare the foods to share their \"rave reviews\" of how simple and delicious they are. Kit includes two kits. "
             },
             {
-              "img": "spring-summer/Catalog.jpg",
+              "img": "Catalog.jpg",
               "name": "Catalogs",
-              "qty": "20",
-              "description": "Your #1 business tool featuring the fresh flavors and products of the season. Kit includes 20 catalogs."
+              "qty": "25",
+              "description": "Your #1 business tool featuring the fresh flavors and products of the season. Kit includes 25 catalogs."
             },
             {
               "img": "OrderForms.jpg",
               "name": "Order Forms",
               "qty": "25",
               "description": "Party guests will use these forms to place their orders with you."
-            },
-            {
-              "img": "spring-summer/PreviewInvite.jpg",
-              "name": "Preview Invitations",
-              "qty": "30",
-              "description": "Your party host will send these invitations to create excitement for attending the party. Kit includes 30 invitations."
             }
           ],
           "col_2": [
+            {
+              "img": "PreviewInvite.jpg",
+              "name": "Preview Invitations",
+              "qty": "30",
+              "description": "Your party host will send these invitation to create excitement for attending the party. Kit includes 30 invitations."
+            },
             {
               "img": "SomethingMoreBrochure.jpg",
               "name": "Something More Brochure",
@@ -138,7 +139,7 @@
               "img": "SimplyShine.jpg",
               "name": "Simply Shine: Stories that<br/>Stirred the Fire book",
               "qty": "1",
-              "description": "Tastefully Simple's Founder & CEO Jill Blashack Strahan shares her inspiring story and life lessons she's learned along the way."
+              "description": "Tastefully Simple Founder & CEO Jill Blashack Strahan shares her inspiring story and life lessons she's learned along the way."
             },
             {
               "img": "TSConnectedPropay.jpg",
@@ -161,19 +162,19 @@
               "description": "Includes information and resources to help you get your business off to a strong start."
             },
             {
-              "img": "spring-summer/TSFavesKit.jpg",
-              "name": "TS Faves 5-Meal Kit",
+              "img": "FamilyFavesKit.jpg",
+              "name": "Family Faves 5-Meal Kit",
               "qty": "1",
-              "description": "Includes products and recipes for 5 simple, delicious meals. Include it on your display tables at online parties and reference it when you talk about meal kits."
+              "description": "Include this kit on a display behind you when you are LIVE during your online parties. Hold up some of the products and share your favorite way to use it. Engage the guests to have them share their product knowledge also."
             },
             {
               "img": "PartyFoodKit.jpg",
-              "name": "Party Food Kit<span>&trade;</span> 1",
+              "name": "Party Food Kit<span>&trade;</span> 3",
               "qty": "1",
               "description": "Includes products and recipes to share with your host for in-home tasting parties. You may also wish to provide a Party Food Kit to online hosts and ask them to prepare the foods to share their \"rave reviews\" of how simple and delicious they are."
             },
             {
-              "img": "spring-summer/Catalog.jpg",
+              "img": "Catalog.jpg",
               "name": "Catalogs",
               "qty": "10",
               "description": "Your #1 business tool featuring the fresh flavors and products of the season. Kit includes 10 catalogs."
@@ -184,13 +185,13 @@
               "img": "SomethingMoreBrochure.jpg",
               "name": "Something More Brochure",
               "qty": "2",
-              "description": "Share this document with anyone who might want to create a life they love by joining your team. It provides an overview of the Tastefully Simple business opportunity. Kit includes 2 brochures."
+              "description": "Share this document with anyone who might want to create a life they love by joining your team. It provides an overview of the Tastefully Simple business opportunity. Kit includes two brochures."
             },
             {
               "img": "SimplyShine.jpg",
               "name": "Simply Shine: Stories that<br/>Stirred the Fire book",
               "qty": "1",
-              "description": "Tastefully Simple's Founder & CEO Jill Blashack Strahan shares her inspiring story and life lessons she's learned along the way."
+              "description": "Tastefully Simple Founder & CEO Jill Blashack Strahan shares her inspiring story and life lessons she's learned along the way."
             },
             {
               "img": "TSConnectedPropay.jpg",
@@ -308,6 +309,7 @@
     "color-greyLight": "#999999",
     "color-greyLighter": "#cccccc",
     "color-greyLightest": "#e5e5e5",
+    "banner--deafault-backgroundColor": "#707070",
     "button--default-color": "#2d2d2d",
     "button--default-colorHover": "#610b31",
     "button--default-colorActive": "#ffffff",
@@ -337,6 +339,10 @@
     "carousel-arrow-color": "#999999",
     "carousel-arrow-bgColor": "#ffffff",
     "carousel-arrow-borderColor": "#ffffff",
+    "carousel-play-pause-button-textColor": "8f8f8f",
+    "carousel-play-pause-button-textColor--hover": "#474747",
+    "carousel-play-pause-button-bgColor": "#ffffff",
+    "carousel-play-pause-button-borderColor": "#ffffff",
     "card-title-color": "#333333",
     "card-title-color-hover": "#2d2d2d",
     "card-figcaption-button-background": "#ffffff",
@@ -467,6 +473,7 @@
     "navigation_design": "simple",
     "price_ranges": true,
     "pdp-price-label": "",
+    "pdp_sale_badge_label": "",
     "pdp-sale-price-label": "",
     "pdp-non-sale-price-label": "",
     "pdp-retail-price-label": "MSRP:",
@@ -576,19 +583,19 @@
         "ts_join_ss_product_id": 566,
         "ts_join_kits": [
           {
-            "id": 613,
+            "id": 566,
             "name": "Business Blast Off Kit<span>&reg;</span>",
             "price": "$99.99",
             "real_value": "(Over $180 Value!)",
-            "image": "img/join-kit/spring-summer/BBOK.jpg",
+            "image": "img/join-kit/BusinessBlastOffKit.jpg",
             "url": "/business-blast-off-kit-fw2020"
           },
           {
-            "id": 612,
+            "id": 571,
             "name": "Starter Business Blast Off Kit<span>&reg;</span>",
             "price": "$49.00",
             "real_value": "(Over $100 Value!)",
-            "image": "img/join-kit/spring-summer/StarterBBOK.jpg",
+            "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
             "url": "/starter-business-blast-off-kit"
           }
         ]
@@ -619,19 +626,19 @@
         "ts_join_ss_product_id": 661,
         "ts_join_kits": [
           {
-            "id": 1072,
+            "id": 661,
             "name": "Business Blast Off Kit<span>&reg;</span>",
             "price": "$99.99",
             "real_value": "(Over $180 Value!)",
-            "image": "img/join-kit/spring-summer/BBOK.jpg",
+            "image": "img/join-kit/BusinessBlastOffKit.jpg",
             "url": "/business-blast-off-kit-fw2020"
           },
           {
-            "id": 1073,
+            "id": 974,
             "name": "Starter Business Blast Off Kit<span>&reg;</span>",
             "price": "$49.00",
             "real_value": "(Over $100 Value!)",
-            "image": "img/join-kit/spring-summer/StarterBBOK.jpg",
+            "image": "img/join-kit/StarterBusinessBlastOffKit.jpg",
             "url": "/starter-business-blast-off-kit"
           }
         ]

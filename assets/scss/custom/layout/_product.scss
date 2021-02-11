@@ -4,6 +4,7 @@
 
 // Product Page
 .productView {
+    flex-direction: row; // TST-335
     // Product Details Section - productView-product
     .productView-details {
         margin-bottom: 0px;

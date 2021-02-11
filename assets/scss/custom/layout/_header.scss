@@ -35,6 +35,9 @@
                         display:inline;
                     }
                 }
+                #bannerPasswordResetDropdown.dropdown-menu {
+                    z-index: $zIndex-low; // TST-336
+                }
                 .banner-detail-button {
                     font-weight: 700;
                 }

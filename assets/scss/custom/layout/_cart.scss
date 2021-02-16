@@ -37,6 +37,9 @@
                     .affiliate-name {
                         @extend .frameheading-1;
                     }
+                .cart-affiliate-btn.framelink-md {
+                    font-weight: 700;
+                }
                 }
             }
         }
@@ -78,6 +81,9 @@
                         display:none;
                     }
                 }
+            }
+            .partybar {
+                width: 100%;
             }
             .cart-affiliate-party {
                 display: none;

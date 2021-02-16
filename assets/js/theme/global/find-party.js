@@ -293,21 +293,20 @@ class FindAParty {
             $findPartyBarMobile.html(`<p><strong>${phost}</strong> is your host</p>
                 <button><span><small>(edit)</small></span></button>`);
         } else {
-            // no party selected (mobile)
-            this.renderNoPartySelected($findPartyBarMobile);
+            this.noPartySelectedHtml($findPartyBarMobile);
+            this.noPartySelectedHtml($findPartyBarDesktop);
+
             // initial no party selected (desktop)
             if (window.innerWidth >= SCREEN_MIN_WIDTH) {
                 this.$findPartyBar.hide();
-                $('header.header').append($findPartyBarDesktop);
-                this.renderNoPartySelected($findPartyBarDesktop);
+                $($findPartyBarDesktop).insertAfter($cartHeader);
             }
 
             $(window).resize(() => {
                 if (window.innerWidth >= SCREEN_MIN_WIDTH) {
                     this.$findPartyBar.hide();
                     $findPartyBarDesktop.show();
-                    $('header.header').append($findPartyBarDesktop);
-                    this.renderNoPartySelected($findPartyBarDesktop);
+                    $($findPartyBarDesktop).insertAfter($cartHeader);
                 } else {
                     // Show default party bar in mobile menu
                     this.$findPartyBar.show();
@@ -327,21 +326,23 @@ class FindAParty {
 
         const $navPages = $('.navPages-container .navPages');
 
-        if (window.innerWidth >= SCREEN_MIN_WIDTH) {
+        if (window.innerWidth >= SCREEN_MIN_WIDTH && this.isOnCartPage()) {
+            $('.cart-affiliate').append($party);
+        } else if (window.innerWidth >= SCREEN_MIN_WIDTH) {
             $('header.header').append($party);
         } else {
             $navPages.append($party);
         }
     }
 
-    renderNoPartySelected($partyBar) {
+    noPartySelectedHtml($partyBar) {
         const softRed = '#FFDDDD';
         const grey = '#2D2D2D';
 
         $partyBar.css('background-color', softRed);
         $partyBar.css('color', grey);
-        $partyBar.html(`<p>You have not selected a party</p>
-            <button><span><small>(Find a Party)</small></span></button>`);
+        $partyBar.html(`<p>Are you shopping in a <strong>party?</strong></p>
+            <button class="framelink-md teal-text">Find It Here</button>`);
     }
 
     showSelectedPartyMessage(host) {

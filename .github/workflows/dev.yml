@@ -23,8 +23,8 @@ jobs:
           npm install -g @bigcommerce/stencil-cli
           yarn
 
-      - run: 'echo "$STENCIL" > config.stencil.json'
-      - run: 'echo "STENCIL_SECRETS" > secrets.stencil.json'
+      - run: 'echo "$STENCIL" > cornerstone/config.stencil.json'
+      - run: 'echo "STENCIL_SECRETS" > cornerstone/secrets.stencil.json'
         shell: bash
         env:
           STENCIL: ${{secrets.STENCIL}}

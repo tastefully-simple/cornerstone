@@ -16,7 +16,7 @@ jobs:
       - name: Set Node version to 10
         uses: actions/setup-node@v1
         with:
-          node-version: 10.16.0
+          node-version: 10.17.0
 
       - name: Install Dependencies
         run: |
@@ -30,4 +30,4 @@ jobs:
 
       - name: Push Theme
         run: |
-          stencil push -a "Tech-Sandbox"
+          stencil push -a Tech-Sandbox

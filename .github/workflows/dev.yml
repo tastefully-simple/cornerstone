@@ -23,10 +23,12 @@ jobs:
           npm install -g @bigcommerce/stencil-cli
           yarn
 
-      - run: 'echo "$STENCIL" > .stencil'
+      - run: 'echo "$STENCIL" > config.stencil.json'
+      - run: 'echo "STENCIL_SECRETS" > secrets.stencil.json'
         shell: bash
         env:
           STENCIL: ${{secrets.STENCIL}}
+          STENCIL_SECRETS: ${{secrets.STENCIL_SECRETS}}
 
       - name: Push Theme
         run: |

@@ -28,6 +28,10 @@ jobs:
         env:
           STENCIL: ${{secrets.STENCIL}}
 
+      - name: Configure Big Commerce Stencil config
+        run: |
+          npm install 
+
       - name: Push Theme
         run: |
           stencil push -a Tech-Sandbox -d

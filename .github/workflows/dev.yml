@@ -11,25 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Set Node version to 10
         uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: 10.16.0
 
       - name: Install Dependencies
         run: |
           npm install -g @bigcommerce/stencil-cli
           yarn
-
-      - run: 'stencil init --url https://tastefully-simple-sandbox-2.mybigcommerce.com/ --token 657f3t8mbti1w5nzijdfjmg9mm1299j'
+      - run: 'echo "$STENCIL" > .stencil'
         shell: bash
-
-      - name: Configure Big Commerce Stencil config
-        run: |
-          npm install 
+        env:
+          STENCIL: ${{secrets.STENCIL}}
 
       - name: Push Theme
         run: |
-          stencil push -a Tech-Sandbox
+          stencil push -a "Tech-Sandbox"

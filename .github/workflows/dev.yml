@@ -23,10 +23,9 @@ jobs:
           npm install -g @bigcommerce/stencil-cli
           yarn
 
-      - run: '$STENCIL'
+      - name: Configure Big Commerce Stencil config
+      - run: stencil init --url https://tastefully-simple-sandbox-2.mybigcommerce.com/ --token 657f3t8mbti1w5nzijdfjmg9mm1299j
         shell: bash
-        env:
-          STENCIL: ${{secrets.STENCIL}}
 
       - name: Configure Big Commerce Stencil config
         run: |

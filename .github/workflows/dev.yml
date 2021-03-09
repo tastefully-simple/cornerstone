@@ -30,6 +30,6 @@ jobs:
           STENCIL: ${{secrets.STENCIL}}
           STENCIL_SECRETS: ${{secrets.STENCIL_SECRETS}}
 
-      - name: Push Theme
+      - name: Push Theme to Tech
         run: |
           stencil push -a Tech-Sandbox

@@ -9,11 +9,14 @@ product:
     similar_by_views:
         limit: {{theme_settings.productpage_similar_by_views_count}}
 ---
+{{inject 'productId' product.id}}
+
 {{#partial "page"}}
+
     {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
 
     {{#each product.shipping_messages}}
-        {{> components/common/alert-info message}}
+        {{> components/common/alert/alert-info message}}
     {{/each}}
 
     <div itemscope itemtype="http://schema.org/Product">
@@ -27,7 +30,7 @@ product:
 
         {{> components/products/tabs}}
 
-        {{#all settings.show_product_reviews (if theme_settings.show_product_reviews_tabs '!==' true)}}
+        {{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}
             {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
         {{/all}}
     </div>

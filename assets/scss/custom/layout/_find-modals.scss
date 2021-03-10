@@ -6,9 +6,6 @@
     border-radius: 5px;
     max-height:none;
     min-height:0;
-    &.modal-results {
-        height:100%;
-    }
     .modal-close {
         display: none;
     }
@@ -17,7 +14,6 @@
         filter:grayscale(1%);
     }
     .modal-content {
-        height:100%;
         .vertical-bottom {
             display: flex;
             flex-direction: column;
@@ -156,7 +152,6 @@
                 background-color: $gainsboro;
                 bottom:0;
                 padding: 10px;
-                position: absolute;
                 text-align:center;
                 width:100%;
                 .return-search {

@@ -4,8 +4,8 @@ export default class JoinKitContentCard {
     /**
      * Returns Promise that returns the join-kit-content-card template
      */
-    async getTemplate() {
-        const promise = new Promise((resolve, _reject) => {
+    getTemplate() {
+        const template = new Promise((resolve, _reject) => {
             utils.api.getPage('/', {
                 template: 'common/join-kit-content-card',
             }, (err, res) => {
@@ -17,8 +17,6 @@ export default class JoinKitContentCard {
                 resolve(res);
             });
         });
-
-        const template = await promise;
 
         return template;
     }

@@ -1,28 +1,30 @@
-<div class="productView kit-productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
-{{#each product.reviews.messages}}
-{{#if error}}
-{{> components/common/alert-error error}}
-{{/if}}
-{{#if success}}
-{{> components/common/alert-success success}}
-{{/if}}
-{{/each}}
+<div class="productView kit-productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option" {{/if}}>
+    {{#each product.reviews.messages}}
+    {{#if error}}
+    {{> components/common/alert/alert-error error}}
+    {{/if}}
+    {{#if success}}
+    {{> components/common/alert/alert-success success}}
+    {{/if}}
+    {{/each}}
 
     <main class="page kit" id="kit">
         <div class="join__banner">
             <div class="join__banner-title-wrapper">
                 <h1 class="white-text">What comes in your kit</h1>
-                    {{> components/common/responsive-img
+                {{
+> components/common/responsive-img
                     image=image
                     class="progress-bar"
                     default_image=theme_settings.progress_bar_2
-                    }}
+                }}
             </div>
         </div>
         <div class="join__container">
             <div class="kit-content-wrapper">
                 <div class="productView-img-container">
-                    {{> components/common/responsive-img
+                    {{
+> components/common/responsive-img
                     image=product.main_image
                     class="productView-image--default"
                     fallback_size=theme_settings.product_size
@@ -36,10 +38,10 @@
                     <div>{{> components/products/kit-description}}</div>
                     <div class="kit-price-sticker">
                         {{#if product.price.sale_price_without_tax.formatted}}
-                            <h4 class="heading--4 price">{{product.price.non_sale_price_without_tax.formatted}}</h4>
-                            <h2 class="heading--2 sale-price">{{product.price.sale_price_without_tax.formatted}}</h2>
+                        <h4 class="heading--4 price">{{product.price.non_sale_price_without_tax.formatted}}</h4>
+                        <h2 class="heading--2 sale-price">{{product.price.sale_price_without_tax.formatted}}</h2>
                         {{else}}
-                            <h2 class="heading--4 no-sale--price">{{product.price.without_tax.formatted}}</h2>
+                        <h2 class="heading--4 no-sale--price">{{product.price.without_tax.formatted}}</h2>
                         {{/if}}
                     </div>
                     <div class="kit-price-table-wrapper">
@@ -47,20 +49,20 @@
                             <div class="kit-price-table-details">
                                 <div class="price-table-details-left">
                                     {{#if product.price.sale_price_without_tax.formatted}}
-                                        <p>Sale Price</p>
-                                        <p>Shipping</p>
+                                    <p>Sale Price</p>
+                                    <p>Shipping</p>
                                     {{else}}
-                                        <p>Shipping</p>
+                                    <p>Shipping</p>
                                     {{/if}}
                                 </div>
                                 <div class="price-table-details-right">
                                     {{#if product.price.sale_price_without_tax.formatted}}
-                                        <p class="price-table-full-price">{{product.price.non_sale_price_without_tax.formatted}}</p>
-                                        <p class="price-table-sale-price">{{product.price.sale_price_without_tax.formatted}}</p>
-                                        <p class="price-table-free">FREE</p>
+                                    <p class="price-table-full-price">{{product.price.non_sale_price_without_tax.formatted}}</p>
+                                    <p class="price-table-sale-price">{{product.price.sale_price_without_tax.formatted}}</p>
+                                    <p class="price-table-free">FREE</p>
                                     {{else}}
-                                        <p class="price-table-no-sale-price">{{product.price.without_tax.formatted}}</p>
-                                        <p class="price-table-free">FREE</p>
+                                    <p class="price-table-no-sale-price">{{product.price.without_tax.formatted}}</p>
+                                    <p class="price-table-free">FREE</p>
                                     {{/if}}
                                 </div>
                             </div>
@@ -70,9 +72,9 @@
                                 </div>
                                 <div class="price-table-total-price">
                                     {{#if product.price.sale_price_without_tax.formatted}}
-                                        <h3 class="teal-text price">{{product.price.sale_price_without_tax.formatted}}</h3>
+                                    <h3 class="teal-text price">{{product.price.sale_price_without_tax.formatted}}</h3>
                                     {{else}}
-                                        <h3 class="teal-text price">{{product.price.without_tax.formatted}}</h3>
+                                    <h3 class="teal-text price">{{product.price.without_tax.formatted}}</h3>
                                     {{/if}}
                                 </div>
                             </div>
@@ -85,17 +87,17 @@
             </div>
         </div>
 
-<!--        the below seems like it might be important for adding to cart and ordering -->
+        <!--        the below seems like it might be important for adding to cart and ordering -->
         <section class="productView-details">
-                <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
-                      data-cart-item-add>
-                    <div data-product-option-change style="display:none;">
-                        {{#each product.options}}
-                        {{{dynamicComponent 'components/products/options'}}}
-                        {{/each}}
-                    </div>
-                </form>
-            </div>
+            <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
+                  data-cart-item-add>
+                <div data-product-option-change style="display:none;">
+                    {{#each product.options}}
+                    {{{dynamicComponent 'components/products/options'}}}
+                    {{/each}}
+                </div>
+            </form>
+</div>
         </section>
     </main>
 </div>

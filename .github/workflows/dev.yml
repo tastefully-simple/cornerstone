@@ -1,7 +1,8 @@
 name: Publish Tech Sandbox BigCommerce
 # This workflow is triggered on pushes to the dev branch only.
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - dev
 
@@ -46,5 +47,5 @@ jobs:
         TOKEN: ${{ secrets.STENCIL_ACCESS_TOKEN_TECH_SANDBOX }}
       run: stencil init -u $URL -t $TOKEN -p 3000
 
-    - name: Push theme live, automatically deleting oldest theme if necessary
+    - name: Publishing theme to Tech-Sandbox, automatically deleting oldest theme if necessary
       run: stencil push -a Tech-Sandbox -d

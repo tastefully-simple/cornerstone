@@ -1,9 +1,10 @@
 name: Publish Tech Sandbox BigCommerce
 # This workflow is triggered on pushes to the dev branch only.
 on:
-  push:
-    branches:
-      - dev-with-51upgrade
+  pull_request:
+   types: [closed]
+   branches:
+      dev
 
 jobs:
   build:

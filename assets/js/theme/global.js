@@ -24,11 +24,12 @@ import findParty from './global/find-party';
 import tooltip from './global/tooltip';
 import tsCheckUserLogin from './global/ts-check-user-login';
 import tsAddToCart from './global/ts-add-to-cart';
+import tsJoinProcess from './global/ts-join-process';
 
 export default class Global extends PageManager {
     onReady() {
         const {
-            channelId, cartId, productId, categoryId, secureBaseUrl, maintenanceModeSettings, adminBarLanguage, showAdminBar, themeSettings
+            channelId, cartId, productId, categoryId, secureBaseUrl, maintenanceModeSettings, adminBarLanguage, showAdminBar, themeSettings,
         } = this.context;
         cartPreview(secureBaseUrl, cartId);
         quickSearch();
@@ -53,5 +54,6 @@ export default class Global extends PageManager {
         tooltip();
         tsCheckUserLogin();
         tsAddToCart();
+        tsJoinProcess(themeSettings);
     }
 }

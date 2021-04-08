@@ -9,10 +9,14 @@ class TSJoinProcess {
 
     setJoinStoreUrl() {
         if (document.location.pathname === JOIN_US_PAGE) {
-            const $joinTodayBtn = document.querySelector('.join-today-btn a');
+            const $joinTodayBtns = document.querySelectorAll('.join-today-btn a');
 
-            $joinTodayBtn.href = this.joinStoreUrl;
-            $joinTodayBtn.target = '_blank';
+            $joinTodayBtns.forEach(btn => {
+                const joinBtn = btn;
+
+                joinBtn.href = this.joinStoreUrl;
+                joinBtn.target = '_blank';
+            });
         }
     }
 }

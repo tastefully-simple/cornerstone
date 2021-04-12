@@ -11,13 +11,16 @@ class TSJoinProcess {
         if (document.location.pathname === JOIN_US_PAGE) {
             const $joinTodayBtns = document.querySelectorAll('.join-today-btn a');
 
-            $joinTodayBtns.forEach(btn => {
-                const joinBtn = btn;
-
-                joinBtn.href = this.joinStoreUrl;
-                joinBtn.target = '_blank';
+            $joinTodayBtns.forEach($btn => {
+                $btn.addEventListener('click', (e) => this.goToJoinStore(e));
             });
         }
+    }
+
+    goToJoinStore(e) {
+        e.preventDefault();
+
+        window.open(this.joinStoreUrl, '_blank');
     }
 }
 

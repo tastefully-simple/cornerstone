@@ -21,16 +21,19 @@ product_results:
             {{>components/search/heading}}
         </div>
     {{/if}}
-    <nav class="navBar navBar--sub">
-        <ul class="navBar-section account-navigation">
-            <li class="navBar-item">
-                <a id="search-results-product-count" class="navBar-action" href="{{forms.search.product_url}}" data-product-results-toggle>
+    <nav class="navBar navBar--sub search-nav">
+        <span id="search-tabs-widget-description" class="aria-description--hidden">
+            {{lang 'search.tabs_accesibility_hint'}}
+        </span>
+        <ul role="tablist" class="navBar-section account-navigation" data-search-page-tabs>
+            <li role="presentation" class="navBar-item">
+                <a aria-describedby="search-tabs-widget-description" role="tab" aria-controls="product-listing-container" id="search-results-product-count" class="navBar-action" href="{{forms.search.product_url}}" data-product-results-toggle>
                     {{>components/search/product-count}}
                 </a>
             </li>
-            <li class="navBar-item">
-                <a class="navBar-action" href="{{forms.search.content_url}}" data-content-results-toggle>
-                    {{lang 'search.results.content_count' count=pagination.content_results.total}}
+            <li role="presentation" class="navBar-item">
+                <a aria-describedby="search-tabs-widget-description" role="tab" aria-controls="search-results-content" id="search-results-content-count" class="navBar-action" href="{{forms.search.content_url}}" data-content-results-toggle>
+                    {{>components/search/content-count}}
                 </a>
             </li>
             {{#unless product_results.faceted_search_enabled}}
@@ -53,16 +56,12 @@ product_results:
 </section>
 
 <section class="page">
-    {{#if product_results.products}}
-        {{#if product_results.faceted_search_enabled}}
-            <aside class="page-sidebar{{#if forms.search.section '!=' 'product'}} u-hiddenVisually{{/if}}" id="faceted-search-container">
-                {{> components/faceted-search/index product_results}}
-            </aside>
-        {{/if}}
-        <main class="page-content">
-    {{else}}
-        <main class="page-content page-content--centered">
+    {{#if product_results.faceted_search_enabled}}
+        <aside class="page-sidebar{{#if forms.search.section '!=' 'product'}} u-hiddenVisually{{/if}}" id="faceted-search-container">
+            {{> components/faceted-search/index product_results}}
+        </aside>
     {{/if}}
+    <main class="page-content">
         {{#if forms.search.has_suggestions}}
             <div class="panel panel--large">
                 <div class="panel-body">
@@ -76,7 +75,7 @@ product_results:
                             <div class="search-suggestion">
                                 <p>
                                     {{lang 'forms.search.your_search_for'}}
-                                    "<strong>{{forms.search.query}}</strong>"
+                                    "<strong>{{{sanitize forms.search.query}}}</strong>"
                                     {{lang 'forms.search.no_match'}}
                                 </p>
                             </div>
@@ -126,20 +125,19 @@ product_results:
             </div>
         {{/if}}
 
-        {{#if content_results}}
-            <div id="search-results-content" {{#if forms.search.section '!=' 'content'}}class="u-hiddenVisually"{{/if}}>
-                {{> components/search/content-sort-box sort=pagination.content_results.sort}}
-                <ul>
-                    {{#each content_results}}
-                        <strong><a href="{{url}}">{{{title}}}</a></strong>({{type}})
-                        <p>{{{content}}}</p>
-                    {{/each}}
-                </ul>
-                {{> components/common/paginator pagination.content_results reload=true}}
-            </div>
-        {{/if}}
+        <p role="status"
+           aria-live="polite"
+           class="quickSearchResultsAriaMessage aria-description--hidden u-hidden"
+           data-search-aria-message
+        >
+            {{{lang 'search.results.count' count=result_count search_query=(sanitize forms.search.query)}}}
+        </p>
 
-        <div id="product-listing-container" {{#if forms.search.section '!=' 'product'}}class="u-hiddenVisually"{{/if}}>
+        <div role="tabpanel" id="search-results-content" aria-labelledby="search-results-content-count" {{#if forms.search.section '!=' 'content'}}class="u-hidden"{{/if}}>
+            {{> components/search/content-listing}}
+        </div>
+
+        <div role="tabpanel" id="product-listing-container" aria-labelledby="search-results-product-count" {{#if forms.search.section '!=' 'product'}}class="u-hidden"{{/if}}>
             {{> components/search/product-listing}}
         </div>
 

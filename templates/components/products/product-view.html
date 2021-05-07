@@ -1,10 +1,10 @@
 <div class="productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
 {{#each product.reviews.messages}}
         {{#if error}}
-            {{> components/common/alert-error error}}
+            {{> components/common/alert/alert-error error}}
         {{/if}}
         {{#if success}}
-            {{> components/common/alert-success success}}
+            {{> components/common/alert/alert-success success}}
         {{/if}}
     {{/each}}
 
@@ -65,7 +65,8 @@
             {{/each}}
         </ul>
     </section>
-    <section class="productView-details">
+
+    <section class="productView-details product-data">
         <div class="productView-product">
             <h1 class="productView-title" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
             <!--
@@ -84,25 +85,24 @@
                             <meta itemprop="reviewCount" content="{{product.num_reviews}}">
                         {{/if}}
                     {{/if}}
-                    {{> components/products/ratings rating=product.rating}}
-                    <span class="productView-reviewLink">
-                        {{#if product.num_reviews '>' 0}}
-                            <a href="{{product.url}}#product-reviews">
-                                read product reviews
-                                {{! lang 'products.reviews.link_to_review' total=product.num_reviews}}
-                            </a>
-                        {{else}}
-                            {{lang 'products.reviews.link_to_review' total=product.num_reviews}}
-                        {{/if}}
-                    </span>
+                        {{> components/products/ratings rating=product.rating}}
+                    {{#if product.num_reviews '>' 0}}
+                        <a href="{{product.url}}#product-reviews">
+                            read product reviews
+                            {{! lang 'products.reviews.link_to_review' total=product.num_reviews}}
+                        </a>
+                    {{else}}
+                        <span>{{lang 'products.reviews.link_to_review' total=product.num_reviews}}</span>
+                    {{/if}}
                 {{/if}}
                 {{#if settings.show_product_reviews}}
-                    <span class="productView-reviewLink">
-                        <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"
-                           {{#unless is_ajax }}data-reveal-id="modal-review-form"{{/unless}}>
-                           {{lang 'products.reviews.new'}}
-                        </a>
-                    </span>
+                    <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"
+                       class="productView-reviewLink productView-reviewLink--new"
+                       {{#unless is_ajax}}data-reveal-id="modal-review-form"{{/unless}}
+                       role="button"
+                    >
+                       {{lang 'products.reviews.new'}}
+                    </a>
                     {{> components/products/modals/writeReview}}
                 {{/if}}
             </div>
@@ -215,7 +215,7 @@
                             {{! Hidden Custom Fields}}
                         {{else}}
                         <dt class="productView-info-name">{{name}}:</dt>
-                        <dd class="productView-info-value">{{{value}}}</dd>
+                        <dd class="productView-info-value">{{{ sanitize value }}}</dd>
                         {{/inArray}}
                     {{/each}}
                 {{/if}}
@@ -224,8 +224,7 @@
         </div>
     </section>
 
-
-    <section class="productView-details">
+    <section class="productView-details product-options">
         <div class="productView-options">
             {{#if product.release_date }}
                 <p>{{product.release_date}}</p>
@@ -245,14 +244,12 @@
                         <span data-product-stock>{{product.stock_level}}</span>
                     </label>
                 </div> --}}
-                {{#if product.can_purchase}}
-                    {{> components/products/add-to-cart}}
-                {{/if}}
+                {{> components/products/add-to-cart}}
                 {{#if product.out_of_stock}}
                     {{#if product.out_of_stock_message}}
                         {{> components/common/product-alert-error product.out_of_stock_message}}
                     {{else}}
-                        {{> components/common/alert-error (lang 'products.sold_out')}}
+                        {{> components/common/alert/alert-error (lang 'products.sold_out')}}
                     {{/if}}
                 {{/if}}
             </form>
@@ -260,7 +257,9 @@
                 {{> components/common/wishlist-dropdown}}
             {{/if}}
         </div>
-        {{> components/common/share}}
+        {{#unless is_ajax}}
+            {{> components/common/share}}
+        {{/unless}}
     </section>
 
     <article class="productView-description"{{#if schema}} itemprop="description"{{/if}}>
@@ -273,9 +272,7 @@
 </div>
 
 <div id="previewModal" class="modal modal--large" data-reveal>
-    <a href="#" class="modal-close" aria-label="{{lang 'common.close'}}" role="button">
-        <span aria-hidden="true">&#215;</span>
-    </a>
+    {{> components/common/modal/modal-close-btn }}
     <div class="modal-content"></div>
     <div class="loadingOverlay"></div>
 </div>

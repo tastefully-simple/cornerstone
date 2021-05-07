@@ -5,6 +5,7 @@ category:
         limit: {{theme_settings.categorypage_products_per_page}}
 ---
 {{inject "categoryProductsPerPage" theme_settings.categorypage_products_per_page}}
+{{inject "categoryId" category.id}}
 {{#partial "head"}}
     {{#if pagination.category.previous}}
         <link rel="prev" href="{{pagination.category.previous}}">
@@ -22,6 +23,7 @@ category:
         image=category.image
         fallback_size=theme_settings.zoom_size
         lazyload=theme_settings.lazyload_mode
+        class="category-header-image"
     }}
 {{/if}}
 {{#unless theme_settings.hide_category_page_heading }}
@@ -49,11 +51,7 @@ category:
     --}}
 
     <main class="page-content" id="product-listing-container">
-        {{#if category.products}}
-            {{> components/category/product-listing}}
-        {{else}}
-            <p>{{lang 'categories.no_products'}}</p>
-        {{/if}}
+        {{> components/category/product-listing}}
         {{{region name="category_below_content"}}}
     </main>
 </div>

@@ -46,10 +46,6 @@
     <body class="cart">
         <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
 
-        {{~#and settings.privacy_cookie settings.is_eu_ip_address}}
-            {{> components/common/cookie}}
-        {{/and}}
-
         {{> components/common/header }}
 
         {{!-- Find a Party bar --}}

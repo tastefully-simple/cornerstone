@@ -10,12 +10,52 @@
 // -----------------------------------------------------------------------------
 
 $cart-item-spacing:                     spacing("single");
+$cart-content-padding-right:            4px;
 
 $cart-thumbnail-maxWidth:               remCalc(100px);
 $cart-thumbnail-height:                 remCalc(100px);
+$cart-thumbnail-maxHeight:              14rem;
+$cart-thumbnail-paddingVertical:        0.5rem;
 
 $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-spacing;
+$card-preview-zoom-bottom-offset:       6rem;
 
+//
+// Shared styles for additional checkout buttons
+// -----------------------------------------------------------------------------
+
+%additionalCheckoutButtons {
+    @include clearfix;
+
+    // scss-lint:disable SelectorFormat
+    .FloatRight {
+        @include clearfix;
+
+        // scss-lint:disable SelectorDepth, NestingDepth
+        p {
+            // scss-lint:disable ImportantRule
+            float: none !important;
+            margin: spacing("third") 0;
+            text-align: right;
+        }
+
+        div {
+            float: right;
+        }
+    }
+
+    .CheckoutButton {
+        margin-bottom: spacing("base");
+
+        &:first-child {
+            margin-top: spacing("single");
+        }
+
+        &:last-child {
+            margin-bottom: spacing("single");
+        }
+    }
+}
 
 // Cart layout
 // -----------------------------------------------------------------------------
@@ -99,7 +139,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 
 .cart-item-figure {
     float: left;
-    height: $cart-thumbnail-height;
+    text-align: center;
     margin-bottom: $cart-item-spacing;
     width: grid-calc(4, $total-columns);
     position: relative;
@@ -114,9 +154,10 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     @include breakpoint("medium") {
         float: none;
         width: grid-calc(1, $total-columns);
+        padding: $cart-thumbnail-paddingVertical 0;
     }
 
-    @include lazy-loaded-padding('productthumb_size');
+    @include cart-item-lazy-load-img-placeholder;
 }
 
 .cart-item-fixed-image {
@@ -124,9 +165,8 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 }
 
 .cart-item-image {
+    max-height: $cart-thumbnail-maxHeight;
     max-width: get-width(stencilString('productthumb_size'));
-
-    @include lazy-loaded-img;
 
     @include breakpoint("medium") {
         margin-left:0;
@@ -174,15 +214,14 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
             text-align: right;
         }
     }
-
-    + .cart-item-info {
-        margin-top: spacing("half");
-    }
 }
 
 
 // Cart content
 // -----------------------------------------------------------------------------
+.cart-content-padding-right {
+    padding-right: $cart-content-padding-right;
+}
 
 .cart-header-quantity,
 .cart-item-quantity {
@@ -234,13 +273,18 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 }
 
 .cart-item-brand {
-    color: color("greys", "light");
+    color: stencilColor("color-textSecondary");
     margin-bottom: spacing("eighth");
 }
 
 .cart-item-name {
     font-size: fontSize("smaller");
     margin: 0;
+    display: inline-block;
+
+    &__label {
+        display: inline-block;
+    }
 
     + .definitionList {
         margin-top: spacing("quarter");
@@ -323,11 +367,11 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     }
 
     .form-select {
-        background-position: right remCalc(5px) top remCalc(7px);
+        background-position: right remCalc(5px) center;
         background-size: remCalc(20px) remCalc(20px);
         height: remCalc(32px);
         margin-bottom: spacing("half");
-        padding: spacing("third") spacing("half");
+        padding: 0 spacing("half");
     }
 
     .form-inlineMessage {
@@ -392,7 +436,6 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 .coupon-code-add,
 .coupon-code-cancel,
 .shipping-estimate-show,
-.shipping-estimate-hide,
 .gift-certificate-add,
 .gift-certificate-cancel {
     color: stencilColor("color-textSecondary");
@@ -406,7 +449,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 }
 
 .coupon-code-cancel,
-.shipping-estimate-hide {
+.shipping-estimate-show[aria-expanded="true"] {
     font-style: italic;
 }
 
@@ -518,39 +561,14 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     }
 }
 
-.cart-additionalCheckoutButtons { // 1
-    @include clearfix;
-
-    // scss-lint:disable SelectorFormat
-    .FloatRight {
-        @include clearfix;
-
-        // scss-lint:disable SelectorDepth, NestingDepth
-        p {
-            // scss-lint:disable ImportantRule
-            float: none !important;
-            margin: spacing("third") 0;
-            text-align: right;
-        }
-
-        div {
-            float: right;
-        }
-    }
-
-    .CheckoutButton {
-        margin-bottom: spacing("base");
-
-        &:first-child {
-            margin-top: spacing("single");
-        }
-
-        &:last-child {
-            margin-bottom: spacing("single");
-        }
-    }
+.cart-additionalCheckoutButtons {
+    @extend %additionalCheckoutButtons;
 }
 
+.previewCart-additionalCheckoutButtons {
+    @extend %additionalCheckoutButtons;
+    padding-right: 1.5rem;
+}
 
 // Cart Preview
 // -----------------------------------------------------------------------------
@@ -558,6 +576,11 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
 // 1. Need to vertically align a block of text
 //
 // -----------------------------------------------------------------------------
+
+.previewCartWrapper {
+    max-height: calc(100vh - #{$card-preview-zoom-bottom-offset});
+    overflow: auto;
+}
 
 .previewCartList {
     @include u-listReset;
@@ -590,6 +613,7 @@ $cart-item-label-offset:                $cart-thumbnail-maxWidth + $cart-item-sp
     position: relative;
 
     img {
+        max-height: 90%;
         @include lazy-loaded-img;
     }
 

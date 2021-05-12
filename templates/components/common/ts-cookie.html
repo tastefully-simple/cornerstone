@@ -1,9 +1,12 @@
 <script type="text/javascript">
     (function(w) {
+        let cookieDomain = window.location.hostname;
+        if (cookieDomain == 'www.tastefullysimple.com') cookieDomain = 'tastefullysimple.com';
+
         w.TSCookie = {
             // Social Bug Affiliate ID
             setAffiliateId: function(afid) {
-                Cookies.set('afid', afid, { expires: 365 });
+                Cookies.set('afid', afid, { domain: cookieDomain });
             },
 
             getAffiliateId: function() {
@@ -12,7 +15,7 @@
 
             // Consultant ID
             setConsultantId: function(cid) {
-                Cookies.set('cid', cid, { expires: 365 });
+                Cookies.set('cid', cid, { domain: cookieDomain });
             },
 
             getConsultantId: function() {
@@ -21,7 +24,7 @@
 
             // Consultant XID
             setConsultantXid: function(cxid) {
-                Cookies.set('cxid', cxid, { expires: 365 });
+                Cookies.set('cxid', cxid, { domain: cookieDomain });
             },
 
             getConsultantXid: function() {
@@ -30,7 +33,7 @@
 
             // Consultant Image
             setConsultantImage: function(cimg) {
-                Cookies.set('cimg', cimg, { expires: 365 });
+                Cookies.set('cimg', cimg, { domain: cookieDomain });
             },
 
             getConsultantImage: function() {
@@ -39,7 +42,7 @@
 
             // Consultant Name
             setConsultantName: function(name) {
-                Cookies.set('name', name, { expires: 365 });
+                Cookies.set('name', name, { domain: cookieDomain });
             },
 
             getConsultantName: function() {
@@ -47,9 +50,8 @@
             },
 
             // Party Id
-            setPartyId: function(pid, expirationDate) {
-                expirationDate = expirationDate || 30;
-                Cookies.set('pid', pid, { expires: expirationDate });
+            setPartyId: function(pid) {
+                Cookies.set('pid', pid, { domain: cookieDomain });
             },
 
             getPartyId: function() {
@@ -57,9 +59,8 @@
             },
 
             // Party Host
-            setPartyHost: function(phost, expirationDate) {
-                expirationDate = expirationDate || 30;
-                Cookies.set('phost', phost, { expires: expirationDate });
+            setPartyHost: function(phost) {
+                Cookies.set('phost', phost, { domain: cookieDomain });
             },
 
             getPartyHost: function() {
@@ -67,9 +68,8 @@
             },
 
             // Party Date
-            setPartyDate: function(pdate, expirationDate) {
-                expirationDate = expirationDate || 30;
-                Cookies.set('pdate', pdate, { expires: expirationDate });
+            setPartyDate: function(pdate) {
+                Cookies.set('pdate', pdate, { domain: cookieDomain });
             },
 
             getPartyDate: function() {
@@ -77,9 +77,8 @@
             },
 
             // Party Time
-            setPartyTime: function(ptime, expirationDate) {
-                expirationDate = expirationDate || 30;
-                Cookies.set('ptime', ptime, { expires: expirationDate });
+            setPartyTime: function(ptime) {
+                Cookies.set('ptime', ptime, { domain: cookieDomain });
             },
 
             getPartyTime: function() {
@@ -87,9 +86,8 @@
             },
 
             // Party Total
-            setPartyTotal: function(ptotal, expirationDate) {
-                expirationDate = expirationDate || 30;
-                Cookies.set('ptotal', ptotal, { expires: expirationDate });
+            setPartyTotal: function(ptotal) {
+                Cookies.set('ptotal', ptotal, { domain: cookieDomain });
             },
 
             getPartyTotal: function() {
@@ -98,18 +96,18 @@
 
             // Delete Party cookies
             deleteParty: function() {
-                Cookies.remove('pid');
-                Cookies.remove('phost');
-                Cookies.remove('pdate');
-                Cookies.remove('ptime');
-                Cookies.remove('ptotal');
+                Cookies.remove('pid', { domain: cookieDomain});
+                Cookies.remove('phost', { domain: cookieDomain});
+                Cookies.remove('pdate', { domain: cookieDomain});
+                Cookies.remove('ptime', { domain: cookieDomain});
+                Cookies.remove('ptotal', { domain: cookieDomain});
             },
 
             deleteConsultant: function() {
-                Cookies.remove('cid');
-                Cookies.remove('name');
-                Cookies.remove('cimg');
-                Cookies.remove('afid');
+                Cookies.remove('cid', { domain: cookieDomain});
+                Cookies.remove('name', { domain: cookieDomain});
+                Cookies.remove('cimg', { domain: cookieDomain});
+                Cookies.remove('afid', { domain: cookieDomain});
             },
 
             setLoginStateChecker: function(loginState) {
@@ -121,7 +119,7 @@
             },
 
             setSelectedKitId: function(id) {
-                Cookies.set('selectedKitId', id, { expires: 365 });
+                Cookies.set('selectedKitId', id, { domain: cookieDomain });
             },
 
             getSelectedKitId: function() {

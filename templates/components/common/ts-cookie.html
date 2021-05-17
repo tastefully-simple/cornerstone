@@ -4,15 +4,6 @@
         if (cookieDomain == 'www.tastefullysimple.com') cookieDomain = 'tastefullysimple.com';
 
         w.TSCookie = {
-            // Social Bug Affiliate ID
-            setAffiliateId: function(afid) {
-                Cookies.set('afid', afid, { domain: cookieDomain });
-            },
-
-            getAffiliateId: function() {
-                return Cookies.get('afid');
-            },
-
             // Consultant ID
             setConsultantId: function(cid) {
                 Cookies.set('cid', cid, { domain: cookieDomain });

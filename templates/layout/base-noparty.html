@@ -2,7 +2,7 @@
 <html class="no-js" lang="{{ locale_name }}">
     <head>
         {{> components/common/gtm-datalayer }}
-        
+
         <title>{{ head.title }}</title>
         {{{ resourceHints }}}
         {{{ head.meta_tags }}}
@@ -47,10 +47,6 @@
     </head>
     <body>
         <svg data-src="{{cdn 'img/icon-sprite.svg'}}" class="icons-svg-sprite"></svg>
-
-        {{~#and settings.privacy_cookie settings.is_eu_ip_address}}
-            {{> components/common/cookie}}
-        {{/and}}
 
         {{> components/common/header }}
         {{> components/common/body }}

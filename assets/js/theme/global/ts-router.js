@@ -167,7 +167,7 @@ export default class TSRouter {
     checkUrlForConsultantWebSlug() {
         const szUrl = window.location.pathname;
 
-        if (szUrl.match(/^\/web\/[a-z0-9]+/i)) {
+        if (szUrl.match(/^\/web\/[a-z0-9\W]+/i)) {
             this.showLoading();
             const cUsername = szUrl.substring(5);
 

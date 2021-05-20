@@ -4,6 +4,7 @@
 
 .header{
     padding:0;
+    height: auto;
     .container{
         padding:0;
     }
@@ -34,6 +35,9 @@
                         display:inline;
                     }
                 }
+                #bannerPasswordResetDropdown.dropdown-menu {
+                    z-index: $zIndex-low; // TST-336
+                }
                 .banner-detail-button {
                     font-weight: 700;
                 }
@@ -50,6 +54,9 @@
             .navUser {
                 position:unset;
                 .navUser-item--cart {
+                    &__hidden-s {
+                        display: block;
+                    }
                     position:absolute;
                     right:0;
                     top:50%;
@@ -68,9 +75,7 @@
                 &>a {
                     width:100%;
                     .header-logo-image {
-                        left:50%;
                         max-height:none;
-                        transform:translateX(-50%);
                     }
                 }
             }
@@ -238,8 +243,11 @@
                         text-align:left;
                     }
                     .header-logo-image-container {
+                        min-height: unset;
                         .header-logo-image {
+                            display: inline-block;
                             left:unset;
+                            margin: auto;
                             position:relative;
                             transform:unset;
                         }

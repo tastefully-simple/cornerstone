@@ -94,15 +94,13 @@
                     }
                     .card-form {
                         .input-label {
-                            flex-basis: unset;
                             input {
-                                width: 160px;
+                                width: 100%;
                             }
                         }
                         .simple-dropdown {
-                            flex-basis: unset;
                             select {
-                                width: 160px;
+                                width: 100%;
                                 height: 35px;
                                 background-color: $wan-white;
                                 border-radius: 3px;

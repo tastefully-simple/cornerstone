@@ -102,6 +102,11 @@
                     @extend .button-alternate:hover;
                 }
             }
+            .button-cancel{
+                &.hover{
+                    @extend .button-cancel:hover;
+                }
+            }
             .styleitem-content{
                 justify-content:space-around;
                 .stylebutton-item{

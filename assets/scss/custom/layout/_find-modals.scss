@@ -53,9 +53,12 @@
             .buy-wide-card {
                 display: flex;
                 flex-wrap: wrap;
-                background-color: $color-white;
                 margin: 0;
                 margin-bottom: 13px;
+                .result-card {
+                    background-color: $color-white;
+                    margin:.35rem auto;
+                }
                 &.id-search {
                     margin-bottom: 15px;
                 }
@@ -68,6 +71,7 @@
                 .card-form {
                     display: flex;
                     flex-basis: 100%;
+                    flex-wrap: wrap;
                     justify-content: flex-start;
                     & > * {
                         margin-right: 15px;
@@ -78,7 +82,7 @@
                     }   
                     .input-label {
                         max-width: unset;
-                        flex-basis: 28.5%;
+                        flex-basis: 48%;
                         input {
                             width: 100%;
                             height: 35px;
@@ -86,7 +90,7 @@
                         }
                     }
                     .simple-dropdown {
-                        flex-basis: 28.5%;
+                        flex-basis: 48%;
                         label {
                             min-width: 80px;
                         }
@@ -96,6 +100,12 @@
                             background-color: $wan-white;
                             border-radius: 3px;
                         }
+                    }
+                    .last-selector {
+                        margin-right: 0;
+                    }
+                    .vertical-bottom {
+                        margin: 1rem 0 0 auto;
                     }
                     .button-alternate {
                         margin: 0;
@@ -112,6 +122,22 @@
         }
         .modal-results {
             height:100%;
+            .findmodal-header {
+                @extend .gainsboro-background;
+                line-height:1;
+                padding:1rem 1rem 0;
+                .return-search-top {
+                    display:flex;
+                    @extend .return-search;
+                    .icon-system-left-caret {
+                        height:12px;
+                        width:12px;
+                    }
+                }
+                .return-count {
+                    padding-left:.5ch;
+                }
+            }
             .genmodal-body {
                 .buy-wide-card {
                     overflow-y: auto;
@@ -125,21 +151,16 @@
                         }
                         &.selected {
                             margin-top:1rem;
-                            border:.5rem solid $teal;
-                            border-top:none;
+                            border:2px solid $teal;
                             .selected-header {
                                 align-items:center;
-                                background-color: $teal;
-                                color: $white;
+                                color: $text-gray;
                                 display: flex;
                                 flex-basis: 100%; 
-                                padding:10px 0;
                                 .selection-title {
-                                    color:$white;
                                     margin:0;
                                 }
                                 .icon-system-check {
-                                    color:$white;
                                     font-size:2rem;
                                     margin-right:1rem;
                                 }

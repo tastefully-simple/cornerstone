@@ -13,6 +13,10 @@
                         .input-label {
                             flex-basis:100%;
                         }
+                        &:last-of-type {
+                            justify-content:flex-end;
+                            padding-bottom:.5rem;
+                        }
                     }
                 }
             }
@@ -23,17 +27,9 @@
                 position:relative;
                 overflow-y:scroll;
                 .buy-wide-card {
+                    background: none;
                     .party-card {
                         width:100%;
-                        &:not(.selected) {
-                            &::after {
-                                border-top:1px solid $text-gray;
-                                content:'';
-                                display:inline-block;
-                                margin-top:1rem;
-                                width:100%;
-                            }
-                        }
                         &.selected {
                             .party-info {
                                 padding:0 20px .5rem;
@@ -130,11 +126,12 @@
                         align-items:flex-end;
                         justify-content:space-between;
                         .card-form {
-                            flex-basis:33.333%;
+                            flex-basis:48%;
                             justify-content:center;
                             margin-top:.5rem;
                             &:last-child {
-                                flex-basis:20.5%;
+                                flex-basis:auto;
+                                margin-left:auto;
                             }
                         }
                     }

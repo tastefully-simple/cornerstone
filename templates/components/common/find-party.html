@@ -1,6 +1,6 @@
 <div class="modal-general-alternate" id="party-search">
     <div class="genmodal-header">
-        <h2>find a host or party</h2>
+        <h2>find a party or fundraiser</h2>
         <button type="button"  class="modal-close" aria-label="Close" role="button">
             <span aria-hidden="true" class="close-modal-alternate"></span>
         </button>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="card-form">
-                    <label class="input-label">
+                    <label class="input-label last-selector">
                         <span class="system-12">Search host or fundraiser name (optional)</span>
                         <input type="text">
                     </label>
@@ -37,10 +37,19 @@
 </div>
 <div class="modal-general-alternate modal-results" id="party-search-results">
     <div class="genmodal-header">
-        <h2>choose your party</h2>
+        <h2>your consultant's parties</h2>
         <a href="#" class="modal-close" aria-label="Close" role="button">
             <span aria-hidden="true" class="close-modal-alternate"></span>
         </a>
+    </div>
+    <div class="findmodal-header">
+        <div class="return-search-top">
+            <div class="vertical-center">
+                <span class="icon-system-left-caret system-12"></span>
+            </div>
+            <button id="return-refine" class="subhead-14">Refine your search</button>
+        </div>
+        <span class="return-count frame-caption">2 parties matching "28"</span>
     </div>
     <div class="genmodal-body">
         <article class="buy-wide-card"></article>
@@ -54,7 +63,8 @@
     <div class="findmodal-footer">
         <div class="next-step-wrapper">
             <p class="next-step-selected-text system-14"></p>
-            <button class="next-step-continue-btn button-secondary-icon" id="party-continue">
+            <button class="button-cancel" type="submit">cancel</button>
+            <button class="next-step-continue-btn button-alternate-icon" id="party-continue">
                 continue
             </button>
             <button class="button-primary" id="party-goback">go back</button>

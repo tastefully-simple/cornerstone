@@ -321,7 +321,25 @@ footer{
         border-color:$green-hover;
     }
 }
+.button-alternate-icon{
+    @extend .button-alternate;
+    &::after{
+        content:"\f105";
+        font-family:"FontAwesome";
+        margin-left:10px;
+    }
+}
 
+.button-cancel{
+    background-color:$white;
+    border-color:$green-apple;
+    color:$green-apple;
+    @extend .button-primary;
+    &:hover{
+        background-color:$green-apple;
+        border-color:$green-apple;
+    }
+}
 
 // Icons
 // -----------------------------------------------------------------------------
@@ -857,7 +875,7 @@ table{
 // Cards
 // -----------------------------------------------------------------------------
 .grid-card{
-    padding:0 10px 20px;
+    padding:0 10px;
     margin:auto;
     width:300px;
     @include card-dropshadow();
@@ -887,11 +905,16 @@ table{
 }
 .buy-wide-card{
     align-items:center;
+    background-color: $color-white;
+    border-radius: 5px;
     display:flex;
     flex-direction:row;
     justify-content:space-between;
+    padding:.25rem .5rem;
     width:auto;
-    @extend .grid-card;
+    .result-card {
+        @extend .grid-card;
+    }
     .card-info{
         align-items:center;
         display:flex;

@@ -2,6 +2,22 @@
 // Tastefully Simple Search Modal Styles
 // =============================================================================
 
+@mixin result-card-header {
+    align-items:center;
+    color: white;
+    display: flex;
+    flex-basis: 100%;
+    .fa-circle {
+        margin-right: 5px;
+        border: 1px solid $text-gray;
+        border-radius: 50%;
+        padding: 2px;
+    }
+    .selection-title {
+        color: $text-gray;
+    }
+}
+
 #modal {
     border-radius: 5px;
     max-height:none;
@@ -126,44 +142,52 @@
                 @extend .gainsboro-background;
                 line-height:1;
                 padding:1rem 1rem 0;
-                .return-search-top {
-                    display:flex;
-                    @extend .return-search;
-                    .icon-system-left-caret {
-                        height:12px;
-                        width:12px;
-                    }
-                }
                 .return-count {
                     padding-left:.5ch;
                 }
             }
             .genmodal-body {
+                .search-filter-wrapper {
+                    background-color: $gainsboro;
+                    box-shadow: none;
+                    border: none;
+                    padding: 5px 10px;
+                    margin: 0;
+                    .return-search {
+                        cursor: pointer;
+                        display:flex;
+                        width: fit-content;
+                        .icon-system-left-caret {
+                            height:12px;
+                            width:12px;
+                        }
+                        .return-search-text {
+                            font-weight: 900;
+                        }
+                    }
+                }
                 .buy-wide-card {
                     overflow-y: auto;
                     .result-card {
                         cursor:pointer;
+                        padding: 10px;
                         &:not(.selected) {
-                            padding-top:1rem;
                             .selected-header {
                                 display: none;
                             }
                         }
                         &.selected {
-                            margin-top:1rem;
                             border:2px solid $teal;
-                            .selected-header {
-                                align-items:center;
-                                color: $text-gray;
-                                display: flex;
-                                flex-basis: 100%; 
-                                .selection-title {
-                                    margin:0;
-                                }
-                                .icon-system-check {
-                                    font-size:2rem;
-                                    margin-right:1rem;
-                                }
+                        }
+                        .consultant-header,
+                        .party-header,
+                        .selected-header{
+                            @include result-card-header;
+                            margin-bottom: 5px;
+                        }
+                        .selected-header {
+                            .fa-circle {
+                                color: $teal;
                             }
                         }
                     }
@@ -197,12 +221,16 @@
                     text-align:right;
                     .next-step-selected-text {
                         margin-bottom:.5rem;
-                    }
-                    .next-step-continue-btn {
-                        width:190px;
+                        span {
+                            color: $green-apple;
+                        }
                     }
                 }
             }
+        }
+        .genmodal-footer {
+            background-color: $gainsboro;
+            padding: 0 10px;
         }
     }
 }

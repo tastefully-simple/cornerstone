@@ -4,6 +4,7 @@ import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
+import PartyCard from '../common/party-card';
 
 // Breakpoint for mobile
 const SCREEN_MIN_WIDTH = 801;
@@ -190,6 +191,12 @@ class FindAParty {
     }
 
     search() {
+        if (this.searchInfo.name) {
+            this.searchQuery = `${this.searchInfo.name}, ${this.searchInfo.state}`;
+        } else {
+            this.searchQuery = this.searchInfo.state;
+        }
+
         this.api.searchPartyByState(
             this.searchInfo.state,
             this.searchInfo.name,
@@ -228,11 +235,14 @@ class FindAParty {
         $('.alertbox-error').hide();
         const $partyCard = $(e.target).closest('.party-card');
 
+        $('.party-header').show();
         if (!$partyCard.hasClass('selected')) {
             this.selectedId = $partyCard.data('pid');
             $('.selected').toggleClass('selected');
+            $partyCard.find('.party-header').hide();
         } else {
             this.selectedId = null;
+            $partyCard.find('.party-header').show();
         }
 
         $(e.target).closest('.party-card').toggleClass('selected');
@@ -338,7 +348,7 @@ class FindAParty {
 
     showSelectedPartyMessage(host) {
         if (this.selectedId) {
-            $('.next-step-selected-text').html(`You have selected <strong>${host}'s</strong> Party`);
+            $('.next-step-selected-text').html(`You have selected <span>${host}'s</span> Party`);
         } else {
             $('.next-step-selected-text').text('');
         }
@@ -357,6 +367,7 @@ class FindAParty {
         $('.party-card').remove();
         $('.return-search').remove();
         $('.findmodal-pagination').remove();
+        $('.matching').remove();
     }
 
     deletePartyCookies() {
@@ -381,11 +392,30 @@ class FindAParty {
         $('#party-search').hide();
         this.clearPartyWindow();
 
-        // List of Parties
-        response.Results.forEach(party => {
-            const $partyHtmlBlock = this.getPartyHtmlBlock(party);
-            $('#party-search-results article').append($partyHtmlBlock);
-        });
+        // Return search
+        const $returnSearch = $('<div>', { class: 'return-search' });
+        $returnSearch.html(`
+            <div class="vertical-center">
+                <span class="icon-system-left-caret"></span>
+            </div>
+            <span class="frame-caption return-search-text">Refine your search</span>
+        `);
+
+        $('#party-search-results .genmodal-body .search-filter-wrapper').prepend($returnSearch);
+
+        const $matchingParties = $('<span>', { class: 'frame-caption matching' });
+        $matchingParties.text(`${response.TotalRecordCount} Parties matching \"${this.searchQuery}\"`);
+        $('#party-search-results .genmodal-body .search-filter-wrapper').append($matchingParties);
+
+        const partyCard = new PartyCard();
+
+        partyCard.getTemplate()
+            .then(template => {
+                response.Results.forEach(party => {
+                    const $partyHtmlBlock = partyCard.insertPartyData(template, party);
+                    $('#party-search-results article').append($partyHtmlBlock);
+                });
+            });
 
         $('#party-search-results').show();
         $('#modal').addClass('modal-results');
@@ -427,17 +457,6 @@ class FindAParty {
             DISPLAY_NUM_PAGES,
             (p) => this.goToPage(p),
         );
-
-        // Return search
-        const $returnSearch = $('<div>', { class: 'return-search' });
-        $returnSearch.html(`
-            <div class="vertical-center">
-                <span class="icon-system-left-caret"></span>
-            </div>
-            <span class="frame-caption">Refine your search</span>
-        `);
-
-        $footerHtml.prepend($returnSearch);
     }
 
     getPartyHtmlBlock(party) {

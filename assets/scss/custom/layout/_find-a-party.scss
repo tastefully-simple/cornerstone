@@ -9,6 +9,9 @@
                 .buy-wide-card {
                     .card-form {
                         margin-top:.5rem;
+                        .simple-dropdown {
+                            margin: 0;
+                        }
                         .simple-dropdown,
                         .input-label {
                             flex-basis:100%;
@@ -25,19 +28,10 @@
             display: none;
             .genmodal-body {
                 position:relative;
-                overflow-y:scroll;
                 .buy-wide-card {
                     background: none;
                     .party-card {
                         width:100%;
-                        &.selected {
-                            .party-info {
-                                padding:0 20px .5rem;
-                                .party-name {
-                                    margin:.5rem 0;
-                                }
-                            }
-                        }
                         .party-info {
                             .party-name {
                                 margin-top:0;
@@ -51,6 +45,9 @@
                     display: none;
                 }
             }
+        }
+        .genmodal-footer {
+            text-align: right;
         }
     }
 }

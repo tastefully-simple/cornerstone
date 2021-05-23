@@ -126,6 +126,8 @@ class FindAParty {
 
         // Move "Find a Party" bar into the main menu in mobile view
         $(window).on('resize', () => this.renderPartyBar(this.$findPartyBar));
+
+        $('body').on('click', '.partymodal-cancel-btn', () => this.closeModal());
     }
 
     createModal(e, template) {
@@ -183,6 +185,10 @@ class FindAParty {
     modalLoaded(result) {
         this.modal.updateContent(result);
         this.renderStatesSelect();
+    }
+
+    closeModal() {
+        this.modal.close();
     }
 
     renderStatesSelect() {

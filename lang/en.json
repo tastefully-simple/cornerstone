@@ -981,6 +981,10 @@
     "party_modal": {
       "search_title": "find a party or fundraiser",
       "results_title": "choose your party"
+    },
+    "consultant_modal": {
+      "search_title": "find your consultant",
+      "results_title": "choose a consultant"
     }
   }
 }

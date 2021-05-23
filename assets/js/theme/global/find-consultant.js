@@ -141,6 +141,8 @@ class FindAConsultant {
 
         // Account for sticky header
         $(window).on('scroll', () => this.renderConsultant());
+
+        $('body').on('click', '.consultantmodal-cancel-btn', () => this.closeModal());
     }
 
     createModal(e, template) {
@@ -162,6 +164,10 @@ class FindAConsultant {
     modalLoaded(result) {
         this.modal.updateContent(result);
         this.renderStatesSelect();
+    }
+
+    closeModal() {
+        this.modal.close();
     }
 
     renderStatesSelect() {
@@ -194,6 +200,8 @@ class FindAConsultant {
     search() {
         switch (this.searchInfo.mode) {
             case SEARCH_BY_ZIP:
+                this.searchQuery = this.searchInfo.zip;
+
                 this.api.searchConsultantsByZip(
                     this.searchInfo.zip,
                     this.searchInfo.radius,
@@ -218,6 +226,8 @@ class FindAConsultant {
                 break;
 
             case SEARCH_BY_NAME:
+                this.searchQuery = `${this.searchInfo.name}, ${this.searchInfo.state}`;
+
                 this.api.searchConsultantsByName(
                     this.searchInfo.name,
                     this.searchInfo.state,
@@ -242,6 +252,8 @@ class FindAConsultant {
                 break;
 
             case SEARCH_BY_ID:
+                this.searchQuery = this.searchInfo.id;
+
                 this.api.getConsultant(this.searchInfo.id)
                     .then(res => {
                         const statusCode = res.status.toString();
@@ -307,7 +319,7 @@ class FindAConsultant {
         const consultantName = $('.selected .consultant-name').text();
         if (this.selectedId) {
             $('.next-step-selected-text')
-                .html(`You have selected <strong>${consultantName}</strong> as your consultant`);
+                .html(`You have selected <span>${consultantName}</span> as your consultant`);
         } else {
             $('.next-step-selected-text').text('');
         }
@@ -474,9 +486,9 @@ class FindAConsultant {
         $('.alertbox-error').hide();
         this.clearConsultantWindow();
 
-        const $matchingConsultants = $('<span>', { class: 'system-14 matching' });
-        $matchingConsultants.text(`Consultants matching \"${response.TotalRecordCount}\"`);
-        $('#consultant-search-results .buy-wide-card .search-filter-wrapper').append($matchingConsultants);
+        const $matchingConsultants = $('<span>', { class: 'frame-caption matching' });
+        $matchingConsultants.text(`${response.TotalRecordCount} Consultant's Matching \"${this.searchQuery}\"`);
+        $('#consultant-search-results .genmodal-body .search-filter-wrapper').append($matchingConsultants);
 
         const consultantCard = new ConsultantCard();
         // Get consultant-card template

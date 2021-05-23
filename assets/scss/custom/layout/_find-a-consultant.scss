@@ -6,6 +6,15 @@
     #consultant-search {
         .genmodal-body {
             max-height:500px;
+            .buy-wide-card {
+                padding: 0.5rem;
+                .simple-dropdown,
+                .input-label {
+                    margin: 0;
+                    margin-bottom: 10px;
+                    flex-basis: 100%;
+                }
+            }
             .buy-wide-card.name-search {
                 .card-form {
                     flex-wrap:wrap;
@@ -15,10 +24,9 @@
                 }
             }
         }
-        .findmodal-footer {
-            background: none;
-            box-shadow: none;
-            text-align: right;
+        .genmodal-footer {
+            padding: 10px;
+            margin-top: -2px;
         }
     }
     #no-consultants-continue {
@@ -32,6 +40,10 @@
         }
         .genmodal-body {
             .buy-wide-card {
+                background-color: $gainsboro;
+                .consultant-card {
+                    width: 100%;
+                }
                 .return-search {
                     margin: 10px 0;
                     display: flex;
@@ -63,9 +75,6 @@
                 }
                 .buy-wide-card {
                     .consultant-card {
-                        .consultant-image {
-                            min-width: 100px;
-                        }
                         .consultant-info {
                             padding-left:0;
                             .system-14 {
@@ -109,6 +118,35 @@
                         .button-alternate {
                             margin: 0;
                         }
+                    }
+                }
+            }
+            #consultant-search {
+                .genmodal-body .buy-wide-card {
+                    .form-title {
+                        margin: 0;
+                        margin-bottom: 10px;
+                    }
+                    .card-form {
+                        justify-content: space-between;
+                        .input-label,
+                        .simple-dropdown {
+                            flex-basis: 48%;
+                        }
+                    }
+                }
+                .genmodal-body .buy-wide-card.id-search {
+                    .card-form {
+                        justify-content: flex-start;
+                    }
+
+                    .input-label {
+                        margin: 0;
+                    }
+
+                    .vertical-bottom {
+                        margin: 0;
+                        margin-left: 20px;
                     }
                 }
             }

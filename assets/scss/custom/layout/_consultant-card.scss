@@ -2,73 +2,30 @@
 // Tastefully Simple - Consultant Card
 // =============================================================================
 
-@mixin consultant-header {
-    align-items:center;
-    background-color: $teal;
-    color: $white;
-    display: flex;
-    flex-basis: 100%; 
-    padding: 10px 0;
-}
-
-.consultant-divider {
-    width: 100%;
-    border: 1px solid $silver;
-}
 .consultant-card {
     cursor:pointer;
     display: flex;
-    justify-content:space-between;
-    padding: 10px 0;
-    width: 100%;
     flex-wrap: wrap;
-    &:not(.selected) {
-        padding-top:1rem;
-        .selected-header {
-            display: none;
-        }
-    }
-    .consultant-header {
-        @include consultant-header;
-        background-color: $shady-lady;
-        padding: 5px;
-        margin-bottom: 10px;
-        .fa-circle {
-            font-size: 2rem;
-            margin-right: 1rem;
-        }
-    }
-    &.selected {
-        margin-top:1rem;
-        border:.5rem solid $teal;
-        border-top:none;
-        flex-wrap: wrap;
-        margin: 10px 0px 10px 0;
-        padding-top: 0;
-        position: relative;
-        .selected-header {
-            @include consultant-header;
-            .selection-title {
-                color:$white;
-                margin:0;
-            }
-            .icon-system-check {
-                color:$white;
-                font-size:2rem;
-                margin-right:1rem;
-            }
-        }
-    }
-    .consultant-image {
-        width:30%;
-        img {
-            max-height: 135px;
-        }
-    }
+    justify-content:space-between;
+    padding: 10px;
+    width: 100%;
     .consultant-info {
+        align-items: flex-start;
         display: flex;
-        flex-basis:65%;
-        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .consultant-info-col p {
+            margin: 0;
+        }
+        .consultant-info-col.consultant-image {
+            width: 28%;
+            img {
+                max-height: 75px;
+            }
+        }
+        .consultant-info-col.consultant-contact {
+            margin: 10px 0 0 15px;
+        }
         .system-14 {
             font-size: 14px;
         }
@@ -82,7 +39,6 @@
                 margin-right: 5px;
             }
             span {
-                font-size: 14px;
                 vertical-align: middle;
             }
         }
@@ -92,7 +48,6 @@
                 margin-right: 5px;
             }
             span {
-                font-size: 14px;
                 overflow-wrap: anywhere;
                 vertical-align: middle;
             }
@@ -110,11 +65,21 @@
     }
 }
 
+@media only screen and (min-width:801px) {
+    .consultant-card .consultant-info {
+        flex-wrap: nowrap;
+        min-width: 428px;
 
-@media only screen and (min-width:361px) {
-    .consultant-card {
-        .consultant-header {
-            padding:10px;
+        .consultant-info-col.consultant-image {
+            width: 15%;
+        }
+        .consultant-info-col.consultant-basic-info {
+            padding-left: 10px;
+            width: 35%;
+        }
+        .consultant-info-col.consultant-contact {
+            width: 50%;
+            margin: 0;
         }
     }
 }

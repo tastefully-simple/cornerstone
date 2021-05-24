@@ -24,6 +24,9 @@ cart: true
                 {{> components/cart/totals}}
             </div>
 
+            {{!-- TST-426 --}}
+            {{> components/cart/ts-affiliation}}
+
             {{{region name="cart_below_totals"}}}
 
             {{#if cart.show_primary_checkout_button}}

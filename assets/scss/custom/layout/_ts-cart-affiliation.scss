@@ -1,0 +1,66 @@
+/*
+ * Affiliation section in the cart page
+ * (under Grand total)
+ */
+
+#ts-cart-affiliation {
+    margin-right: 4px;
+    width: 100%;
+
+    .ts-cart-affiliation-wrapper {
+        background-color: $cream;
+        height: 400px;
+    }
+}
+
+// Checkout button
+.cart-actions {
+    align-items: center;
+    background-color: $cream;
+    display: flex;
+    flex-direction: column;
+
+    a.button {
+        margin: 0;
+        margin-bottom: 2rem;
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width:801px) {
+    #ts-cart-affiliation .ts-cart-affiliation-wrapper,
+    .cart-actions {
+        width: grid-calc(7, $total-columns);
+    }
+
+    #ts-cart-affiliation {
+        margin-right: 4px;
+        width: 100%;
+    
+        &::after {
+          content: " ";
+           display: block; 
+           height: 0; 
+           clear: both;
+        }
+    
+        .ts-cart-affiliation-wrapper {
+            float: right;
+            text-align: right;
+        }
+    }
+    
+    // Checkout button
+    .cart-actions {
+        justify-content: center;
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
+@media only screen and (min-width:1261px) {
+    #ts-cart-affiliation .ts-cart-affiliation-wrapper,
+    .cart-actions {
+        width: grid-calc(5, $total-columns);
+    }
+}

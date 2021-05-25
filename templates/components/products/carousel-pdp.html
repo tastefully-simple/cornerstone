@@ -6,6 +6,9 @@
         "mobileFirst": true,
         "slidesToShow": 1,
         "slidesToScroll": 1,
+        "slide": ".js-product-slide",
+        "prevArrow": "{{#if customArrowClass}}.{{customArrowClass}}{{/if}}.js-product-prev-arrow",
+        "nextArrow": "{{#if customArrowClass}}.{{customArrowClass}}{{/if}}.js-product-next-arrow",
         "responsive": [
             {
                 "breakpoint": 800,
@@ -23,10 +26,19 @@
             }
         ]
     }'
->
+    data-dots-labels='{
+        "dotAriaLabel": "{{lang 'carousel.dotAriaLabel'}}",
+        "activeDotAriaLabel": "{{lang 'carousel.activeDotAriaLabel'}}"
+    }'>
+    {{#if products.length '>' 1}}
+    <button aria-label="{{lang 'carousel.arrowAriaLabel'}} {{products.length}}" class="{{#if customArrowClass}}{{customArrowClass}} {{/if}}js-product-prev-arrow slick-prev slick-arrow"></button>
+    {{/if}}
     {{#each products}}
-    <div class="productCarousel-slide">
+    <div class="productCarousel-slide js-product-slide">
         {{> components/products/card-pdp show_rating=true settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}}
     </div>
     {{/each}}
+    {{#if products.length '>' 1}}
+    <button aria-label="{{lang 'carousel.arrowAriaLabel'}} {{products.length}}" class="{{#if customArrowClass}}{{customArrowClass}} {{/if}}js-product-next-arrow slick-next slick-arrow"></button>
+    {{/if}}
 </section>

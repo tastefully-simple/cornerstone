@@ -577,6 +577,29 @@ input{
         width:15px;
     }
 }
+.burgundy-radio {
+    label {
+        &> input[type="radio"] {
+          display: none;
+            &+ *::before {
+              border-radius: 50%;
+              border:0.01rem solid $shady-lady;
+              content: "";
+              display: inline-block;
+              height: 1rem;
+              margin-right: 0.3rem;
+              vertical-align: bottom;
+              width: 1rem;
+            }
+            &:checked {
+                &+ *::before {
+                  background: radial-gradient($burgundy 0%, $burgundy 40%, transparent 50%, transparent);
+                  border-color: $burgundy;
+                }
+            }
+        }
+    }
+}
 label{
     &>span{
         font-weight:700;

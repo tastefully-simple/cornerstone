@@ -210,11 +210,30 @@
                         width: 12px;
                     }
                 }
-                .findmodal-pagination {
-                    background-color:$white;
-                    padding:5px 20px;
-                    margin:20px 0;
-                    @include modal-dropshadow();
+                .findmodal-pagination-container {
+                    align-items: center;
+                    display: flex;
+                    justify-content: flex-end;
+                    padding: 0px 20px;
+
+                    .custom-pagination-item .custom-pagination-link {
+                        color: $burgundy;
+                        font-size: 1.2rem;
+                    }
+                    .custom-pagination-item {
+                        text-decoration: underline;
+                    }
+                    .custom-pagination-item.custom-pagination-item--current {
+                        text-decoration: none;
+
+                        .custom-pagination-link {
+                            color: $text-gray;
+                        }
+                    }
+                    .custom-pagination-item .custom-pagination-link.isDisabled {
+                        color: $wan-white;
+                        opacity: 1;
+                    }
                 }
                 .next-step-wrapper {
                     padding:5px 20px;

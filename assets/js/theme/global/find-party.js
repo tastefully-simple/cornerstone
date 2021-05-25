@@ -372,7 +372,7 @@ class FindAParty {
     clearPartyWindow() {
         $('.party-card').remove();
         $('.return-search').remove();
-        $('.findmodal-pagination').remove();
+        $('.findmodal-pagination-container').remove();
         $('.matching').remove();
     }
 
@@ -449,20 +449,10 @@ class FindAParty {
             this.showSelectedPartyMessage(partyHost);
         }
 
-        // Footer
-        const $footerHtml = $('#party-search-results .findmodal-footer');
-
         // Pagination
-        const $paginationContainer = $('<div>', { class: 'findmodal-pagination pagination' });
-        $footerHtml.prepend($paginationContainer);
-
-        pagination(
-            $paginationContainer,
-            response.CurrentPage,
-            Math.ceil(response.TotalRecordCount / response.PageSize),
-            DISPLAY_NUM_PAGES,
-            (p) => this.goToPage(p),
-        );
+        if (response.TotalRecordCount > 1) {
+            this.getPagination(response);
+        }
     }
 
     getPartyHtmlBlock(party) {
@@ -516,6 +506,32 @@ class FindAParty {
         $infoContainerHtml.append($innerContainerHtml);
 
         return $infoContainerHtml;
+    }
+
+    getPagination(response) {
+        const pageSize = response.PageSize;
+        const totalRecordCount = response.TotalRecordCount;
+
+        const $paginationContainer = $('<div>', { class: 'findmodal-pagination-container' });
+        const $paginationText = $('<div>', { class: 'findmodal-pagination-text' });
+        const $paginationList = $('<div>', { class: 'findmodal-pagination pagination' });
+
+        const pageSizeCount = totalRecordCount < pageSize ? totalRecordCount : pageSize;
+        $paginationText.html(`
+            <p class="frame-caption">${pageSizeCount} out of ${totalRecordCount} results</p>
+        `);
+
+        pagination(
+            $paginationList,
+            response.CurrentPage,
+            Math.ceil(totalRecordCount / pageSize),
+            DISPLAY_NUM_PAGES,
+            (p) => this.goToPage(p),
+        );
+
+        $paginationContainer.append($paginationText);
+        $paginationContainer.append($paginationList);
+        $('#party-search-results .findmodal-footer').prepend($paginationContainer);
     }
 }
 

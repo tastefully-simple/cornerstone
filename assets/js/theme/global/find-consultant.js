@@ -189,7 +189,7 @@ class FindAConsultant {
         $('.matching').remove();
         $('.consultant-card').remove();
         $('.consultant-divider').remove();
-        $('.findmodal-pagination').remove();
+        $('.findmodal-pagination-container').remove();
     }
 
     displayError(err) {
@@ -501,18 +501,9 @@ class FindAConsultant {
             $('#consultant-search-results').show();
             $('#modal').addClass('modal-results');
 
-            // Pagination is only needed when searching by zipcode or searching by name
-            // Searching by Consultant Id should produce only 1 result
-            if (this.searchInfo.mode !== SEARCH_BY_ID) {
-                const $paginationContainer = $('<div>', { class: 'findmodal-pagination pagination' });
-                $('#consultant-search-results .findmodal-footer').prepend($paginationContainer);
-                pagination(
-                    $paginationContainer,
-                    response.CurrentPage,
-                    Math.ceil(response.TotalRecordCount / response.PageSize),
-                    DISPLAY_NUM_PAGES,
-                    (p) => this.goToPage(p),
-                );
+            // Pagination is only needed if search result is more than 1 record
+            if (this.searchInfo.mode !== SEARCH_BY_ID && response.TotalRecordCount > 1) {
+                this.getPagination(response);
             }
         });
     }
@@ -536,6 +527,32 @@ class FindAConsultant {
             $footerHtml.append($tSimpleBtn);
             return $footerHtml;
         }
+    }
+
+    getPagination(response) {
+        const pageSize = response.PageSize;
+        const totalRecordCount = response.TotalRecordCount;
+
+        const $paginationContainer = $('<div>', { class: 'findmodal-pagination-container' });
+        const $paginationText = $('<div>', { class: 'findmodal-pagination-text' });
+        const $paginationList = $('<div>', { class: 'findmodal-pagination pagination' });
+
+        const pageSizeCount = totalRecordCount < pageSize ? totalRecordCount : pageSize;
+        $paginationText.html(`
+            <p class="frame-caption">${pageSizeCount} out of ${totalRecordCount} results</p>
+        `);
+
+        pagination(
+            $paginationList,
+            response.CurrentPage,
+            Math.ceil(totalRecordCount / pageSize),
+            DISPLAY_NUM_PAGES,
+            (p) => this.goToPage(p),
+        );
+
+        $paginationContainer.append($paginationText);
+        $paginationContainer.append($paginationList);
+        $('#consultant-search-results .findmodal-footer').prepend($paginationContainer);
     }
 }
 

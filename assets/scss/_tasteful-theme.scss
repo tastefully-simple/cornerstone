@@ -697,6 +697,17 @@ textarea{
         @extend .tooltip-inner;
     }
 }
+.tooltip-right{
+    width:300px;
+    @extend .tooltip-general;
+    &::before{
+        right:5%;
+        @extend .tooltip-arrow::before;
+    }
+    &>div{
+        @extend .tooltip-inner;
+    }
+}
 
 // Alerts
 // -----------------------------------------------------------------------------

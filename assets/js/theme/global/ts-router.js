@@ -73,7 +73,6 @@ export default class TSRouter {
                                 localStorage.removeItem('partyDetails');
                                 window.location = '/closed-party';
                             } else {
-                                TSCookie.setAffiliateId(party.AfId);
                                 TSCookie.setConsultantId(party.ConsultantId);
                                 TSCookie.setConsultantName(party.ConsultantName);
                                 TSCookie.setConsultantImage(party.Image);
@@ -109,7 +108,6 @@ export default class TSRouter {
                 this.api.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(party => {
-                        TSCookie.setAffiliateId(party.AfId);
                         TSCookie.setConsultantId(party.ConsultantId);
                         TSCookie.setConsultantName(party.ConsultantName);
                         this.setPartyCookies(party);

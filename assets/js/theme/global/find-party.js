@@ -371,7 +371,6 @@ class FindAParty {
 
     clearPartyWindow() {
         $('.party-card').remove();
-        $('.return-search').remove();
         $('.findmodal-pagination-container').remove();
         $('.matching').remove();
     }
@@ -397,17 +396,6 @@ class FindAParty {
     renderResults(response) {
         $('#party-search').hide();
         this.clearPartyWindow();
-
-        // Return search
-        const $returnSearch = $('<div>', { class: 'return-search' });
-        $returnSearch.html(`
-            <div class="vertical-center">
-                <span class="icon-system-left-caret"></span>
-            </div>
-            <span class="frame-caption return-search-text">Refine your search</span>
-        `);
-
-        $('#party-search-results .genmodal-body .search-filter-wrapper').prepend($returnSearch);
 
         const $matchingParties = $('<span>', { class: 'frame-caption matching' });
         $matchingParties.text(`${response.TotalRecordCount} Parties matching \"${this.searchQuery}\"`);

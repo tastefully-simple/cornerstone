@@ -73,7 +73,6 @@ export default class TSRouter {
                                 localStorage.removeItem('partyDetails');
                                 window.location = '/closed-party';
                             } else {
-                                TSCookie.setAffiliateId(party.AfId);
                                 TSCookie.setConsultantId(party.ConsultantId);
                                 TSCookie.setConsultantName(party.ConsultantName);
                                 TSCookie.setConsultantImage(party.Image);
@@ -109,7 +108,6 @@ export default class TSRouter {
                 this.api.getPartyDetails(iPid)
                     .then(res => res.json())
                     .then(party => {
-                        TSCookie.setAffiliateId(party.AfId);
                         TSCookie.setConsultantId(party.ConsultantId);
                         TSCookie.setConsultantName(party.ConsultantName);
                         this.setPartyCookies(party);
@@ -226,25 +224,10 @@ export default class TSRouter {
     //
 
     setPartyCookies(party) {
-        const now = new Date();
-
-        const closedDate = new Date();
-        closedDate.setDate(closedDate.getDate() - 1);
-
-        const partyDate = new Date(party.Date);
-        partyDate.setDate(partyDate.getDate() + 31);
-
-        let expiration;
-        if (party.IsClosed) {
-            expiration = closedDate;
-        } else if (partyDate > now) {
-            expiration = partyDate;
-        }
-
-        TSCookie.setPartyId(party.PartyId, expiration);
-        TSCookie.setPartyHost(party.HostName, expiration);
-        TSCookie.setPartyDate(party.Date, expiration);
-        TSCookie.setPartyTime(party.Time, expiration);
+        TSCookie.setPartyId(party.PartyId);
+        TSCookie.setPartyHost(party.HostName);
+        TSCookie.setPartyDate(party.Date);
+        TSCookie.setPartyTime(party.Time);
     }
 
     /* TST-175

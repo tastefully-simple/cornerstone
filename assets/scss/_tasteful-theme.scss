@@ -8,6 +8,7 @@
 // Primary
 $brown: #4c3723;
 $burgundy: #610b31;
+$butterscotch: #ddcda6;
 $caramel: #b46c20;
 $cream: #f0ebdf;
 $grape: #720f4b;
@@ -47,6 +48,9 @@ $utility-success: #d5ffd8;
 }
 .burgundy-text{
     color: $burgundy;
+}
+.butterscotch-text{
+    color: $butterscotch;
 }
 .caramel-text{
     color: $caramel;
@@ -120,6 +124,9 @@ $utility-success: #d5ffd8;
 }
 .burgundy-background{
     background-color: $burgundy;
+}
+.butterscotch-background{
+    background-color: $butterscotch;
 }
 .caramel-background{
     background-color: $caramel;
@@ -230,6 +237,9 @@ a,
     font-size:14px;
     text-transform:unset;
     @extend .frametext-semibold;
+}
+.frame-subhead {
+    font-size:14px;
 }
 .framelink-xl{
     @extend .frametext-black;
@@ -580,16 +590,17 @@ input{
 .burgundy-radio {
     label {
         &> input[type="radio"] {
-          display: none;
+            display: none;
             &+ *::before {
-              border-radius: 50%;
-              border:0.01rem solid $shady-lady;
-              content: "";
-              display: inline-block;
-              height: 1rem;
-              margin-right: 0.3rem;
-              vertical-align: bottom;
-              width: 1rem;
+                background-color: $white;
+                border-radius: 50%;
+                border:0.01rem solid $burgundy;
+                content: "";
+                display: inline-block;
+                height: 1rem;
+                margin-right: 0.3rem;
+                vertical-align: bottom;
+                width: 1rem;
             }
             &:checked {
                 &+ *::before {

@@ -71,39 +71,6 @@
             }
         }
     }
-    #ts-cart-affiliation {
-        @extend .cart-actions;
-        .ts-cart-affiliation-wrapper {
-            align-items:center;
-            display:flex;
-            flex-direction:column;
-            height:auto;
-            width:90%;
-            .ts-affiliate-cart-form {
-                align-items:flex-start;
-                display:flex;
-                flex-direction:column;
-                label {
-                    align-items:center;
-                    display:flex;
-                    margin-bottom:1rem;
-                    input {
-                        margin-right:1ch;
-                    }
-                    .icon-system-info {
-                        cursor:pointer;
-                        height:16px;
-                        margin-left:.5ch;
-                        width:16px;
-                        vertical-align:middle;
-                    }
-                }
-                .tooltip-right {
-                    align-self:flex-end;
-                }
-            }
-        }
-    }
 }
 
 @media only screen and (min-width:801px) {

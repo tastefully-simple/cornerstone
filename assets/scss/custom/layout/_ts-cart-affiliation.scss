@@ -6,17 +6,87 @@
 #ts-cart-affiliation {
     margin-right: 4px;
     width: 100%;
-
+    h2 {
+        font-size:18px;
+    }
     .ts-cart-affiliation-wrapper {
-        background-color: $cream;
-        height: 400px;
+        align-items:center;
+        background-color: $butterscotch;
+        display:flex;
+        flex-direction:column;
+        height:auto;
+        .ts-affiliate-cart-form {
+            align-items:flex-start;
+            display:flex;
+            flex-direction:column;
+            label {
+                align-items:center;
+                display:flex;
+                margin-bottom:1rem;
+                input {
+                    margin-right:1ch;
+                }
+                .icon-system-info {
+                    cursor:pointer;
+                    height:16px;
+                    margin-left:.5ch;
+                    width:16px;
+                    vertical-align:middle;
+                }
+            }
+            .tooltip-right {
+                align-self:flex-end;
+            }
+        }
+        .cart-affiliate-consultant-selected {
+            margin:auto;
+            width:100%;
+            button {
+                color: $teal;
+            }
+            .cart-affiliate-consultant {
+                align-items:center;
+                display:flex;
+                justify-content:center;
+                margin-bottom:1rem;
+                img {
+                    height:50px;
+                    margin-right:1rem;
+                    width:50px;
+                }
+                .cart-affiliate-name {
+                    margin-bottom:0;
+                    text-align:left;
+                    button {
+                        &:last-of-type {
+                            border-left:1.5px solid $teal;
+                            line-height:.7;
+                        }
+                    }
+                }
+            }
+            .cart-affiliate-party {
+                border-top: 1px solid $text-gray;
+                margin:auto;
+                padding-top:1rem;
+                text-align:center;
+                width:85%;
+                &.noparty {
+                    p {
+                        &:not(:last-of-type) {
+                            margin-bottom:.25rem;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 // Checkout button
 .cart-actions {
     align-items: center;
-    background-color: $cream;
+    background-color: $butterscotch;
     display: flex;
     flex-direction: column;
 

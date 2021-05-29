@@ -32,6 +32,7 @@ export default class ConsultantCard {
         newCard = newCard.replace(/{consultant-email}/g, consultant.EmailAddress ? consultant.EmailAddress : '');
         newCard = newCard.replace(/{consultant-location}/g, consultant.Location ? consultant.Location : '');
         newCard = newCard.replace(/{consultant-weburl}/g, consultant.WebUrl ? consultant.WebUrl : '');
+        newCard = newCard.replace(/{consultant-hasopenparty}/g, consultant.HasOpenParty ? true : false);
 
         return newCard;
     }

@@ -984,7 +984,8 @@
     },
     "consultant_modal": {
       "search_title": "find your consultant",
-      "results_title": "choose a consultant"
+      "results_title": "choose a consultant",
+      "parties_title": "your consultant's parties"
     }
   }
 }

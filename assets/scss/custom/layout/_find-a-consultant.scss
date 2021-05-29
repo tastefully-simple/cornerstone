@@ -62,6 +62,59 @@
             }
         }
     }
+    #consultantparties-search-results {
+        display: none;
+
+        .consultant-info,
+        .consultantparties-caption {
+            background-color: #e2e2e2;
+            box-shadow: none;
+            margin: 0;
+            padding: .25rem .5rem;
+        }
+
+        .consultant-info {
+            display: flex;
+            align-items: center;
+
+            .consultant-image img {
+                max-height: 55px;
+            }
+
+            .consultant-text {
+                padding-left: 1rem;
+
+                p {
+                    margin-bottom: 5px;
+                }
+
+                .consultant-name {
+                    font-weight: 900;
+                }
+
+                .consultant-edit,
+                .consultant-remove {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .consultantparties-caption p {
+            margin-bottom: 5px;
+        }
+
+        .buy-wide-card {
+            background: none;
+            .party-card {
+                width:100%;
+                .party-info {
+                    .party-name {
+                        margin-top:0;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (min-width:801px) {

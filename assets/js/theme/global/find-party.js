@@ -115,7 +115,7 @@ class FindAParty {
         });
 
         // Select party
-        $('body').on('click', '.party-card', (e) => this.selectParty(e));
+        $('body').on('click', '#party-search-results .party-card', (e) => this.selectParty(e));
 
         // Submit
         $('body').on('click', '#party-continue', () => this.continueWithSelection());

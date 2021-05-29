@@ -5,7 +5,7 @@ import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
 import ConsultantCard from '../common/consultant-card';
-
+import ConsultantParties from '../common/consultant-parties';
 
 // Consultants
 const TST_CONSULTANT_ID = '0160785';
@@ -50,6 +50,7 @@ class FindAConsultant {
             id: TSCookie.getConsultantId(),
             name: TSCookie.getConsultantName(),
             image: TSCookie.getConsultantImage(),
+            hasOpenParty: TSCookie.getConsultantHasOpenParty(),
         };
     }
 
@@ -57,6 +58,7 @@ class FindAConsultant {
         TSCookie.setConsultantId(consultant.id);
         TSCookie.setConsultantName(consultant.name);
         TSCookie.setConsultantImage(consultant.image);
+        TSCookie.setConsultantHasOpenParty(consultant.hasOpenParty);
     }
 
     isExternalConsultant() {
@@ -87,6 +89,9 @@ class FindAConsultant {
 
         // Return
         $('body').on('click', '.search-filter-wrapper .return-search', this.returnSearch.bind(this));
+
+        // Go back to search when editing consultant in consultant parties modal
+        $('body').on('click', '#consultantparties-search-results .consultant-edit', this.returnSearch.bind(this));
 
         // Search by ZIP
         $('body').on('submit', '#zipcode-search-form', () => {
@@ -177,6 +182,7 @@ class FindAConsultant {
 
     returnSearch() {
         $('#consultant-search-results').hide();
+        $('#consultantparties-search-results').hide();
         $('#modal').removeClass('modal-results');
         $('.alertbox-error').hide();
         $('#consultant-search').show();
@@ -308,7 +314,7 @@ class FindAConsultant {
         const $consultantCard = $(e.target).closest('.consultant-card');
         if (!$consultantCard.hasClass('selected')) {
             this.selectedId = $consultantCard.data('cid');
-            $('.selected').toggleClass('selected');
+            $('#consultant-search-results .selected').toggleClass('selected');
             $consultantCard.find('.consultant-header').hide();
         } else {
             $consultantCard.find('.consultant-header').show();
@@ -317,11 +323,12 @@ class FindAConsultant {
 
         $(e.target).closest('.consultant-card').toggleClass('selected');
         const consultantName = $('.selected .consultant-name').text();
+        const $nextStepText = $('#consultant-search-results .next-step-selected-text');
         if (this.selectedId) {
-            $('.next-step-selected-text')
+            $nextStepText
                 .html(`You have selected <span>${consultantName}</span> as your consultant`);
         } else {
-            $('.next-step-selected-text').text('');
+            $nextStepText.text('');
         }
     }
 
@@ -331,6 +338,7 @@ class FindAConsultant {
                 id: this.selectedId,
                 name: $('.selected .consultant-name').text(),
                 image: $('.selected .consultant-image img').attr('src'),
+                hasOpenParty: $('.selected').data('copenparty'),
             });
             this.deletePartyCookies();
         } else {
@@ -343,19 +351,17 @@ class FindAConsultant {
             id: TST_CONSULTANT_ID,
             name: 'Tastefully Simple',
             image: null,
+            hasOpenParty: false,
         });
         this.deletePartyCookies();
     }
 
     continue(consultant) {
         this.saveCookie(consultant);
-        if (this.isOnConsultantPage()) {
-            window.location = CONSULTANT_PAGE;
-        } else if (this.isOnCartPage()) {
-            window.location = CART_PAGE;
-        } else {
-            this.setConsultant(consultant);
-            this.modal.close();
+        this.setConsultant(consultant);
+
+        if (consultant.hasOpenParty) {
+            this.renderConsultantParties();
         }
     }
 
@@ -474,6 +480,8 @@ class FindAConsultant {
      * HTML
      */
     renderResults(response) {
+        this.selectedId = null;
+
         if (response.Results) {
             this.renderHasResults(response);
         } else {
@@ -527,6 +535,18 @@ class FindAConsultant {
             $footerHtml.append($tSimpleBtn);
             return $footerHtml;
         }
+    }
+
+    renderConsultantParties() {
+        this.api.getPartiesByConsultant(this.selectedId, 1, 10)
+            .then(res => res.json())
+            .then(data => {
+                const consultantParties = new ConsultantParties(data, this.modal, this.consultant);
+                return consultantParties;
+            })
+            .catch(err => {
+                console.warn('getPartiesByConsultant', err);
+            });
     }
 
     getPagination(response) {

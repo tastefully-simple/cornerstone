@@ -157,9 +157,8 @@
                         cursor: pointer;
                         display:flex;
                         width: fit-content;
-                        .icon-system-left-caret {
-                            height:12px;
-                            width:12px;
+                        i {
+                            color: $green-hover;
                         }
                         .return-search-text {
                             font-weight: 900;

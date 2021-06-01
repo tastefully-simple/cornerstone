@@ -37,6 +37,10 @@ class FindAConsultant {
         this.pageSize = 10;
         this.screenMinWidth = 801;
         this.api = new TSApi();
+
+        // TST-443 Delete old affiliation cookies
+        TSCookie.deleteOldAffiliation();
+
         this.setConsultant(this.loadConsultant());
         this.initListeners();
     }

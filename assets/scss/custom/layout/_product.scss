@@ -123,6 +123,9 @@
 
     // Product Description
     .productView-description {
+        .productView-title {
+            display: none;
+        }
         .tabs {
             display:none;
             .tab {

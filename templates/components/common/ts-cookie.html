@@ -101,6 +101,25 @@
                 Cookies.remove('afid', { domain: cookieDomain});
             },
 
+            deleteOldAffiliation: function() {
+                const domain = window.location.hostname;
+
+                if (domain == 'www.tastefullysimple.com') {
+                    // Delete Old Party cookies
+                    Cookies.remove('pid', { domain: domain});
+                    Cookies.remove('phost', { domain: domain});
+                    Cookies.remove('pdate', { domain: domain});
+                    Cookies.remove('ptime', { domain: domain});
+                    Cookies.remove('ptotal', { domain: domain});
+
+                    // Delete Old Consultant cookies
+                    Cookies.remove('cid', { domain: domain});
+                    Cookies.remove('name', { domain: domain});
+                    Cookies.remove('cimg', { domain: domain});
+                    Cookies.remove('afid', { domain: domain});
+                }
+            },
+
             setLoginStateChecker: function(loginState) {
                 Cookies.set('loginStateChecker', loginState);
             },

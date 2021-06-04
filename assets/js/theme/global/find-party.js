@@ -64,10 +64,6 @@ class FindAParty {
     setParty(party) {
         this.party = party;
         this.renderPartyBar(this.$findPartyBar);
-
-        if (this.isOnCartPage()) {
-            this.renderPartyInCart();
-        }
     }
 
     initListeners() {
@@ -296,41 +292,6 @@ class FindAParty {
         return document.location.pathname === CART_PAGE;
     }
 
-    renderPartyInCart() {
-        const phost = this.party.host;
-        const $cartHeader = $('.cart-affiliate');
-        const $findPartyBarMobile = $('<div>', { class: 'cart-affiliate-party no-party-selected' });
-        const $findPartyBarDesktop = $('<div>', { class: 'partybar no-party-selected' });
-
-        if (phost) {
-            $findPartyBarMobile.html(`<p><strong>${phost}</strong> is your host</p>
-                <button><span><small>(edit)</small></span></button>`);
-        } else {
-            this.noPartySelectedHtml($findPartyBarMobile);
-            this.noPartySelectedHtml($findPartyBarDesktop);
-
-            // initial no party selected (desktop)
-            if (window.innerWidth >= SCREEN_MIN_WIDTH) {
-                this.$findPartyBar.hide();
-                $($findPartyBarDesktop).insertAfter($cartHeader);
-            }
-
-            $(window).resize(() => {
-                if (window.innerWidth >= SCREEN_MIN_WIDTH) {
-                    this.$findPartyBar.hide();
-                    $findPartyBarDesktop.show();
-                    $($findPartyBarDesktop).insertAfter($cartHeader);
-                } else {
-                    // Show default party bar in mobile menu
-                    this.$findPartyBar.show();
-                    $findPartyBarDesktop.hide();
-                }
-            });
-        }
-
-        $cartHeader.append($findPartyBarMobile);
-    }
-
     renderPartyBar($party) {
         // Partybar Greeting Text
         const hostname = TSCookie.getPartyHost();
@@ -339,23 +300,28 @@ class FindAParty {
 
         const $navPages = $('.navPages-container .navPages');
 
-        if (window.innerWidth >= SCREEN_MIN_WIDTH && this.isOnCartPage()) {
-            $('.cart-affiliate').append($party);
-        } else if (window.innerWidth >= SCREEN_MIN_WIDTH) {
-            $('header.header').append($party);
-        } else {
-            $navPages.append($party);
+        /* Party bar does not have a background color by default
+         * and need to set the background color to apple green.
+         * It's kind of a hack when hiding it in
+         * desktop view when user is in the cart page so that
+         * it's not really obvious that the party bar gets hidden.
+         */
+        const appleGreen = '#6e7a06';
+
+        if (this.isDesktop() && this.isOnCartPage()) {
+            // Hide party bar in desktop (cart page only)
+            $party.hide();
+        } else  {
+            $party.show();
+            $party.css('background-color', appleGreen);
+
+            // Show party bar in desktop or mobile
+            this.isDesktop() ? $('header.header').append($party) : $navPages.append($party);
         }
     }
 
-    noPartySelectedHtml($partyBar) {
-        const softRed = '#FFDDDD';
-        const grey = '#2D2D2D';
-
-        $partyBar.css('background-color', softRed);
-        $partyBar.css('color', grey);
-        $partyBar.html(`<p>Are you shopping in a <strong>party?</strong></p>
-            <button class="framelink-md teal-text">Find It Here</button>`);
+    isDesktop() {
+        return window.innerWidth >= SCREEN_MIN_WIDTH;
     }
 
     showSelectedPartyMessage(host) {

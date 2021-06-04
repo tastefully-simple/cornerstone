@@ -76,6 +76,7 @@
                 justify-content:center;
                 margin-bottom:1rem;
                 img {
+                    font-size: 6px;
                     height:50px;
                     margin-right:1rem;
                     width:50px;
@@ -83,6 +84,11 @@
                 .cart-affiliate-name {
                     margin-bottom:0;
                     text-align:left;
+                }
+                .consultant-info-control {
+                    p {
+                        margin-bottom: 0;
+                    }
                 }
             }
             .cart-affiliate-party {

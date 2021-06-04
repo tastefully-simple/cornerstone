@@ -3,6 +3,10 @@ import PartyCard from './party-card';
 
 const SHOP_NO_PARTY_MESSAGE = "I'm shopping without a party or fundraiser";
 
+// Redirect
+const CONSULTANT_PAGE = '/web';
+const CART_PAGE = '/cart.php';
+
 export default class ConsultantParties {
     constructor(response, modal, selectedConsultant) {
         this.response = response;
@@ -31,7 +35,6 @@ export default class ConsultantParties {
         this.$parent.find('.party-card.selected').removeClass('selected');
         // Always select default party card first
         this.$parent.find('.default-party-card').addClass('selected');
-        this.$parent.find('.default-party-card .party-header').hide();
 
         // Render Party cards
         const partyCard = new PartyCard();
@@ -59,7 +62,7 @@ export default class ConsultantParties {
 
         const $partyCard = $(e.target).closest('.party-card');
 
-        $('.party-header').show();
+        $('.party-header').css('display', 'flex');
 
         /* Default party card does not have pid data attr.
          * So $partyCard.data('pid') will return undefined
@@ -79,21 +82,35 @@ export default class ConsultantParties {
     continueWithSelection() {
         const $selectedPartyCard = this.$parent.find('.party-card.selected');
 
-        const party = {
-            id: this.selectedId,
-            host: $selectedPartyCard.data('phost'),
-            date: $selectedPartyCard.data('pdate'),
-            time: $selectedPartyCard.data('ptime'),
-            cid: $selectedPartyCard.data('cid'),
-            cname: $selectedPartyCard.data('cname'),
-            cimg: $selectedPartyCard.data('cimg'),
-        };
+        if (this.selectedId) {
+            const party = {
+                id: this.selectedId,
+                host: $selectedPartyCard.data('phost'),
+                date: $selectedPartyCard.data('pdate'),
+                time: $selectedPartyCard.data('ptime'),
+                cid: $selectedPartyCard.data('cid'),
+                cname: $selectedPartyCard.data('cname'),
+                cimg: $selectedPartyCard.data('cimg'),
+            };
 
-        // Update green party bar text
-        this.updatePartyBarText(party.host);
+            // Update green party bar text
+            this.updatePartyBarText(party.host);
 
-        this.savePartyCookies(party);
-        this.modal.close();
+            this.savePartyCookies(party);
+        } else {
+            // To account for user not choosing to
+            // select a party with selected consultant
+            // that has active parties
+            TSCookie.setPartyId(null);
+        }
+
+        if (this.isOnConsultantPage()) {
+            window.location = CONSULTANT_PAGE;
+        } else if (this.isOnCartPage()) {
+            window.location = CART_PAGE;
+        } else {
+            this.modal.close();
+        }
     }
 
     savePartyCookies(party) {
@@ -126,5 +143,13 @@ export default class ConsultantParties {
         } else {
             $('.partybar-main-text').html(`<strong>${SHOP_NO_PARTY_MESSAGE}</strong>`);
         }
+    }
+
+    isOnConsultantPage() {
+        return document.location.pathname.includes(CONSULTANT_PAGE);
+    }
+
+    isOnCartPage() {
+        return document.location.pathname === CART_PAGE;
     }
 }

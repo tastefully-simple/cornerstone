@@ -99,8 +99,11 @@ class FindAParty {
 
         // Party bar in cart page (mobile)
         $('.cart-affiliate-party button').on('click', (e) => this.createModal(e, this.modalTemplate));
-        // Party bar in cart page (desktop)
-        $('.partybar button').on('click', (e) => this.createModal(e, this.modalTemplate));
+
+        // View all parties button in cart page
+        $('body').on('click', '.cart-affiliate-btn.view-all-parties', (e) => this.createModal(e, this.modalTemplate));
+        // Continue button in cart page
+        $('body').on('click', '.continue-party-select', (e) => this.createModal(e, this.modalTemplate));
 
         // TS affiliate cart page
         $('body.cart #page-wrapper').on('change', '#tsacf-findparty', (e) => {
@@ -212,7 +215,6 @@ class FindAParty {
             this.searchInfo.name,
             this.searchInfo.page,
             PAGE_SIZE,
-            this.searchInfo.sid,
         )
             .then(res => {
                 const statusCode = res.status.toString();

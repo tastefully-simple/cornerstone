@@ -21,6 +21,7 @@ export default class TSCartAffiliation {
             this.template('cart/ts-selected-affiliation')
                 .then(template => {
                     $wrapper.append(template);
+                    this.renderSelectedAffiliation();
                 });
         } else {
             this.applyAffiliationOptionsTemplates($wrapper);
@@ -110,5 +111,105 @@ export default class TSCartAffiliation {
         });
 
         return template;
+    }
+
+    renderSelectedAffiliation() {
+        this.selectedConsultant = {
+            id: TSCookie.getConsultantId(),
+            name: TSCookie.getConsultantName(),
+            image: TSCookie.getConsultantImage(),
+        };
+
+        // Update Selected Consultant
+        this.updateConsultantSelection();
+        // Update Selected party
+        this.updatePartySelection();
+    }
+
+    updateConsultantSelection() {
+        const $parent = $('.cart-affiliate-consultant-selected');
+
+        // Update Selected consultant name
+        $parent.find('.cart-affiliate-name').text(this.selectedConsultant.name);
+
+        // Update Selected consultant image
+        const $consultantImg = $parent.find('.cart-affiliate-img');
+
+        $consultantImg.css('display', 'initial');
+        $consultantImg.attr('alt', `Photograph thumbnail of ${this.selectedConsultant.name}`);
+
+        if (this.selectedConsultant.image) {
+            $consultantImg.attr('src', this.selectedConsultant.image);
+        }
+    }
+
+    updatePartySelection() {
+        const pid = TSCookie.getPartyId();
+        const hasOpenParties = JSON.parse(TSCookie.getConsultantHasOpenParty());
+
+        if (hasOpenParties && pid === 'null') {
+            // Scenario 1
+            this.hasOpenPartiesNoPartySelected();
+        } else if (hasOpenParties && pid) {
+            // Scenario 2
+            this.hasOpenPartiesWithPartySelected();
+        } else if (hasOpenParties && !pid) {
+            // Scenario 3
+            this.hasOpenPartiesNoPartySelectedYet();
+        } else {
+            // Scenario 4
+            this.noOpenParties();
+        }
+    }
+
+    // Scenario 1
+    hasOpenPartiesNoPartySelected() {
+        const html =
+            `<div class="cart-affiliate-party noparty">
+                <p class="cart-affiliate-party-name frame-subhead">I'm shopping without a party or fundraiser</p>
+                <p>
+                    <button type="button" class="framelink-sm cart-affiliate-btn view-consultant-parties">
+                        view ${this.selectedConsultant.name}'s parties
+                    </button>
+                </p>
+                <p>
+                    <button type="button" class="framelink-sm cart-affiliate-btn view-all-parties">
+                        view all parties
+                    </button>
+                </p>
+            </div>`;
+
+        $('.cart-affiliate-party-state').html(html);
+    }
+
+    // Scenario 2
+    hasOpenPartiesWithPartySelected() {
+        const phost = TSCookie.getPartyHost();
+        const html =
+            `<div class="cart-affiliate-party">
+                <p class="cart-affiliate-party-name frame-subhead">
+                    <span class="frameheading-4">${phost}</span>
+                    is my host <button type="button" class="framelink-sm">remove</button>
+                </p>
+            </div>`;
+
+        $('.cart-affiliate-party-state').html(html);
+    }
+
+    // Scenario 3
+    hasOpenPartiesNoPartySelectedYet() {
+        $('.cart-affiliate-party-state').text('');
+
+        const $parentCartAction = $('.cart-actions');
+        $parentCartAction.find('.button--primary').attr('href', '/checkout').hide();
+
+        const $continueBtn = $('<a>', { class: 'button button--primary continue-party-select' });
+        $continueBtn.text('continue');
+        $parentCartAction.prepend($continueBtn);
+    }
+
+    // Scenario 4
+    noOpenParties() {
+        $('.cart-affiliate-party-state').text('');
     }
 }

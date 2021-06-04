@@ -81,8 +81,11 @@ class FindAConsultant {
             }
         });
 
-        // Consultant bar in cart page
-        $('.cart-affiliate-info button').on('click', (e) => this.createModal(e, this.modalTemplate));
+        // Consultant edit button in cart page
+        $('body').on('click', '.cart-affiliate-btn.consultant-edit', (e) => this.createModal(e, this.modalTemplate));
+
+        // Open consultant parties modal
+        $('body').on('click', '.cart-affiliate-btn.view-consultant-parties', (e) => this.openConsultantParties(e));
 
         // Trigger modal when the modaltrigger-consult class is present
         $('.modaltrigger-consult').on('click', (e) => this.createModal(e, this.modalTemplate));
@@ -177,6 +180,25 @@ class FindAConsultant {
 
     closeModal() {
         this.modal.close();
+    }
+
+    openConsultantParties(e) {
+        const template = 'common/consultant-parties';
+        $('#modal').removeClass('modal-results');
+        this.modal = defaultModal();
+        e.preventDefault();
+        this.modal.open({ size: 'small' });
+        const options = { template };
+        utils.api.getPage('/', options, (err, res) => {
+            if (err) {
+                console.error('Failed to get common/find-consultant. Error:', err);
+                return false;
+            } else if (res) {
+                this.modal.updateContent(res);
+                $('#consultantparties-search-results').show();
+                this.renderConsultantParties();
+            }
+        });
     }
 
     renderStatesSelect() {
@@ -366,6 +388,12 @@ class FindAConsultant {
 
         if (consultant.hasOpenParty) {
             this.renderConsultantParties();
+        } else if (this.isOnCartPage() && !this.consultant.hasOpenParty) {
+            window.location = CART_PAGE;
+        } else if (this.isOnConsultantPage() && !this.consultant.hasOpenParty) {
+            window.location = CONSULTANT_PAGE;
+        } else {
+            this.modal.close();
         }
     }
 
@@ -374,10 +402,6 @@ class FindAConsultant {
         this.consultant = consultant;
 
         this.renderConsultant();
-
-        if (this.isOnCartPage()) {
-            this.renderConsultantInCart();
-        }
     }
 
     renderConsultant() {
@@ -442,18 +466,11 @@ class FindAConsultant {
             $consultantImg.css('display', 'none');
         }
 
-        // Update the displayed verbiage and consultant name in the banner
-        const bannerText = this.consultant.name
-            ? `You are shopping with <br/> <strong class="affiliate-name">${this.consultant.name}</strong>
-               <button type="button" class="modal-button">
-                  <span><small class="cart-affiliate-btn">(edit)</small></span>
-               </button>`
-            : `Are you shopping with a <br/> <strong class="affiliate-name">consultant?</strong>
-               <button type="button" class="modal-button cart-affiliate-btn framelink-md teal-text">
-                   Find Them Here
-               </button>`;
+        $('.cart-affiliate-info .cart-affiliate-name').html(this.consultant.name);
 
-        $('.cart-affiliate-info .cart-affiliate-name').html(bannerText);
+        if (!this.consultant.hasOpenParty) {
+            window.location = CART_PAGE;
+        }
     }
 
     isOnConsultantPage() {
@@ -542,6 +559,7 @@ class FindAConsultant {
     }
 
     renderConsultantParties() {
+        this.selectedId = this.selectedId ? this.selectedId : TSCookie.getConsultantId();
         this.api.getPartiesByConsultant(this.selectedId, 1, 10)
             .then(res => res.json())
             .then(data => {

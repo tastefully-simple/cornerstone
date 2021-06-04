@@ -87,7 +87,6 @@
         justify-content: center;
         align-items: center;
         display: flex;
-        padding: 0.6rem;
     }
     &-accordion {
       max-height: 0;
@@ -97,6 +96,7 @@
       transition: max-height 0.2s ease-out;
     }
     &-text {
+        cursor: default;
         text-align: center;
     }
 }

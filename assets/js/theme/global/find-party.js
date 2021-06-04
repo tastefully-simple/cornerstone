@@ -179,7 +179,7 @@ class FindAParty {
         if (hostname) {
             return `You\'re shopping in <strong>${hostname}\'s</strong> party`;
         }
-        return 'Find a party';
+        return 'Find a Party or Fundraiser';
     }
 
     modalLoaded(result) {
@@ -385,7 +385,7 @@ class FindAParty {
         }
 
         const $partyBarText = $('#partybar-find .partybar-text');
-        $partyBarText.text('Find a party');
+        $partyBarText.text('Find a Party or Fundraiser');
 
         TSCookie.deleteParty();
     }

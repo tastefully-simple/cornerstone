@@ -70,6 +70,9 @@
                 background-color: $white;
             }
         }
+        .button--primary {
+            outline: none !important;
+        }
     }
 }
 

@@ -102,6 +102,11 @@ class FindAParty {
         // Party bar in cart page (desktop)
         $('.partybar button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
+        // TS affiliate cart page
+        $('body.cart #page-wrapper').on('change', '#tsacf-findparty', (e) => {
+            this.createModal(e, this.modalTemplate);
+        });
+
         // Search by State / Name
         $('body').on('submit', '#state-search-form', () => {
             this.searchInfo = {
@@ -133,7 +138,6 @@ class FindAParty {
     createModal(e, template) {
         $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
-        e.preventDefault();
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {

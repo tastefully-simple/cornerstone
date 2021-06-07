@@ -15,27 +15,53 @@
         display:flex;
         flex-direction:column;
         height:auto;
-        .ts-affiliate-cart-form {
-            align-items:flex-start;
-            display:flex;
-            flex-direction:column;
-            label {
-                align-items:center;
-                display:flex;
-                margin-bottom:1rem;
-                input {
-                    margin-right:1ch;
-                }
-                .icon-system-info {
-                    cursor:pointer;
-                    height:16px;
-                    margin-left:.5ch;
-                    width:16px;
-                    vertical-align:middle;
-                }
+        position: relative;
+        .alertbox-error {
+            display: none;
+            position: absolute;
+            top: -22px;
+            height: 95px;
+            .alert-title {
+                text-align: left;
+            } 
+        }
+        #ts-affiliate-cart-form-wrapper {
+            margin-bottom: 5px;
+            &.error {
+                padding: 20px 20px 5px;
+                border: 2px solid $utility-red;
+                margin-top: 75px;
             }
-            .tooltip-right {
-                align-self:flex-end;
+            .ts-affiliate-cart-form {
+                align-items:flex-start;
+                display:flex;
+                flex-direction:column;
+                label {
+                    align-items:center;
+                    display:flex;
+                    margin-bottom:1rem;
+                    input {
+                        margin-right:1ch;
+                    }
+                    .icon-system-info {
+                        cursor:pointer;
+                        height:16px;
+                        margin-left:.5ch;
+                        width:16px;
+                        vertical-align:middle;
+                    }
+                    #partyTooltip[style] {
+                        left: -91px !important;
+                        top: 20px !important;
+                    }
+                    #consultantTooltip[style] {
+                        left: -108px !important;
+                        top: 14px !important;
+                    }
+                }
+                .tooltip-right {
+                    align-self:flex-end;
+                }
             }
         }
         .cart-affiliate-consultant-selected {

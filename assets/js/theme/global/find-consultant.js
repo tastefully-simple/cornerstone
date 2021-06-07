@@ -87,6 +87,11 @@ class FindAConsultant {
         // Trigger modal when the modaltrigger-consult class is present
         $('.modaltrigger-consult').on('click', (e) => this.createModal(e, this.modalTemplate));
 
+        // TS affiliate cart page  
+        $('body.cart #page-wrapper').on('change', '#tsacf-findconsultant', (e) => {
+            this.createModal(e, this.modalTemplate);
+        });
+
         // Return
         $('body').on('click', '.search-filter-wrapper .return-search', this.returnSearch.bind(this));
 
@@ -153,11 +158,10 @@ class FindAConsultant {
     createModal(e, template) {
         $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
-        e.preventDefault();
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
-            if (err) {
+          if (err) {
                 console.error('Failed to get common/find-consultant. Error:', err);
                 return false;
             } else if (res) {

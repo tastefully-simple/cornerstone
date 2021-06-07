@@ -49,7 +49,7 @@
         "multiple": "check out with multiple addresses",
         "or": "or"
       },
-      "button": "Check out",
+      "button": "Select Option Above To Checkout",
       "empty_cart": "Your cart is empty",
       "title": "Click here to proceed to checkout",
       "item": "Item",

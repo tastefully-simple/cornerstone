@@ -82,19 +82,26 @@
         }
     }
     &-button {
-        cursor: pointer;
         justify-content: center;
         align-items: center;
         display: flex;
+        padding-bottom: 0.4rem;
     }
     &-accordion {
+      background-color: $green-hover;
       max-height: 0;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       transition: max-height 0.2s ease-out;
+      width: 100%;
+
+      .partybar-accordion-items { 
+          padding: 0.4rem;
+      }
     }
     &-text {
+        margin-bottom: 0.6rem;
         cursor: default;
         text-align: center;
     }

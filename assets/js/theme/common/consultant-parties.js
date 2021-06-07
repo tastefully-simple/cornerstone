@@ -102,6 +102,7 @@ export default class ConsultantParties {
             // select a party with selected consultant
             // that has active parties
             TSCookie.setPartyId(null);
+            this.updatePartyBarText(null);
         }
 
         if (this.isOnConsultantPage()) {
@@ -139,9 +140,9 @@ export default class ConsultantParties {
 
     updatePartyBarText(host) {
         if (this.selectedId) {
-            $('.partybar-main-text').html(`<strong>${host}</strong> is my host`);
+            $('.partybar-main-text').html(`<span><strong>${host}</strong> is my host</span>`);
         } else {
-            $('.partybar-main-text').html(`<strong>${SHOP_NO_PARTY_MESSAGE}</strong>`);
+            $('.partybar-main-text').html(`<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`);
         }
     }
 

@@ -1,5 +1,6 @@
 import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
+import copyToClipboard from 'copy-to-clipboard';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states';
@@ -18,6 +19,8 @@ const CART_PAGE = '/cart.php';
 const API_ERROR_MESSAGE = {
     errorMessage: 'An error has occurred.',
 };
+
+const SHOP_NO_PARTY_MESSAGE = "I'm shopping without a party or fundraiser";
 
 class FindAParty {
     constructor(trigger, template) {
@@ -49,6 +52,7 @@ class FindAParty {
         TSCookie.setConsultantId(party.cid);
         TSCookie.setConsultantName(party.cname);
         TSCookie.setConsultantImage(party.cimg);
+        TSCookie.setConsultantHasOpenParty(true);
     }
 
     /* party = {
@@ -69,35 +73,18 @@ class FindAParty {
     initListeners() {
         // Modal
         this.$findParty.on('click', (e) => {
-            if (!TSCookie.getPartyId()) {
+            if (!TSCookie.getPartyId() && !TSCookie.getConsultantHasOpenParty()) {
                 this.createModal(e, this.modalTemplate);
             } else {
-                this.openDropdown(this.$findParty);
+                this.openPartyBarDropdown(this.$findParty);
             }
         });
-
-        const $findPartyButtons = this.$findPartyBar.find('.partybar-accordion').find('.partybar-button');
-        const $viewPartyButton = $($findPartyButtons[0]);
-        // View party button
-        $viewPartyButton.on('click', () => {
-            window.location.href = `/p/${this.party.id}`;
-        });
-
-        const $switchPartyButton = $($findPartyButtons[1]);
-        // Switch party button
-        $switchPartyButton.on('click', (e) => {
-            this.createModal(e, this.modalTemplate);
-        });
-
-        const $deletePartyButton = $($findPartyButtons[2]);
-        // Delete party button
-        $deletePartyButton.on('click', () => this.deletePartyCookies());
 
         // Party bar in cart page (mobile)
         $('.cart-affiliate-party button').on('click', (e) => this.createModal(e, this.modalTemplate));
 
         // View all parties button in cart page
-        $('body').on('click', '.cart-affiliate-btn.view-all-parties', (e) => this.createModal(e, this.modalTemplate));
+        $('body').on('click', '.view-all-parties', (e) => this.createModal(e, this.modalTemplate));
         // Continue button in cart page
         $('body').on('click', '.continue-party-select', (e) => this.createModal(e, this.modalTemplate));
 
@@ -149,7 +136,7 @@ class FindAParty {
         });
     }
 
-    openDropdown(target) {
+    openPartyBarDropdown(target) {
         target.toggleClass('active');
 
         const accord = target.next();
@@ -168,7 +155,7 @@ class FindAParty {
             accord.css('max-height', 0);
         }
 
-        const $findPartyBarArrow = this.$findParty.find('.fa-caret-right');
+        const $findPartyBarArrow = this.$findParty.find('.partybar-arrow');
         if (target.hasClass('active')) {
             // Change arrow pointing down when party bar opened
             $findPartyBarArrow.addClass('fa-caret-down').removeClass('fa-caret-right');
@@ -176,13 +163,104 @@ class FindAParty {
             // Default
             $findPartyBarArrow.addClass('fa-caret-right').removeClass('fa-caret-down');
         }
+
+        const pid = TSCookie.getPartyId();
+
+        if ((this.consultantHasOpenParties() && pid === 'null')
+            || (this.consultantHasOpenParties() && !pid)) {
+            this.hasOpenPartiesNoPartySelected();
+        } else if (this.consultantHasOpenParties() && pid) {
+            this.hasOpenPartiesWithPartySelected();
+        } else {
+            this.noOpenParties();
+        }
+    }
+
+    consultantHasOpenParties() {
+        return JSON.parse(TSCookie.getConsultantHasOpenParty());
+    }
+
+    hasOpenPartiesNoPartySelected() {
+        // Get consultant's first name
+        const consultant = TSCookie.getConsultantName().split(' ').slice(0, -1);
+
+        const html =
+            `<div class="partybar-accordion-items">
+                <div class="partybar-button">
+                    <button type="button" class="subhead-16 view-consultant-parties">view ${consultant}'s parties</button>
+                </div>
+                <div class="partybar-button">
+                    <button type="button" class="subhead-16 view-all-parties">view all parties</button>
+                </div>
+            </div>`;
+
+        $('.partybar-accordion').html(html);
+    }
+
+    hasOpenPartiesWithPartySelected() {
+        const html =
+            `<div class="partybar-accordion-items">
+                <div class="partybar-button">
+                    <button type="button" class="view-party">view party</button>
+                </div>
+                <div class="partybar-button">
+                    <button type="button" class="copy-party-link">copy &amp; share party link </button>
+                </div>
+                <div class="partybar-button">
+                    <p class="subhead-14">
+                        <button type="button" class="view-all-parties">edit</button>
+                        <span class="white-text">&verbar;</span>
+                        <button type="button">remove party</button>
+                    </p>
+                </div>
+            </div>`;
+
+        $('.partybar-accordion').html(html);
+
+        // View party button
+        const $viewPartyButton = this.$findPartyBar.find('.partybar-accordion-items .view-party');
+        $viewPartyButton.on('click', () => {
+            window.location.href = `/p/${this.party.id}`;
+        });
+
+        // Copy Party URL to clipboard
+        const $copyPartyUrl = this.$findPartyBar.find('.partybar-accordion-items .copy-party-link')
+        $copyPartyUrl.on('click', () => {
+            console.log('this.party', this.party);
+            copyToClipboard(`${window.location.host}/p/${this.party.id}`);
+            $copyPartyUrl.append('<i class="fas fa-check copied"></i>');
+
+            setTimeout(() => {
+                $('.copy-party-link .copied').remove();
+            }, 5000);
+        });
+    }
+
+    noOpenParties() {
+        // Get consultant's first name
+        const consultant = TSCookie.getConsultantName().split(' ').slice(0, -1);
+
+        const html =
+            `<div class="partybar-accordion-items">
+                <div class="partybar-text">
+                    <p>${consultant} doesn't have any open parties</p>
+                </div>
+                <div class="partybar-button">
+                    <button type="button" class="subhead-16 view-all-parties">view all parties</button>
+                </div>
+            </div>`;
+
+        $('.partybar-accordion').html(html);
     }
 
     partyGreeting(hostname) {
         if (hostname) {
-            return `You\'re shopping in <strong>${hostname}\'s</strong> party`;
+            return `<span><strong>${hostname}</strong> is my host</span>`;
+        } else if (TSCookie.getPartyId() == 'null') {
+            return `<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`;
+        } else {
+            return 'Find a Party or Fundraiser';
         }
-        return 'Find a Party or Fundraiser';
     }
 
     modalLoaded(result) {
@@ -295,7 +373,7 @@ class FindAParty {
     renderPartyBar($party) {
         // Partybar Greeting Text
         const hostname = TSCookie.getPartyHost();
-        const $findPartyBarText = this.$findParty.find('.partybar-text');
+        const $findPartyBarText = this.$findParty.find('.partybar-main-text');
         $findPartyBarText.html(this.partyGreeting(hostname));
 
         const $navPages = $('.navPages-container .navPages');

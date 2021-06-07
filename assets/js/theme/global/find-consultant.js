@@ -74,6 +74,7 @@ class FindAConsultant {
             if (this.consultant.id
                 && this.consultant.id !== TST_CONSULTANT_ID
                 && e.target.tagName !== 'SMALL'
+                && !$(e.target).hasClass('consultant-edit')
             ) {
                 window.location = CONSULTANT_PAGE;
             } else {
@@ -85,7 +86,7 @@ class FindAConsultant {
         $('body').on('click', '.cart-affiliate-btn.consultant-edit', (e) => this.createModal(e, this.modalTemplate));
 
         // Open consultant parties modal
-        $('body').on('click', '.cart-affiliate-btn.view-consultant-parties', (e) => this.openConsultantParties(e));
+        $('body').on('click', '.view-consultant-parties', (e) => this.openConsultantParties(e));
 
         // Trigger modal when the modaltrigger-consult class is present
         $('.modaltrigger-consult').on('click', (e) => this.createModal(e, this.modalTemplate));
@@ -410,12 +411,6 @@ class FindAConsultant {
             `<span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
                 <span class="headertoplinks-consult-text">Find a Consultant</span>`;
 
-        this.consultantHtml =
-            `<span>
-                <strong>${this.consultant.name}</strong> is your Consultant
-                <small>(edit)</small>
-            </span>`;
-
         if (window.innerWidth <= this.screenMinWidth) {
             this.renderConsultantInMobileMenu();
         } else {
@@ -427,11 +422,46 @@ class FindAConsultant {
         $('.navPages-container .navPages').prepend(this.$findConsultant);
 
         if (this.isExternalConsultant()) {
-            this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
-            this.$findConsultant.innerHTML = this.consultantHtml;
+            this.$findConsultant.classList.add('consultant-mobile');
+            this.$findConsultant.innerHTML = this.consultantInMobileHtml();
+            $('.find-consultant-m .consultant-img').attr('src', this.consultant.image);
         } else {
             this.$findConsultant.innerHTML = this.defaultConsultantHtml;
         }
+    }
+
+    consultantInMobileHtml() {
+        const html =
+            `<div class="find-consultant-m">
+                <img class="consultant-img"
+                     src="https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png"
+                     alt="Photograph thumbnail of ${this.consultant.name}"
+                     style="display: initial;">
+                ${this.consultantInfoHtml()}
+            </div>`;
+
+        return html;
+    }
+
+    consultantInfoHtml() {
+        const html =
+            `<div class="consultant-info">
+                <p class="framelink-xl consultant-name">${this.consultant.name}</p>
+                <div class="consultant-info-control">
+                    <p class="frame-subhead">
+                        <span>is my consultant</span>
+                        <button type="button" class="framelink-sm">
+                            <span class="consultant-edit">edit</span>
+                        </button>
+                        <span class="verbar">&verbar;</span>
+                        <button type="button" class="framelink-sm">
+                            <span class="cart-affilitiate-btn consultant-remove">remove</span>
+                        </button>
+                    </p>
+                </div>
+            </div>`;
+
+        return html;
     }
 
     renderConsultantInHeader() {
@@ -445,7 +475,7 @@ class FindAConsultant {
 
         if (this.isExternalConsultant() && isStickyHeaderDisabled) {
             this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
-            this.$findConsultant.innerHTML = this.consultantHtml;
+            this.$findConsultant.innerHTML = this.consultantInfoHtml();
         } else {
             this.$findConsultant.innerHTML = this.defaultConsultantHtml;
         }

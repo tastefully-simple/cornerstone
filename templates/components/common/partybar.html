@@ -1,9 +1,14 @@
 {{!-- Find a Party bar --}}
 <div class="partybar">
     <div id="partybar-find" class="partybar-container">
-        <button type="button" class="partybar-button partybar-main-text"> Find a Party or Fundraiser </button>
-        <span class="fa fa-caret-right" aria-hidden="true"></span>
+        <button type="button" class="partybar-main-text">Find a Party or Fundraiser</button>
+        <span class="fa fa-caret-right partybar-arrow" aria-hidden="true"></span>
     </div>
+    {{!--
+        TST-436
+        * Items in partybar-accordion are manipulated in
+          the find-party.js script
+    --}}
     <div class="partybar-accordion">
         <div class="pbaccordion-partyselected">
             <div class="partybar-button">

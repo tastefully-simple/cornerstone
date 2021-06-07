@@ -28,6 +28,27 @@ export default class TSCartAffiliation {
         }
     }
 
+    template(templatePath) {
+        const template = new Promise((resolve, _reject) => {
+            utils.api.getPage('/', {
+                template: templatePath,
+            }, (err, res) => {
+                if (err) {
+                    console.error(`Error getting ${templatePath} template`);
+                    throw new Error(err);
+                } else {
+                    resolve(res);
+                }
+            });
+        });
+
+        return template;
+    }
+
+    /*
+     * RADIO BUTTON SECTION
+     */
+
     applyAffiliationOptionsTemplates($wrapper) {
         this.template('cart/ts-affiliation-options').then(template => {
             $wrapper.append(template);
@@ -42,9 +63,13 @@ export default class TSCartAffiliation {
             const partyTooltipParent = '#ts-affiliate-cart-form label:nth-child(1)';
             const partyTooltip = partyTooltipParent + ' .tooltip-center';
             const partyTooltipIcon = partyTooltipParent + ' .icon-system-info';
+            const partyTooltipText =
+                `What is a party? Tastefully Simple parties and fundraisers reward
+                hosts of $200+ events with free products. Help us ensure your host
+                gets credit for your order.`;
 
             $(partyTooltipParent).append(partyTooltipHtml);
-            $(partyTooltip + ' p').text('What is a party? Tastefully Simple parties and fundraisers reward hosts of $200+ events with free products. Help us ensure your host gets credit for your order.');
+            $(partyTooltip + ' p').text(partyTooltipText);
             $(partyTooltip).attr('id', 'partyTooltip');
             $(partyTooltipIcon).attr('data-dropdown', 'partyTooltip');
         }),
@@ -52,9 +77,13 @@ export default class TSCartAffiliation {
             const consultantTooltipParent = '#ts-affiliate-cart-form label:nth-child(3)';
             const consultantTooltip = consultantTooltipParent + ' .tooltip-center';
             const consultantTooltipIcon = consultantTooltipParent + ' .icon-system-info';
+            const consultantTooltipText =
+                `What is a consultant? Our consultants are independent business owners
+                who help you decide what\'s to eat! Help us ensure your consultant
+                receives their commission or credit.`;
 
             $(consultantTooltipParent).append(consultantTooltipHtml);
-            $(consultantTooltip + ' p').text('What is a consultant? Our consultants are independent business owners who help you decide what\'s to eat! Help us ensure your consultant receives their commission or credit.');
+            $(consultantTooltip + ' p').text(consultantTooltipText);
             $(consultantTooltip).attr('id', 'consultantTooltip');
             $(consultantTooltipIcon).attr('data-dropdown', 'consultantTooltip');
             this.selectionLogic();
@@ -96,22 +125,9 @@ export default class TSCartAffiliation {
       });
     }
 
-    template(templatePath) {
-        const template = new Promise((resolve, _reject) => {
-            utils.api.getPage('/', {
-                template: templatePath,
-            }, (err, res) => {
-                if (err) {
-                    console.error(`Error getting ${templatePath} template`);
-                    throw new Error(err);
-                } else {
-                    resolve(res);
-                }
-            });
-        });
-
-        return template;
-    }
+    /*
+     * SELECTED AFFILIATION SECTION
+     */
 
     renderSelectedAffiliation() {
         this.selectedConsultant = {
@@ -180,6 +196,8 @@ export default class TSCartAffiliation {
             </div>`;
 
         $('.cart-affiliate-party-state').html(html);
+        $(this.checkoutButton).html('check out');
+        $(this.checkoutButton).removeAttr('onclick');
     }
 
     // Scenario 2
@@ -194,6 +212,8 @@ export default class TSCartAffiliation {
             </div>`;
 
         $('.cart-affiliate-party-state').html(html);
+        $(this.checkoutButton).html('check out');
+        $(this.checkoutButton).removeAttr('onclick');
     }
 
     // Scenario 3
@@ -211,5 +231,7 @@ export default class TSCartAffiliation {
     // Scenario 4
     noOpenParties() {
         $('.cart-affiliate-party-state').text('');
+        $(this.checkoutButton).html('check out');
+        $(this.checkoutButton).removeAttr('onclick');
     }
 }

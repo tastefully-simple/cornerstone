@@ -265,7 +265,7 @@ class FindAConsultant {
     }
 
     displayError(err) {
-        $('.alertbox-error span').text(err);
+        $('.alertbox-error span').html(err);
         $('.alertbox-error').show();
     }
 
@@ -587,24 +587,18 @@ class FindAConsultant {
     }
 
     renderNoResults() {
-        this.displayError('No consultant was found.'
-            + ' Search again or shop directly with Tastefully Simple, Inc.');
-
-        $('#consultant-search .genmodal-body')
-            .append(this.getNoResultsFooterHtml());
+      $.when(this.displayError('<strong>No consultant was found.</strong><br>'
+          + ' Revise your search or shop directly with Tastefully Simple.'))
+        .then( () => {
+            this.displayNoResultsButton();
+        });
     }
 
-    getNoResultsFooterHtml() {
-        const $parent = $('#consultant-search');
-
-        // If no footer (i.e. "Shop with TST" button) is found, then return one
-        if ($parent.find('.findmodal-footer').length === 0) {
-            const $footerHtml = $('<div>', { class: 'findmodal-footer' });
-            const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary-icon' });
-            $tSimpleBtn.text('Shop with Tastefully Simple');
-            $footerHtml.append($tSimpleBtn);
-            return $footerHtml;
-        }
+    displayNoResultsButton() {
+        const $errorWrapper = $('#consultant-search .alertbox-error p');
+        const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary-icon' });
+        $tSimpleBtn.text('Shop with Tastefully Simple');
+        $errorWrapper.append($tSimpleBtn);
     }
 
     renderConsultantParties() {

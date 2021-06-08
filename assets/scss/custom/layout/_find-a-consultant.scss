@@ -6,6 +6,21 @@
     #consultant-search {
         .genmodal-body {
             max-height:500px;
+            .alertbox-error {
+                text-align: center;
+                p {
+                    text-align: center;
+                    flex-direction: column;
+                    font-size: 14px;
+                    display: flex;
+                    #no-consultants-continue {
+                        padding: 5px;
+                        width: 100%;
+                        height: fit-content;
+                        align-self: center;
+                    }
+                }
+            }
             .buy-wide-card {
                 padding: 0.5rem;
                 .simple-dropdown,
@@ -182,6 +197,13 @@
                 }
             }
             #consultant-search {
+                .alertbox-error {
+                    text-align: left;
+                    p {
+                        text-align: left;
+                        flex-direction: row;
+                    }
+                }
                 .genmodal-body .buy-wide-card {
                     .form-title {
                         margin: 0;

@@ -56,7 +56,7 @@ class FindAConsultant {
         };
     }
 
-    saveCookie(consultant) {
+    saveCookies(consultant) {
         TSCookie.setConsultantId(consultant.id);
         TSCookie.setConsultantName(consultant.name);
         TSCookie.setConsultantImage(consultant.image);
@@ -64,7 +64,7 @@ class FindAConsultant {
     }
 
     isExternalConsultant() {
-        return this.consultant.id
+        return TSCookie.getConsultantId()
             && this.consultant.id !== TST_CONSULTANT_ID;
     }
 
@@ -423,16 +423,18 @@ class FindAConsultant {
     }
 
     continue(consultant) {
-        this.saveCookie(consultant);
         this.setConsultant(consultant);
 
         if (consultant.hasOpenParty) {
             this.renderConsultantParties();
         } else if (this.isOnCartPage() && !this.consultant.hasOpenParty) {
+            this.saveCookies(consultant);
             window.location = CART_PAGE;
         } else if (this.isOnConsultantPage() && !this.consultant.hasOpenParty) {
+            this.saveCookies(consultant);
             window.location = CONSULTANT_PAGE;
         } else {
+            this.saveCookies(consultant);
             this.modal.close();
         }
     }
@@ -517,28 +519,6 @@ class FindAConsultant {
             this.$findConsultant.innerHTML = this.consultantInfoHtml();
         } else {
             this.$findConsultant.innerHTML = this.defaultConsultantHtml;
-        }
-    }
-
-    renderConsultantInCart() {
-        const $consultantImg = $('.cart-affiliate-img');
-
-        if (this.isExternalConsultant()) {
-            $('.cart-affiliate').css('height', 'initial');
-            $consultantImg.css('display', 'initial');
-            $consultantImg.attr('alt', `Photograph thumbnail of ${this.consultant.name}`);
-            if (this.consultant.image) {
-                $consultantImg.attr('src', this.consultant.image);
-            }
-        } else {
-            $('.cart-affiliate').css('height', '83px');
-            $consultantImg.css('display', 'none');
-        }
-
-        $('.cart-affiliate-info .cart-affiliate-name').html(this.consultant.name);
-
-        if (!this.consultant.hasOpenParty) {
-            window.location = CART_PAGE;
         }
     }
 

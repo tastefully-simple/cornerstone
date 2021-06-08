@@ -96,6 +96,7 @@ export default class ConsultantParties {
             // Update green party bar text
             this.updatePartyBarText(party.host);
 
+            this.saveConsultantCookies(this.consultant);
             this.savePartyCookies(party);
         } else {
             // To account for user not choosing to
@@ -122,6 +123,13 @@ export default class ConsultantParties {
         TSCookie.setConsultantId(party.cid);
         TSCookie.setConsultantName(party.cname);
         TSCookie.setConsultantImage(party.cimg);
+    }
+
+    saveConsultantCookies(consultant) {
+        TSCookie.setConsultantId(consultant.id);
+        TSCookie.setConsultantName(consultant.name);
+        TSCookie.setConsultantImage(consultant.image);
+        TSCookie.setConsultantHasOpenParty(consultant.hasOpenParty);
     }
 
     showSelectedPartyMessage(host) {

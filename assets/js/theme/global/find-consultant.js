@@ -587,17 +587,17 @@ class FindAConsultant {
     }
 
     renderNoResults() {
-      $.when(this.displayError('<strong>No consultant was found.</strong><br>'
-          + ' Revise your search or shop directly with Tastefully Simple.'))
-        .then( () => {
-            this.displayNoResultsButton();
-        });
+        $.when(this.displayError('<strong>No consultant was found.</strong><br>'
+            + ' Revise your search or shop directly with Tastefully Simple.'))
+            .then(() => {
+                this.displayNoResultsButton();
+            });
     }
 
     displayNoResultsButton() {
         const $errorWrapper = $('#consultant-search .alertbox-error p');
-        const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary-icon' });
-        $tSimpleBtn.text('Shop with Tastefully Simple');
+        const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary' });
+        $tSimpleBtn.text('shop with tastefully simple');
         $errorWrapper.append($tSimpleBtn);
     }
 

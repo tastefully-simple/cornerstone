@@ -23,6 +23,7 @@
                     <div>
                         <dd><img src="{{cdn 'assets/img/colors/color-container-lightburgundy@2x.png'}}" alt="Light Burgundy"/></dd>
                         <dd><img src="{{cdn 'assets/img/colors/color-container-burgundy@2x.png'}}" alt="Burgundy"/></dd>
+                        <dd><img src="{{cdn 'assets/img/colors/color-container-butterscotch@2x.png'}}" alt="Butterscotch"/></dd>
                         <dd><img src="{{cdn 'assets/img/colors/color-container-grape@2x.png'}}" alt="Grape"/></dd>
                         <dd><img src="{{cdn 'assets/img/colors/color-container-caramel@2x.png'}}" alt="Caramel"/></dd>
                         <dd><img src="{{cdn 'assets/img/colors/color-container-cream@2x.png'}}" alt="Cream"/></dd>
@@ -149,8 +150,8 @@
                 </ul>
                 <ul>
                     <li>
-                        <span class="frame-text">Body: Muli 16 Regular</span>
-                        <p class="guide-label">class: frame-text</p>
+                        <span class="frametext">Body: Muli 16 Regular</span>
+                        <p class="guide-label">class: frametext</p>
                     </li>
                     <li>
                         <span class="frame-subhead">Subheading: Muli 14 Regular</span>
@@ -421,6 +422,15 @@
                         <span class="guide-label">Disabled</span>
                         <button class="button-alternate" disabled>sign up to host</button>
                     </div>
+                    <div>
+                        <span class="guide-label">With Icon</span>
+                        <button class="button-alternate-icon">sign up to host</button>
+                        <p class="guide-label">class: button-alternate-icon</p>
+                    </div>
+                    <div>
+                        <span class="guide-label">Cancel</span>
+                        <button class="button-cancel">cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -481,13 +491,16 @@
         <div class="style-item style-radiochecks">
             <h2 class="burgundy-text">Radio Button & Checkboxes</h2>
             <div class="styleitem-content">
-                <div class="styleradio-item">
+                <div class="styleradio-item burgundy-radio">
                     <label class="tick-enabled">
-                        <input type="radio" id="radio-active-demo" name="radio-active-demo" value="Active" checked/> Active
+                        <input type="radio" id="radio-active-demo" name="radio-demo" value="Active" checked/>
+                        <span class="frametext">Active</span>
                     </label>
                     <label class="tick-enabled">
-                        <input type="radio" id="radio-inactive-demo" name="radio-inactive-demo" value="Inactive"/> Inactive
+                        <input type="radio" id="radio-inactive-demo" name="radio-demo" value="Inactive"/>
+                        <span class="frametext">Inactive</span>
                     </label>
+                    <span class="guide-label">outer class: burgundy-radio</span>
                     <span class="guide-label">label class: tick-enabled</span>
                 </div>
                 <div class="styleradio-item">
@@ -541,6 +554,19 @@
                 </div>
                 <div class="styletooltip-item">
                     <div class="tooltip-left">
+                        <div>
+                            <span class="close-tooltip">x</span>
+                            <p>Do you have a consultant you order from? Add your consultant here.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span class="guide-label">Right</span>
+                    <span class="guide-label">outer class: tooltip-right</span>
+                    <span class="guide-label">close class: close-tooltip</span>
+                </div>
+                <div class="styletooltip-item">
+                    <div class="tooltip-right">
                         <div>
                             <span class="close-tooltip">x</span>
                             <p>Do you have a consultant you order from? Add your consultant here.</p>

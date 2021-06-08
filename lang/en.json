@@ -49,7 +49,7 @@
         "multiple": "check out with multiple addresses",
         "or": "or"
       },
-      "button": "Check out",
+      "button": "Select Option Above To Checkout",
       "empty_cart": "Your cart is empty",
       "title": "Click here to proceed to checkout",
       "item": "Item",
@@ -975,6 +975,17 @@
       "thank_you_customer_heading": "Thank you {name}!",
       "thank_you_heading": "Thank you!",
       "order_status_update_facebook_messenger_heading": "Get instant updates of your order to Messenger"
+    }
+  },
+  "ts_affiliation": {
+    "party_modal": {
+      "search_title": "find a party or fundraiser",
+      "results_title": "choose your party"
+    },
+    "consultant_modal": {
+      "search_title": "find your consultant",
+      "results_title": "choose a consultant",
+      "parties_title": "your consultant's parties"
     }
   }
 }

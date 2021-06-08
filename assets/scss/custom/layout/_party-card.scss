@@ -1,0 +1,17 @@
+// =============================================================================
+// Tastefully Simple - Party Card
+// =============================================================================
+
+.party-card {
+    .party-info .party-info-row {
+        display: flex;
+        align-items: center;
+        p {
+            margin: 0;
+        }
+        .party-name {
+            margin-bottom: 5px;
+            width: 50%;
+        }
+    }
+}

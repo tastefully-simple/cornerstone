@@ -72,6 +72,15 @@ export default class TSApi {
         });
     }
 
+    getPartiesByConsultant(cid, page, size) {
+        const uri = `/search/party-list/${cid}/${page}/${size}`;
+
+        return fetch(this.fullUrl(uri), {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+        });
+    }
+
 
     /*
      * Find a Party

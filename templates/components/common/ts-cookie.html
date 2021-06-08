@@ -40,6 +40,15 @@
                 return Cookies.get('name');
             },
 
+            // Consultant Has Open Party?
+            setConsultantHasOpenParty: function(copenparty) {
+                Cookies.set('copenparty', copenparty, { domain: cookieDomain });
+            },
+
+            getConsultantHasOpenParty: function() {
+                return Cookies.get('copenparty');
+            },
+
             // Party Id
             setPartyId: function(pid) {
                 Cookies.set('pid', pid, { domain: cookieDomain });
@@ -99,6 +108,7 @@
                 Cookies.remove('name', { domain: cookieDomain});
                 Cookies.remove('cimg', { domain: cookieDomain});
                 Cookies.remove('afid', { domain: cookieDomain});
+                Cookies.remove('copenparty', { domain: cookieDomain});
             },
 
             deleteOldAffiliation: function() {

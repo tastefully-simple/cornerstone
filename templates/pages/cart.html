@@ -24,11 +24,16 @@ cart: true
                 {{> components/cart/totals}}
             </div>
 
+            {{!-- TST-426 --}}
+            {{> components/cart/ts-affiliation}}
+
             {{{region name="cart_below_totals"}}}
 
             {{#if cart.show_primary_checkout_button}}
                 <div class="cart-actions cart-content-padding-right">
-                    <a class="button button--primary" href="{{urls.checkout.single_address}}" title="{{lang 'cart.checkout.title'}}">{{lang 'cart.checkout.button'}}</a>
+                    {{!-- TST-427 Start --}}
+                    <a class="button button--primary" href="{{urls.checkout.single_address}}" title="{{lang 'cart.checkout.title'}}" onclick="return false;">{{lang 'cart.checkout.button'}}</a>
+                    {{!-- TST-427 End --}}
                     {{#if cart.show_multiple_address_shipping}}
                         <a class="checkoutMultiple" href="{{urls.checkout.multiple_address}}">
                             {{lang 'cart.preview.checkout_multiple'}}
@@ -56,9 +61,10 @@ cart: true
         {{/if}}
         {{!-- TST-264 Check user last login date API --}}
         <input type="hidden" class="customer-email" value="{{customer.email}}" />
+
+        {{> components/cart/modals/find-affiliate}}
     </main>
 
-    {{> components/cart/modals/find-affiliate}}
 
 </div>
 {{/partial}}

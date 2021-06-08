@@ -8,6 +8,7 @@
 // Primary
 $brown: #4c3723;
 $burgundy: #610b31;
+$butterscotch: #ddcda6;
 $caramel: #b46c20;
 $cream: #f0ebdf;
 $grape: #720f4b;
@@ -47,6 +48,9 @@ $utility-success: #d5ffd8;
 }
 .burgundy-text{
     color: $burgundy;
+}
+.butterscotch-text{
+    color: $butterscotch;
 }
 .caramel-text{
     color: $caramel;
@@ -120,6 +124,9 @@ $utility-success: #d5ffd8;
 }
 .burgundy-background{
     background-color: $burgundy;
+}
+.butterscotch-background{
+    background-color: $butterscotch;
 }
 .caramel-background{
     background-color: $caramel;
@@ -231,6 +238,9 @@ a,
     text-transform:unset;
     @extend .frametext-semibold;
 }
+.frame-subhead {
+    font-size:14px;
+}
 .framelink-xl{
     @extend .frametext-black;
 }
@@ -321,7 +331,25 @@ footer{
         border-color:$green-hover;
     }
 }
+.button-alternate-icon{
+    @extend .button-alternate;
+    &::after{
+        content:"\f105";
+        font-family:"FontAwesome";
+        margin-left:10px;
+    }
+}
 
+.button-cancel{
+    background-color:$white;
+    border-color:$green-apple;
+    color:$green-apple;
+    @extend .button-primary;
+    &:hover{
+        background-color:$green-apple;
+        border-color:$green-apple;
+    }
+}
 
 // Icons
 // -----------------------------------------------------------------------------
@@ -559,6 +587,30 @@ input{
         width:15px;
     }
 }
+.burgundy-radio {
+    label {
+        &> input[type="radio"] {
+            display: none;
+            &+ *::before {
+                background-color: $white;
+                border-radius: 50%;
+                border:0.01rem solid $burgundy;
+                content: "";
+                display: inline-block;
+                height: 1rem;
+                margin-right: 0.3rem;
+                vertical-align: bottom;
+                width: 1rem;
+            }
+            &:checked {
+                &+ *::before {
+                  background: radial-gradient($burgundy 0%, $burgundy 40%, transparent 50%, transparent);
+                  border-color: $burgundy;
+                }
+            }
+        }
+    }
+}
 label{
     &>span{
         font-weight:700;
@@ -673,6 +725,17 @@ textarea{
     @extend .tooltip-general;
     &::before{
         left:5%;
+        @extend .tooltip-arrow::before;
+    }
+    &>div{
+        @extend .tooltip-inner;
+    }
+}
+.tooltip-right{
+    width:300px;
+    @extend .tooltip-general;
+    &::before{
+        right:5%;
         @extend .tooltip-arrow::before;
     }
     &>div{
@@ -857,7 +920,7 @@ table{
 // Cards
 // -----------------------------------------------------------------------------
 .grid-card{
-    padding:0 10px 20px;
+    padding:0 10px;
     margin:auto;
     width:300px;
     @include card-dropshadow();
@@ -887,11 +950,16 @@ table{
 }
 .buy-wide-card{
     align-items:center;
+    background-color: $color-white;
+    border-radius: 5px;
     display:flex;
     flex-direction:row;
     justify-content:space-between;
+    padding:.25rem .5rem;
     width:auto;
-    @extend .grid-card;
+    .result-card {
+        @extend .grid-card;
+    }
     .card-info{
         align-items:center;
         display:flex;

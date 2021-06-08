@@ -1,6 +1,8 @@
+{{!-- Party Search Modal --}}
+
 <div class="modal-general-alternate" id="party-search">
     <div class="genmodal-header">
-        <h2>find a host or party</h2>
+      <h2>{{ lang 'ts_affiliation.party_modal.search_title' }}</h2>
         <button type="button"  class="modal-close" aria-label="Close" role="button">
             <span aria-hidden="true" class="close-modal-alternate"></span>
         </button>
@@ -23,7 +25,7 @@
                     </div>
                 </div>
                 <div class="card-form">
-                    <label class="input-label">
+                    <label class="input-label last-selector">
                         <span class="system-12">Search host or fundraiser name (optional)</span>
                         <input type="text">
                     </label>
@@ -34,15 +36,29 @@
             </article>
         </form>
     </div>
+    <div class="genmodal-footer">
+        <button class="button-cancel partymodal-cancel-btn" type="button">cancel</button>
+    </div>
 </div>
+
+{{!-- Party Search Result Modal --}}
+
 <div class="modal-general-alternate modal-results" id="party-search-results">
     <div class="genmodal-header">
-        <h2>choose your party</h2>
+        <h2>{{ lang 'ts_affiliation.party_modal.results_title' }}</h2>
         <a href="#" class="modal-close" aria-label="Close" role="button">
             <span aria-hidden="true" class="close-modal-alternate"></span>
         </a>
     </div>
     <div class="genmodal-body">
+        <div class="search-filter-wrapper">
+            <div class="return-search">
+                <div class="vertical-center">
+                    <i class="fas fa-caret-left"></i>
+                </div>
+                <button class="subhead-14 return-search-text">Refine your search</button>
+            </div>
+        </div>
         <article class="buy-wide-card"></article>
         <div class="alertbox-error">
             <h2 class="alert-title">Error</h2>
@@ -54,7 +70,8 @@
     <div class="findmodal-footer">
         <div class="next-step-wrapper">
             <p class="next-step-selected-text system-14"></p>
-            <button class="next-step-continue-btn button-secondary-icon" id="party-continue">
+            <button class="button-cancel partymodal-cancel-btn" type="button">cancel</button>
+            <button class="next-step-continue-btn button-alternate-icon" id="party-continue">
                 continue
             </button>
             <button class="button-primary" id="party-goback">go back</button>

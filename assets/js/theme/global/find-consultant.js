@@ -6,6 +6,7 @@ import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
 import ConsultantCard from '../common/consultant-card';
 import ConsultantParties from '../common/consultant-parties';
+import TSRemoveAffiliation from '../common/ts-remove-affiliation';
 
 // Consultants
 const TST_CONSULTANT_ID = '0160785';
@@ -37,6 +38,7 @@ class FindAConsultant {
         this.pageSize = 10;
         this.screenMinWidth = 801;
         this.api = new TSApi();
+        this.removeAffiliation = new TSRemoveAffiliation();
 
         // TST-443 Delete old affiliation cookies
         TSCookie.deleteOldAffiliation();
@@ -75,32 +77,69 @@ class FindAConsultant {
                 && this.consultant.id !== TST_CONSULTANT_ID
                 && e.target.tagName !== 'SMALL'
                 && !$(e.target).hasClass('consultant-edit')
+                && !$(e.target).hasClass('consultant-remove')
             ) {
                 window.location = CONSULTANT_PAGE;
+            } else if ($(e.target).hasClass('consultant-remove')) {
+                this.removeAffiliation.openAlert();
             } else {
                 this.createModal(e, this.modalTemplate);
             }
         });
 
         // Consultant edit button in cart page
-        $('body').on('click', '.cart-affiliate-btn.consultant-edit', (e) => this.createModal(e, this.modalTemplate));
+        $('body').on(
+            'click',
+            '.cart-affiliate-btn.consultant-edit',
+            (e) => this.createModal(e, this.modalTemplate),
+        );
+
+        // Consultant remove button in cart page
+        $('body').on(
+            'click',
+            '.cart-affiliate-btn.consultant-remove',
+            () => this.removeAffiliation.openAlert(),
+        );
+
+        $('body').on(
+            'click',
+            '#consultantparties-search-results .consultant-remove',
+            () => this.removeAffiliation.openAlert(),
+        );
 
         // Open consultant parties modal
-        $('body').on('click', '.view-consultant-parties', (e) => this.openConsultantParties(e));
+        $('body').on(
+            'click',
+            '.view-consultant-parties',
+            (e) => this.openConsultantParties(e),
+        );
 
         // Trigger modal when the modaltrigger-consult class is present
-        $('.modaltrigger-consult').on('click', (e) => this.createModal(e, this.modalTemplate));
+        $('.modaltrigger-consult').on(
+            'click',
+            (e) => this.createModal(e, this.modalTemplate),
+        );
 
-        // TS affiliate cart page  
-        $('body.cart #page-wrapper').on('change', '#tsacf-findconsultant', (e) => {
-            this.createModal(e, this.modalTemplate);
-        });
+        // TS affiliate cart page
+        $('body.cart #page-wrapper').on(
+            'change',
+            '#tsacf-findconsultant',
+            (e) => this.createModal(e, this.modalTemplate),
+        );
 
         // Return
-        $('body').on('click', '.search-filter-wrapper .return-search', this.returnSearch.bind(this));
+        $('body').on(
+            'click',
+            '.search-filter-wrapper .return-search',
+            this.returnSearch.bind(this),
+        );
 
         // Go back to search when editing consultant in consultant parties modal
-        $('body').on('click', '#consultantparties-search-results .consultant-edit', this.returnSearch.bind(this));
+        $('body').on(
+            'click',
+            '#consultantparties-search-results .consultant-edit',
+            this.returnSearch.bind(this),
+        );
 
         // Search by ZIP
         $('body').on('submit', '#zipcode-search-form', () => {
@@ -165,7 +204,7 @@ class FindAConsultant {
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
-          if (err) {
+            if (err) {
                 console.error('Failed to get common/find-consultant. Error:', err);
                 return false;
             } else if (res) {

@@ -13,7 +13,6 @@ const SCREEN_MIN_WIDTH = 801;
 const DISPLAY_NUM_PAGES = 6;
 const PAGE_SIZE = 10;
 // Redirect
-const PARTY_DETAILS_PAGE = '/party-details';
 const CART_PAGE = '/cart.php';
 // API error message
 const API_ERROR_MESSAGE = {
@@ -210,29 +209,35 @@ class FindAParty {
                     <p class="subhead-14">
                         <button type="button" class="view-all-parties">edit</button>
                         <span class="white-text">&verbar;</span>
-                        <button type="button">remove party</button>
+                        <button type="button" class="remove-party">remove party</button>
                     </p>
                 </div>
             </div>`;
 
         $('.partybar-accordion').html(html);
 
-        // View party button
+        // View party
         const $viewPartyButton = this.$findPartyBar.find('.partybar-accordion-items .view-party');
         $viewPartyButton.on('click', () => {
             window.location.href = `/p/${this.party.id}`;
         });
 
         // Copy Party URL to clipboard
-        const $copyPartyUrl = this.$findPartyBar.find('.partybar-accordion-items .copy-party-link')
+        const $copyPartyUrl = this.$findPartyBar.find('.partybar-accordion-items .copy-party-link');
         $copyPartyUrl.on('click', () => {
-            console.log('this.party', this.party);
             copyToClipboard(`${window.location.host}/p/${this.party.id}`);
             $copyPartyUrl.append('<i class="fas fa-check copied"></i>');
 
             setTimeout(() => {
                 $('.copy-party-link .copied').remove();
             }, 5000);
+        });
+
+        // Remove party
+        const $removeParty = this.$findPartyBar.find('.partybar-accordion-items .remove-party');
+        $removeParty.on('click', () => {
+            TSCookie.deleteParty();
+            window.location.reload();
         });
     }
 
@@ -256,11 +261,11 @@ class FindAParty {
     partyGreeting(hostname) {
         if (hostname) {
             return `<span><strong>${hostname}</strong> is my host</span>`;
-        } else if (TSCookie.getPartyId() == 'null') {
+        } else if (TSCookie.getPartyId() === 'null') {
             return `<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`;
-        } else {
-            return 'Find a Party or Fundraiser';
         }
+
+        return 'Find a Party or Fundraiser';
     }
 
     modalLoaded(result) {
@@ -389,12 +394,16 @@ class FindAParty {
         if (this.isDesktop() && this.isOnCartPage()) {
             // Hide party bar in desktop (cart page only)
             $party.hide();
-        } else  {
+        } else {
             $party.show();
             $party.css('background-color', appleGreen);
 
             // Show party bar in desktop or mobile
-            this.isDesktop() ? $('header.header').append($party) : $navPages.append($party);
+            if (this.isDesktop()) {
+                $('header.header').append($party);
+            } else {
+                $navPages.append($party);
+            }
         }
     }
 
@@ -423,21 +432,6 @@ class FindAParty {
         $('.party-card').remove();
         $('.findmodal-pagination-container').remove();
         $('.matching').remove();
-    }
-
-    deletePartyCookies() {
-        if (this.isOnPartyDetailsPage()) {
-            document.location = PARTY_DETAILS_PAGE;
-        }
-
-        if (this.isOnCartPage()) {
-            document.location = CART_PAGE;
-        }
-
-        const $partyBarText = $('#partybar-find .partybar-text');
-        $partyBarText.text('Find a Party or Fundraiser');
-
-        TSCookie.deleteParty();
     }
 
     /*

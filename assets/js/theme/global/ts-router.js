@@ -76,6 +76,7 @@ export default class TSRouter {
                                 TSCookie.setConsultantId(party.ConsultantId);
                                 TSCookie.setConsultantName(party.ConsultantName);
                                 TSCookie.setConsultantImage(party.Image);
+                                TSCookie.setConsultantHasOpenParty(true);
                                 this.setPartyCookies(party);
 
                                 localStorage.setItem('partyDetails', JSON.stringify(party));
@@ -110,6 +111,7 @@ export default class TSRouter {
                     .then(party => {
                         TSCookie.setConsultantId(party.ConsultantId);
                         TSCookie.setConsultantName(party.ConsultantName);
+                        TSCookie.setConsultantHasOpenParty(true);
                         this.setPartyCookies(party);
                         window.location = '/host-planner';
                     })
@@ -177,6 +179,7 @@ export default class TSRouter {
                     const cname = `${data.FirstName} ${data.LastName}`;
                     TSCookie.setConsultantName(cname);
                     TSCookie.setConsultantId(data.ConsultantId);
+                    TSCookie.setConsultantHasOpenParty(data.HasOpenParty);
                     this.deletePartyCookies();
                 })
                 .catch(err => {

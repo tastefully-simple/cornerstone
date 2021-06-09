@@ -985,7 +985,8 @@
     "consultant_modal": {
       "search_title": "find your consultant",
       "results_title": "choose a consultant",
-      "parties_title": "your consultant's parties"
+      "parties_title": "your consultant's parties",
+      "parties_caption": "Are you shopping with a party or fundraiser? Make sure your host gets credit for your order."
     }
   }
 }

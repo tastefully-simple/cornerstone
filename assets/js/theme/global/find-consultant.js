@@ -382,9 +382,11 @@ class FindAConsultant {
             this.selectedId = $consultantCard.data('cid');
             $('#consultant-search-results .selected').toggleClass('selected');
             $consultantCard.find('.consultant-header').hide();
+            $('#consultant-continue').attr('disabled', false);
         } else {
             $consultantCard.find('.consultant-header').show();
             this.selectedId = null;
+            $('#consultant-continue').attr('disabled', true);
         }
 
         $(e.target).closest('.consultant-card').toggleClass('selected');

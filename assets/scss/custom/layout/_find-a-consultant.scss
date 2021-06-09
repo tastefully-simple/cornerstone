@@ -93,14 +93,15 @@
             align-items: center;
 
             .consultant-image img {
-                max-height: 55px;
+                max-height: 35px;
             }
 
             .consultant-text {
+                font-size: 10px;
                 padding-left: 1rem;
 
                 p {
-                    margin-bottom: 5px;
+                    margin-bottom: 0;
                 }
 
                 .consultant-name {
@@ -124,7 +125,7 @@
                 width:100%;
                 .party-info {
                     .party-name {
-                        margin-top:0;
+                        margin:0;
                     }
                 }
             }

@@ -12,9 +12,9 @@
                 <img src="{consultant-imagesrc}" onerror="this.onerror=null;this.src='https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png';">
             </div>
             <div class="consultant-info-col consultant-text">
-                <p class="frame-caption consultant-name"></p>
+                <p class="consultant-name"></p>
                 <div class="consultant-info-control">
-                    <p class="frame-caption">
+                    <p>
                         is my consultant
                         <strong class="teal-text">
                             <span class="consultant-edit">edit</span> |
@@ -25,18 +25,18 @@
             </div>
         </div>
         <div class="consultantparties-caption">
-            <p class="system-14">Are you shopping with a party or fundraiser? Make sure your host gets credit for your order.</p>
+            <p class="system-12">{{ lang 'ts_affiliation.consultant_modal.parties_caption' }}</p>
         </div>
         <article class="buy-wide-card">
             <div class="party-card result-card default-party-card selected">
                 <div class="party-header">
-                    <span class="fas fa-circle"></span>
+                    <span class="ts-circle"></span>
                     <div class="vertical-center">
                         <span class="frame-caption selection-title">Select</span>
                     </div>
                 </div>
                 <div class="selected-header">
-                     <span class="fas fa-circle"></span>
+                     <span class="ts-circle"></span>
                      </span>
                      <div class="vertical-center">
                          <span class="frame-caption selection-title">Selected</span>
@@ -44,7 +44,7 @@
                  </div>
 
                 <div class="party-info">
-                    <p class="subhead-16 party-name">Shop without a party or fundraiser</p>
+                    <p class="subhead-14 party-name">Shop without a party or fundraiser</p>
                 </div>
             </div>
         </article>
@@ -57,7 +57,7 @@
     </div>
     <div class="findmodal-footer">
         <div class="next-step-wrapper">
-            <p class="next-step-selected-text system-14">I'm shopping without a party or fundraiser</p>
+            <p class="next-step-selected-text system-12">I'm shopping without a party or fundraiser</p>
             <button class="button-cancel consultantmodal-cancel-btn" type="button">cancel</button>
             <button class="next-step-continue-btn button-alternate-icon" id="consultantparties-continue">
                 continue

@@ -56,8 +56,11 @@ export default class TSCartAffiliation {
             },
             this.template('common/alert-error').then(noSelectionErrorHtml => {
                 const errorBoxMessage = '.ts-cart-affiliation-wrapper .alert-message span';
+                const errorBoxTitle = '.ts-cart-affiliation-wrapper .alert-title';
 
                 $('.ts-cart-affiliation-wrapper').prepend(noSelectionErrorHtml);
+                $(errorBoxMessage).text('A selection is required before you proceed');
+                $(errorBoxTitle).text('Selection Required');
                 $(errorBoxMessage).text('A selection is required before you proceed');
             }),
             this.template('common/tooltip-square').then(partyTooltipHtml => {

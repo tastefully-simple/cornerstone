@@ -90,6 +90,7 @@ class FindAParty {
         // TS affiliate cart page
         $('body.cart #page-wrapper').on('change', '#tsacf-findparty', (e) => {
             this.createModal(e, this.modalTemplate);
+            $(e.target).prop('checked', false);
         });
 
         // Search by State / Name

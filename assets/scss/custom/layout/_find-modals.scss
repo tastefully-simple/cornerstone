@@ -243,6 +243,10 @@
                             color: $green-apple;
                         }
                     }
+                    .next-step-continue-btn[disabled] {
+                        background-color: $green-apple;
+                        opacity: 0.5;
+                    }
                 }
             }
         }

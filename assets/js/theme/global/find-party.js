@@ -327,13 +327,16 @@ class FindAParty {
         const $partyCard = $(e.target).closest('.party-card');
 
         $('.party-header').show();
+
         if (!$partyCard.hasClass('selected')) {
             this.selectedId = $partyCard.data('pid');
             $('.selected').toggleClass('selected');
             $partyCard.find('.party-header').hide();
+            $('#party-continue').attr('disabled', false);
         } else {
             this.selectedId = null;
             $partyCard.find('.party-header').show();
+            $('#party-continue').attr('disabled', true);
         }
 
         $(e.target).closest('.party-card').toggleClass('selected');

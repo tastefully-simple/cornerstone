@@ -201,6 +201,7 @@ class FindAConsultant {
     createModal(e, template) {
         $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
+        e.preventDefault();
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {

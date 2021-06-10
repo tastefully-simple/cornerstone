@@ -306,7 +306,7 @@ footer{
     background-color:$teal;
     border-color:$teal;
     @extend .button-primary;
-    &:hover{
+    &:not([disabled])&:hover{
         background-color:$teal-hover;
         border-color:$teal-hover;
     }
@@ -326,7 +326,15 @@ footer{
     background-color:$green-apple;
     border-color:$green-apple;
     @extend .button-primary;
-    &:hover{
+    &:not([disabled]):hover{
+        background-color:$green-hover;
+        border-color:$green-hover;
+    }
+}
+[disabled].button-alternate-disabled {
+    @extend .button-alternate;
+    opacity:.5;
+    &:hover {
         background-color:$green-hover;
         border-color:$green-hover;
     }
@@ -338,6 +346,10 @@ footer{
         font-family:"FontAwesome";
         margin-left:10px;
     }
+    &:hover {
+        background-color:$green-hover;
+        border-color:$green-hover;
+    }
 }
 
 .button-cancel{
@@ -345,7 +357,7 @@ footer{
     border-color:$green-apple;
     color:$green-apple;
     @extend .button-primary;
-    &:hover{
+    &:not([disabled]):hover{
         background-color:$green-apple;
         border-color:$green-apple;
     }
@@ -765,6 +777,32 @@ textarea{
 .alertbox-error{
     @extend .alertbox;
     @extend .alertBox--error;
+}
+.alertbox-action {
+    @extend .alertbox-success;
+    .alert-title {
+        align-items:center;
+        display:flex;
+        justify-content:space-between;
+        h2 {
+            color:$utility-green;
+        }
+    }
+    .alert-message {
+        p {
+            margin-bottom:1rem;
+        }
+    }
+    .alert-actions {
+        display:flex;
+        justify-content:flex-end;
+        &>span {
+            @extend .subhead-14;
+            &:not(:last-child) {
+                margin-right:2rem;
+            }
+        }
+    }
 }
 .alertBox--info {
     background-color:$gainsboro;

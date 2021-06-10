@@ -7,11 +7,13 @@
     color: white;
     display: flex;
     flex-basis: 100%;
-    .fa-circle {
-        margin-right: 5px;
-        border: 1px solid $text-gray;
+    .ts-circle {
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
-        padding: 0.2rem;
+        border: 2px solid white;
+        box-shadow: 0 0 0 1px $shady-lady;
+        margin-right: 5px;
     }
     .selection-title {
         color: $text-gray;
@@ -185,8 +187,8 @@
                             margin-bottom: 5px;
                         }
                         .selected-header {
-                            .fa-circle {
-                                color: $teal;
+                            .ts-circle {
+                                background-color: teal;
                             }
                         }
                     }
@@ -217,7 +219,7 @@
 
                     .custom-pagination-item .custom-pagination-link {
                         color: $burgundy;
-                        font-size: 1.2rem;
+                        font-size: 18px;
                     }
                     .custom-pagination-item {
                         text-decoration: underline;
@@ -242,6 +244,10 @@
                         span {
                             color: $green-apple;
                         }
+                    }
+                    .next-step-continue-btn[disabled] {
+                        background-color: $green-apple;
+                        opacity: 0.5;
                     }
                 }
             }

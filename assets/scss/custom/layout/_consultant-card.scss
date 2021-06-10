@@ -37,6 +37,7 @@
             display: flex;
             .icon-system-phone {
                 margin-right: 5px;
+                width: 13.5px;
             }
             span {
                 vertical-align: middle;
@@ -46,10 +47,12 @@
             display: flex;
             .icon-system-envelope {
                 margin-right: 5px;
+                width: 15px;
             }
             span {
                 overflow-wrap: anywhere;
                 vertical-align: middle;
+                font-size: 10px;
             }
         }
         .ts-page-link {

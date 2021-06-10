@@ -84,12 +84,11 @@ class FindAParty {
 
         // View all parties button in cart page
         $('body').on('click', '.view-all-parties', (e) => this.createModal(e, this.modalTemplate));
-        // Continue button in cart page
-        $('body').on('click', '.continue-party-select', (e) => this.createModal(e, this.modalTemplate));
 
         // TS affiliate cart page
         $('body.cart #page-wrapper').on('change', '#tsacf-findparty', (e) => {
             this.createModal(e, this.modalTemplate);
+            $(e.target).prop('checked', false);
         });
 
         // Search by State / Name
@@ -123,6 +122,7 @@ class FindAParty {
     createModal(e, template) {
         $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
+        e.preventDefault();
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
@@ -327,13 +327,16 @@ class FindAParty {
         const $partyCard = $(e.target).closest('.party-card');
 
         $('.party-header').show();
+
         if (!$partyCard.hasClass('selected')) {
             this.selectedId = $partyCard.data('pid');
             $('.selected').toggleClass('selected');
             $partyCard.find('.party-header').hide();
+            $('#party-continue').attr('disabled', false);
         } else {
             this.selectedId = null;
             $partyCard.find('.party-header').show();
+            $('#party-continue').attr('disabled', true);
         }
 
         $(e.target).closest('.party-card').toggleClass('selected');

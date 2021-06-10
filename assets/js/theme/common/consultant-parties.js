@@ -44,6 +44,7 @@ export default class ConsultantParties {
                 this.response.Results.forEach(party => {
                     const $partyHtmlBlock = partyCard.insertPartyData(template, party);
                     this.$parent.find('article').append($partyHtmlBlock);
+                    this.$parent.find('.party-info .consultant-name').remove();
                 });
             });
 

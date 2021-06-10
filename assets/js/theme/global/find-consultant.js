@@ -124,7 +124,10 @@ class FindAConsultant {
         $('body.cart #page-wrapper').on(
             'change',
             '#tsacf-findconsultant',
-            (e) => this.createModal(e, this.modalTemplate),
+            (e) => {
+                this.createModal(e, this.modalTemplate);
+                $(e.target).prop('checked', false);
+            },
         );
 
         // Return
@@ -201,6 +204,7 @@ class FindAConsultant {
     createModal(e, template) {
         $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
+        e.preventDefault();
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
@@ -382,9 +386,11 @@ class FindAConsultant {
             this.selectedId = $consultantCard.data('cid');
             $('#consultant-search-results .selected').toggleClass('selected');
             $consultantCard.find('.consultant-header').hide();
+            $('#consultant-continue').attr('disabled', false);
         } else {
             $consultantCard.find('.consultant-header').show();
             this.selectedId = null;
+            $('#consultant-continue').attr('disabled', true);
         }
 
         $(e.target).closest('.consultant-card').toggleClass('selected');

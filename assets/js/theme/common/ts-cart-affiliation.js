@@ -105,10 +105,10 @@ export default class TSCartAffiliation {
             $(this.noSelectionError).hide();
             if (e.target === document.getElementById('tsacf-shopdirect')) {
                 $(this.checkoutButton).html('check out');
-                $(this.checkoutButton).data('selected', true);
+                $(this.checkoutButton).removeAttr('disabled');
             } else {
                 $(this.checkoutButton).html($(this.checkoutButton).data('originalText'));
-                $(this.checkoutButton).data('selected', false);
+                $(this.checkoutButton).attr('disabled', '');
             }
         });
     }
@@ -116,10 +116,10 @@ export default class TSCartAffiliation {
     bindCheckoutButtonClickEvent() {
         $('#page-wrapper').on('click', '.cart-actions .button--primary', () => {
             const that = this;
-            if ($(this.checkoutButton).data('selected')) {
+            if ($(this.checkoutButton).is(['disabled'])) {
                 window.location.href = $(this.checkoutButton).prop('href');
             }
-            if (!$(this.checkoutButton).data('selected')) {
+            if (!$(this.checkoutButton).is(['disabled'])) {
                 $(that.formWrapper).addClass('error');
                 $(that.formTitle).hide();
                 $(this.noSelectionError).show();

@@ -232,7 +232,7 @@ export default class TSCartAffiliation {
         const $parentCartAction = $('.cart-actions');
         $parentCartAction.find('.button--primary').attr('href', '/checkout').hide();
 
-        const $continueBtn = $('<a>', { class: 'button button--primary continue-party-select' });
+        const $continueBtn = $('<a>', { class: 'button button--primary view-consultant-parties' });
         $continueBtn.text('continue');
         $parentCartAction.prepend($continueBtn);
     }

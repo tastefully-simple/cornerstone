@@ -84,8 +84,6 @@ class FindAParty {
 
         // View all parties button in cart page
         $('body').on('click', '.view-all-parties', (e) => this.createModal(e, this.modalTemplate));
-        // Continue button in cart page
-        $('body').on('click', '.continue-party-select', (e) => this.createModal(e, this.modalTemplate));
 
         // TS affiliate cart page
         $('body.cart #page-wrapper').on('change', '#tsacf-findparty', (e) => {

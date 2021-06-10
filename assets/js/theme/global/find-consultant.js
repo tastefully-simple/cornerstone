@@ -124,10 +124,10 @@ class FindAConsultant {
         $('body.cart #page-wrapper').on(
             'change',
             '#tsacf-findconsultant',
-            (e) => { 
+            (e) => {
                 this.createModal(e, this.modalTemplate);
                 $(e.target).prop('checked', false);
-            }
+            },
         );
 
         // Return

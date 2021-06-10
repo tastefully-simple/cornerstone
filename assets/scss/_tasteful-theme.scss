@@ -796,7 +796,7 @@ textarea{
     .alert-actions {
         display:flex;
         justify-content:flex-end;
-        &>span {
+        &>button {
             @extend .subhead-14;
             &:not(:last-child) {
                 margin-right:2rem;

@@ -25,14 +25,14 @@ export default class TSRemoveAffiliation {
         $alert.html(html);
         $('body').append($alert);
 
-        $($alert).on('click', '.remove-affiliation-cancel', () => {
+        $($alert).on('click', '.alertaction-decline', () => {
             $alert.remove();
         });
         $($alert).on('click', '.close-tooltip', () => {
             $alert.remove();
         });
 
-        $($alert).on('click', '.remove-affiliation-confirm', this.deleteAffiliation);
+        $($alert).on('click', '.alertaction-accept', this.deleteAffiliation);
     }
 
     alertMessage() {

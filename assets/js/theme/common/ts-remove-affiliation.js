@@ -8,16 +8,17 @@ export default class TSRemoveAffiliation {
     openAlert() {
         const $alert = $('<div>', { class: 'remove-affiliation-alertbox-container' });
         const html =
-            `<div class="alertbox-success">
-                <h2 class="alert-title">Please Confirm</h2>
-                <p class="alert-message">${this.alertMessage()}</p>
-                <div class="remove-affiliation-buttons">
-                    <button class="ok-btn subhead-16 remove-affiliation-cancel">
-                        no, keep consultant
-                    </button>
-                    <button class="ok-btn subhead-16 remove-affiliation-confirm">
-                        yes, remove consultant
-                    </button>
+            `<div class="alertbox-action">
+                <div class="alert-title">
+                    <h2>Please Confirm</h2>
+                    <span class="close-tooltip">x</span>
+                </div>
+                <div class="alert-message">
+                    <p>${this.alertMessage()}</p>
+                    <div class="alert-actions">
+                        <button class="alertaction-decline">no, keep consultant</button>
+                        <button class="alertaction-accept">yes, remove consultant</button>
+                    </div>
                 </div>
             </div>`;
 
@@ -25,6 +26,9 @@ export default class TSRemoveAffiliation {
         $('body').append($alert);
 
         $($alert).on('click', '.remove-affiliation-cancel', () => {
+            $alert.remove();
+        });
+        $($alert).on('click', '.close-tooltip', () => {
             $alert.remove();
         });
 
@@ -39,7 +43,7 @@ export default class TSRemoveAffiliation {
                 or fundraiser that you have selected. Are you sure you'd like to proceed?`;
         }
 
-        return `You have requested to removing your consultant. This will mean that
+        return `You have requested to remove your consultant. This will mean that
             they will not get credit for your order`;
     }
 

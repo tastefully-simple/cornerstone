@@ -59,7 +59,6 @@ export default class TSCartAffiliation {
                 const errorBoxTitle = '.ts-cart-affiliation-wrapper .alert-title';
 
                 $('.ts-cart-affiliation-wrapper').prepend(noSelectionErrorHtml);
-                $(errorBoxMessage).text('A selection is required before you proceed');
                 $(errorBoxTitle).text('Selection Required');
                 $(errorBoxMessage).text('A selection is required before you proceed');
             }),

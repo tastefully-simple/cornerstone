@@ -7,32 +7,29 @@ export default class TSRemoveAffiliation {
 
     openAlert() {
         const $alert = $('<div>', { class: 'remove-affiliation-alertbox-container' });
-        const html =
-            `<div class="alertbox-action">
-                <div class="alert-title">
-                    <h2>Please Confirm</h2>
-                    <span class="close-tooltip">x</span>
-                </div>
-                <div class="alert-message">
-                    <p>${this.alertMessage()}</p>
-                    <div class="alert-actions">
-                        <button class="alertaction-decline">no, keep consultant</button>
-                        <button class="alertaction-accept">yes, remove consultant</button>
-                    </div>
-                </div>
-            </div>`;
 
-        $alert.html(html);
+        $alert.html(this.alertHtml());
         $('body').append($alert);
 
-        $($alert).on('click', '.alertaction-decline', () => {
-            $alert.remove();
-        });
-        $($alert).on('click', '.close-tooltip', () => {
-            $alert.remove();
-        });
+        $($alert).on('click', '.remove-affiliation-decline', () => $alert.remove());
 
-        $($alert).on('click', '.alertaction-accept', this.deleteAffiliation);
+        $($alert).on('click', '.remove-affiliation-accept', this.deleteAffiliation);
+    }
+
+    alertHtml() {
+        return `<div class="alertbox-action">
+            <div class="alert-title">
+                <h2>Please Confirm</h2>
+                <span class="close-tooltip remove-affiliation-decline">x</span>
+            </div>
+            <div class="alert-message">
+                <p>${this.alertMessage()}</p>
+                <div class="alert-actions">
+                    <button class="alertaction-decline remove-affiliation-decline">no, keep consultant</button>
+                    <button class="alertaction-accept remove-affiliation-accept">yes, remove consultant</button>
+                </div>
+            </div>
+        </div>`;
     }
 
     alertMessage() {

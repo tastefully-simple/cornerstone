@@ -14,6 +14,7 @@ const DISPLAY_NUM_PAGES = 6;
 const PAGE_SIZE = 10;
 // Redirect
 const CART_PAGE = '/cart.php';
+const HOST_PAGE = '/host';
 // API error message
 const API_ERROR_MESSAGE = {
     errorMessage: 'An error has occurred.',
@@ -237,7 +238,12 @@ class FindAParty {
         const $removeParty = this.$findPartyBar.find('.partybar-accordion-items .remove-party');
         $removeParty.on('click', () => {
             TSCookie.deleteParty();
-            window.location.reload();
+
+            if (this.isOnPartyDetailsPage()) {
+                window.location.href = HOST_PAGE;
+            } else {
+                window.location.reload();
+            }
         });
     }
 

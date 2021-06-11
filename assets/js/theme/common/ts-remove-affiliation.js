@@ -1,5 +1,8 @@
 import TSCookie from './ts-cookie';
 
+const CONSULTANT_PAGE = '/web';
+const HOST_PAGE = '/host';
+
 export default class TSRemoveAffiliation {
     constructor(affiliation) {
         this.affiliation = affiliation;
@@ -13,7 +16,7 @@ export default class TSRemoveAffiliation {
 
         $($alert).on('click', '.remove-affiliation-decline', () => $alert.remove());
 
-        $($alert).on('click', '.remove-affiliation-accept', this.deleteAffiliation);
+        $($alert).on('click', '.remove-affiliation-accept', this.deleteAffiliation.bind(this));
     }
 
     alertHtml() {
@@ -48,6 +51,14 @@ export default class TSRemoveAffiliation {
         TSCookie.deleteConsultant();
         TSCookie.deleteParty();
 
-        window.location.reload();
+        if (this.isOnConsultantPage()) {
+            window.location.href = HOST_PAGE;
+        } else {
+            window.location.reload();
+        }
+    }
+
+    isOnConsultantPage() {
+        return document.location.pathname.includes(CONSULTANT_PAGE);
     }
 }

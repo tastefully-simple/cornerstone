@@ -97,7 +97,6 @@ export default class ConsultantParties {
             // Update green party bar text
             this.updatePartyBarText(party.host);
 
-            this.saveConsultantCookies(this.consultant);
             this.savePartyCookies(party);
         } else {
             // To account for user not choosing to
@@ -106,6 +105,10 @@ export default class ConsultantParties {
             TSCookie.setPartyId(null);
             this.updatePartyBarText(null);
         }
+
+        // Save consultant cookies even if the user did
+        // not select any party from the selected consultant
+        this.saveConsultantCookies(this.consultant);
 
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;

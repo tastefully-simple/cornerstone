@@ -8,11 +8,17 @@ const CONSULTANT_PAGE = '/web';
 const CART_PAGE = '/cart.php';
 
 export default class ConsultantParties {
-    constructor(response, modal, selectedConsultant) {
+    constructor(response, modal, selectedConsultant, renderConsultantCb) {
         this.response = response;
         this.modal = modal;
         this.consultant = selectedConsultant;
         this.$parent = $('#consultantparties-search-results');
+
+        // Callback function to run renderConsultant()
+        // from FindAConsultant class to update the selected
+        // consultant in the header
+        this.renderConsultantCb = renderConsultantCb;
+
         this.init();
     }
 
@@ -109,6 +115,9 @@ export default class ConsultantParties {
         // Save consultant cookies even if the user did
         // not select any party from the selected consultant
         this.saveConsultantCookies(this.consultant);
+
+        // Run renderConsultant() from FindAConsultant class
+        this.renderConsultantCb();
 
         if (this.isOnConsultantPage()) {
             window.location = CONSULTANT_PAGE;

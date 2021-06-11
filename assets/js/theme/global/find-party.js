@@ -356,10 +356,15 @@ class FindAParty {
                 cname: $('.party-card.selected').data('cname'),
                 cimg: $('.party-card.selected').data('cimg'),
             });
-            // Redirect
-            window.location.href = `/p/${this.selectedId}`;
         } else {
             this.displayError('Please select a party before continuing');
+        }
+
+        if (this.isOnCartPage()) {
+            window.location.href = CART_PAGE;
+        } else {
+            // Redirect to party details page
+            window.location.href = `/p/${this.selectedId}`;
         }
     }
 

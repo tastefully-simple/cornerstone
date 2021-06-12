@@ -240,7 +240,7 @@ class FindAConsultant {
             } else if (res) {
                 this.modal.updateContent(res);
                 $('#consultantparties-search-results').show();
-                this.renderConsultantParties();
+                this.renderConsultantParties(this.consultant);
             }
         });
     }
@@ -430,7 +430,7 @@ class FindAConsultant {
 
     continue(consultant) {
         if (consultant.hasOpenParty) {
-            this.renderConsultantParties();
+            this.renderConsultantParties(consultant);
         } else if (this.isOnCartPage() && !this.consultant.hasOpenParty) {
             this.saveCookies(consultant);
             window.location = CART_PAGE;
@@ -611,17 +611,18 @@ class FindAConsultant {
         $errorWrapper.append($tSimpleBtn);
     }
 
-    renderConsultantParties() {
+    renderConsultantParties(consultant) {
         this.selectedId = this.selectedId ? this.selectedId : TSCookie.getConsultantId();
-        this.api.getPartiesByConsultant(this.selectedId, 1, 10)
-            .then(res => res.json())
-            .then(data => {
-                const consultantParties = new ConsultantParties(data, this.modal, this.consultant, this.renderConsultant.bind(this));
-                return consultantParties;
-            })
-            .catch(err => {
-                console.warn('getPartiesByConsultant', err);
-            });
+
+        const consultantParties =
+            new ConsultantParties(
+                this.selectedId,
+                this.modal,
+                consultant,
+                this.renderConsultant.bind(this),
+            );
+
+        return consultantParties;
     }
 
     getPagination(response) {

@@ -107,8 +107,16 @@ class FindAConsultant {
             () => this.removeAffiliation.openAlert(),
         );
 
-        // Open consultant parties modal
-        $('body').on(
+        // Open consultant parties modal in cart
+        $('body.cart').on(
+            'click',
+            '.view-consultant-parties',
+            (e) => this.openConsultantParties(e),
+        );
+
+        // Open consultant parties modal in
+        // party bar mobile
+        $('.partybar').on(
             'click',
             '.view-consultant-parties',
             (e) => this.openConsultantParties(e),

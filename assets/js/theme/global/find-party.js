@@ -195,6 +195,10 @@ class FindAParty {
             </div>`;
 
         $('.partybar-accordion').html(html);
+
+        // View all parties button
+        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
     hasOpenPartiesWithPartySelected() {
@@ -245,6 +249,10 @@ class FindAParty {
                 window.location.reload();
             }
         });
+
+        // View all parties button
+        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
     noOpenParties() {
@@ -262,6 +270,10 @@ class FindAParty {
             </div>`;
 
         $('.partybar-accordion').html(html);
+
+        // View all parties button
+        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
     partyGreeting(hostname) {
@@ -405,19 +417,14 @@ class FindAParty {
          */
         const appleGreen = '#6e7a06';
 
-        if (this.isDesktop() && this.isOnCartPage()) {
-            // Hide party bar in desktop (cart page only)
-            $party.hide();
-        } else {
-            $party.show();
-            $party.css('background-color', appleGreen);
+        $party.show();
+        $party.css('background-color', appleGreen);
 
-            // Show party bar in desktop or mobile
-            if (this.isDesktop()) {
-                $('header.header').append($party);
-            } else {
-                $navPages.append($party);
-            }
+        // Show party bar in desktop or mobile
+        if (this.isDesktop()) {
+            $('header.header').append($party);
+        } else {
+            $navPages.append($party);
         }
     }
 

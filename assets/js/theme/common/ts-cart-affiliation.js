@@ -56,8 +56,10 @@ export default class TSCartAffiliation {
             },
             this.template('common/alert-error').then(noSelectionErrorHtml => {
                 const errorBoxMessage = '.ts-cart-affiliation-wrapper .alert-message span';
+                const errorBoxTitle = '.ts-cart-affiliation-wrapper .alert-title';
 
                 $('.ts-cart-affiliation-wrapper').prepend(noSelectionErrorHtml);
+                $(errorBoxTitle).text('Selection Required');
                 $(errorBoxMessage).text('A selection is required before you proceed');
             }),
             this.template('common/tooltip-square').then(partyTooltipHtml => {
@@ -99,16 +101,19 @@ export default class TSCartAffiliation {
 
     bindTsCartFormSelectionEvent() {
         $(this.checkoutButton).data('originalText', $(this.checkoutButton).text());
+
         $('#page-wrapper').on('change', '#ts-affiliate-cart-form input', (e) => {
             $(this.formWrapper).removeClass('error');
             $(this.formTitle).show();
             $(this.noSelectionError).hide();
+
             if (e.target === document.getElementById('tsacf-shopdirect')) {
                 $(this.checkoutButton).html('check out');
-                $(this.checkoutButton).data('selected', true);
+                $(this.checkoutButton).removeAttr('disabled');
+                $(this.checkoutButton).removeAttr('onclick');
             } else {
                 $(this.checkoutButton).html($(this.checkoutButton).data('originalText'));
-                $(this.checkoutButton).data('selected', false);
+                $(this.checkoutButton).attr('disabled', true);
             }
         });
     }
@@ -116,10 +121,8 @@ export default class TSCartAffiliation {
     bindCheckoutButtonClickEvent() {
         $('#page-wrapper').on('click', '.cart-actions .button--primary', () => {
             const that = this;
-            if ($(this.checkoutButton).data('selected')) {
-                window.location.href = $(this.checkoutButton).prop('href');
-            }
-            if (!$(this.checkoutButton).data('selected')) {
+
+            if ($(this.checkoutButton).attr('disabled')) {
                 $(that.formWrapper).addClass('error');
                 $(that.formTitle).hide();
                 $(this.noSelectionError).show();
@@ -198,8 +201,7 @@ export default class TSCartAffiliation {
             </div>`;
 
         $('.cart-affiliate-party-state').html(html);
-        $(this.checkoutButton).html('check out');
-        $(this.checkoutButton).removeAttr('onclick');
+        this.enableCheckout();
     }
 
     // Scenario 2
@@ -214,8 +216,7 @@ export default class TSCartAffiliation {
             </div>`;
 
         $('.cart-affiliate-party-state').html(html);
-        $(this.checkoutButton).html('check out');
-        $(this.checkoutButton).removeAttr('onclick');
+        this.enableCheckout();
 
         // Remove Party
         const $removeParty = $('.cart-affiliate-party').find('.remove-party');
@@ -240,7 +241,12 @@ export default class TSCartAffiliation {
     // Scenario 4
     noOpenParties() {
         $('.cart-affiliate-party-state').text('');
+        this.enableCheckout();
+    }
+
+    enableCheckout() {
         $(this.checkoutButton).html('check out');
         $(this.checkoutButton).removeAttr('onclick');
+        $(this.checkoutButton).removeAttr('disabled');
     }
 }

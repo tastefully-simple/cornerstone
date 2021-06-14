@@ -21,6 +21,7 @@
             position: absolute;
             top: -22px;
             height: 95px;
+            width: 305px;
             .alert-title {
                 text-align: left;
             } 
@@ -159,5 +160,15 @@
     #ts-cart-affiliation .ts-cart-affiliation-wrapper,
     .cart-actions {
         width: grid-calc(5, $total-columns);
+    }
+}
+
+@media only screen and (max-width:305px) {
+    #ts-cart-affiliation {
+        .ts-cart-affiliation-wrapper {
+            .alertbox-error {
+                width: 100%;
+            }
+        }
     }
 }

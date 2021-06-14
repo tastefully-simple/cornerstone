@@ -1,5 +1,8 @@
 import TSCookie from './ts-cookie';
 
+const CONSULTANT_PAGE = '/web';
+const HOST_PAGE = '/host';
+
 export default class TSRemoveAffiliation {
     constructor(affiliation) {
         this.affiliation = affiliation;
@@ -7,28 +10,29 @@ export default class TSRemoveAffiliation {
 
     openAlert() {
         const $alert = $('<div>', { class: 'remove-affiliation-alertbox-container' });
-        const html =
-            `<div class="alertbox-success">
-                <h2 class="alert-title">Please Confirm</h2>
-                <p class="alert-message">${this.alertMessage()}</p>
-                <div class="remove-affiliation-buttons">
-                    <button class="ok-btn subhead-16 remove-affiliation-cancel">
-                        no, keep consultant
-                    </button>
-                    <button class="ok-btn subhead-16 remove-affiliation-confirm">
-                        yes, remove consultant
-                    </button>
-                </div>
-            </div>`;
 
-        $alert.html(html);
+        $alert.html(this.alertHtml());
         $('body').append($alert);
 
-        $($alert).on('click', '.remove-affiliation-cancel', () => {
-            $alert.remove();
-        });
+        $($alert).on('click', '.remove-affiliation-decline', () => $alert.remove());
 
-        $($alert).on('click', '.remove-affiliation-confirm', this.deleteAffiliation);
+        $($alert).on('click', '.remove-affiliation-accept', this.deleteAffiliation.bind(this));
+    }
+
+    alertHtml() {
+        return `<div class="alertbox-action">
+            <div class="alert-title">
+                <h2>Please Confirm</h2>
+                <span class="close-tooltip remove-affiliation-decline">x</span>
+            </div>
+            <div class="alert-message">
+                <p>${this.alertMessage()}</p>
+                <div class="alert-actions">
+                    <button class="alertaction-decline remove-affiliation-decline">no, keep consultant</button>
+                    <button class="alertaction-accept remove-affiliation-accept">yes, remove consultant</button>
+                </div>
+            </div>
+        </div>`;
     }
 
     alertMessage() {
@@ -39,7 +43,7 @@ export default class TSRemoveAffiliation {
                 or fundraiser that you have selected. Are you sure you'd like to proceed?`;
         }
 
-        return `You have requested to removing your consultant. This will mean that
+        return `You have requested to remove your consultant. This will mean that
             they will not get credit for your order`;
     }
 
@@ -47,6 +51,14 @@ export default class TSRemoveAffiliation {
         TSCookie.deleteConsultant();
         TSCookie.deleteParty();
 
-        window.location.reload();
+        if (this.isOnConsultantPage()) {
+            window.location.href = HOST_PAGE;
+        } else {
+            window.location.reload();
+        }
+    }
+
+    isOnConsultantPage() {
+        return document.location.pathname.includes(CONSULTANT_PAGE);
     }
 }

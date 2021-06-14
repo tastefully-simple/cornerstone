@@ -14,6 +14,7 @@ const DISPLAY_NUM_PAGES = 6;
 const PAGE_SIZE = 10;
 // Redirect
 const CART_PAGE = '/cart.php';
+const HOST_PAGE = '/host';
 // API error message
 const API_ERROR_MESSAGE = {
     errorMessage: 'An error has occurred.',
@@ -194,6 +195,10 @@ class FindAParty {
             </div>`;
 
         $('.partybar-accordion').html(html);
+
+        // View all parties button
+        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
     hasOpenPartiesWithPartySelected() {
@@ -237,8 +242,17 @@ class FindAParty {
         const $removeParty = this.$findPartyBar.find('.partybar-accordion-items .remove-party');
         $removeParty.on('click', () => {
             TSCookie.deleteParty();
-            window.location.reload();
+
+            if (this.isOnPartyDetailsPage()) {
+                window.location.href = HOST_PAGE;
+            } else {
+                window.location.reload();
+            }
         });
+
+        // View all parties button
+        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
     noOpenParties() {
@@ -256,6 +270,10 @@ class FindAParty {
             </div>`;
 
         $('.partybar-accordion').html(html);
+
+        // View all parties button
+        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
     partyGreeting(hostname) {
@@ -356,10 +374,15 @@ class FindAParty {
                 cname: $('.party-card.selected').data('cname'),
                 cimg: $('.party-card.selected').data('cimg'),
             });
-            // Redirect
-            window.location.href = `/p/${this.selectedId}`;
         } else {
             this.displayError('Please select a party before continuing');
+        }
+
+        if (this.isOnCartPage()) {
+            window.location.href = CART_PAGE;
+        } else {
+            // Redirect to party details page
+            window.location.href = `/p/${this.selectedId}`;
         }
     }
 
@@ -394,19 +417,14 @@ class FindAParty {
          */
         const appleGreen = '#6e7a06';
 
-        if (this.isDesktop() && this.isOnCartPage()) {
-            // Hide party bar in desktop (cart page only)
-            $party.hide();
-        } else {
-            $party.show();
-            $party.css('background-color', appleGreen);
+        $party.show();
+        $party.css('background-color', appleGreen);
 
-            // Show party bar in desktop or mobile
-            if (this.isDesktop()) {
-                $('header.header').append($party);
-            } else {
-                $navPages.append($party);
-            }
+        // Show party bar in desktop or mobile
+        if (this.isDesktop()) {
+            $('header.header').append($party);
+        } else {
+            $navPages.append($party);
         }
     }
 

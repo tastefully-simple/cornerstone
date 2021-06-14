@@ -64,7 +64,7 @@ class FindAConsultant {
     }
 
     isExternalConsultant() {
-        return TSCookie.getConsultantId()
+        return this.consultant.id
             && this.consultant.id !== TST_CONSULTANT_ID;
     }
 
@@ -107,8 +107,16 @@ class FindAConsultant {
             () => this.removeAffiliation.openAlert(),
         );
 
-        // Open consultant parties modal
-        $('body').on(
+        // Open consultant parties modal in cart
+        $('body.cart').on(
+            'click',
+            '.view-consultant-parties',
+            (e) => this.openConsultantParties(e),
+        );
+
+        // Open consultant parties modal in
+        // party bar mobile
+        $('.partybar').on(
             'click',
             '.view-consultant-parties',
             (e) => this.openConsultantParties(e),
@@ -240,7 +248,7 @@ class FindAConsultant {
             } else if (res) {
                 this.modal.updateContent(res);
                 $('#consultantparties-search-results').show();
-                this.renderConsultantParties();
+                this.renderConsultantParties(this.consultant);
             }
         });
     }
@@ -429,10 +437,8 @@ class FindAConsultant {
     }
 
     continue(consultant) {
-        this.setConsultant(consultant);
-
         if (consultant.hasOpenParty) {
-            this.renderConsultantParties();
+            this.renderConsultantParties(consultant);
         } else if (this.isOnCartPage() && !this.consultant.hasOpenParty) {
             this.saveCookies(consultant);
             window.location = CART_PAGE;
@@ -443,6 +449,8 @@ class FindAConsultant {
             this.saveCookies(consultant);
             this.modal.close();
         }
+
+        this.setConsultant(consultant);
     }
 
     // consultant = { id: string, name: null|string, image: string }
@@ -469,9 +477,11 @@ class FindAConsultant {
         $('.navPages-container .navPages').prepend(this.$findConsultant);
 
         if (this.isExternalConsultant()) {
-            this.$findConsultant.classList.add('consultant-mobile');
-            this.$findConsultant.innerHTML = this.consultantInMobileHtml();
-            $('.find-consultant-m .consultant-img').attr('src', this.consultant.image);
+            if (TSCookie.getConsultantId() === this.consultant.id) {
+                this.$findConsultant.classList.add('consultant-mobile');
+                this.$findConsultant.innerHTML = this.consultantInMobileHtml();
+                $('.find-consultant-m .consultant-img').attr('src', this.consultant.image);
+            }
         } else {
             this.$findConsultant.innerHTML = this.defaultConsultantHtml;
         }
@@ -521,8 +531,10 @@ class FindAConsultant {
         const isStickyHeaderDisabled = !isStickyHeader && !(window.pageYOffset === offsetTop);
 
         if (this.isExternalConsultant() && isStickyHeaderDisabled) {
-            this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
-            this.$findConsultant.innerHTML = this.consultantInfoHtml();
+            if (TSCookie.getConsultantId() === this.consultant.id) {
+                this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
+                this.$findConsultant.innerHTML = this.consultantInfoHtml();
+            }
         } else {
             this.$findConsultant.innerHTML = this.defaultConsultantHtml;
         }
@@ -607,17 +619,18 @@ class FindAConsultant {
         $errorWrapper.append($tSimpleBtn);
     }
 
-    renderConsultantParties() {
+    renderConsultantParties(consultant) {
         this.selectedId = this.selectedId ? this.selectedId : TSCookie.getConsultantId();
-        this.api.getPartiesByConsultant(this.selectedId, 1, 10)
-            .then(res => res.json())
-            .then(data => {
-                const consultantParties = new ConsultantParties(data, this.modal, this.consultant);
-                return consultantParties;
-            })
-            .catch(err => {
-                console.warn('getPartiesByConsultant', err);
-            });
+
+        const consultantParties =
+            new ConsultantParties(
+                this.selectedId,
+                this.modal,
+                consultant,
+                this.renderConsultant.bind(this),
+            );
+
+        return consultantParties;
     }
 
     getPagination(response) {

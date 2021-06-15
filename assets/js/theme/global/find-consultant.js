@@ -621,6 +621,10 @@ class FindAConsultant {
     }
 
     displayNoResultsButton() {
+        // to clear out the no-consultants-continue button
+        // when user tries to search again with no results found
+        $('#no-consultants-continue').remove();
+
         const $errorWrapper = $('#consultant-search .alertbox-error p');
         const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary' });
         $tSimpleBtn.text('shop with tastefully simple');

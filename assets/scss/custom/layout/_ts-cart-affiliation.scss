@@ -52,15 +52,15 @@
                         width:16px;
                         vertical-align:middle;
                     }
-                    .tooltip-content {
-                        left: unset !important;
-                        min-width:200px;
-                        right: -6px;
-                        top: 16px !important;
-                    }
                 }
                 .tooltip-right {
                     align-self:flex-end;
+                }
+                .tooltip-content {
+                    left: unset !important;
+                    min-width:200px;
+                    right: -6px;
+                    top: -8px !important;
                 }
             }
         }

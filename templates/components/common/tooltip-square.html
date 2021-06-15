@@ -1,8 +1,14 @@
 <div class="styletooltip-item">
-    <div id="<match data-dropdown icon>" class="dropdown-menu tooltip-content tooltip-right" data-dropdown-content="">
+  <div id="{{tooltip_content_id}}" class="dropdown-menu tooltip-content tooltip-right" data-dropdown-content="">
         <div>
             <span class="close-tooltip">x</span>
-            <p></p>
+            {{#if tooltip_content_id '===' 'tsacf-findconsultant-tooltip' }}
+                <p>{{ lang 'ts_affiliation.consultant.tooltip_info' }}</p>
+            {{else if tooltip_content_id '===' 'tsacf-findparty-tooltip' }}
+                <p>{{ lang 'ts_affiliation.party.tooltip_info' }}</p>
+            {{else}}
+                <p>{{ tooltip_message }}</p>
+            {{/if}}
         </div>
     </div>
 </div>

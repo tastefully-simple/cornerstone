@@ -61,34 +61,7 @@ export default class TSCartAffiliation {
                 $('.ts-cart-affiliation-wrapper').prepend(noSelectionErrorHtml);
                 $(errorBoxTitle).text('Selection Required');
                 $(errorBoxMessage).text('A selection is required before you proceed');
-            }),
-            this.template('common/tooltip-square').then(partyTooltipHtml => {
-                const partyTooltipParent = '#ts-affiliate-cart-form label:nth-child(1)';
-                const partyTooltip = `${partyTooltipParent} .tooltip-right`;
-                const partyTooltipIcon = `${partyTooltipParent} .icon-system-info`;
-                const partyTooltipText =
-                    `What is a party? Tastefully Simple parties and fundraisers reward
-                    hosts of $200+ events with free products. Help us ensure your host
-                    gets credit for your order.`;
 
-                $(partyTooltipParent).append(partyTooltipHtml);
-                $(`${partyTooltip} p`).text(partyTooltipText);
-                $(partyTooltip).attr('id', 'partyTooltip');
-                $(partyTooltipIcon).attr('data-dropdown', 'partyTooltip');
-            }),
-            this.template('common/tooltip-square').then(consultantTooltipHtml => {
-                const consultantTooltipParent = '#ts-affiliate-cart-form label:nth-child(3)';
-                const consultantTooltip = `${consultantTooltipParent} .tooltip-right`;
-                const consultantTooltipIcon = `${consultantTooltipParent} .icon-system-info`;
-                const consultantTooltipText =
-                    `What is a consultant? Our consultants are independent business owners
-                    who help you decide what\'s to eat! Help us ensure your consultant
-                    receives their commission or credit.`;
-
-                $(consultantTooltipParent).append(consultantTooltipHtml);
-                $(`${consultantTooltip} p`).text(consultantTooltipText);
-                $(consultantTooltip).attr('id', 'consultantTooltip');
-                $(consultantTooltipIcon).attr('data-dropdown', 'consultantTooltip');
                 this.selectionLogic();
             }),
         );

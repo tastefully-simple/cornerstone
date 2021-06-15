@@ -5,8 +5,12 @@
 
         w.TSCookie = {
             // Consultant ID
+            // Type: Str
             setConsultantId: function(cid) {
-                Cookies.set('cid', cid, { domain: cookieDomain });
+                // Remove trailing spaces
+                const newCid = cid ? cid.trim() : cid;
+
+                Cookies.set('cid', newCid, { domain: cookieDomain });
             },
 
             getConsultantId: function() {
@@ -50,6 +54,7 @@
             },
 
             // Party Id
+            // Type: Int
             setPartyId: function(pid) {
                 Cookies.set('pid', pid, { domain: cookieDomain });
             },

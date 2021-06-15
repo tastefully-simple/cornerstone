@@ -146,11 +146,19 @@ class FindAConsultant {
         );
 
         // Go back to search when editing consultant in consultant parties modal
-        $('body').on(
-            'click',
-            '#consultantparties-search-results .consultant-edit',
-            this.returnSearch.bind(this),
-        );
+        if (this.isOnCartPage()) {
+            $('body').on(
+                'click',
+                '#consultantparties-search-results .consultant-edit',
+                (e) => this.createModal(e, this.modalTemplate),
+            );
+        } else {
+            $('body').on(
+                'click',
+                '#consultantparties-search-results .consultant-edit',
+                this.returnSearch.bind(this),
+            );
+        }
 
         // Search by ZIP
         $('body').on('submit', '#zipcode-search-form', () => {

@@ -52,13 +52,11 @@
                         width:16px;
                         vertical-align:middle;
                     }
-                    #partyTooltip[style] {
-                        left: -91px !important;
-                        top: 20px !important;
-                    }
-                    #consultantTooltip[style] {
-                        left: -108px !important;
-                        top: 14px !important;
+                    .tooltip-content {
+                        left: unset !important;
+                        min-width:200px;
+                        right: -6px;
+                        top: 16px !important;
                     }
                 }
                 .tooltip-right {

@@ -64,7 +64,7 @@ export default class TSCartAffiliation {
             }),
             this.template('common/tooltip-square').then(partyTooltipHtml => {
                 const partyTooltipParent = '#ts-affiliate-cart-form label:nth-child(1)';
-                const partyTooltip = `${partyTooltipParent} .tooltip-center`;
+                const partyTooltip = `${partyTooltipParent} .tooltip-right`;
                 const partyTooltipIcon = `${partyTooltipParent} .icon-system-info`;
                 const partyTooltipText =
                     `What is a party? Tastefully Simple parties and fundraisers reward
@@ -78,7 +78,7 @@ export default class TSCartAffiliation {
             }),
             this.template('common/tooltip-square').then(consultantTooltipHtml => {
                 const consultantTooltipParent = '#ts-affiliate-cart-form label:nth-child(3)';
-                const consultantTooltip = `${consultantTooltipParent} .tooltip-center`;
+                const consultantTooltip = `${consultantTooltipParent} .tooltip-right`;
                 const consultantTooltipIcon = `${consultantTooltipParent} .icon-system-info`;
                 const consultantTooltipText =
                     `What is a consultant? Our consultants are independent business owners

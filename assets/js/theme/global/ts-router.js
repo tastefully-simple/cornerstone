@@ -153,6 +153,7 @@ export default class TSRouter {
                     TSCookie.setConsultantId(data.ConsultantId);
                     TSCookie.setConsultantName(data.Name);
                     TSCookie.setConsultantImage(data.Image);
+                    TSCookie.setConsultantHasOpenParty(data.HasOpenParty);
 
                     window.location = window.location.pathname;
                 })

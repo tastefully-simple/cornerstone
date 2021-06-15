@@ -146,7 +146,8 @@ class FindAConsultant {
         );
 
         // Go back to search when editing consultant in consultant parties modal
-        if (this.isOnCartPage()) {
+        const $consultantSearch = document.querySelector('#consultant-search');
+        if (!$consultantSearch) {
             $('body').on(
                 'click',
                 '#consultantparties-search-results .consultant-edit',

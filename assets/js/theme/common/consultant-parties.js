@@ -135,6 +135,9 @@ export default class ConsultantParties {
     }
 
     continueWithSelection() {
+        // Reset party cookies
+        TSCookie.deleteParty();
+
         const $selectedPartyCard = this.$parent.find('.party-card.selected');
 
         if (this.selectedPid) {

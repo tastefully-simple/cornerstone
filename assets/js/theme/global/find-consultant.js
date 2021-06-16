@@ -448,13 +448,16 @@ class FindAConsultant {
     continue(consultant) {
         if (consultant.hasOpenParty) {
             this.renderConsultantParties(consultant);
-        } else if (this.isOnCartPage() && !this.consultant.hasOpenParty) {
+        } else if (this.isOnCartPage() && !consultant.hasOpenParty) {
             this.saveCookies(consultant);
             window.location = CART_PAGE;
-        } else if (this.isOnConsultantPage() && !this.consultant.hasOpenParty) {
+        } else if (this.isOnConsultantPage() && !consultant.hasOpenParty) {
             this.saveCookies(consultant);
             window.location = CONSULTANT_PAGE;
         } else {
+            // TST-475 set partybar to its default text
+            $('.partybar-main-text').text('Find a Party or Fundraiser');
+
             this.saveCookies(consultant);
             this.modal.close();
         }

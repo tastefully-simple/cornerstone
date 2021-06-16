@@ -1,12 +1,12 @@
 import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
-import copyToClipboard from 'copy-to-clipboard';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
 import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
 import PartyCard from '../common/party-card';
 
+const TST_CONSULTANT_ID = '0160785';
 // Breakpoint for mobile
 const SCREEN_MIN_WIDTH = 801;
 // Number of page numbers to show in pagination
@@ -73,7 +73,9 @@ class FindAParty {
     initListeners() {
         // Modal
         this.$findParty.on('click', (e) => {
-            if (!TSCookie.getPartyId() && !TSCookie.getConsultantHasOpenParty()) {
+            if ((!TSCookie.getPartyId() && !TSCookie.getConsultantHasOpenParty())
+                || TSCookie.getConsultantId() === TST_CONSULTANT_ID
+            ) {
                 this.createModal(e, this.modalTemplate);
             } else {
                 this.openPartyBarDropdown(this.$findParty);
@@ -208,9 +210,6 @@ class FindAParty {
                     <button type="button" class="view-party">view party</button>
                 </div>
                 <div class="partybar-button">
-                    <button type="button" class="copy-party-link">copy &amp; share party link </button>
-                </div>
-                <div class="partybar-button">
                     <p class="subhead-14">
                         <button type="button" class="view-all-parties">edit</button>
                         <span class="white-text">&verbar;</span>
@@ -227,16 +226,18 @@ class FindAParty {
             window.location.href = `/p/${this.party.id}`;
         });
 
-        // Copy Party URL to clipboard
-        const $copyPartyUrl = this.$findPartyBar.find('.partybar-accordion-items .copy-party-link');
-        $copyPartyUrl.on('click', () => {
-            copyToClipboard(`${window.location.host}/p/${this.party.id}`);
-            $copyPartyUrl.append('<i class="fas fa-check copied"></i>');
-
-            setTimeout(() => {
-                $('.copy-party-link .copied').remove();
-            }, 5000);
-        });
+        /* TST-436 Hide copy party link in the partybar dropdown
+         * // Copy Party URL to clipboard
+         * const $copyPartyUrl = this.$findPartyBar.find('.partybar-accordion-items .copy-party-link');
+         * $copyPartyUrl.on('click', () => {
+         *   copyToClipboard(`${window.location.host}/p/${this.party.id}`);
+         *   $copyPartyUrl.append('<i class="fas fa-check copied"></i>');
+         *
+         *   setTimeout(() => {
+         *       $('.copy-party-link .copied').remove();
+         *   }, 5000);
+         * });
+         */
 
         // Remove party
         const $removeParty = this.$findPartyBar.find('.partybar-accordion-items .remove-party');
@@ -417,7 +418,6 @@ class FindAParty {
          */
         const appleGreen = '#6e7a06';
 
-        $party.show();
         $party.css('background-color', appleGreen);
 
         // Show party bar in desktop or mobile

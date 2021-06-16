@@ -169,7 +169,7 @@
     "button--primary-backgroundColor": "#7f4252",
     "button--primary-backgroundColorHover": "#610b31",
     "button--primary-backgroundColorActive": "#610b31",
-    "button--disabled-color": "#bbbbbb",
+    "button--disabled-color": "#979797",
     "button--disabled-backgroundColor": "#e2e2e2",
     "button--disabled-borderColor": "transparent",
     "icon-color": "#00757d",

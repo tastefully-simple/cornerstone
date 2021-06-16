@@ -7,6 +7,7 @@ import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
 import PartyCard from '../common/party-card';
 
+const TST_CONSULTANT_ID = '0160785';
 // Breakpoint for mobile
 const SCREEN_MIN_WIDTH = 801;
 // Number of page numbers to show in pagination
@@ -73,7 +74,9 @@ class FindAParty {
     initListeners() {
         // Modal
         this.$findParty.on('click', (e) => {
-            if (!TSCookie.getPartyId() && !TSCookie.getConsultantHasOpenParty()) {
+            if ((!TSCookie.getPartyId() && !TSCookie.getConsultantHasOpenParty())
+                || TSCookie.getConsultantId() === TST_CONSULTANT_ID
+            ) {
                 this.createModal(e, this.modalTemplate);
             } else {
                 this.openPartyBarDropdown(this.$findParty);

@@ -1,6 +1,6 @@
 class Tooltip {
     constructor() {
-        $('.close-tooltip').on('click', () => this.closeTooltip());
+        $('body').on('click', '.close-tooltip', () => this.closeTooltip());
     }
 
     closeTooltip() {

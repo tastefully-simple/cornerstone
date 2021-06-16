@@ -146,11 +146,20 @@ class FindAConsultant {
         );
 
         // Go back to search when editing consultant in consultant parties modal
-        $('body').on(
-            'click',
-            '#consultantparties-search-results .consultant-edit',
-            this.returnSearch.bind(this),
-        );
+        const $consultantSearch = document.querySelector('#consultant-search');
+        if (!$consultantSearch) {
+            $('body').on(
+                'click',
+                '#consultantparties-search-results .consultant-edit',
+                (e) => this.createModal(e, this.modalTemplate),
+            );
+        } else {
+            $('body').on(
+                'click',
+                '#consultantparties-search-results .consultant-edit',
+                this.returnSearch.bind(this),
+            );
+        }
 
         // Search by ZIP
         $('body').on('submit', '#zipcode-search-form', () => {
@@ -613,6 +622,10 @@ class FindAConsultant {
     }
 
     displayNoResultsButton() {
+        // to clear out the no-consultants-continue button
+        // when user tries to search again with no results found
+        $('#no-consultants-continue').remove();
+
         const $errorWrapper = $('#consultant-search .alertbox-error p');
         const $tSimpleBtn = $('<button>', { id: 'no-consultants-continue', class: 'button-secondary' });
         $tSimpleBtn.text('shop with tastefully simple');

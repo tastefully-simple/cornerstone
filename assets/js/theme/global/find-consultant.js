@@ -455,6 +455,9 @@ class FindAConsultant {
             this.saveCookies(consultant);
             window.location = CONSULTANT_PAGE;
         } else {
+            // TST-475 set partybar to its default text
+            $('.partybar-main-text').text('Find a Party or Fundraiser');
+
             this.saveCookies(consultant);
             this.modal.close();
         }

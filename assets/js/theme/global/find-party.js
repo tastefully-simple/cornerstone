@@ -420,7 +420,6 @@ class FindAParty {
          */
         const appleGreen = '#6e7a06';
 
-        $party.show();
         $party.css('background-color', appleGreen);
 
         // Show party bar in desktop or mobile

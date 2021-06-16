@@ -448,10 +448,10 @@ class FindAConsultant {
     continue(consultant) {
         if (consultant.hasOpenParty) {
             this.renderConsultantParties(consultant);
-        } else if (this.isOnCartPage() && !this.consultant.hasOpenParty) {
+        } else if (this.isOnCartPage() && !consultant.hasOpenParty) {
             this.saveCookies(consultant);
             window.location = CART_PAGE;
-        } else if (this.isOnConsultantPage() && !this.consultant.hasOpenParty) {
+        } else if (this.isOnConsultantPage() && !consultant.hasOpenParty) {
             this.saveCookies(consultant);
             window.location = CONSULTANT_PAGE;
         } else {

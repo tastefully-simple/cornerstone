@@ -40,9 +40,6 @@ class FindAConsultant {
         this.api = new TSApi();
         this.removeAffiliation = new TSRemoveAffiliation();
 
-        // TST-443 Delete old affiliation cookies
-        TSCookie.deleteOldAffiliation();
-
         this.setConsultant(this.loadConsultant());
         this.initListeners();
     }

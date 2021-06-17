@@ -25,6 +25,7 @@ import tooltip from './global/tooltip';
 import tsCheckUserLogin from './global/ts-check-user-login';
 import tsAddToCart from './global/ts-add-to-cart';
 import tsJoinProcess from './global/ts-join-process';
+import tsCookieConfig from './global/ts-cookie-config';
 
 export default class Global extends PageManager {
     onReady() {
@@ -49,6 +50,7 @@ export default class Global extends PageManager {
         accordian();
         newsletterAlert();
         stickyHeader();
+        tsCookieConfig();
         findConsultant();
         findParty();
         tooltip();

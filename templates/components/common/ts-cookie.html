@@ -134,6 +134,18 @@
                 Cookies.remove('loginStateChecker');
             },
 
+            setAffiliationExpiration: function(time) {
+                Cookies.set('affiliationExpiration', time, { domain: cookieDomain });
+            },
+
+            getAffiliationExpiration: function() {
+                return Cookies.get('affiliationExpiration');
+            },
+
+            deleteAffiliationExpiration: function() {
+                Cookies.remove('affiliationExpiration');
+            },
+
             setLoginStateChecker: function(loginState) {
                 Cookies.set('loginStateChecker', loginState, { domain: cookieDomain });
             },

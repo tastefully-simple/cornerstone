@@ -234,6 +234,11 @@ class FindAConsultant {
     modalLoaded(result) {
         this.modal.updateContent(result);
         this.renderStatesSelect();
+
+        // TST-475 make sure to close the partybar dropdown
+        $('#partybar-find .partybar-arrow').addClass('fa-caret-right').removeClass('fa-caret-down');
+        $('#partybar-find').removeClass('active');
+        $('.partybar .partybar-accordion').css('max-height', '0px');
     }
 
     closeModal() {

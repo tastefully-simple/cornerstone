@@ -64,6 +64,13 @@
                 }
             }
         }
+        .cart-affiliate-consultant-selected.internal-consultant {
+            display: none;
+            p {
+                text-align: left;
+                margin-bottom: 0;
+            }
+        }
         .cart-affiliate-consultant-selected {
             margin:auto;
             width:100%;

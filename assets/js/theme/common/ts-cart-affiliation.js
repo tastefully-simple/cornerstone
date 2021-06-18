@@ -1,6 +1,8 @@
 import utils from '@bigcommerce/stencil-utils';
 import TSCookie from './ts-cookie';
 
+const TST_CONSULTANT_ID = '0160785';
+
 export default class TSCartAffiliation {
     constructor() {
         this.init();
@@ -213,7 +215,13 @@ export default class TSCartAffiliation {
 
     // Scenario 4
     noOpenParties() {
-        $('.cart-affiliate-party-state').text('');
+        if (this.selectedConsultant.id === TST_CONSULTANT_ID) {
+            $('.cart-affiliate-consultant-selected.external-consultant').hide();
+            $('.cart-affiliate-consultant-selected.internal-consultant').show();
+        } else {
+            $('.cart-affiliate-party-state').text('');
+        }
+
         this.enableCheckout();
     }
 

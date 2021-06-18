@@ -290,6 +290,7 @@ class FindAConsultant {
     displayError(err) {
         $('.alertbox-error span').html(err);
         $('.alertbox-error').show();
+        $('#modal #consultant-search .genmodal-body').animate({ scrollTop: 0 });
     }
 
     search() {

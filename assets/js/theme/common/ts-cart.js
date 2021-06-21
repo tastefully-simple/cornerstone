@@ -3,6 +3,12 @@ import TSAffiliationCheck from './ts-affiliation-check';
 import TSCartAffiliation from './ts-cart-affiliation';
 
 export default class TSCart extends PageManager {
+    constructor(context) {
+        super(context);
+
+        this.themeSettings = this.context.themeSettings;
+    }
+
     onReady() {
         this.initTSAffiliationCheck();
         this.initTSCartAffiliation();
@@ -15,7 +21,9 @@ export default class TSCart extends PageManager {
 
     // TST-426
     initTSCartAffiliation() {
-        const tsCartAffiliation = new TSCartAffiliation();
+        const tsConsultantId = this.themeSettings.ts_consultant_id;
+        const tsCartAffiliation = new TSCartAffiliation(tsConsultantId);
+
         return tsCartAffiliation;
     }
 }

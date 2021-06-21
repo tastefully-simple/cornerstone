@@ -2,15 +2,13 @@ import utils from '@bigcommerce/stencil-utils';
 import TSCookie from './ts-cookie';
 
 export default class TSCartAffiliation {
-    constructor() {
-        this.init();
+    constructor(tsConsultantId) {
+        this.TS_CONSULTANT_ID = tsConsultantId;
         this.checkoutButton = '.cart-actions .button--primary';
         this.formWrapper = '#ts-affiliate-cart-form-wrapper';
         this.formTitle = '.ts-cart-affiliation-wrapper > h2';
         this.noSelectionError = '.ts-cart-affiliation-wrapper .alertbox-error';
-    }
 
-    init() {
         this.renderTemplate();
     }
 
@@ -213,7 +211,13 @@ export default class TSCartAffiliation {
 
     // Scenario 4
     noOpenParties() {
-        $('.cart-affiliate-party-state').text('');
+        if (this.selectedConsultant.id === this.TS_CONSULTANT_ID) {
+            $('.cart-affiliate-consultant-selected.external-consultant').hide();
+            $('.cart-affiliate-consultant-selected.internal-consultant').show();
+        } else {
+            $('.cart-affiliate-party-state').text('');
+        }
+
         this.enableCheckout();
     }
 

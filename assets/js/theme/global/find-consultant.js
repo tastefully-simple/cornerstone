@@ -8,9 +8,6 @@ import ConsultantCard from '../common/consultant-card';
 import ConsultantParties from '../common/consultant-parties';
 import TSRemoveAffiliation from '../common/ts-remove-affiliation';
 
-// Consultants
-const TST_CONSULTANT_ID = '0160785';
-
 // Search mode
 const NO_SEARCH = 0;
 const SEARCH_BY_ZIP = 1;
@@ -31,9 +28,10 @@ const API_ERROR_MESSAGE = {
 };
 
 class FindAConsultant {
-    constructor(trigger, template) {
+    constructor(trigger, template, tsConsultantId) {
         this.$findConsultant = trigger;
         this.modalTemplate = template;
+        this.TS_CONSULTANT_ID = tsConsultantId;
         this.searchInfo = { mode: NO_SEARCH };
         this.pageSize = 10;
         this.screenMinWidth = 801;
@@ -62,7 +60,7 @@ class FindAConsultant {
 
     isExternalConsultant() {
         return this.consultant.id
-            && this.consultant.id !== TST_CONSULTANT_ID;
+            && this.consultant.id !== this.TS_CONSULTANT_ID;
     }
 
     initListeners() {
@@ -71,7 +69,7 @@ class FindAConsultant {
         this.$findConsultant.addEventListener('click', (e) => {
             // Github issue #179, go to consultant page
             if (this.consultant.id
-                && this.consultant.id !== TST_CONSULTANT_ID
+                && this.consultant.id !== this.TS_CONSULTANT_ID
                 && e.target.tagName !== 'SMALL'
                 && !$(e.target).hasClass('consultant-edit')
                 && !$(e.target).hasClass('consultant-remove')
@@ -234,6 +232,11 @@ class FindAConsultant {
     modalLoaded(result) {
         this.modal.updateContent(result);
         this.renderStatesSelect();
+
+        // TST-475 make sure to close the partybar dropdown
+        $('#partybar-find .partybar-arrow').addClass('fa-caret-right').removeClass('fa-caret-down');
+        $('#partybar-find').removeClass('active');
+        $('.partybar .partybar-accordion').css('max-height', '0px');
     }
 
     closeModal() {
@@ -283,8 +286,9 @@ class FindAConsultant {
     }
 
     displayError(err) {
-        $('.alertbox-error span').html(err);
-        $('.alertbox-error').show();
+        $('#modal #consultant-search .alertbox-error span').html(err);
+        $('#modal #consultant-search .alertbox-error').show();
+        $('#modal #consultant-search .genmodal-body').animate({ scrollTop: 0 });
     }
 
     search() {
@@ -434,7 +438,7 @@ class FindAConsultant {
 
     continueWithInternal() {
         this.continue({
-            id: TST_CONSULTANT_ID,
+            id: this.TS_CONSULTANT_ID,
             name: 'Tastefully Simple',
             image: null,
             hasOpenParty: false,
@@ -678,11 +682,14 @@ class FindAConsultant {
  * A second view is available once the user hits search. The modal is then
  * populated with data from the user's search parameters
  */
-export default function () {
+export default function (themeSettings) {
+    const tsConsultantId = themeSettings.ts_consultant_id;
+
     $(document).ready(() => {
         const consultant = new FindAConsultant(
             document.querySelector('.headertoplinks-consult'),
             'common/find-consultant',
+            tsConsultantId,
         );
 
         return consultant;

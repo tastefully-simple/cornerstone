@@ -6,7 +6,6 @@ import StatesSelect from '../common/directory/states';
 import pagination from '../common/pagination';
 import PartyCard from '../common/party-card';
 
-const TST_CONSULTANT_ID = '0160785';
 // Breakpoint for mobile
 const SCREEN_MIN_WIDTH = 801;
 // Number of page numbers to show in pagination
@@ -23,9 +22,10 @@ const API_ERROR_MESSAGE = {
 const SHOP_NO_PARTY_MESSAGE = "I'm shopping without a party or fundraiser";
 
 class FindAParty {
-    constructor(trigger, template) {
+    constructor(trigger, template, tsConsultantId) {
         this.$findParty = trigger;
         this.modalTemplate = template;
+        this.TS_CONSULTANT_ID = tsConsultantId;
         this.$findPartyBar = trigger.parent();
         this.api = new TSApi();
         this.setParty(this.loadParty());
@@ -74,7 +74,7 @@ class FindAParty {
         // Modal
         this.$findParty.on('click', (e) => {
             if ((!TSCookie.getPartyId() && !TSCookie.getConsultantHasOpenParty())
-                || TSCookie.getConsultantId() === TST_CONSULTANT_ID
+                || TSCookie.getConsultantId() === this.TS_CONSULTANT_ID
             ) {
                 this.createModal(e, this.modalTemplate);
             } else {
@@ -588,11 +588,14 @@ class FindAParty {
     }
 }
 
-export default function () {
+export default function (themeSettings) {
+    const tsConsultantId = themeSettings.ts_consultant_id;
+
     $(document).ready(() => {
         const party = new FindAParty(
             $('#partybar-find'),
             'common/find-party',
+            tsConsultantId,
         );
 
         return party;

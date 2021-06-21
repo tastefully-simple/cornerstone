@@ -1,6 +1,6 @@
-<div class="cart-affiliate-consultant-selected">
+<div class="cart-affiliate-consultant-selected external-consultant">
     <div class="cart-affiliate-consultant">
-        <img class="cart-affiliate-img" src="https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png" alt="Photograph thumbnail of Betty Evans" style="display: initial;">
+        <img class="cart-affiliate-img" onerror="this.onerror=null;this.src='https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png';" alt="Photograph thumbnail of Betty Evans" style="display: initial;">
         <div class="cart-affiliate-info">
             <p class="cart-affiliate-name frameheading-4"></p>
             <div class="consultant-info-control">
@@ -18,4 +18,28 @@
         </div>
     </div>
     <div class="cart-affiliate-party-state"></div>
+</div>
+
+{{!-- TST-478 display: none by default
+This would only display if user chooses to Shop with TST
+--}}
+<div class="cart-affiliate-consultant-selected internal-consultant">
+    <div class="cart-affiliate-consultant">
+        <img class="cart-affiliate-img" onerror="this.onerror=null;this.src='https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png';" alt="Photograph thumbnail of Tastefully Simple" style="display: initial;">
+        <div class="cart-affiliate-info">
+            <p class="frame-subhead">I'm shopping directly with</p>
+            <div class="consultant-info-control">
+                <p class="frame-subhead">
+                    <span class="cart-affiliate-name frameheading-4">Tastefully Simple</span>
+                    <button type="button" class="framelink-sm">
+                        <span class="cart-affiliate-btn consultant-edit">edit</span>
+                    </button>
+                    <span class="teal-text">&verbar;</span>
+                    <button type="button" class="framelink-sm">
+                        <span class="cart-affiliate-btn consultant-remove">remove</span>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>

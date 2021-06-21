@@ -8,9 +8,6 @@ import ConsultantCard from '../common/consultant-card';
 import ConsultantParties from '../common/consultant-parties';
 import TSRemoveAffiliation from '../common/ts-remove-affiliation';
 
-// Consultants
-const TST_CONSULTANT_ID = '0160785';
-
 // Search mode
 const NO_SEARCH = 0;
 const SEARCH_BY_ZIP = 1;
@@ -31,9 +28,10 @@ const API_ERROR_MESSAGE = {
 };
 
 class FindAConsultant {
-    constructor(trigger, template) {
+    constructor(trigger, template, tsConsultantId) {
         this.$findConsultant = trigger;
         this.modalTemplate = template;
+        this.TS_CONSULTANT_ID = tsConsultantId;
         this.searchInfo = { mode: NO_SEARCH };
         this.pageSize = 10;
         this.screenMinWidth = 801;
@@ -62,7 +60,7 @@ class FindAConsultant {
 
     isExternalConsultant() {
         return this.consultant.id
-            && this.consultant.id !== TST_CONSULTANT_ID;
+            && this.consultant.id !== this.TS_CONSULTANT_ID;
     }
 
     initListeners() {
@@ -71,7 +69,7 @@ class FindAConsultant {
         this.$findConsultant.addEventListener('click', (e) => {
             // Github issue #179, go to consultant page
             if (this.consultant.id
-                && this.consultant.id !== TST_CONSULTANT_ID
+                && this.consultant.id !== this.TS_CONSULTANT_ID
                 && e.target.tagName !== 'SMALL'
                 && !$(e.target).hasClass('consultant-edit')
                 && !$(e.target).hasClass('consultant-remove')
@@ -440,7 +438,7 @@ class FindAConsultant {
 
     continueWithInternal() {
         this.continue({
-            id: TST_CONSULTANT_ID,
+            id: this.TS_CONSULTANT_ID,
             name: 'Tastefully Simple',
             image: null,
             hasOpenParty: false,
@@ -684,11 +682,14 @@ class FindAConsultant {
  * A second view is available once the user hits search. The modal is then
  * populated with data from the user's search parameters
  */
-export default function () {
+export default function (themeSettings) {
+    const tsConsultantId = themeSettings.ts_consultant_id;
+
     $(document).ready(() => {
         const consultant = new FindAConsultant(
             document.querySelector('.headertoplinks-consult'),
             'common/find-consultant',
+            tsConsultantId,
         );
 
         return consultant;

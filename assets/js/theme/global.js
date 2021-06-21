@@ -51,8 +51,8 @@ export default class Global extends PageManager {
         newsletterAlert();
         stickyHeader();
         tsCookieConfig();
-        findConsultant();
-        findParty();
+        findConsultant(themeSettings);
+        findParty(themeSettings);
         tooltip();
         tsCheckUserLogin();
         tsAddToCart();

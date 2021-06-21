@@ -50,6 +50,7 @@
     "ts_tsapi_base_url": "https://qa1-tsapi.tastefullysimple.com",
     "ts_help_email": "help@tastefullysimple.com",
     "ts_join_store_url": "https://tastefully-simple-inc-sandbox-4.mybigcommerce.com",
+    "ts_consultant_id": "0160785",
     "hide_breadcrumbs": false,
     "hide_page_heading": false,
     "hide_category_page_heading": false,

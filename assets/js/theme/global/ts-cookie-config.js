@@ -1,11 +1,15 @@
 import TSCookie from '../common/ts-cookie';
 
-// Currently set to 15 minutes.
-// @TODO: Change this to 24 hours once QA passes
-const IN_N_MINUTES = 15 * 60 * 1000;
-
 class TSCookieConfig {
-    constructor() {
+    constructor(themeSettings) {
+        // var themeSettings.ts_log_debugging
+        // type: Boolean
+        this.TS_DEBUG_MODE = themeSettings.ts_debug_mode;
+
+        // var themeSettings.ts_affiliation_timer
+        // type: Integer (minutes)
+        this.IN_N_MINUTES = themeSettings.ts_affiliation_timer * 60 * 1000;
+
         // TST-443/TST-473
         // Delete old TS cookies
         TSCookie.deleteOldTSCookies();
@@ -16,7 +20,7 @@ class TSCookieConfig {
     }
 
     cookieSessionChecker() {
-        const initSessionExpiration = new Date(new Date().getTime() + IN_N_MINUTES);
+        const initSessionExpiration = new Date(new Date().getTime() + this.IN_N_MINUTES);
 
         if (!TSCookie.getAffiliationExpiration()) {
             TSCookie.setAffiliationExpiration(initSessionExpiration);
@@ -37,7 +41,7 @@ class TSCookieConfig {
         TSCookie.deleteAffiliationExpiration();
 
         // Reinitialize with new expire time
-        const initSessionExpireTime = new Date(new Date().getTime() + IN_N_MINUTES);
+        const initSessionExpireTime = new Date(new Date().getTime() + this.IN_N_MINUTES);
         TSCookie.setAffiliationExpiration(initSessionExpireTime);
 
         window.location.reload();
@@ -51,17 +55,18 @@ class TSCookieConfig {
     getCookieSessionExpiration() {
         const expiration = new Date(TSCookie.getAffiliationExpiration());
 
-        // @TODO: delete when QA passes
-        console.warn('Affiliation cookies will expire on', expiration);
+        if (this.TS_DEBUG_MODE) {
+            console.warn('Affiliation cookies will expire on', expiration);
+        }
 
         // Convert to ms
         return expiration - Date.now();
     }
 }
 
-export default function () {
+export default function (themeSettings) {
     $(document).ready(() => {
-        const tsCookieConfig = new TSCookieConfig();
+        const tsCookieConfig = new TSCookieConfig(themeSettings);
 
         return tsCookieConfig;
     });

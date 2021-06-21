@@ -49,8 +49,17 @@
     const customCheckout = new TSCheckout(checkoutApp);
 </script>
 
-{{!-- TST-470 Cookie Session Timeout checker --}}
+{{!--
+    TST-470 Cookie Session Timeout checker
+    - Redirect user to cart page when Cookie Session timer expires
+--}}
 <script type="text/javascript">
+    {{ inject "themeSettings" theme_settings }}
+
+    const context = JSON.parse({{jsContext}});
+    const themeSettings = context.themeSettings;
+    const TS_DEBUG_MODE = themeSettings.ts_debug_mode;
+
     setTimeout(function() {
         window.location = '/cart.php';
     }, getCookieSessionExpiration());
@@ -60,8 +69,9 @@
         const expirationCookie = decodeURIComponent(getCookie('affiliationExpiration'));
         const expiration = new Date(expirationCookie);
 
-        // @TODO: delete when QA passes
-        console.warn('in Checkout::Affiliation cookies will expire on', expiration);
+        if (TS_DEBUG_MODE) {
+            console.warn('in Checkout::Affiliation cookies will expire on', expiration);
+        }
 
         return expiration - Date.now();
     }

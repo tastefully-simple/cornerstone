@@ -50,7 +50,7 @@ export default class Global extends PageManager {
         accordian();
         newsletterAlert();
         stickyHeader();
-        tsCookieConfig();
+        tsCookieConfig(themeSettings);
         findConsultant(themeSettings);
         findParty(themeSettings);
         tooltip();

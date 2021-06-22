@@ -49,7 +49,7 @@
         "multiple": "check out with multiple addresses",
         "or": "or"
       },
-      "button": "Check out",
+      "button": "Select Option Above To Checkout",
       "empty_cart": "Your cart is empty",
       "title": "Click here to proceed to checkout",
       "item": "Item",
@@ -975,6 +975,20 @@
       "thank_you_customer_heading": "Thank you {name}!",
       "thank_you_heading": "Thank you!",
       "order_status_update_facebook_messenger_heading": "Get instant updates of your order to Messenger"
+    }
+  },
+  "ts_affiliation": {
+    "party": {
+      "search_title": "find a party or fundraiser",
+      "results_title": "choose your party",
+      "tooltip_info": "What is a party? Tastefully Simple parties and fundraisers reward hosts of $200+ events with free products. Help us ensure your host gets credit for your order."
+    },
+    "consultant": {
+      "search_title": "find your consultant",
+      "results_title": "choose a consultant",
+      "parties_title": "your consultant's parties",
+      "parties_caption": "Are you shopping with a party or fundraiser? Make sure your host gets credit for your order.",
+      "tooltip_info": "What is a consultant? Our consultants are independent business owners who help you decide what's to eat! Help us ensure your consultant receives their commission or credit."
     }
   }
 }

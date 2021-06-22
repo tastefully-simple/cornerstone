@@ -48,3 +48,37 @@
     const checkoutApp = document.getElementById('checkout-app');
     const customCheckout = new TSCheckout(checkoutApp);
 </script>
+
+{{!--
+    TST-470 Cookie Session Timeout checker
+    - Redirect user to cart page when Cookie Session timer expires
+--}}
+<script type="text/javascript">
+    {{ inject "themeSettings" theme_settings }}
+
+    const context = JSON.parse({{jsContext}});
+    const themeSettings = context.themeSettings;
+    const TS_DEBUG_MODE = themeSettings.ts_debug_mode;
+
+    setTimeout(function() {
+        window.location = '/cart.php';
+    }, getCookieSessionExpiration());
+
+    function getCookieSessionExpiration() {
+        // To get rid of %20 (space) in the expiration's value
+        const expirationCookie = decodeURIComponent(getCookie('affiliationExpiration'));
+        const expiration = new Date(expirationCookie);
+
+        if (TS_DEBUG_MODE) {
+            console.warn('in Checkout::Affiliation cookies will expire on', expiration);
+        }
+
+        return expiration - Date.now();
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+</script>

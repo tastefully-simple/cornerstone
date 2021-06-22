@@ -1,44 +1,45 @@
-<div class="consultant-card" data-cid="{consultant-id}" data-afid="{consultant-afid}" data-name="{consultant-name}">
-    <div class="selected-header">
-        <span class="icon-system-check">
-        </span>
-        <div class="vertical-center">
-            <span class="selection-title">Selected</span>
-        </div>
-    </div>
+<div
+    class="consultant-card result-card"
+    data-cid="{consultant-id}"
+    data-afid="{consultant-afid}"
+    data-name="{consultant-name}"
+    data-copenparty="{consultant-hasopenparty}"
+    >
     <div class="consultant-header">
-        <span class="fas fa-circle"></span>
+        <span class="ts-circle"></span>
         <div class="vertical-center">
-            <span class="selection-title">Select</span>
+            <span class="frame-caption selection-title">Select</span>
         </div>
     </div>
-    <div class="consultant-image">
-        <img src="{consultant-imagesrc}" onerror="this.onerror=null;this.src='https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png';">
+    <div class="selected-header">
+         <span class="ts-circle"></span>
+         </span>
+         <div class="vertical-center">
+             <span class="frame-caption selection-title">Selected</span>
+         </div>
     </div>
     <div class="consultant-info">
-        <h5 class="frameheading-5 consultant-name">{consultant-name}</h5>
-        <div class="system-14">
-            <span>{consultant-title}</span>
+        <div class="consultant-info-col consultant-image">
+            <img src="{consultant-imagesrc}" onerror="this.onerror=null;this.src='https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png';">
+        </div>
+        <div class="consultant-info-col consultant-basic-info">
+            <p class="subhead-14 consultant-name">{consultant-name}</p>
+            <p class="frame-caption">{consultant-title}</p>
+            <p class="frame-caption">{consultant-location}</p>
+        </div>
+        <div class="consultant-info-col consultant-contact">
             <div class="consultant-phone">
                 <span class="icon-system-phone"></span>
-                <div class="vertical-center system-14">
-                    <span>{consultant-phone}</span>
+                <div class="vertical-center">
+                    <span class="frame-caption">{consultant-phone}</span>
                 </div>
             </div>
             <div class="consultant-email">
                 <span class="icon-system-envelope"> </span>
-                <div class="vertical-center system-14">
+                <div class="vertical-center">
                     <span>{consultant-email}</span>
                 </div>
-            </div>
-            <span>{consultant-location}</span>
-            <div class="ts-page-link">
-                <div class="vertical-center">
-                    <a class="framelink-lg" href="{consultant-weburl}">View my TS page</a>
-                </div>
-                <span class="icon-system-download"> </span>
             </div>
         </div>
     </div>
 </div>
-<div class="consultant-divider"></div>

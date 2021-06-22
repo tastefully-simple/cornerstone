@@ -17,6 +17,31 @@
                             padding: 10px;
                             text-align: center;
                         }
+                        .headertoplinks-consult.consultant-mobile {
+                            background: $cream;
+
+                            .find-consultant-m {
+                                display: flex;
+                                justify-content: center;
+                                text-align: left;
+
+                                .consultant-img {
+                                    max-height: 75px;
+                                }
+                                .consultant-info {
+                                    margin: auto 1rem;
+                                    p {
+                                        margin: 0;
+                                        color: $text-gray;
+                                    }
+                                    .consultant-edit,
+                                    .verbar,
+                                    .consultant-remove {
+                                        color: $teal;
+                                    }
+                                }
+                            }
+                        }
                         .headertoplinks-consult-text {
                             font-weight:700;
                         }

@@ -29,8 +29,8 @@ function trackTrans() {
     dataLayer.push(transaction);
 }
 var pageTracker = new trackGTMEcommerce();
-function getPartyId() {
-    var cookieName = 'pid';
+
+function getAffiliationCookie(cookieName) {
     var value = `; ${document.cookie}`;
     var parts = value.split(`; ${cookieName}=`);
     if (parts.length === 2) {
@@ -39,9 +39,13 @@ function getPartyId() {
         return null;
     }
 }
-var partyId = getPartyId('pid');
+
+var partyId = getAffiliationCookie('pid');
+var consultantId = getAffiliationCookie('cid');
+
 window.dataLayer.push({
-    'event' : 'partyID',
+    'event' : 'affiliation',
+    'dimension2': consultantId,
     'dimension3': partyId
 });
 </script>

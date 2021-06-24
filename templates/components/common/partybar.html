@@ -1,26 +1,40 @@
 {{!-- Find a Party bar --}}
 <div class="partybar">
     <div id="partybar-find" class="partybar-container">
-        <p class="partybar-text">
-          Find a party
-        </p>
-        <span class="fa fa-caret-right" aria-hidden="true"></span>
+        <button type="button" class="partybar-main-text">Find a Party or Fundraiser</button>
+        <span class="fa fa-caret-right partybar-arrow" aria-hidden="true"></span>
     </div>
+    {{!--
+        TST-436
+        * Items in partybar-accordion are manipulated in
+          the find-party.js script
+    --}}
     <div class="partybar-accordion">
-        <div class="partybar-button">
-            <p class="partybar-text">
-                view party
-            </p>
+        <div class="pbaccordion-partyselected">
+            <div class="partybar-button">
+                <button type="button" class="framelink-xl"> view party </button>
+            </div>
+            <div class="partybar-button">
+                <button type="button" class="framelink-xl"> copy &amp; share party link </button>
+            </div>
+            <div class="partybar-button">
+                <p class="framelink-xl">
+                    <button type="button" class="framelink-xl">edit</button>
+                    <span class="white-text">&verbar;</span>
+                    <button type="button" class="framelink-xl">remove party</button>
+                </p>
+            </div>
         </div>
-        <div class="partybar-button">
-            <p class="partybar-text">
-                switch parties
-            </p>
-        </div>
-        <div class="partybar-button">
-            <p class="partybar-text">
-                remove party
-            </p>
+        <div class="pbaccordion-nopartyselected">
+            <div class="partybar-button">
+                <button type="button" class="framelink-xl"> view Sally Sue's parties </button>
+            </div>
+            <div class="partybar-text">
+                <p> Sally Sue doesn't have any open parties </p>
+            </div>
+            <div class="partybar-button">
+                <button type="button" class="framelink-xl"> view all parties </button>
+            </div>
         </div>
     </div>
 </div>

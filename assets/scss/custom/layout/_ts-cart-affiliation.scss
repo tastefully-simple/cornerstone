@@ -1,0 +1,179 @@
+/*
+ * Affiliation section in the cart page
+ * (under Grand total)
+ */
+
+#ts-cart-affiliation {
+    margin-right: 4px;
+    width: 100%;
+    h2 {
+        font-size:18px;
+    }
+    .ts-cart-affiliation-wrapper {
+        align-items:center;
+        background-color: $butterscotch;
+        display:flex;
+        flex-direction:column;
+        height:auto;
+        position: relative;
+        .alertbox-error {
+            display: none;
+            position: absolute;
+            top: -22px;
+            height: 95px;
+            width: 305px;
+            .alert-title {
+                text-align: left;
+            } 
+        }
+        #ts-affiliate-cart-form-wrapper {
+            margin-bottom: 5px;
+            &.error {
+                padding: 20px 20px 5px;
+                border: 2px solid $utility-red;
+                margin-top: 75px;
+            }
+            .ts-affiliate-cart-form {
+                align-items:flex-start;
+                display:flex;
+                flex-direction:column;
+                label {
+                    align-items:center;
+                    cursor:pointer;
+                    display:flex;
+                    margin-bottom:1rem;
+                    input {
+                        margin-right:1ch;
+                    }
+                    .icon-system-info {
+                        cursor:pointer;
+                        height:16px;
+                        margin-left:.5ch;
+                        width:16px;
+                        vertical-align:middle;
+                    }
+                }
+                .tooltip-right {
+                    align-self:flex-end;
+                }
+                .tooltip-content {
+                    left: unset !important;
+                    min-width:200px;
+                    right: -6px;
+                    top: -8px !important;
+                }
+            }
+        }
+        .cart-affiliate-consultant-selected.internal-consultant {
+            display: none;
+            p {
+                text-align: left;
+                margin-bottom: 0;
+            }
+        }
+        .cart-affiliate-consultant-selected {
+            margin:auto;
+            width:100%;
+            button {
+                color: $teal;
+            }
+            .cart-affiliate-consultant {
+                align-items:center;
+                display:flex;
+                justify-content:center;
+                margin-bottom:1rem;
+                img {
+                    font-size: 6px;
+                    height:50px;
+                    margin-right:1rem;
+                    width:50px;
+                }
+                .cart-affiliate-name {
+                    margin-bottom:0;
+                    text-align:left;
+                }
+                .consultant-info-control {
+                    p {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            .cart-affiliate-party {
+                border-top: 1px solid $text-gray;
+                margin:auto;
+                padding-top:1rem;
+                text-align:center;
+                width:85%;
+                &.noparty {
+                    p {
+                        &:not(:last-of-type) {
+                            margin-bottom:.25rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Checkout button
+.cart-actions {
+    align-items: center;
+    background-color: $butterscotch;
+    display: flex;
+    flex-direction: column;
+
+    a.button {
+        margin: 0;
+        margin-bottom: 2rem;
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width:801px) {
+    #ts-cart-affiliation .ts-cart-affiliation-wrapper,
+    .cart-actions {
+        width: grid-calc(7, $total-columns);
+    }
+
+    #ts-cart-affiliation {
+        margin-right: 4px;
+        width: 100%;
+    
+        &::after {
+          content: " ";
+           display: block; 
+           height: 0; 
+           clear: both;
+        }
+    
+        .ts-cart-affiliation-wrapper {
+            float: right;
+            text-align: right;
+        }
+    }
+    
+    // Checkout button
+    .cart-actions {
+        justify-content: center;
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
+@media only screen and (min-width:1261px) {
+    #ts-cart-affiliation .ts-cart-affiliation-wrapper,
+    .cart-actions {
+        width: grid-calc(5, $total-columns);
+    }
+}
+
+@media only screen and (max-width:305px) {
+    #ts-cart-affiliation {
+        .ts-cart-affiliation-wrapper {
+            .alertbox-error {
+                width: 100%;
+            }
+        }
+    }
+}

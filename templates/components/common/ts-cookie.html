@@ -5,8 +5,12 @@
 
         w.TSCookie = {
             // Consultant ID
+            // Type: Str
             setConsultantId: function(cid) {
-                Cookies.set('cid', cid, { domain: cookieDomain });
+                // Remove trailing spaces
+                const newCid = cid ? cid.trim() : cid;
+
+                Cookies.set('cid', newCid, { domain: cookieDomain });
             },
 
             getConsultantId: function() {
@@ -40,7 +44,17 @@
                 return Cookies.get('name');
             },
 
+            // Consultant Has Open Party?
+            setConsultantHasOpenParty: function(copenparty) {
+                Cookies.set('copenparty', copenparty, { domain: cookieDomain });
+            },
+
+            getConsultantHasOpenParty: function() {
+                return Cookies.get('copenparty');
+            },
+
             // Party Id
+            // Type: Int
             setPartyId: function(pid) {
                 Cookies.set('pid', pid, { domain: cookieDomain });
             },
@@ -87,41 +101,53 @@
 
             // Delete Party cookies
             deleteParty: function() {
-                Cookies.remove('pid', { domain: cookieDomain});
-                Cookies.remove('phost', { domain: cookieDomain});
-                Cookies.remove('pdate', { domain: cookieDomain});
-                Cookies.remove('ptime', { domain: cookieDomain});
-                Cookies.remove('ptotal', { domain: cookieDomain});
+                Cookies.remove('pid', { domain: cookieDomain });
+                Cookies.remove('phost', { domain: cookieDomain });
+                Cookies.remove('pdate', { domain: cookieDomain });
+                Cookies.remove('ptime', { domain: cookieDomain });
+                Cookies.remove('ptotal', { domain: cookieDomain });
             },
 
             deleteConsultant: function() {
-                Cookies.remove('cid', { domain: cookieDomain});
-                Cookies.remove('name', { domain: cookieDomain});
-                Cookies.remove('cimg', { domain: cookieDomain});
-                Cookies.remove('afid', { domain: cookieDomain});
+                Cookies.remove('cid', { domain: cookieDomain });
+                Cookies.remove('name', { domain: cookieDomain });
+                Cookies.remove('cimg', { domain: cookieDomain });
+                Cookies.remove('afid', { domain: cookieDomain });
+                Cookies.remove('copenparty', { domain: cookieDomain });
             },
 
-            deleteOldAffiliation: function() {
-                const domain = window.location.hostname;
+            deleteOldTSCookies: function() {
+                // Delete Old Party cookies
+                Cookies.remove('pid');
+                Cookies.remove('phost');
+                Cookies.remove('pdate');
+                Cookies.remove('ptime');
+                Cookies.remove('ptotal');
 
-                if (domain == 'www.tastefullysimple.com') {
-                    // Delete Old Party cookies
-                    Cookies.remove('pid');
-                    Cookies.remove('phost');
-                    Cookies.remove('pdate');
-                    Cookies.remove('ptime');
-                    Cookies.remove('ptotal');
+                // Delete Old Consultant cookies
+                Cookies.remove('cid');
+                Cookies.remove('name');
+                Cookies.remove('cimg');
+                Cookies.remove('afid');
 
-                    // Delete Old Consultant cookies
-                    Cookies.remove('cid');
-                    Cookies.remove('name');
-                    Cookies.remove('cimg');
-                    Cookies.remove('afid');
-                }
+                // Others
+                Cookies.remove('loginStateChecker');
+            },
+
+            setAffiliationExpiration: function(time) {
+                Cookies.set('affiliationExpiration', time, { domain: cookieDomain });
+            },
+
+            getAffiliationExpiration: function() {
+                return Cookies.get('affiliationExpiration');
+            },
+
+            deleteAffiliationExpiration: function() {
+                Cookies.remove('affiliationExpiration');
             },
 
             setLoginStateChecker: function(loginState) {
-                Cookies.set('loginStateChecker', loginState);
+                Cookies.set('loginStateChecker', loginState, { domain: cookieDomain });
             },
 
             getLoginStateChecker: function() {

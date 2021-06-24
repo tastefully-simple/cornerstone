@@ -50,6 +50,9 @@
     "ts_tsapi_base_url": "https://qa1-tsapi.tastefullysimple.com",
     "ts_help_email": "help@tastefullysimple.com",
     "ts_join_store_url": "https://tastefully-simple-inc-sandbox-4.mybigcommerce.com",
+    "ts_consultant_id": "0160785",
+    "ts_affiliation_timer": 15,
+    "ts_debug_mode": true,
     "hide_breadcrumbs": false,
     "hide_page_heading": false,
     "hide_category_page_heading": false,
@@ -169,7 +172,7 @@
     "button--primary-backgroundColor": "#7f4252",
     "button--primary-backgroundColorHover": "#610b31",
     "button--primary-backgroundColorActive": "#610b31",
-    "button--disabled-color": "#bbbbbb",
+    "button--disabled-color": "#979797",
     "button--disabled-backgroundColor": "#e2e2e2",
     "button--disabled-borderColor": "transparent",
     "icon-color": "#00757d",
@@ -402,7 +405,8 @@
       },
       "images": {},
       "settings": {
-        "ts_tsapi_base_url": "https://qa1-tsapi.tastefullysimple.com"
+        "ts_tsapi_base_url": "https://qa1-tsapi.tastefullysimple.com",
+        "ts_affiliation_timer": 15
       }
     },
     {
@@ -427,7 +431,8 @@
         "ts_current_store_base_url": "https://tastefully-simple-sandbox-1.mybigcommerce.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://stage-tsapi.tastefullysimple.com",
-        "ts_join_store_url": "https://tastefully-simple-inc-sandbox-5.mybigcommerce.com"
+        "ts_join_store_url": "https://tastefully-simple-inc-sandbox-5.mybigcommerce.com",
+        "ts_affiliation_timer": 15
       }
     },
     {
@@ -452,7 +457,9 @@
         "ts_current_store_base_url": "https://www.tastefullysimple.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://tsapi.tastefullysimple.com",
-        "ts_join_store_url": "https://join.tastefullysimple.com"
+        "ts_join_store_url": "https://join.tastefullysimple.com",
+        "ts_affiliation_timer": 1440,
+        "ts_debug_mode": false
       }
     }
   ]

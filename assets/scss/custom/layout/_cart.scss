@@ -3,6 +3,9 @@
 // =============================================================================
 
 .cart {
+    .headertoplinks-consult {
+        display:none;
+    }
     .cart-affiliate {
         align-items:center;
         background-color: $cream;
@@ -66,6 +69,12 @@
     .cart-actions {
         .button {
             text-transform:lowercase;
+            &.button--tertiary {
+                background-color: $white;
+            }
+        }
+        .button--primary {
+            outline: none !important;
         }
     }
 }

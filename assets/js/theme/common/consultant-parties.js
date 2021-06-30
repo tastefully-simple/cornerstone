@@ -43,12 +43,13 @@ export default class ConsultantParties {
     }
 
     renderModal() {
+        // Reset
         this.clearWindow();
         $('#consultant-search').hide();
         $('#consultant-search-results').hide();
         $('.alertbox-error').hide();
-
         this.$parent.show();
+        this.removeEventHandlers();
 
         // Set selected consultant info
         const $consultantImg = this.$parent.find('.consultant-image img');
@@ -61,8 +62,6 @@ export default class ConsultantParties {
         this.$parent.find('article').append(this.defaultPartyCardHtml());
         // Reset selected party card
         this.$parent.find('.party-card.selected').removeClass('selected');
-        // Always select default party card first
-        this.$parent.find('.default-party-card').addClass('selected');
 
         // Render Party cards
         const partyCard = new PartyCard();
@@ -90,8 +89,13 @@ export default class ConsultantParties {
         $('body').on('click', '#consultantparties-continue', () => this.continueWithSelection());
     }
 
+    removeEventHandlers() {
+        $('body').off('click', '#consultantparties-search-results .party-card');
+        $('body').off('click', '#consultantparties-continue');
+    }
+
     defaultPartyCardHtml() {
-        return `<div class="party-card result-card default-party-card selected">
+        return `<div class="party-card result-card">
             <div class="party-header">
                 <span class="ts-circle"></span>
                 <div class="vertical-center">
@@ -115,19 +119,25 @@ export default class ConsultantParties {
     selectParty(e) {
         $('.alertbox-error').hide();
 
+        $('.party-header').show();
         const $partyCard = $(e.target).closest('.party-card');
 
-        $('.party-header').css('display', 'flex');
+        if (!$partyCard.hasClass('selected')) {
+            $('#consultantparties-search-results .selected').toggleClass('selected');
+            /* No party card does not have pid data attr.
+             * So $partyCard.data('pid') will return undefined
+             * when that card is selected
+             */
+            this.selectedPid = $partyCard.data('pid');
+            $partyCard.find('.party-header').hide();
+            $('#consultantparties-continue').attr('disabled', false);
+        } else {
+            $partyCard.find('.party-header').show();
+            this.selectedPid = null;
+            $('#consultantparties-continue').attr('disabled', true);
+        }
 
-        /* Default party card does not have pid data attr.
-         * So $partyCard.data('pid') will return undefined
-         * when that card is selected
-         */
-        this.selectedPid = $partyCard.data('pid');
-
-        $partyCard.find('.party-header').show().toggle();
-        $('.selected').removeClass('selected');
-        $(e.target).closest('.party-card').addClass('selected');
+        $(e.target).closest('.party-card').toggleClass('selected');
 
         // Display highlighted party in modal's footer
         const partyHost = $partyCard.data('phost');
@@ -203,6 +213,10 @@ export default class ConsultantParties {
             this.$parent
                 .find('.next-step-selected-text')
                 .html(selectedMessage);
+        } else if (this.selectedPid === null) {
+            this.$parent
+                .find('.next-step-selected-text')
+                .text('');
         } else {
             this.$parent
                 .find('.next-step-selected-text')

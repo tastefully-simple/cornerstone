@@ -1,0 +1,54 @@
+// =============================================================================
+// Tastefully Simple Host Planner Styles
+// =============================================================================
+
+.party-planner-results {
+    #partyOrders {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        th {
+            padding: 5px 5px;
+            width: unset; 
+        }
+        tbody {
+            tr {
+                td:first-child {
+                    text-align: left; 
+                    padding: 5px;
+                }
+            }
+        }
+        .booked-parties {
+            background-color: $COLOR_GREEN_LIGHT;
+            margin: 10px 0;
+            .parties {
+                margin-left: 32px;
+            }
+            .collapse-parent {
+                align-items: center;
+                display: flex;
+                padding: 5px 0;
+                .star {
+                    height: 0.7rem;
+                    margin: 0 8px;
+                }
+                .subhead-16 {
+                    padding: 1px 0;
+                }
+                .booked-toggle {
+                    margin: 0 30px;
+                    display: flex;
+                    align-items: center;
+                    .icon-toggle-minus {
+                        display: none;
+                    }
+                    .icon-toggle-plus {
+                        height: 18px;
+                        width: 18px;
+                    }   
+                }
+            }
+        }
+    }
+}

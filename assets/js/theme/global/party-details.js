@@ -26,7 +26,7 @@ class PartyDetails {
         .catch(function(err) { console.warn('getPartyInfo:', err)});
     }
 
-    renderResults() {
+    renderResults(response) {
         if (typeof response === 'string') {
             console.warn('PartyDetails::renderResults', response);
             return;
@@ -35,7 +35,7 @@ class PartyDetails {
         this.getHtmlBlock(response);
     }
   
-    getHtmlBlock() {
+    getHtmlBlock(data) {
         document.getElementById('hpPartyDetailName').innerHTML = data.PartyTitle;
         document.getElementById('hpPartyDetailDate').innerHTML = data.Date;
         document.getElementById('hpPartyDetailTime').innerHTML = data.Time;

@@ -2,17 +2,24 @@ import TSCookie from '../common/ts-cookie';
 
 class TSCookieConfig {
     constructor(themeSettings) {
-        // var themeSettings.ts_log_debugging
+        // var themeSettings.ts_debug_mode
         // type: Boolean
         this.TS_DEBUG_MODE = themeSettings.ts_debug_mode;
+
+        // var themeSettings.zoy_dev_mode
+        // type: Boolean
+        this.ZOY_DEV_MODE = themeSettings.zoy_dev_mode;
 
         // var themeSettings.ts_affiliation_timer
         // type: Integer (minutes)
         this.IN_N_MINUTES = themeSettings.ts_affiliation_timer * 60 * 1000;
 
         // TST-443/TST-473
-        // Delete old TS cookies
-        TSCookie.deleteOldTSCookies();
+        // This fix only applies for the 3 TST environments.
+        // Local dev env is not affected by this issue.
+        if (!this.ZOY_DEV_MODE) {
+            TSCookie.deleteOldTSCookies();
+        }
 
         // TST-473 Remove TS Affiliation cookies
         // after the set expiration time
@@ -22,14 +29,30 @@ class TSCookieConfig {
     cookieSessionChecker() {
         const initSessionExpiration = new Date(new Date().getTime() + this.IN_N_MINUTES);
 
-        if (!TSCookie.getAffiliationExpiration()) {
-            TSCookie.setAffiliationExpiration(initSessionExpiration);
-        }
+        if (this.isDateValid(initSessionExpiration)) {
+            const expirationCookie = TSCookie.getAffiliationExpiration();
 
-        setTimeout(
-            () => this.deleteAffiliationCookies(),
-            this.getCookieSessionExpiration(),
-        );
+            // Check first if affiliationExpiration cookie exists
+            // If it does not, set a new expiration date and save it
+            // as a cookie
+            // Else set the existing expiration from cookie
+            let expiration;
+            if (!expirationCookie) {
+                expiration = initSessionExpiration;
+                TSCookie.setAffiliationExpiration(expiration);
+            } else {
+                expiration = new Date(expirationCookie);
+            }
+
+            if (this.isDateValid(expiration)) {
+                setTimeout(
+                    () => this.deleteAffiliationCookies(),
+                    this.getCookieSessionExpiration(expiration),
+                );
+            } else {
+                TSCookie.deleteAffiliationExpiration();
+            }
+        }
     }
 
     deleteAffiliationCookies() {
@@ -41,26 +64,31 @@ class TSCookieConfig {
         TSCookie.deleteAffiliationExpiration();
 
         // Reinitialize with new expire time
-        const initSessionExpireTime = new Date(new Date().getTime() + this.IN_N_MINUTES);
-        TSCookie.setAffiliationExpiration(initSessionExpireTime);
+        const initSessionExpiration = new Date(new Date().getTime() + this.IN_N_MINUTES);
 
-        window.location.reload();
+        if (this.isDateValid(initSessionExpiration)) {
+            TSCookie.setAffiliationExpiration(initSessionExpiration);
 
-        setTimeout(
-            () => this.deleteAffiliationCookies(),
-            this.getCookieSessionExpiration(),
-        );
+            window.location.reload();
+
+            setTimeout(
+                () => this.deleteAffiliationCookies(),
+                this.getCookieSessionExpiration(initSessionExpiration),
+            );
+        }
     }
 
-    getCookieSessionExpiration() {
-        const expiration = new Date(TSCookie.getAffiliationExpiration());
-
+    getCookieSessionExpiration(expiration) {
         if (this.TS_DEBUG_MODE) {
             console.warn('Affiliation cookies will expire on', expiration);
         }
 
         // Convert to ms
         return expiration - Date.now();
+    }
+
+    isDateValid(date) {
+        return date.toString() !== 'Invalid Date';
     }
 }
 

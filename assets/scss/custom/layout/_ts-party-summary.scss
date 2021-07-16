@@ -1,0 +1,255 @@
+// =============================================================================
+// Tastefully Simple Host Planner Styles
+// =============================================================================
+
+.party-planner-results {
+    .shg-row {
+        display: flex;
+    }
+    #partyOrders {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .booked-parties {
+            .party-list {
+                padding-bottom: 10px;
+                .party {
+                    margin-left: 31px;
+                }
+            }
+            &.collapsed {
+                .party-list {
+                    display: none !important;
+                }
+                .collapse-parent {
+                    .icon-toggle-minus {
+                        display: none !important;
+                    }
+                    .icon-toggle-plus {
+                        display: block !important;
+                    }
+                }
+            }
+        }
+        .simple-table {
+            th {
+                padding: 5px 5px;
+                width: unset; 
+            }
+            tbody {
+                tr {
+                    td:first-child {
+                        text-align: left; 
+                        padding: 5px;
+                    }
+                    td {
+                        position: relative;
+                        .star {
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            left: -15px;
+                            height: 0.8rem;
+                        }
+                    }
+                }
+            }
+        }
+        .booked-parties {
+            background-color: $COLOR_GREEN_LIGHT;
+            margin: 10px 0;
+            .parties {
+                margin-left: 32px;
+            }
+            .collapse-parent {
+                align-items: center;
+                display: flex;
+                padding: 5px 0;
+                .star {
+                    height: 0.8rem;
+                    margin: 0 8px;
+                }
+                .subhead-16 {
+                    padding: 1px 0;
+                }
+                .booked-toggle {
+                    margin: 0 30px;
+                    display: flex;
+                    align-items: center;
+                    .icon-toggle-plus {
+                        display: none;
+                    }
+                    .icon-toggle-plus, .icon-toggle-minus {
+                        height: 18px;
+                        width: 18px;
+                    }   
+                }
+            }
+        }
+    }
+    #host-rewards {
+        width: 500px;
+        margin-bottom: 15px;
+        .grid-card {
+            width: unset;
+            padding: 0;
+            text-align: center;
+            color: #000;
+            .rewards-head {
+                display: flex;
+                flex-direction: column;
+                margin: auto;
+                width: 60%;
+                .rewards-amount-container {
+                    display: none;
+                    #rewards-amount {
+                        color: #000;
+                        margin: 0;
+                    }
+                }
+                .rewards-title {
+                    margin-bottom: 5px;
+                    margin-top: 10px;
+                    color: #000;
+                }
+                .rewards-message {
+                    display: none;
+                    margin-bottom: 0;
+                }
+            }
+            .rewards-body {
+                display: flex;
+                flex-direction: column;
+                padding: 0 10px 10px;
+                hr {
+                    width: 100%;
+                    border-top: 2px solid $COLOR_GRAY_100;
+                    margin: 0;
+                }
+                .section {
+                    width: 95%;
+                    margin: auto;
+                    text-align: left;
+                    overflow: initial;
+                    padding: 10px 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    .section-title {
+                        margin: 0 0 20px 0;
+                        color: black;
+                    }
+                    .progress-container {
+                        margin-bottom: 10px;
+                        margin-top: 10px;
+                        color: #000;
+                        background-color: #f1f1f1;
+                        border-radius: 16px;
+                        .progress {
+                            color: #fff;
+                            background-color: $teal;
+                            border-radius: 16px;
+                            height: 15px;
+                            position:relative;
+                            .pointer {
+                                display: flex;
+                                justify-content: flex-end;
+                                position: absolute;
+                                right: 17px;
+                                width: 100%;
+                                &.achieved {
+                                    .achieved-icon {
+                                        display: flex;
+                                        justify-content: center;
+                                    }
+                                    .pointer-circle {
+                                        display: none;
+                                    }
+                                }
+                                .achieved-icon {
+                                    border-radius: 50%;
+                                    background-color: #fff;
+                                    position: absolute;
+                                    border: 2px solid #fff;
+                                    top: -8px;
+                                    right: -18px;
+                                    display: none;
+                                    font-size: 27px;
+                                    .progress-amount {
+                                        top: -62px;
+                                    }
+                                }
+                                .pointer-circle {
+                                    width: 30px;
+                                    height: 30px;
+                                    top: -7px; 
+                                    border: 2px solid #fff;
+                                    display: flex;
+                                    justify-content: center;
+                                    &:before {
+                                        content: "";
+                                    }
+                                }
+                                .progress-amount {
+                                    margin-bottom: 0;
+                                    display: block;
+                                    position: absolute;
+                                    min-width: 27px;
+                                    top: -67px;
+                                    color: #000;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .rewards-footer {
+                h3 {
+                    color: #000;
+                    margin-top: 0;
+                }
+            }
+            .rewards-top {
+                border-radius: 5px 5px 0 0;
+            }
+            .rewards-bottom {
+                border-radius: 0 0 5px 5px;
+            }
+            .rewards-top, .rewards-bottom {
+                background-color: $COLOR_PRIMARY_100;
+                padding: 5px 20px;
+            }
+        }
+    }
+}
+@media (max-width: 1060px) {
+    .party-planner-results {
+        .shg-row {
+            flex-direction: column;
+            align-items: center;
+            #host-rewards {
+                margin: 15px auto;
+            }
+        }
+    }
+}
+@media (max-width: 768px) {
+    .party-planner-results {
+        #partyOrders {
+            width: 100%;
+            .simple-table {
+                margin: auto;
+                width: 95%;
+            }
+            .booked-parties {
+                margin-right: 10px;
+            }
+            .subhead-16 {
+                margin-right: 10px;
+            }
+        }
+        #host-rewards {
+            width: 95%;
+        }
+    }
+}

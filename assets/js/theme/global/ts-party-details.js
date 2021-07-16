@@ -13,11 +13,13 @@ class PartyDetails {
     }
 
     async displayPartyInfo() {
-        try {
-            const partyInfo = await this.api.getPartyInfo(this.pid);
-            this.renderResults(partyInfo);
-        } catch (error) {
-            console.warn('getPartyInfo:', error);
+        if (typeof this.pid !== 'undefined') {
+            try {
+                const partyInfo = await this.api.getPartyInfo(this.pid);
+                this.renderResults(partyInfo);
+            } catch (error) {
+                console.warn('getPartyInfo:', error);
+            }
         }
     }
 

@@ -20,31 +20,36 @@ class PartySummary {
         this.clearGuestsInfo();
         
         if (guestInfo == null) {
-            var guestInfo; 
-            try {
-                guestInfo = await this.api.getPartyGuests('1706799'); //this.pid
-            } catch(error) {
-                console.warn('getPartyGuests:', error);
-                return;
+            var guestInfo = {"Guests": [], "TotalGuests": 0}; 
+            if (typeof this.pid !== 'undefined') {
+                try {
+                    guestInfo = await this.api.getPartyGuests(this.pid);
+                } catch(error) {
+                    console.warn('getPartyGuests:', error);
+                    guestInfo = {"Guests": [], "TotalGuests": 0};
+                }
             }
         }
 
-        this.getPagination(guestInfo);
-
         const pageGuests = this.getPageGuests(guestInfo.Guests);
+        this.getPagination(guestInfo);
         this.displayGuestsInfo(pageGuests);
         this.displayPaginationInfo(pageGuests, guestInfo.TotalGuests);
         this.displayBookedPartiesInfo(pageGuests);
     }
 
     async displayRewardsInfo() {
-        var rewardsInfo; 
+        var rewardsInfo = {"Rewards": [], "PartySales": 0}; 
 
-        try {
-            rewardsInfo = await this.api.getPartyRewards('1706799'); //this.pid
-        } catch(error) {
-            console.warn('getPartyRewards:', error);
+        if (typeof this.pid !== 'undefined') {
+            try {
+                rewardsInfo = await this.api.getPartyRewards(this.pid);
+            } catch(error) {
+                console.warn('getPartyRewards:', error);
+                rewardsInfo = {"Rewards": [], "PartySales": 0};
+            }
         }
+
 
         this.displayRewardsSalesInfo(rewardsInfo.PartySales);
         rewardsInfo.Rewards.forEach((rewardCategoryInfo) => {
@@ -159,18 +164,47 @@ class PartySummary {
     }
 
     getPageGuests(guests) {
+        if (guests.length == 0) {
+            return [];
+        }
+
         var chunks = [];
         for (let i = 0; i < guests.length; i += this.guestPageSize) {
            chunks.push(guests.slice(i, i + this.guestPageSize));
         }
-
+      
         return chunks[this.guestCurrentPage-1];
     }
 
     displayGuestsInfo(guests) {
+        if (guests.length == 0) {
+            this.insertEmptyGuestRows();
+            this.fillEmptyGuestRows();
+            $('#partyOrders .guest-info-pagination-container').hide();
+            $('#partyOrders .guest-info-pagination-container').hide();
+            $('#partyOrders .booked-parties').toggleClass('collapsed');
+            return;
+        }
         guests.forEach((guest) => {
             this.insertGuestRow(guest);
         });
+    }
+
+    insertEmptyGuestRows() {
+        for (let i = 0; i < 10; i++) {
+            var $row = $('<tr>');
+            $row.append($('<td>'));
+            $('#partyOrders tbody').append($row);
+        }
+    }
+
+    fillEmptyGuestRows() {
+        var $firstCell = $('#partyOrders .simple-table tbody tr:first-of-type td'); 
+        var $allCells = $('#partyOrders .simple-table tbody td');
+
+        $allCells.attr('colspan', 3);
+        $allCells.css('height', '34px');
+        $firstCell.html('Your party orders will display here.');
     }
 
     insertGuestRow(guest) {
@@ -215,6 +249,9 @@ class PartySummary {
             }
         }
         $('#partyOrders .collapsible').html(`${bookedParties} Booked Parties`);
+        if (bookedParties == 0) {
+            $('#partyOrders .booked-parties').toggleClass('collapsed');
+        }
     }
 
     bindPartyEvents() {

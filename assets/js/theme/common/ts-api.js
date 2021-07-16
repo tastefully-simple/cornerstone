@@ -1,10 +1,15 @@
 export default class TSApi {
     constructor() {
         this.baseUrl = window.theme_settings.ts_tsapi_base_url;
+        this.hostPartyBaseUrl = window.theme_settings.ts_tsapi_host_party_base_url;
     }
 
     fullUrl(uri) {
         return this.baseUrl + uri;
+    }
+
+    fullPartyUrl(uri) {
+        return this.hostPartyBaseUrl + uri;
     }
 
     welcomeCheck(email) {
@@ -221,6 +226,36 @@ export default class TSApi {
             type: 'GET',
             accepts: 'json',
             url: this.fullUrl('/join/tc'),
+        });
+    }
+
+    getPartyGuests(pid) {
+        const uri = `/planner/guests/${pid}`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullPartyUrl(uri),
+        });
+    }
+
+    getPartyRewards(pid) {
+        const uri = `/planner/rewards/${pid}`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullPartyUrl(uri),
+        });
+    }
+
+    getPartyInfo(pid) {
+        const uri = `/party/planner?pid=${pid}`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
         });
     }
 }

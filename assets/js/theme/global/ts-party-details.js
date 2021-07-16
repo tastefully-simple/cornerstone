@@ -1,29 +1,24 @@
 import PageManager from '../page-manager';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
+//For await
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 class PartyDetails {
     constructor() {
-        if (window.location.href.indexOf("host-planner") > -1) {
-            this.api = new TSApi();
-            this.pid = TSCookie.getPartyId();
-            debugger;
-            this.baseUrl = this.api.baseUrl;
-            this.getPartyInfo();
-        }
+        this.api = new TSApi();
+        this.pid = TSCookie.getPartyId();
+        this.displayPartyInfo();
     }
 
-    getPartyInfo() {
-        var self = this;
-        var url = this.baseUrl + '/party/planner?pid=' + this.pid;
-        
-        return fetch(url, {
-            method: 'GET',
-            headers: { 'Accept': 'application/json' }
-        })
-        .then(function(res) { return res.json(); })
-        .then(function(data) { return self.renderResults(data); })
-        .catch(function(err) { console.warn('getPartyInfo:', err)});
+    async displayPartyInfo() {
+        try {
+            const partyInfo = await this.api.getPartyInfo(this.pid);
+            this.renderResults(partyInfo);
+        } catch (error) {
+            console.warn('getPartyInfo:', error);
+        }
     }
 
     renderResults(response) {
@@ -49,10 +44,8 @@ class PartyDetails {
     }
 }
 
-export default class PartyDetailsX extends PageManager {
-    constructor() {
-        const partyDetails = new PartyDetails();
-
-        return partyDetails;
+export default function () {
+    if (window.location.href.indexOf("host-planner") > -1) {
+        return new PartyDetails();
     }
 }

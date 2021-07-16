@@ -26,6 +26,8 @@ import tsCheckUserLogin from './global/ts-check-user-login';
 import tsAddToCart from './global/ts-add-to-cart';
 import tsJoinProcess from './global/ts-join-process';
 import tsCookieConfig from './global/ts-cookie-config';
+import tsPartyDetails from './global/ts-party-details';
+import tsPartySummary from './global/ts-party-summary';
 
 export default class Global extends PageManager {
     onReady() {
@@ -57,5 +59,7 @@ export default class Global extends PageManager {
         tsCheckUserLogin();
         tsAddToCart();
         tsJoinProcess(themeSettings);
+        tsPartyDetails();
+        tsPartySummary();
     }
 }

@@ -25,6 +25,7 @@ class PartySummary {
                 guestInfo = await this.api.getPartyGuests('1706799'); //this.pid
             } catch(error) {
                 console.warn('getPartyGuests:', error);
+                return;
             }
         }
 

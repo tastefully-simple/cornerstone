@@ -12,47 +12,60 @@ class PartySummary {
         this.pid = TSCookie.getPartyId();
         this.guestCurrentPage = 1;
         this.guestPageSize = 10;
+        this.guestInfo = {"Guests": [], "TotalGuests": 0};
+        this.rewardsInfo = {"Rewards": [], "PartySales": 0};
+        this.initTableGuests();
+        this.initRewards();
+    }
+
+    async initTableGuests() {
+        try { await this.fetchPartyGuests() } catch {};
         this.displayGuestsTableInfo();
+    }
+
+    async initRewards() {
+        try { await this.fetchRewardsInfo() } catch {};
         this.displayRewardsInfo();
     }
 
-    async displayGuestsTableInfo(guestInfo = null) {
-        this.clearGuestsInfo();
-        
-        if (guestInfo == null) {
-            var guestInfo = {"Guests": [], "TotalGuests": 0}; 
-            if (typeof this.pid !== 'undefined') {
-                try {
-                    guestInfo = await this.api.getPartyGuests(this.pid);
-                } catch(error) {
-                    console.warn('getPartyGuests:', error);
-                    guestInfo = {"Guests": [], "TotalGuests": 0};
-                }
-            }
+    async fetchPartyGuests() {
+        if (typeof this.pid !== 'undefined') {
+            return this.api.getPartyGuests(this.pid)
+            .done((data) => {
+                this.guestInfo = data;
+            })
+            .fail((xhr, textStatus, error) => {
+                const readableError = $(xhr.responseText).filter('p').html();
+                console.warn('getPartyGuests:', readableError);
+            });
         }
+    }
 
-        const pageGuests = this.getPageGuests(guestInfo.Guests);
-        this.getPagination(guestInfo);
+    async fetchRewardsInfo() {
+        if (typeof this.pid !== 'undefined') {
+            return this.api.getPartyRewards(this.pid)
+            .done((data) => {
+                this.rewardsInfo = data;
+            })
+            .fail((xhr, textStatus, error) => {
+                const readableError = $(xhr.responseText).filter('p').html();
+                console.warn('getPartyRewards:', readableError);
+            });
+        }
+    }
+
+    displayGuestsTableInfo() {
+        this.clearGuestsInfo();
+        const pageGuests = this.getPageGuests();
+        this.getPagination();
         this.displayGuestsInfo(pageGuests);
-        this.displayPaginationInfo(pageGuests, guestInfo.TotalGuests);
+        this.displayPaginationInfo(pageGuests);
         this.displayBookedPartiesInfo(pageGuests);
     }
 
-    async displayRewardsInfo() {
-        var rewardsInfo = {"Rewards": [], "PartySales": 0}; 
-
-        if (typeof this.pid !== 'undefined') {
-            try {
-                rewardsInfo = await this.api.getPartyRewards(this.pid);
-            } catch(error) {
-                console.warn('getPartyRewards:', error);
-                rewardsInfo = {"Rewards": [], "PartySales": 0};
-            }
-        }
-
-
-        this.displayRewardsSalesInfo(rewardsInfo.PartySales);
-        rewardsInfo.Rewards.forEach((rewardCategoryInfo) => {
+    displayRewardsInfo() {
+        this.displayRewardsSalesInfo();
+        this.rewardsInfo.Rewards.forEach((rewardCategoryInfo) => {
             switch(rewardCategoryInfo.Label) {
                 case 'Free Shipping':
                     this.displayRewardsFreeShippingInfo(rewardCategoryInfo);
@@ -69,9 +82,9 @@ class PartySummary {
         });
     }
 
-    displayRewardsSalesInfo(sales) {
-        var formattedSales = Math.trunc(sales);
-        if (sales != 0) {
+    displayRewardsSalesInfo() {
+        var formattedSales = Math.trunc(this.rewardsInfo.PartySales);
+        if (this.rewardsInfo.PartySales != 0) {
             $('#host-rewards .rewards-amount-container').show();
             $('#host-rewards #rewards-amount').html(`$${formattedSales}`); 
         } else {
@@ -139,8 +152,8 @@ class PartySummary {
         $('#partyOrders .guest-info-pagination-container').remove();
     }
 
-    getPagination(guestInfo) {
-        const totalRecordCount = guestInfo.TotalGuests;
+    getPagination() {
+        const totalRecordCount = this.guestInfo.TotalGuests;
         const displayNumPages = 6; //This doesn't seem to do anything
 
         const $paginationContainer = $('<div>', { class: 'guest-info-pagination-container' });
@@ -151,26 +164,26 @@ class PartySummary {
             this.guestCurrentPage,
             Math.ceil(totalRecordCount / this.guestPageSize),
             displayNumPages,
-            (p) => this.goToPage(p, guestInfo)
+            (p) => this.goToPage(p, this.guestInfo)
         );
 
         $paginationContainer.append($paginationList);
         $('#partyOrders').append($paginationContainer);
     }
 
-    goToPage(p, guestInfo) {
+    goToPage(p) {
         this.guestCurrentPage = p;
-        this.displayGuestsTableInfo(guestInfo);
+        this.displayGuestsTableInfo();
     }
 
-    getPageGuests(guests) {
-        if (guests.length == 0) {
+    getPageGuests() {
+        if (this.guestInfo.Guests.length == 0) {
             return [];
         }
 
         var chunks = [];
-        for (let i = 0; i < guests.length; i += this.guestPageSize) {
-           chunks.push(guests.slice(i, i + this.guestPageSize));
+        for (let i = 0; i < this.guestInfo.Guests.length; i += this.guestPageSize) {
+           chunks.push(this.guestInfo.Guests.slice(i, i + this.guestPageSize));
         }
       
         return chunks[this.guestCurrentPage-1];
@@ -220,9 +233,9 @@ class PartySummary {
     }
 
 
-    displayPaginationInfo(pageGuests, totalGuests) {
-        const pageOrderTotal = this.getPageOrderTotal(pageGuests, totalGuests);
-        const totalRecordCount = totalGuests;
+    displayPaginationInfo(pageGuests) {
+        const pageOrderTotal = this.getPageOrderTotal(pageGuests, this.guestInfo.TotalGuests);
+        const totalRecordCount = this.guestInfo.TotalGuests;
         const pageSizeCount = totalRecordCount < this.guestPageSize ? totalRecordCount : this.guestPageSize;
 
         $('#partyOrders .display-count').html(`Displaying ${pageSizeCount} out of ${totalRecordCount} orders. Total: ${pageOrderTotal}`);

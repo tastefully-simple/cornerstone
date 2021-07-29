@@ -230,7 +230,7 @@ export default class TSApi {
     }
 
     getPartyGuests(pid) {
-        const uri = `/planner/guests/${pid}`;
+        const uri = `/planner/guests/%${pid}`;
 
         return $.ajax({
             type: 'GET',
@@ -242,6 +242,7 @@ export default class TSApi {
     getPartyRewards(pid) {
         const uri = `/planner/rewards/${pid}`;
 
+        
         return $.ajax({
             type: 'GET',
             accepts: 'json',

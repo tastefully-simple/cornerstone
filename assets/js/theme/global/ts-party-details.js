@@ -9,38 +9,52 @@ class PartyDetails {
     constructor() {
         this.api = new TSApi();
         this.pid = TSCookie.getPartyId();
+        this.partyInfo;
+        this.initPartyDetails();
+    }
+
+    async initPartyDetails() {
+        try { await this.fetchPartyInfo() } catch {};
         this.displayPartyInfo();
     }
 
-    async displayPartyInfo() {
+    fetchPartyInfo() {
         if (typeof this.pid !== 'undefined') {
-            try {
-                const partyInfo = await this.api.getPartyInfo(this.pid);
-                this.renderResults(partyInfo);
-            } catch (error) {
-                console.warn('getPartyInfo:', error);
-            }
+            return this.api.getPartyInfo(this.pid)
+            .done((data) => {
+                this.partyInfo = data;
+            })
+            .fail((xhr, textStatus, error) => {
+                const readableError = $(xhr.responseText).filter('p').html();
+                console.warn('getPartyInfo:', readableError);
+            });
         }
     }
 
-    renderResults(response) {
-        if (typeof response === 'string') {
-            console.warn('PartyDetails::renderResults', response);
+    displayPartyInfo() {
+        if (this.partyInfo) {
+            this.renderResults();
+        }
+    }
+
+    renderResults() {
+        if (typeof this.partyInfo === 'string') {
+            console.warn('PartyDetails::renderResults', this.partyInfo);
             return;
         }
         
-        this.getHtmlBlock(response);
+        this.getHtmlBlock();
     }
   
-    getHtmlBlock(data) {
-        document.getElementById('hpPartyDetailName').innerHTML = data.PartyTitle;
-        document.getElementById('hpPartyDetailDate').innerHTML = data.Date;
-        document.getElementById('hpPartyDetailTime').innerHTML = data.Time;
-        document.getElementById('hpPartyDetailConsultant').innerHTML = data.Consultant;
-        document.getElementById('hpPartyDetailTotal').innerHTML = '$' + data.Total;
+    getHtmlBlock() {
+        document.getElementById('hpPartyDetailName').innerHTML = this.partyInfo.PartyTitle;
+        document.getElementById('hpPartyDetailDate').innerHTML = this.partyInfo.Date;
+        document.getElementById('hpPartyDetailTime').innerHTML = this.partyInfo.Time;
+        document.getElementById('hpPartyDetailConsultant').innerHTML = this.partyInfo.Consultant;
+        document.getElementById('hpPartyDetailTotal').innerHTML = '$' + this.partyInfo.Total;
         
         var getUrl = window.location;
-        var szPartyUrl = getUrl.protocol + '//' + getUrl.host + '/p/' + data.PartyId
+        var szPartyUrl = getUrl.protocol + '//' + getUrl.host + '/p/' + this.partyInfo.PartyId
         var szHtml = '<a href="' + szPartyUrl + '">' + szPartyUrl + '</a>';
         document.getElementById('hpPartyUrl').innerHTML = szHtml;
     }

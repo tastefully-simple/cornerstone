@@ -28,7 +28,7 @@ class PartySummary {
         this.displayRewardsInfo();
     }
 
-    async fetchPartyGuests() {
+    fetchPartyGuests() {
         if (typeof this.pid !== 'undefined') {
             return this.api.getPartyGuests(this.pid)
             .done((data) => {
@@ -41,7 +41,7 @@ class PartySummary {
         }
     }
 
-    async fetchRewardsInfo() {
+    fetchRewardsInfo() {
         if (typeof this.pid !== 'undefined') {
             return this.api.getPartyRewards(this.pid)
             .done((data) => {

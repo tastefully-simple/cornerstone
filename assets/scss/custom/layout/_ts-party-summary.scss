@@ -2,6 +2,24 @@
 // Tastefully Simple Host Planner Styles
 // =============================================================================
 
+/* Anchor Tag positioning  */
+#party-orders-anchor {
+    top: -115px;
+    position: relative;
+}
+#host-specials-anchor {
+    position: relative;
+    top: -100px;
+}
+#party-prep {
+    position: relative;
+    top: -85px;
+}
+#party-details {
+    position: relative;
+    top: 75px;
+}
+
 .party-planner-results {
     .shg-row {
         display: flex;

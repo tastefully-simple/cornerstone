@@ -94,6 +94,10 @@ class PartySummary {
 
     displayRewardsFreeShippingInfo(data) {
         var $progressBar = $('#host-rewards .shipping-progress');
+        $( window ).resize(() => {
+            const newWidth = this.getRewardCategoryWidth(data, data.Maximum / 5);
+            $progressBar.width(newWidth);
+        });
         this.displayRewardsBar(data, data.Maximum / 5, $progressBar);
         this.displayRewardsAmount(data.DisplayValue, $progressBar);
         this.displayRewardsCheckmark(data, $progressBar);
@@ -101,6 +105,10 @@ class PartySummary {
 
     displayRewardsProductEarnedInfo(data) {
         var $progressBar = $('#host-rewards .product-progress');
+        $( window ).resize(() => {
+            const newWidth = this.getRewardCategoryWidth(data, data.Maximum / 5);
+            $progressBar.width(newWidth);
+        });
         this.displayRewardsBar(data, data.Maximum / 10, $progressBar);
         this.displayRewardsAmount(data.DisplayValue, $progressBar);
         this.displayRewardsCheckmark(data, $progressBar);
@@ -108,6 +116,10 @@ class PartySummary {
 
     displayRewardsDiscountInfo(data) {
         var $progressBar = $('#host-rewards .discount-progress');
+        $( window ).resize(() => {
+            const newWidth = this.getRewardCategoryWidth(data, data.Maximum / 5);
+            $progressBar.width(newWidth);
+        });
         this.displayRewardsBar(data, data.Maximum / 5, $progressBar);
         this.displayRewardsAmount(data.DisplayValue, $progressBar);
         this.displayRewardsCheckmark(data, $progressBar);
@@ -115,7 +127,7 @@ class PartySummary {
 
     displayRewardsBar(data, multiple, $progressBar) {
         const width = this.getRewardCategoryWidth(data, multiple);
-        $progressBar.css('width', width);
+        $progressBar.width(width);
     }
 
     displayRewardsAmount(displayValue, $progressBar) {
@@ -124,8 +136,8 @@ class PartySummary {
     }
 
     getRewardCategoryWidth(data, multiple) {
-        const barWidth = 456;
         const minWidth = 20;
+        const barWidth = $('#host-rewards .progress-container').width();
 
         if (data.Value == 0) {
             return minWidth;

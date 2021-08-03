@@ -1,6 +1,7 @@
 import PageManager from '../page-manager';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
+import TSCopyLink from '../common/ts-copy-link';
 //For await
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -43,6 +44,8 @@ class PartyDetails {
         var szPartyUrl = getUrl.protocol + '//' + getUrl.host + '/p/' + data.PartyId
         var szHtml = '<a href="' + szPartyUrl + '">' + szPartyUrl + '</a>';
         document.getElementById('hpPartyUrl').innerHTML = szHtml;
+        new TSCopyLink('#hpPartyDetail .socialLinks-copy', szPartyUrl);
+        $('.share-link').addClass('visible');
     }
 }
 

@@ -21,7 +21,12 @@
 }
 
 .share-link {
+    display: none;
+    margin-top: 10px;
     @extend .addthis_toolbox;
+    &.visible {
+        display: inline-block;
+    }
     .shareLink-title {
         @extend .socialLinks-title;
         top: -14px;

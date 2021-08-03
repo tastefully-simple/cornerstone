@@ -20,6 +20,25 @@
     top: 75px;
 }
 
+.share-link {
+    display: none;
+    margin-top: 10px;
+    @extend .addthis_toolbox;
+    &.visible {
+        display: inline-block;
+    }
+    .shareLink-title {
+        @extend .socialLinks-title;
+        top: -14px;
+        .shareLink-titleText {
+            @extend .socialLinks-titleText;
+        }
+    }
+    a {
+        margin-left:1rem;
+    }
+}
+
 .party-planner-results {
     .shg-row {
         display: flex;

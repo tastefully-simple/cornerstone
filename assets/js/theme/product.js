@@ -8,7 +8,7 @@ import ProductDetails from './common/product-details';
 import videoGallery from './product/video-gallery';
 import { classifyForm } from './common/utils/form-utils';
 import modalFactory, { modalTypes } from './global/modal';
-import copy from 'copy-to-clipboard';
+import TSCopyLink from './common/ts-copy-link.js';
 
 const { WRITE_REVIEW } = modalTypes;
 
@@ -65,7 +65,7 @@ export default class Product extends PageManager {
 
         this.productReviewHandler();
         this.bulkPricingHandler();
-        this.socialShareHandler();
+        new TSCopyLink('.socialLinks-copy');
     }
 
     ariaDescribeReviewInputs($form) {
@@ -88,24 +88,5 @@ export default class Product extends PageManager {
         if (this.url.indexOf('#bulk_pricing') !== -1) {
             this.$bulkPricingLink.trigger('click');
         }
-    }
-
-    socialShareHandler() {
-        // Copy PDP URL to clipboard
-        $('.socialLinks-copy').click(this.copyToClipboard);
-    }
-
-    copyToClipboard() {
-        const $linkCopied = $('.link-copied-text');
-        const $copyLinkBtn = this;
-
-        copy(window.location.href);
-        $copyLinkBtn.innerHTML = '<i class="fas fa-check"></i>';
-        $linkCopied.addClass('copied');
-
-        setTimeout(() => {
-            $copyLinkBtn.innerHTML = 'Copy Link';
-            $linkCopied.removeClass('copied');
-        }, 10000);
     }
 }

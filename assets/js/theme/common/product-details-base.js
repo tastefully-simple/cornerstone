@@ -47,13 +47,13 @@ export default class ProductDetailsBase {
 
     _makeProductVariantAccessible(variantDomNode, variantType) {
         switch (variantType) {
-        case optionsTypesMap.SET_RADIO:
-        case optionsTypesMap.SWATCH: {
-            initRadioOptions($(variantDomNode), '[type=radio]');
-            break;
-        }
+            case optionsTypesMap.SET_RADIO:
+            case optionsTypesMap.SWATCH: {
+                initRadioOptions($(variantDomNode), '[type=radio]');
+                break;
+            }
 
-        default: break;
+            default: break;
         }
     }
 

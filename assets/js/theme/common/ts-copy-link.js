@@ -1,19 +1,14 @@
 import copy from 'copy-to-clipboard';
 
 export default class TSCopyLink {
-    constructor(buttonSelector, url = window.location.href) {
-        this.$button = $(buttonSelector);
-        this.url = url;
-        this.socialShareHandler();
-    }
-
-    socialShareHandler() {
-        this.$button.click(() => {
-            this.copyToClipboard(this.$button, this.url);
+    static socialShareHandler(buttonSelector, url = window.location.href) {
+        const $button = $(buttonSelector);
+        $button.click(() => {
+            this.copyToClipboard($button, url);
         });
     }
 
-    copyToClipboard($button, url) {
+    static copyToClipboard($button, url) {
         const $linkCopiedMessage = $('.link-copied-text');
 
         copy(url);

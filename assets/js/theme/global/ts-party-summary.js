@@ -125,9 +125,10 @@ class PartySummary {
 
     getRewardCategoryWidth(data, multiple) {
         const barWidth = 456;
+        const minWidth = 20;
 
         if (data.Value == 0) {
-            return 20;
+            return minWidth;
         }
 
         if (data.Value >= data.Maximum) {
@@ -135,6 +136,9 @@ class PartySummary {
         }
 
         var roundedMultiple = Math.floor(data.Value / multiple) * multiple;
+        if (roundedMultiple == 0) {
+            return minWidth;
+        }
         var percent = roundedMultiple / data.Maximum; 
         var widthPixels = barWidth * percent;
         return widthPixels;

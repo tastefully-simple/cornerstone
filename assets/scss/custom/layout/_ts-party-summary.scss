@@ -76,6 +76,7 @@
             }
         }
         .simple-table {
+            width: 100%;
             th {
                 padding: 5px 5px;
                 width: unset; 
@@ -132,7 +133,7 @@
         }
     }
     #host-rewards {
-        width: 500px;
+        width: 100%;
         margin-bottom: 15px;
         .grid-card {
             width: unset;
@@ -273,6 +274,9 @@
             #host-rewards {
                 margin: 15px auto;
             }
+            > div {
+                width: 100% !important;
+            }
         }
     }
 }
@@ -282,7 +286,6 @@
             width: 100%;
             .simple-table {
                 margin: auto;
-                width: 95%;
             }
             .booked-parties {
                 margin-right: 10px;

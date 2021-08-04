@@ -280,15 +280,19 @@
         }
     }
 }
+@media (max-width: 450px) {
+    #partyOrders {
+        .display-count {
+            font-size: 12px;
+        }
+    }
+}
 @media (max-width: 768px) {
     .party-planner-results {
         #partyOrders {
             width: 100%;
             .simple-table {
                 margin: auto;
-            }
-            .booked-parties {
-                margin-right: 10px;
             }
             .subhead-16 {
                 margin-right: 10px;

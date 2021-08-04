@@ -65,7 +65,7 @@ export default class Product extends PageManager {
 
         this.productReviewHandler();
         this.bulkPricingHandler();
-        new TSCopyLink('.socialLinks-copy');
+        TSCopyLink.socialShareHandler('.socialLinks-copy');
     }
 
     ariaDescribeReviewInputs($form) {

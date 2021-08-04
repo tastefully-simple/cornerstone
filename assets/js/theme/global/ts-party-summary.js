@@ -244,27 +244,27 @@ class PartySummary {
         let guestRecipient = `<span class="guest-recipient">${guest.Recipient}</span>`;
         guestRecipient = guest.Booked ? (star + guestRecipient) : guestRecipient;
         $row.append($('<td>').append(guestRecipient));
-        $row.append($('<td>').append(guest.GuestOrderTotal));
+        $row.append($('<td>').append(guest.GuestOrderTotal.toFixed(2)));
         $('#partyOrders tbody').append($row);
     }
 
 
-    displayPaginationInfo(pageGuests) {
-        const pageOrderTotal = this.getPageOrderTotal(pageGuests);
+    displayPaginationInfo() {
+        const ordersTotal = this.getOrdersTotal();
         const totalRecordCount = this.guestInfo.TotalGuests;
         const pageSizeCount = totalRecordCount < this.guestPageSize ? totalRecordCount : this.guestPageSize;
 
-        $('#partyOrders .display-count').html(`Displaying ${pageSizeCount} out of ${totalRecordCount} orders. Total: ${pageOrderTotal}`);
+        $('#partyOrders .display-count').html(`Displaying ${pageSizeCount} out of ${totalRecordCount} orders. Total: ${ordersTotal}`);
     }
 
-    getPageOrderTotal(pageGuests) {
-        let pageOrderTotal = 0;
+    getOrdersTotal() {
+        let ordersTotal = 0;
 
-        pageGuests.forEach((guest) => {
-            pageOrderTotal += guest.GuestOrderTotal;
+        this.guestInfo.Guests.forEach((guest) => {
+            ordersTotal += guest.GuestOrderTotal;
         });
 
-        return `$${pageOrderTotal.toLocaleString()}`;
+        return `$${ordersTotal.toLocaleString()}`;
     }
 
     displayBookedPartiesInfo(guests) {

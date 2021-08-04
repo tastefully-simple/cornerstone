@@ -298,4 +298,21 @@
             width: 95%;
         }
     }
+
+    .party-details-container {
+        margin: 0 13%;
+        .shg-row {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            > div {
+                width: initial !important;
+            }
+            > div:nth-child(2) {
+                width: 100% !important;
+                max-width: 354px;
+                margin-top: 10px;
+            }
+        }
+}
 }

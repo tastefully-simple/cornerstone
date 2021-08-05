@@ -2,6 +2,50 @@
 // Tastefully Simple Host Planner Styles
 // =============================================================================
 
+/* Anchor Tag positioning  */
+#party-orders-anchor {
+    top: -115px;
+    position: relative;
+}
+#host-specials-anchor {
+    position: relative;
+    top: -100px;
+}
+#party-prep {
+    position: relative;
+    top: -85px;
+}
+#party-details {
+    position: relative;
+    top: 75px;
+}
+
+.share-link {
+    display: none;
+    margin-top: 10px;
+    @extend .addthis_toolbox;
+    &.visible {
+        display: inline-block;
+    }
+    .shareLink-title {
+        @extend .socialLinks-title;
+        top: -14px;
+        .shareLink-titleText {
+            @extend .socialLinks-titleText;
+        }
+    }
+    a {
+        margin-left:1rem;
+    }
+}
+
+#hpPartyDetail {
+    #hpPartyDetailConsultant {
+        color: $teal;
+        font-weight: bold;
+    }
+}
+
 .party-planner-results {
     .shg-row {
         display: flex;
@@ -32,6 +76,7 @@
             }
         }
         .simple-table {
+            width: 100%;
             th {
                 padding: 5px 5px;
                 width: unset; 
@@ -88,7 +133,7 @@
         }
     }
     #host-rewards {
-        width: 500px;
+        width: 100%;
         margin-bottom: 15px;
         .grid-card {
             width: unset;
@@ -194,7 +239,6 @@
                                     margin-bottom: 0;
                                     display: block;
                                     position: absolute;
-                                    min-width: 27px;
                                     top: -67px;
                                     color: #000;
                                 }
@@ -230,6 +274,16 @@
             #host-rewards {
                 margin: 15px auto;
             }
+            > div {
+                width: 100% !important;
+            }
+        }
+    }
+}
+@media (max-width: 450px) {
+    #partyOrders {
+        .display-count {
+            font-size: 12px;
         }
     }
 }
@@ -239,10 +293,6 @@
             width: 100%;
             .simple-table {
                 margin: auto;
-                width: 95%;
-            }
-            .booked-parties {
-                margin-right: 10px;
             }
             .subhead-16 {
                 margin-right: 10px;
@@ -250,6 +300,23 @@
         }
         #host-rewards {
             width: 95%;
+        }
+    }
+
+    .party-details-container {
+        margin: 0 13%;
+        .shg-row {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            > div {
+                width: initial !important;
+            }
+            > div:nth-child(2) {
+                width: 100% !important;
+                max-width: 354px;
+                margin-top: 10px;
+            }
         }
     }
 }

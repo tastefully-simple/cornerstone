@@ -1,53 +1,68 @@
-import PageManager from '../page-manager';
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
-//For await
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import TSCopyLink from '../common/ts-copy-link';
+// For await
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 class PartyDetails {
     constructor() {
         this.api = new TSApi();
         this.pid = TSCookie.getPartyId();
-        this.displayPartyInfo();
+        this.partyInfo = {};
+        this.initPartyDetails();
     }
 
-    async displayPartyInfo() {
+    async initPartyDetails() {
         if (typeof this.pid !== 'undefined') {
             try {
-                const partyInfo = await this.api.getPartyInfo(this.pid);
-                this.renderResults(partyInfo);
-            } catch (error) {
-                console.warn('getPartyInfo:', error);
+                await this.fetchPartyInfo();
+            } catch (xhr) {
+                const readableError = $(xhr.responseText).filter('p').html();
+                console.warn('getPartyInfo:', readableError);
             }
+            this.displayPartyInfo();
         }
     }
 
-    renderResults(response) {
-        if (typeof response === 'string') {
-            console.warn('PartyDetails::renderResults', response);
+    fetchPartyInfo() {
+        return this.api.getPartyInfo(this.pid)
+            .done((data) => {
+                this.partyInfo = data;
+            });
+    }
+
+    displayPartyInfo() {
+        if (this.partyInfo) {
+            this.renderResults();
+        }
+    }
+
+    renderResults() {
+        if (typeof this.partyInfo === 'string') {
+            console.warn('PartyDetails::renderResults', this.partyInfo);
             return;
         }
-        
-        this.getHtmlBlock(response);
+        this.getHtmlBlock();
     }
-  
-    getHtmlBlock(data) {
-        document.getElementById('hpPartyDetailName').innerHTML = data.PartyTitle;
-        document.getElementById('hpPartyDetailDate').innerHTML = data.Date;
-        document.getElementById('hpPartyDetailTime').innerHTML = data.Time;
-        document.getElementById('hpPartyDetailConsultant').innerHTML = data.Consultant;
-        document.getElementById('hpPartyDetailTotal').innerHTML = '$' + data.Total;
-        
-        var getUrl = window.location;
-        var szPartyUrl = getUrl.protocol + '//' + getUrl.host + '/p/' + data.PartyId
-        var szHtml = '<a href="' + szPartyUrl + '">' + szPartyUrl + '</a>';
+
+    getHtmlBlock() {
+        document.getElementById('hpPartyDetailName').innerHTML = this.partyInfo.PartyTitle;
+        document.getElementById('hpPartyDetailDate').innerHTML = this.partyInfo.Date;
+        document.getElementById('hpPartyDetailTime').innerHTML = this.partyInfo.Time;
+        document.getElementById('hpPartyDetailConsultant').innerHTML = this.partyInfo.Consultant;
+        document.getElementById('hpPartyDetailTotal').innerHTML = `$${this.partyInfo.Total}`;
+        const getUrl = window.location;
+        const szPartyUrl = `${getUrl.protocol}//${getUrl.host}/p/${this.partyInfo.PartyId}`;
+        const szHtml = `<a href="${szPartyUrl}">${szPartyUrl}</a>`;
         document.getElementById('hpPartyUrl').innerHTML = szHtml;
+        TSCopyLink.socialShareHandler('#hpPartyDetail .socialLinks-copy', szPartyUrl);
+        $('.share-link').addClass('visible');
     }
 }
 
 export default function () {
-    if (window.location.href.indexOf("host-planner") > -1) {
+    if (window.location.href.indexOf('host-planner') > -1) {
         return new PartyDetails();
     }
 }

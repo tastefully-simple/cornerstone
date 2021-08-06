@@ -35,7 +35,12 @@
         }
     }
     a {
-        margin-left:1rem;
+        display: block;
+        margin-left: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 225px;
     }
 }
 

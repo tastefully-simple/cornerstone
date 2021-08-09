@@ -32,6 +32,7 @@
     display: none;
     margin-top: 10px;
     @extend .addthis_toolbox;
+    border-color: $green-apple;
     &.visible {
         display: inline-block;
     }
@@ -40,6 +41,7 @@
         top: -14px;
         .shareLink-titleText {
             @extend .socialLinks-titleText;
+            color: $green-apple;
         }
     }
     a {
@@ -54,7 +56,6 @@
 
 #hpPartyDetail {
     #hpPartyDetailConsultant {
-        color: $teal;
         font-weight: bold;
     }
 }

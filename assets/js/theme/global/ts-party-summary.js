@@ -222,7 +222,7 @@ class PartySummary {
 
     insertEmptyGuestRows() {
         for (let i = 0; i < 10; i++) {
-          const $row = $('<tr>', {'class':'system-14'});
+            const $row = $('<tr>', { class: 'system-14' });
             $row.append($('<td>'));
             $('#partyOrders tbody').append($row);
         }

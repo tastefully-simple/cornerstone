@@ -88,6 +88,7 @@ class PartySummary {
         if (this.rewardsInfo.PartySales !== 0) {
             $('#host-rewards .rewards-amount-container').show();
             $('#host-rewards #rewards-amount').html(`$${formattedSales}`);
+            $('#host-rewards .section-title').css('margin', '0 0 20px 0');
         } else {
             $('#host-rewards .rewards-message').show();
         }
@@ -221,7 +222,7 @@ class PartySummary {
 
     insertEmptyGuestRows() {
         for (let i = 0; i < 10; i++) {
-            const $row = $('<tr>');
+          const $row = $('<tr>', {'class':'system-14'});
             $row.append($('<td>'));
             $('#partyOrders tbody').append($row);
         }
@@ -232,7 +233,7 @@ class PartySummary {
         const $allCells = $('#partyOrders .simple-table tbody td');
 
         $allCells.attr('colspan', 3);
-        $allCells.css('height', '34px');
+        $allCells.css('height', '30px');
         $firstCell.html('Your party orders will display here.');
     }
 

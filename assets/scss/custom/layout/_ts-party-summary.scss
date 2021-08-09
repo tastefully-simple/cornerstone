@@ -75,6 +75,23 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        .guest-info-pagination {
+            margin-top: 10px;
+            .custom-pagination-item--current {
+                a {
+                    color: $burgundy;
+                }
+            }
+            a {
+                font-size: 18px;
+            }
+            i {
+                position: relative;
+                top: 4px;
+                font-size: 26px;
+                color: $light-burgundy;
+            }
+        }
         .booked-parties {
             .party-list {
                 padding-bottom: 10px;
@@ -98,6 +115,7 @@
         }
         .simple-table {
             width: 100%;
+            font-weight: normal;
             th {
                 padding: 5px 5px 2px 5px;
                 width: unset; 
@@ -120,7 +138,7 @@
                             top: 50%;
                             transform: translateY(-50%);
                             left: -15px;
-                            height: 0.8rem;
+                            height: 0.6rem;
                         }
                     }
                 }
@@ -179,12 +197,14 @@
                 .rewards-amount-container {
                     display: none;
                     #rewards-amount {
+                        line-height: 1;
                         color: #000;
                         margin: 0;
+                        margin-top: 8px;
                     }
                 }
                 .rewards-title {
-                    margin-bottom: 5px;
+                    margin-bottom: 0;
                     margin-top: 10px;
                     color: #000;
                 }
@@ -208,15 +228,24 @@
                     margin: auto;
                     text-align: left;
                     overflow: initial;
-                    padding: 10px 0;
+                    padding: 20px 0;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    &.discount {
+                        padding-bottom: 10px;
+                    }
+                    &.shipping {
+                        padding-top: 7px;
+                    }
                     .section-title {
                         font-weight: normal;
                         text-transform: none;
                         margin: 0;
                         color: black;
+                    }
+                    .section-title[style] {
+                        margin: 0px 0px 15px !important; 
                     }
                     .progress-container {
                         border-bottom: 5px;
@@ -242,6 +271,9 @@
                                     .achieved-icon {
                                         display: flex;
                                         justify-content: center;
+                                        &:before {
+                                            font-size: 23px;
+                                        }
                                     }
                                     .pointer-circle {
                                         display: none;
@@ -257,7 +289,7 @@
                                     display: none;
                                     font-size: 27px;
                                     .progress-amount {
-                                        top: -62px;
+                                        top: -56px;
                                     }
                                 }
                                 .pointer-circle {

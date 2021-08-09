@@ -245,7 +245,8 @@ class PartySummary {
         let guestRecipient = `<span class="guest-recipient">${guest.Recipient}</span>`;
         guestRecipient = guest.Booked ? (star + guestRecipient) : guestRecipient;
         $row.append($('<td>').append(guestRecipient));
-        $row.append($('<td>').append(guest.GuestOrderTotal.toFixed(2)));
+        const total = guest.GuestOrderTotal.toFixed(2);
+        $row.append($('<td>').append(`$${total}`));
         $('#partyOrders tbody').append($row);
     }
 
@@ -293,7 +294,7 @@ class PartySummary {
         const date = new Date(guest.OrderFormCreateDate).toLocaleDateString();
         const $row =
             $('<div>', { class: 'party' })
-                .append($('<span>')
+                .append($('<span>', { class: 'system-12' })
                     .append(`${guest.Recipient} on ${date}`));
         $('#partyOrders .booked-parties .party-list').append($row);
     }

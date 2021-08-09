@@ -13,44 +13,29 @@ class PartySummary {
         this.guestPageSize = 10;
         this.guestInfo = { Guests: [], TotalGuests: 0 };
         this.rewardsInfo = { Rewards: [], PartySales: 0 };
-        this.initTableGuests();
-        this.initRewards();
+        this.bookingsInfo = { Bookings: [], TotalBookings: 0 };
+        this.init();
+        this.bindPartyEvents();
     }
 
-    async initTableGuests() {
+    async init() {
         try {
-            await this.fetchPartyGuests();
+            await this.fetchPartySummary();
         } catch (xhr) {
             const readableError = $(xhr.responseText).filter('p').html();
-            console.warn('getPartyGuests:', readableError);
+            console.warn('getPartySumary:', readableError);
         }
         this.displayGuestsTableInfo();
-    }
-
-    async initRewards() {
-        try {
-            await this.fetchRewardsInfo();
-        } catch (xhr) {
-            const readableError = $(xhr.responseText).filter('p').html();
-            console.warn('getPartyRewards:', readableError);
-        }
         this.displayRewardsInfo();
     }
 
-    fetchPartyGuests() {
+    fetchPartySummary() {
         if (typeof this.pid !== 'undefined') {
-            return this.api.getPartyGuests(this.pid)
+            return this.api.getPartySummary(this.pid)
                 .done((data) => {
-                    this.guestInfo = data;
-                });
-        }
-    }
-
-    fetchRewardsInfo() {
-        if (typeof this.pid !== 'undefined') {
-            return this.api.getPartyRewards(this.pid)
-                .done((data) => {
-                    this.rewardsInfo = data;
+                    this.guestInfo = data.Guests;
+                    this.rewardsInfo = data.Rewards;
+                    this.bookingsInfo = data.Bookings;
                 });
         }
     }
@@ -61,7 +46,7 @@ class PartySummary {
         this.getPagination();
         this.displayGuestsInfo(pageGuests);
         this.displayPaginationInfo(pageGuests);
-        this.displayBookedPartiesInfo(pageGuests);
+        this.displayBookedPartiesInfo();
     }
 
     displayRewardsInfo() {
@@ -212,7 +197,6 @@ class PartySummary {
             this.fillEmptyGuestRows();
             $('#partyOrders .guest-info-pagination-container').hide();
             $('#partyOrders .guest-info-pagination-container').hide();
-            $('#partyOrders .booked-parties').toggleClass('collapsed');
             return;
         }
         guests.forEach((guest) => {
@@ -269,18 +253,17 @@ class PartySummary {
         return `$${ordersTotal.toLocaleString()}`;
     }
 
-    displayBookedPartiesInfo(guests) {
-        let bookedParties = 0;
-        this.bindPartyEvents();
-        for (let i = 0; i < guests.length; i++) {
-            if (guests[i].Booked === true) {
-                this.insertBookedPartyRow(guests[i]);
-                bookedParties++;
-            }
-        }
-        $('#partyOrders .collapsible').html(`${bookedParties} Booked Parties`);
-        if (bookedParties === 0) {
-            $('#partyOrders .booked-parties').toggleClass('collapsed');
+    displayBookedPartiesInfo() {
+        const guests = this.bookingsInfo.Bookings;
+        const maxBookings = 5;
+        const totalBookings = this.bookingsInfo.TotalBookings > maxBookings ? maxBookings : this.bookingsInfo.TotalBookings;
+        guests.forEach((booking) => {
+            this.insertBookedPartyRow(booking);
+        });
+        if (totalBookings === 1) {
+            $('#partyOrders .collapsible').html(`${totalBookings} Booked Party`);
+        } else {
+            $('#partyOrders .collapsible').html(`${totalBookings} Booked Parties`);
         }
     }
 

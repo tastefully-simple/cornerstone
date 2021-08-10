@@ -13,44 +13,29 @@ class PartySummary {
         this.guestPageSize = 10;
         this.guestInfo = { Guests: [], TotalGuests: 0 };
         this.rewardsInfo = { Rewards: [], PartySales: 0 };
-        this.initTableGuests();
-        this.initRewards();
+        this.bookingsInfo = { Bookings: [], TotalBookings: 0 };
+        this.init();
+        this.bindPartyEvents();
     }
 
-    async initTableGuests() {
+    async init() {
         try {
-            await this.fetchPartyGuests();
+            await this.fetchPartySummary();
         } catch (xhr) {
             const readableError = $(xhr.responseText).filter('p').html();
-            console.warn('getPartyGuests:', readableError);
+            console.warn('getPartySumary:', readableError);
         }
         this.displayGuestsTableInfo();
-    }
-
-    async initRewards() {
-        try {
-            await this.fetchRewardsInfo();
-        } catch (xhr) {
-            const readableError = $(xhr.responseText).filter('p').html();
-            console.warn('getPartyRewards:', readableError);
-        }
         this.displayRewardsInfo();
     }
 
-    fetchPartyGuests() {
+    fetchPartySummary() {
         if (typeof this.pid !== 'undefined') {
-            return this.api.getPartyGuests(this.pid)
+            return this.api.getPartySummary(this.pid)
                 .done((data) => {
-                    this.guestInfo = data;
-                });
-        }
-    }
-
-    fetchRewardsInfo() {
-        if (typeof this.pid !== 'undefined') {
-            return this.api.getPartyRewards(this.pid)
-                .done((data) => {
-                    this.rewardsInfo = data;
+                    this.guestInfo = data.Guests;
+                    this.rewardsInfo = data.Rewards;
+                    this.bookingsInfo = data.Bookings;
                 });
         }
     }
@@ -61,7 +46,7 @@ class PartySummary {
         this.getPagination();
         this.displayGuestsInfo(pageGuests);
         this.displayPaginationInfo(pageGuests);
-        this.displayBookedPartiesInfo(pageGuests);
+        this.displayBookedPartiesInfo();
     }
 
     displayRewardsInfo() {
@@ -88,6 +73,7 @@ class PartySummary {
         if (this.rewardsInfo.PartySales !== 0) {
             $('#host-rewards .rewards-amount-container').show();
             $('#host-rewards #rewards-amount').html(`$${formattedSales}`);
+            $('#host-rewards .section-title').css('margin', '0 0 20px 0');
         } else {
             $('#host-rewards .rewards-message').show();
         }
@@ -211,7 +197,6 @@ class PartySummary {
             this.fillEmptyGuestRows();
             $('#partyOrders .guest-info-pagination-container').hide();
             $('#partyOrders .guest-info-pagination-container').hide();
-            $('#partyOrders .booked-parties').toggleClass('collapsed');
             return;
         }
         guests.forEach((guest) => {
@@ -221,7 +206,7 @@ class PartySummary {
 
     insertEmptyGuestRows() {
         for (let i = 0; i < 10; i++) {
-            const $row = $('<tr>');
+            const $row = $('<tr>', { class: 'system-14' });
             $row.append($('<td>'));
             $('#partyOrders tbody').append($row);
         }
@@ -232,7 +217,7 @@ class PartySummary {
         const $allCells = $('#partyOrders .simple-table tbody td');
 
         $allCells.attr('colspan', 3);
-        $allCells.css('height', '34px');
+        $allCells.css('height', '30px');
         $firstCell.html('Your party orders will display here.');
     }
 
@@ -244,7 +229,8 @@ class PartySummary {
         let guestRecipient = `<span class="guest-recipient">${guest.Recipient}</span>`;
         guestRecipient = guest.Booked ? (star + guestRecipient) : guestRecipient;
         $row.append($('<td>').append(guestRecipient));
-        $row.append($('<td>').append(guest.GuestOrderTotal.toFixed(2)));
+        const total = guest.GuestOrderTotal.toFixed(2);
+        $row.append($('<td>').append(`$${total}`));
         $('#partyOrders tbody').append($row);
     }
 
@@ -267,18 +253,17 @@ class PartySummary {
         return `$${ordersTotal.toLocaleString()}`;
     }
 
-    displayBookedPartiesInfo(guests) {
-        let bookedParties = 0;
-        this.bindPartyEvents();
-        for (let i = 0; i < guests.length; i++) {
-            if (guests[i].Booked === true) {
-                this.insertBookedPartyRow(guests[i]);
-                bookedParties++;
-            }
-        }
-        $('#partyOrders .collapsible').html(`${bookedParties} Booked Parties`);
-        if (bookedParties === 0) {
-            $('#partyOrders .booked-parties').toggleClass('collapsed');
+    displayBookedPartiesInfo() {
+        const guests = this.bookingsInfo.Bookings;
+        const maxBookings = 5;
+        const totalBookings = this.bookingsInfo.TotalBookings > maxBookings ? maxBookings : this.bookingsInfo.TotalBookings;
+        guests.forEach((booking) => {
+            this.insertBookedPartyRow(booking);
+        });
+        if (totalBookings === 1) {
+            $('#partyOrders .collapsible').html(`${totalBookings} Booked Party`);
+        } else {
+            $('#partyOrders .collapsible').html(`${totalBookings} Booked Parties`);
         }
     }
 
@@ -292,7 +277,7 @@ class PartySummary {
         const date = new Date(guest.OrderFormCreateDate).toLocaleDateString();
         const $row =
             $('<div>', { class: 'party' })
-                .append($('<span>')
+                .append($('<span>', { class: 'system-12' })
                     .append(`${guest.Recipient} on ${date}`));
         $('#partyOrders .booked-parties .party-list').append($row);
     }

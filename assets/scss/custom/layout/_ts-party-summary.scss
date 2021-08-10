@@ -20,10 +20,19 @@
     top: 75px;
 }
 
+.summary-separator {
+    max-width: 800px;    
+    margin: auto;
+    hr {
+        margin-bottom: 20px
+    }
+}
+
 .share-link {
     display: none;
     margin-top: 10px;
     @extend .addthis_toolbox;
+    border-color: $green-apple;
     &.visible {
         display: inline-block;
     }
@@ -32,28 +41,58 @@
         top: -14px;
         .shareLink-titleText {
             @extend .socialLinks-titleText;
+            color: $green-apple;
         }
     }
     a {
-        margin-left:1rem;
+        display: block;
+        margin-left: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 225px;
     }
 }
 
 #hpPartyDetail {
     #hpPartyDetailConsultant {
-        color: $teal;
         font-weight: bold;
     }
 }
 
 .party-planner-results {
+    margin: auto;
+    max-width: 700px;
     .shg-row {
         display: flex;
+        > div:nth-child(1) {
+            max-width: 320px;
+        }
+        > div:nth-child(2) {
+            max-width: 325px;
+        }
     }
     #partyOrders {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        .guest-info-pagination {
+            margin-top: 10px;
+            .custom-pagination-item--current {
+                a {
+                    color: $burgundy;
+                }
+            }
+            a {
+                font-size: 18px;
+            }
+            i {
+                position: relative;
+                top: 4px;
+                font-size: 26px;
+                color: $light-burgundy;
+            }
+        }
         .booked-parties {
             .party-list {
                 padding-bottom: 10px;
@@ -77,24 +116,30 @@
         }
         .simple-table {
             width: 100%;
+            font-weight: normal;
             th {
-                padding: 5px 5px;
+                padding: 5px 5px 2px 5px;
                 width: unset; 
+            }
+            th:nth-child(1) {
+                padding-left: 15px;
             }
             tbody {
                 tr {
                     td:first-child {
                         text-align: left; 
                         padding: 5px;
+                        padding-left: 15px;
                     }
                     td {
+                        height: 30px;
                         position: relative;
                         .star {
                             position: absolute;
                             top: 50%;
                             transform: translateY(-50%);
                             left: -15px;
-                            height: 0.8rem;
+                            height: 0.6rem;
                         }
                     }
                 }
@@ -109,16 +154,20 @@
             .collapse-parent {
                 align-items: center;
                 display: flex;
-                padding: 5px 0;
+                padding: 3.5px 0;
                 .star {
-                    height: 0.8rem;
+                    height: 0.6rem;
                     margin: 0 8px;
+                }
+                .collapsible {
+                    padding-left: 0;
+                    padding-right: 0;
                 }
                 .subhead-16 {
                     padding: 1px 0;
                 }
                 .booked-toggle {
-                    margin: 0 30px;
+                    margin: 0 13px 0 57px;
                     display: flex;
                     align-items: center;
                     .icon-toggle-plus {
@@ -140,6 +189,7 @@
             padding: 0;
             text-align: center;
             color: #000;
+            box-shadow: #bbbbbb 0 4px 6px 1px;
             .rewards-head {
                 display: flex;
                 flex-direction: column;
@@ -148,12 +198,14 @@
                 .rewards-amount-container {
                     display: none;
                     #rewards-amount {
+                        line-height: 1;
                         color: #000;
                         margin: 0;
+                        margin-top: 8px;
                     }
                 }
                 .rewards-title {
-                    margin-bottom: 5px;
+                    margin-bottom: 0;
                     margin-top: 10px;
                     color: #000;
                 }
@@ -165,36 +217,50 @@
             .rewards-body {
                 display: flex;
                 flex-direction: column;
-                padding: 0 10px 10px;
+                padding: 0 0 2px 0;
                 hr {
                     width: 100%;
-                    border-top: 2px solid $COLOR_GRAY_100;
-                    margin: 0;
+                    border-top: 1px solid $COLOR_GRAY_100;
+                    width: 93%;
+                    margin: auto;
                 }
                 .section {
-                    width: 95%;
+                    width: 94%;
                     margin: auto;
                     text-align: left;
                     overflow: initial;
-                    padding: 10px 0;
+                    padding: 20px 0;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    &.discount {
+                        padding-bottom: 10px;
+                    }
+                    &.shipping {
+                        padding-top: 7px;
+                    }
                     .section-title {
-                        margin: 0 0 20px 0;
+                        font-weight: normal;
+                        text-transform: none;
+                        margin: 0;
                         color: black;
                     }
+                    .section-title[style] {
+                        margin: 0px 0px 15px !important; 
+                    }
                     .progress-container {
-                        margin-bottom: 10px;
-                        margin-top: 10px;
+                        border-bottom: 5px;
+                        box-shadow: $wan-white 0px 4px 4px 0px;
+                        height: 10px;
+                        margin: 6px 0 6px 3px;
                         color: #000;
-                        background-color: #f1f1f1;
+                        background-color: $gainsboro;
                         border-radius: 16px;
                         .progress {
+                            height: 10px;
                             color: #fff;
                             background-color: $teal;
                             border-radius: 16px;
-                            height: 15px;
                             position:relative;
                             .pointer {
                                 display: flex;
@@ -206,6 +272,9 @@
                                     .achieved-icon {
                                         display: flex;
                                         justify-content: center;
+                                        &:before {
+                                            font-size: 23px;
+                                        }
                                     }
                                     .pointer-circle {
                                         display: none;
@@ -221,12 +290,12 @@
                                     display: none;
                                     font-size: 27px;
                                     .progress-amount {
-                                        top: -62px;
+                                        top: -56px;
                                     }
                                 }
                                 .pointer-circle {
-                                    width: 30px;
-                                    height: 30px;
+                                    width: 25px;
+                                    height: 25px;
                                     top: -7px; 
                                     border: 2px solid #fff;
                                     display: flex;
@@ -239,7 +308,7 @@
                                     margin-bottom: 0;
                                     display: block;
                                     position: absolute;
-                                    top: -67px;
+                                    top: -59px;
                                     color: #000;
                                 }
                             }
@@ -248,7 +317,7 @@
                 }
             }
             .rewards-footer {
-                h3 {
+                h4 {
                     color: #000;
                     margin-top: 0;
                 }
@@ -261,7 +330,7 @@
             }
             .rewards-top, .rewards-bottom {
                 background-color: $COLOR_PRIMARY_100;
-                padding: 5px 20px;
+                padding: 3px 20px;
             }
         }
     }
@@ -304,7 +373,6 @@
     }
 
     .party-details-container {
-        margin: 0 13%;
         .shg-row {
             flex-direction: column;
             justify-content: space-between;

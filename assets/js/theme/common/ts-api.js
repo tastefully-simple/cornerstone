@@ -258,4 +258,14 @@ export default class TSApi {
             url: this.fullUrl(uri),
         });
     }
+
+    getPartySummary(pid) {
+        const uri = `/planner/summary/${pid}`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullPartyUrl(uri),
+        });
+    }
 }

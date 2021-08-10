@@ -273,12 +273,12 @@ class PartySummary {
         });
     }
 
-    insertBookedPartyRow(guest) {
-        const date = new Date(guest.OrderFormCreateDate).toLocaleDateString();
+    insertBookedPartyRow(booking) {
+        const date = new Date(booking.PartyDate).toLocaleDateString();
         const $row =
             $('<div>', { class: 'party' })
                 .append($('<span>', { class: 'system-12' })
-                    .append(`${guest.Recipient} on ${date}`));
+                    .append(`${booking.Recipient} on ${date}`));
         $('#partyOrders .booked-parties .party-list').append($row);
     }
 }

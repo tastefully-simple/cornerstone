@@ -38,12 +38,12 @@ export default ($heroCarousel) => {
 
                 $element.addClass(() => {
                     switch (true) {
-                    case imageAspectRatio > 0.8 && imageAspectRatio <= 1.2:
-                        return 'is-square-image-type';
-                    case imageAspectRatio > 1.2:
-                        return 'is-vertical-image-type';
-                    default:
-                        return '';
+                        case imageAspectRatio > 0.8 && imageAspectRatio <= 1.2:
+                            return 'is-square-image-type';
+                        case imageAspectRatio > 1.2:
+                            return 'is-vertical-image-type';
+                        default:
+                            return '';
                     }
                 });
 

@@ -202,7 +202,7 @@ class PartySummary {
             this.insertGuestRow(guest);
         });
         if (guests.length < this.guestPageSize) {
-            this.insertEmptyGuestRows(this.guestPageSize - guests.length); 
+            this.insertEmptyGuestRows(this.guestPageSize - guests.length);
         }
     }
 

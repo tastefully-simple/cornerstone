@@ -73,7 +73,6 @@ class PartySummary {
         if (this.rewardsInfo.PartySales !== 0) {
             $('#host-rewards .rewards-amount-container').show();
             $('#host-rewards #rewards-amount').html(`$${formattedSales}`);
-            $('#host-rewards .section-title').css('margin', '0 0 20px 0');
         } else {
             $('#host-rewards .rewards-message').show();
         }

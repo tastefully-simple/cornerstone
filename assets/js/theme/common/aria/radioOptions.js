@@ -14,9 +14,9 @@ const setCheckedRadioItem = (itemCollection, itemIdx) => {
 
 const calculateTargetItemPosition = (lastItemIdx, currentIdx) => {
     switch (true) {
-    case currentIdx > lastItemIdx: return 0;
-    case currentIdx < 0: return lastItemIdx;
-    default: return currentIdx;
+        case currentIdx > lastItemIdx: return 0;
+        case currentIdx < 0: return lastItemIdx;
+        default: return currentIdx;
     }
 };
 
@@ -31,25 +31,25 @@ const handleItemKeyDown = itemCollection => e => {
     }
 
     switch (keyCode) {
-    case ariaKeyCodes.RETURN:
-    case ariaKeyCodes.SPACE: {
-        setCheckedRadioItem(itemCollection, itemIdx);
-        break;
-    }
-    case ariaKeyCodes.LEFT:
-    case ariaKeyCodes.UP: {
-        const prevItemIdx = calculateTargetItemPosition(lastCollectionItemIdx, itemIdx - 1);
-        itemCollection.get(prevItemIdx).focus();
-        break;
-    }
-    case ariaKeyCodes.RIGHT:
-    case ariaKeyCodes.DOWN: {
-        const nextItemIdx = calculateTargetItemPosition(lastCollectionItemIdx, itemIdx + 1);
-        itemCollection.get(nextItemIdx).focus();
-        break;
-    }
+        case ariaKeyCodes.RETURN:
+        case ariaKeyCodes.SPACE: {
+            setCheckedRadioItem(itemCollection, itemIdx);
+            break;
+        }
+        case ariaKeyCodes.LEFT:
+        case ariaKeyCodes.UP: {
+            const prevItemIdx = calculateTargetItemPosition(lastCollectionItemIdx, itemIdx - 1);
+            itemCollection.get(prevItemIdx).focus();
+            break;
+        }
+        case ariaKeyCodes.RIGHT:
+        case ariaKeyCodes.DOWN: {
+            const nextItemIdx = calculateTargetItemPosition(lastCollectionItemIdx, itemIdx + 1);
+            itemCollection.get(nextItemIdx).focus();
+            break;
+        }
 
-    default: break;
+        default: break;
     }
 };
 

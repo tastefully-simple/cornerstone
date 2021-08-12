@@ -1,0 +1,390 @@
+// =============================================================================
+// Tastefully Simple Host Planner Styles
+// =============================================================================
+
+/* Anchor Tag positioning  */
+#party-orders-anchor {
+    top: -115px;
+    position: relative;
+}
+#host-specials-anchor {
+    position: relative;
+    top: -100px;
+}
+#party-prep {
+    position: relative;
+    top: -85px;
+}
+#party-details {
+    position: relative;
+    top: 75px;
+}
+
+.summary-separator {
+    max-width: 800px;    
+    margin: auto;
+    hr {
+        margin-bottom: 20px
+    }
+}
+
+.share-link {
+    display: none;
+    margin-top: 10px;
+    @extend .addthis_toolbox;
+    border-color: $green-apple;
+    &.visible {
+        display: inline-block;
+    }
+    .shareLink-title {
+        @extend .socialLinks-title;
+        top: -14px;
+        .shareLink-titleText {
+            @extend .socialLinks-titleText;
+            color: $green-apple;
+        }
+    }
+    a {
+        display: block;
+        margin-left: 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 225px;
+    }
+}
+
+#hpPartyDetail {
+    #hpPartyDetailConsultant {
+        font-weight: bold;
+    }
+}
+
+.party-planner-results {
+    margin: auto;
+    max-width: 700px;
+    .shg-row {
+        display: flex;
+        > div:nth-child(1) {
+            max-width: 320px;
+        }
+        > div:nth-child(2) {
+            max-width: 325px;
+        }
+    }
+    #partyOrders {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .guest-info-pagination {
+            margin-top: 10px;
+            .custom-pagination-item--current {
+                a {
+                    color: $burgundy;
+                }
+            }
+            a {
+                font-size: 18px;
+            }
+            i {
+                position: relative;
+                top: 4px;
+                font-size: 26px;
+                color: $light-burgundy;
+            }
+        }
+        .booked-parties {
+            .party-list {
+                padding-bottom: 10px;
+                .party {
+                    margin-left: 31px;
+                }
+            }
+            &.collapsed {
+                .party-list {
+                    display: none !important;
+                }
+                .collapse-parent {
+                    .icon-toggle-minus {
+                        display: none !important;
+                    }
+                    .icon-toggle-plus {
+                        display: block !important;
+                    }
+                }
+            }
+        }
+        .simple-table {
+            width: 100%;
+            font-weight: normal;
+            th {
+                padding: 5px 5px 2px 5px;
+                width: unset; 
+            }
+            th:nth-child(1) {
+                padding-left: 15px;
+            }
+            tbody {
+                tr {
+                    td:first-child {
+                        text-align: left; 
+                        padding: 5px;
+                        padding-left: 15px;
+                    }
+                    td {
+                        height: 30px;
+                        position: relative;
+                        .star {
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            left: -15px;
+                            height: 0.6rem;
+                        }
+                    }
+                }
+            }
+        }
+        .booked-parties {
+            background-color: $COLOR_GREEN_LIGHT;
+            margin: 10px 0;
+            .parties {
+                margin-left: 32px;
+            }
+            .collapse-parent {
+                align-items: center;
+                display: flex;
+                padding: 3.5px 0;
+                .star {
+                    height: 0.6rem;
+                    margin: 0 8px;
+                }
+                .collapsible {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+                .subhead-16 {
+                    padding: 1px 0;
+                }
+                .booked-toggle {
+                    margin: 0 13px 0 57px;
+                    display: flex;
+                    align-items: center;
+                    .icon-toggle-plus {
+                        display: none;
+                    }
+                    .icon-toggle-plus, .icon-toggle-minus {
+                        height: 18px;
+                        width: 18px;
+                    }   
+                }
+            }
+        }
+    }
+    #host-rewards {
+        width: 100%;
+        margin-bottom: 15px;
+        .grid-card {
+            width: unset;
+            padding: 0;
+            text-align: center;
+            color: #000;
+            box-shadow: #bbbbbb 0 4px 6px 1px;
+            .rewards-head {
+                display: flex;
+                flex-direction: column;
+                margin: auto;
+                width: 60%;
+                .rewards-amount-container {
+                    display: none;
+                    #rewards-amount {
+                        line-height: 1;
+                        color: #000;
+                        margin: 0;
+                        margin-top: 8px;
+                    }
+                }
+                .rewards-title {
+                    margin-bottom: 0;
+                    margin-top: 10px;
+                    color: #000;
+                }
+                .rewards-message {
+                    display: none;
+                    margin-bottom: 0;
+                }
+            }
+            .rewards-body {
+                display: flex;
+                flex-direction: column;
+                padding: 0 0 2px 0;
+                hr {
+                    width: 100%;
+                    border-top: 1px solid $COLOR_GRAY_100;
+                    width: 93%;
+                    margin: auto;
+                }
+                .section {
+                    width: 94%;
+                    margin: auto;
+                    text-align: left;
+                    overflow: initial;
+                    padding: 20px 0;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    &.discount {
+                        padding-bottom: 10px;
+                    }
+                    &.shipping {
+                        padding-top: 7px;
+                    }
+                    .section-title {
+                        font-weight: normal;
+                        text-transform: none;
+                        margin: 0;
+                        color: black;
+                    }
+                    .section-title[style] {
+                        margin: 0px 0px 15px !important; 
+                    }
+                    .progress-container {
+                        border-bottom: 5px;
+                        box-shadow: $wan-white 0px 4px 4px 0px;
+                        height: 10px;
+                        margin: 6px 0 11px 3px;
+                        color: #000;
+                        background-color: $gainsboro;
+                        border-radius: 16px;
+                        .progress {
+                            height: 10px;
+                            color: #fff;
+                            background-color: $teal;
+                            border-radius: 16px;
+                            position:relative;
+                            .pointer {
+                                display: flex;
+                                justify-content: flex-end;
+                                position: absolute;
+                                right: 17px;
+                                width: 100%;
+                                &.achieved {
+                                    .achieved-icon {
+                                        display: flex;
+                                        justify-content: center;
+                                        &:before {
+                                            font-size: 23px;
+                                        }
+                                    }
+                                    .pointer-circle {
+                                        display: none;
+                                    }
+                                }
+                                .achieved-icon {
+                                    border-radius: 50%;
+                                    background-color: #fff;
+                                    position: absolute;
+                                    border: 2px solid #fff;
+                                    top: -8px;
+                                    right: -18px;
+                                    display: none;
+                                    font-size: 27px;
+                                    .progress-amount {
+                                        top: -56px;
+                                    }
+                                }
+                                .pointer-circle {
+                                    width: 25px;
+                                    height: 25px;
+                                    top: -7px; 
+                                    border: 2px solid #fff;
+                                    display: flex;
+                                    justify-content: center;
+                                    &:before {
+                                        content: "";
+                                    }
+                                }
+                                .progress-amount {
+                                    margin-bottom: 0;
+                                    display: block;
+                                    position: absolute;
+                                    top: -59px;
+                                    color: #000;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .rewards-footer {
+                h4 {
+                    color: #000;
+                    margin-top: 0;
+                }
+            }
+            .rewards-top {
+                border-radius: 5px 5px 0 0;
+            }
+            .rewards-bottom {
+                border-radius: 0 0 5px 5px;
+            }
+            .rewards-top, .rewards-bottom {
+                background-color: $COLOR_PRIMARY_100;
+                padding: 3px 20px;
+            }
+        }
+    }
+}
+@media (max-width: 1060px) {
+    .party-planner-results {
+        .shg-row {
+            flex-direction: column;
+            align-items: center;
+            #host-rewards {
+                margin: 15px auto;
+            }
+            > div {
+                width: 100% !important;
+            }
+        }
+    }
+}
+@media (max-width: 450px) {
+    #partyOrders {
+        .display-count {
+            font-size: 12px;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .party-planner-results {
+        #partyOrders {
+            width: 100%;
+            .simple-table {
+                margin: auto;
+            }
+            .subhead-16 {
+                margin-right: 10px;
+            }
+        }
+        #host-rewards {
+            width: 95%;
+        }
+    }
+
+    .party-details-container {
+        .shg-row {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            > div {
+                width: initial !important;
+            }
+            > div:nth-child(2) {
+                width: 100% !important;
+                max-width: 354px;
+                margin-top: 10px;
+            }
+        }
+    }
+}

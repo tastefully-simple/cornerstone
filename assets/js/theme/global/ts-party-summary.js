@@ -201,12 +201,15 @@ class PartySummary {
         guests.forEach((guest) => {
             this.insertGuestRow(guest);
         });
+        if (guests.length < this.guestPageSize) {
+            this.insertEmptyGuestRows(this.guestPageSize - guests.length); 
+        }
     }
 
-    insertEmptyGuestRows() {
-        for (let i = 0; i < 10; i++) {
+    insertEmptyGuestRows(n = 10) {
+        for (let i = 0; i < n; i++) {
             const $row = $('<tr>', { class: 'system-14' });
-            $row.append($('<td>'));
+            $row.append($('<td>', { colspan: 3 }));
             $('#partyOrders tbody').append($row);
         }
     }
@@ -216,7 +219,6 @@ class PartySummary {
         const $allCells = $('#partyOrders .simple-table tbody td');
 
         $allCells.attr('colspan', 3);
-        $allCells.css('height', '30px');
         $firstCell.html('Your party orders will display here.');
     }
 

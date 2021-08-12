@@ -128,12 +128,12 @@
                 tr {
                     td:first-child {
                         text-align: left; 
-                        padding: 5px;
                         padding-left: 15px;
                     }
                     td {
                         height: 30px;
                         position: relative;
+                        padding: 0 5px;
                         .star {
                             position: absolute;
                             top: 50%;

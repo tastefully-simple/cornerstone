@@ -436,7 +436,7 @@
         "ts_current_store_base_url": "https://tastefully-simple-sandbox-1.mybigcommerce.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://stage-tsapi.tastefullysimple.com",
-        "ts_tsapi_host_party_base_url": "https://qa1-party.api.tastefullysimple.com",
+        "ts_tsapi_host_party_base_url": "https://stage-party.api.tastefullysimple.com",
         "ts_join_store_url": "https://tastefully-simple-inc-sandbox-5.mybigcommerce.com",
         "ts_affiliation_timer": 15,
         "zoy_dev_mode": false
@@ -464,7 +464,7 @@
         "ts_current_store_base_url": "https://www.tastefullysimple.com",
         "ts_shop_more_url": "/shop/",
         "ts_tsapi_base_url": "https://tsapi.tastefullysimple.com",
-        "ts_tsapi_host_party_base_url": "https://qa1-party.api.tastefullysimple.com",
+        "ts_tsapi_host_party_base_url": "https://party.api.tastefullysimple.com",
         "ts_join_store_url": "https://join.tastefullysimple.com",
         "ts_affiliation_timer": 1440,
         "ts_debug_mode": false,

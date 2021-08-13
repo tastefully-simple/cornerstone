@@ -306,7 +306,7 @@ footer{
     background-color:$teal;
     border-color:$teal;
     @extend .button-primary;
-    &:not([disabled])&:hover{
+    &:not([disabled]):hover{
         background-color:$teal-hover;
         border-color:$teal-hover;
     }

@@ -310,6 +310,10 @@ footer{
         background-color:$teal-hover;
         border-color:$teal-hover;
     }
+    &:focus {
+        background-color: $teal;
+        border-color: $teal;
+    }
 }
 .button--secondary{
     @extend .button-secondary;
@@ -329,6 +333,10 @@ footer{
     &:not([disabled]):hover{
         background-color:$green-hover;
         border-color:$green-hover;
+    }
+    &:focus {
+        background-color: $green-apple;
+        border-color: $green-apple;
     }
 }
 [disabled].button-alternate-disabled {

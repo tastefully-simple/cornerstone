@@ -128,12 +128,12 @@
                 tr {
                     td:first-child {
                         text-align: left; 
-                        padding: 5px;
                         padding-left: 15px;
                     }
                     td {
                         height: 30px;
                         position: relative;
+                        padding: 0 5px;
                         .star {
                             position: absolute;
                             top: 50%;
@@ -240,13 +240,10 @@
                         padding-top: 7px;
                     }
                     .section-title {
+                        margin: 0px 0px 15px !important; 
                         font-weight: normal;
                         text-transform: none;
-                        margin: 0;
                         color: black;
-                    }
-                    .section-title[style] {
-                        margin: 0px 0px 15px !important; 
                     }
                     .progress-container {
                         border-bottom: 5px;

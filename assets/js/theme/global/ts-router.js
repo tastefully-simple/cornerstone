@@ -176,13 +176,15 @@ export default class TSRouter {
                 .then(res => res.json())
                 .then(data => {
                     if (data.ConsultantId) {
-                        window.location = '/web';
                         const cname = `${data.FirstName} ${data.LastName}`;
                         TSCookie.setConsultantName(cname);
                         TSCookie.setConsultantId(data.ConsultantId);
                         TSCookie.setConsultantHasOpenParty(data.HasOpenParty);
                         this.deletePartyCookies();
+                        window.location = '/web';
                     } else {
+                        TSCookie.deleteConsultant();
+                        this.deletePartyCookies();
                         window.location = '/shop';
                     }
                 })

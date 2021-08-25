@@ -175,13 +175,18 @@ export default class TSRouter {
             this.api.getConsultantByUsername(cUsername)
                 .then(res => res.json())
                 .then(data => {
-                    window.location = '/web';
-
-                    const cname = `${data.FirstName} ${data.LastName}`;
-                    TSCookie.setConsultantName(cname);
-                    TSCookie.setConsultantId(data.ConsultantId);
-                    TSCookie.setConsultantHasOpenParty(data.HasOpenParty);
-                    this.deletePartyCookies();
+                    if (data.ConsultantId) {
+                        const cname = `${data.FirstName} ${data.LastName}`;
+                        TSCookie.setConsultantName(cname);
+                        TSCookie.setConsultantId(data.ConsultantId);
+                        TSCookie.setConsultantHasOpenParty(data.HasOpenParty);
+                        this.deletePartyCookies();
+                        window.location = '/web';
+                    } else {
+                        TSCookie.deleteConsultant();
+                        this.deletePartyCookies();
+                        window.location = '/shop';
+                    }
                 })
                 .catch(err => {
                     console.warn('getConsultantByUsername', err);

@@ -1,6 +1,5 @@
 import TSApi from '../common/ts-api';
 import TSCookie from '../common/ts-cookie';
-import pagination from '../common/pagination';
 // For await
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -9,25 +8,27 @@ class Consultant {
     constructor() {
         // Modes to what data from API to render
         this.basicInfoData = 0;
-        this.storyData     = 1;
-        this.partiesData   = 2;
-        
+        this.storyData = 1;
+        this.partiesData = 2;
+
         // Modes to what data from API to render
         this.attendTab = 0;
-        this.pastTab   = 1;
+        this.pastTab = 1;
 
         // ConnectTypes for social media urls
-        this.facebook  = 1;
-        this.twitter   = 2;
+        this.facebook = 1;
+        this.twitter = 2;
         this.pinterest = 3;
-        this.youtube   = 4;
+        this.youtube = 4;
 
         // Length of story text limit
         this.storyLimit = 50;
 
         this.api = new TSApi();
         this.cid = TSCookie.getConsultantId();
-        this.consultantInfo = { AfId: 0, ConsultantId: '', EmailAddress: '', HasOpenParty: false, Headline: '', Image: '', Location: '', Name: '', OnlineShopEnabled: false, PhoneNumber: '', SocialMediaURLs: [], Title: '', WebUrl: '' };
+        this.consultantInfo = {
+            AfId: null, ConsultantId: '', EmailAddress: '', HasOpenParty: false, Headline: '', Image: '', Location: '', Name: '', OnlineShopEnabled: false, PhoneNumber: '', SocialMediaURLs: [], Title: '', WebUrl: '',
+        };
         this.consultantStory = { Story: '' };
         this.consultantParties = { Attend: [], Past: [] };
         this.init();
@@ -58,11 +59,11 @@ class Consultant {
 
     /*
      * Added a class called consultant-page in div.body
-     * to use to remove the space between the party bar 
+     * to use to remove the space between the party bar
      * and hero image
      */
     removeSpaceInHeader() {
-        var $bodyContainer = document.querySelector('.body');
+        const $bodyContainer = document.querySelector('.body');
         $bodyContainer.classList.add('consultant-page');
     }
 
@@ -70,8 +71,8 @@ class Consultant {
         if (typeof this.cid !== 'undefined') {
             return this.api.getConsultantInfo(this.cid)
                 .done((data) => {
+                    const urlSlug = data.WebUrl.match(/\/web\/[a-z0-9\W]+/ig)[0];
                     this.consultantInfo = data;
-                    var urlSlug = data.WebUrl.match(/\/web\/[a-z0-9\W]+/ig)[0];
                     history.pushState(null, null, urlSlug);
                     this.renderResults(this.basicInfoData);
                 });
@@ -135,22 +136,22 @@ class Consultant {
      * - Location
      */
     getInfoHtmlBlock() {
-        var $img       = document.querySelector('.cdetails-img');
-        var $name      = document.querySelector('.cdetails-name');
-        var $title     = document.querySelector('.cdetails-title');
-        var $location  = document.querySelector('.cdetails-location');
-        var $url       = document.querySelector('.cdetails-url');
-    
+        const $img = document.querySelector('.cdetails-img');
+        const $name = document.querySelector('.cdetails-name');
+        const $title = document.querySelector('.cdetails-title');
+        const $location = document.querySelector('.cdetails-location');
+        const $url = document.querySelector('.cdetails-url');
+
         if (this.consultantInfo.Image) {
             $img.setAttribute('src', this.consultantInfo.Image);
             TSCookie.setConsultantImage(this.consultantInfo.Image);
         } else {
             TSCookie.setConsultantImage($img.src);
         }
-        $name.innerHTML = this.consultantInfo.Name || "Tastefully Simple";
-        $title.innerHTML = this.consultantInfo.Title || "Consultant";
-        $location.innerHTML = this.consultantInfo.Location || "Alexandria, MN";
-        $url.innerHTML = '<a class="global-link"  href=' + this.consultantInfo.WebUrl + '>' + this.consultantInfo.WebUrl +'</a>';
+        $name.innerHTML = this.consultantInfo.Name || 'Tastefully Simple';
+        $title.innerHTML = this.consultantInfo.Title || 'Consultant';
+        $location.innerHTML = this.consultantInfo.Location || 'Alexandria, MN';
+        $url.innerHTML = `<a class="global-link" href="${this.consultantInfo.WebUrl}">${this.consultantInfo.WebUrl}</a>`;
     }
 
     /* Basic Info - Column 2
@@ -160,38 +161,37 @@ class Consultant {
      * - Email
      */
     getMoreInfoHtmlBlock() {
-        var consultantFName = this.consultantInfo.Name.split(" ")[0];
+        const consultantFName = this.consultantInfo.Name.split(' ')[0];
 
-        var $greetings   = document.querySelector('.cdetails-greetings');
-        var $headline    = document.querySelector('.cdetails-headline');
-        var $phoneNumber = document.querySelector('.cdetails-phone-number');
-        var $email       = document.querySelector('.cdetails-email');
+        const $greetings = document.querySelector('.cdetails-greetings');
+        const $headline = document.querySelector('.cdetails-headline');
+        const $phoneNumber = document.querySelector('.cdetails-phone-number');
+        const $email = document.querySelector('.cdetails-email');
 
-        $greetings.innerHTML = "hello, I'm " + consultantFName + "!";
+        $greetings.innerHTML = `hello, I'm ${consultantFName}!`;
         $headline.innerHTML = this.consultantInfo.Headline;
         $phoneNumber.innerHTML = this.formatPhoneNumber(this.consultantInfo.PhoneNumber);
         $email.innerHTML = this.consultantInfo.EmailAddress;
-        
+
         // Social Media Links
         this.getSocialMedias(this.consultantInfo.SocialMediaURLs);
     }
 
     getSocialMedias(socialMedias) {
+        const $socialLinksContainer = document.querySelector('.cdetails-more-info .socialLinks');
+
         if (socialMedias === null) {
             return;
         }
 
-        var $socialLinksContainer = document.querySelector('.cdetails-more-info .socialLinks');
-        var self = this;
-
-        socialMedias.forEach(function(socialMedia) { 
-            var $link = self.getSocialMedia(socialMedia); 
+        socialMedias.forEach((socialMedia) => {
+            const $link = this.getSocialMedia(socialMedia);
             $socialLinksContainer.appendChild($link);
         });
     }
 
     getSocialMedia(social) {
-        switch(social.ConnectType) {
+        switch (social.ConnectType) {
             case this.facebook:
                 return this.createSocialMedia(social.URL, 'facebook');
             case this.twitter:
@@ -207,7 +207,7 @@ class Consultant {
 
     getStoryHtmlBlock() {
         if (!this.consultantStory.Story) {
-            var $storyTitle = document.querySelector('.consultant-story h2');
+            const $storyTitle = document.querySelector('.consultant-story h2');
             $storyTitle.innerHTML = '';
 
             return;
@@ -215,35 +215,34 @@ class Consultant {
 
         // Returns an object
         // => { short, readMore }
-        var storyText = this.splitStoryText(this.consultantStory.Story);
-        
-        var $storyContainer = document.querySelector('.consultant-story');
-        var $story = document.createElement('p');
+        const storyText = this.splitStoryText(this.consultantStory.Story);
+
+        const $storyContainer = document.querySelector('.consultant-story');
+        const $story = document.createElement('p');
         $story.classList.add('consultant-story-text');
-        
-        var $dots = document.createElement('span');
+
+        const $dots = document.createElement('span');
         $dots.classList.add('consultant-story-dots');
         $dots.innerHTML = '...';
-        
-        var $readMoreText = document.createElement('span');
+
+        const $readMoreText = document.createElement('span');
         $readMoreText.classList.add('read-more-text');
         $readMoreText.style.display = 'none';
         $readMoreText.innerHTML = storyText.readMore;
-        
-        var $readMoreBtn = document.createElement('button');
+
+        const $readMoreBtn = document.createElement('button');
         $readMoreBtn.classList.add('read-more-story', 'framelink-lg', 'teal-text');
         $readMoreBtn.innerHTML = 'read more';
-        
+
         if (storyText.readMore.length !== 0) {
             $story.innerHTML = storyText.short;
             $story.appendChild($dots);
             $story.appendChild($readMoreText);
-            
-            var self = this;
-            $readMoreBtn.addEventListener('click', function() {
-                self.readMoreStory($dots, $readMoreText, $readMoreBtn);
+
+            $readMoreBtn.addEventListener('click', () => {
+                this.readMoreStory($dots, $readMoreText, $readMoreBtn);
             });
-    
+
             $storyContainer.appendChild($story);
             $storyContainer.appendChild($readMoreBtn);
         } else {
@@ -261,7 +260,7 @@ class Consultant {
     }
 
     getTabContentHtmlBlock(parties, tab) {
-        var $content;
+        let $content;
         switch (tab) {
             case this.attendTab:
                 $content = document.querySelector('.cparties-attend');
@@ -279,14 +278,13 @@ class Consultant {
             return;
         }
 
-        var self = this;
-        parties.forEach(function(party, i) {
+        parties.forEach((party, i) => {
             // Create elements for the data
-            var $card = self.createPartyCard(party, tab);
+            const $card = this.createPartyCard(party, tab);
 
-            var $divider = document.createElement('div');
+            const $divider = document.createElement('div');
             $divider.classList.add('party-divider');
-            
+
             $content.appendChild($card);
 
             if (i !== parties.length - 1) {
@@ -300,44 +298,47 @@ class Consultant {
     }
 
     createSocialMedia(url, social) {
-        var $item = document.createElement('li');
+        const $item = document.createElement('li');
         $item.classList.add('socialLinks-item');
 
-        var $socialLink = document.createElement('a');
-        $socialLink.setAttribute('class', 'icon-social-' + social);
+        const $socialLink = document.createElement('a');
+        $socialLink.setAttribute('class', `icon-social-${social}`);
         $socialLink.setAttribute('href', url);
         $socialLink.setAttribute('target', '_blank');
 
         $item.appendChild($socialLink);
-        
+
         return $item;
     }
 
     splitStoryText() {
-        var shortText = "";
-        var readMoreText = "";
-        var counter = 0;
-        
+        let shortText = '';
+        let readMoreText = '';
+        let counter = 0;
+
         this.consultantStory.Story.split(' ').forEach((word) => {
-            var wordFormat = word;
-        
+            let wordFormat = word;
+
             if (word.includes('\r\n\r\n')) {
                 wordFormat = word.replace('\r\n\r\n', '<br><br>');
             }
-            
+
             if (counter <= this.storyLimit) {
-                shortText += wordFormat + ' ';
+                shortText += `${wordFormat} `;
             } else {
-                readMoreText += wordFormat + ' ';
-          }
-          
-          counter += 1;
+                readMoreText += `${wordFormat} `;
+            }
+
+            counter += 1;
         });
-        
+
         return { short: shortText, readMore: readMoreText };
     }
 
-    readMoreStory($dots, $text, $btn) {
+    readMoreStory($dotsObject, $textObject, $btnObject) {
+        const $dots = $dotsObject;
+        const $text = $textObject;
+        const $btn = $btnObject;
         if ($dots.style.display === 'none') {
             $dots.style.display = 'inline';
             $text.style.display = 'none';
@@ -345,14 +346,14 @@ class Consultant {
         } else {
             $dots.style.display = 'none';
             $text.style.display = 'inline';
-            $btn.innerHTML = 'read less'; 
+            $btn.innerHTML = 'read less';
         }
     }
 
     setCookies(e, party) {
         e.stopPropagation();
-        var phost = party.HostFirstName + ' ' + party.HostLastName;
-    
+        const phost = `${party.HostFirstName} ${party.HostLastName}`;
+
         TSCookie.setPartyId(party.PartyId);
         TSCookie.setPartyHost(phost);
         TSCookie.setPartyDate(party.Date);
@@ -365,40 +366,39 @@ class Consultant {
      * - Consultant
      */
     createPartyCard(party, tab) {
-        var $card = document.createElement('div');
+        const $card = document.createElement('div');
         $card.classList.add('party-card');
-        
-        var $col1 = document.createElement('div');
+
+        const $col1 = document.createElement('div');
         $col1.classList.add('party-info');
-        
-        var $col2 = document.createElement('div');
+
+        const $col2 = document.createElement('div');
         $col2.classList.add('party-shop');
-        
-        var $host = document.createElement('h4');
+
+        const $host = document.createElement('h4');
         $host.classList.add('party-host', 'textgray-text');
-        
-        var $date = document.createElement('p');
+
+        const $date = document.createElement('p');
         $date.classList.add('party-date', 'system-14');
-        
-        var $consultant = document.createElement('p');
+
+        const $consultant = document.createElement('p');
         $consultant.classList.add('party-consultant', 'system-14');
-        
-        var $shop = document.createElement('a');
+
+        const $shop = document.createElement('a');
         $shop.classList.add('party-shop-link');
 
-        $host.innerHTML = party.HostFirstName + " " + party.HostLastName + "'s Party";
-        $consultant.innerHTML = 'Consultant: ' + party.Consultant;
+        $host.innerHTML = `${party.HostFirstName} ${party.HostLastName}'s Party`;
+        $consultant.innerHTML = `Consultant: ${party.Consultant}`;
         $shop.setAttribute('href', '/shop');
         $shop.innerHTML = 'shop';
-        
-        var self = this;
-        $shop.addEventListener('click', function(e) { self.setCookies(e, party); });
 
-        var dateText = '';
+        $shop.addEventListener('click', (e) => { this.setCookies(e, party); });
+
+        let dateText = '';
         if (tab === this.pastTab) {
-            dateText = 'Ended On: ' + party.Date;
+            dateText = `Ended On: ${party.Date}`;
         } else {
-            dateText = 'Date: ' + party.Date;
+            dateText = `Date: ${party.Date}`;
         }
         $date.innerHTML = dateText;
 

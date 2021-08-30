@@ -9,7 +9,23 @@ class PartyDetails {
     constructor() {
         this.api = new TSApi();
         this.pid = TSCookie.getPartyId();
-        this.partyInfo = {};
+        this.partyInfo = {
+            Consultant: '',
+            ConsultantId: '',
+            ConsultantXid: null,
+            Date: '',
+            FundraisingOrganization: '',
+            HostFirtName: '',
+            HostLastName: '',
+            Image: '',
+            IsFundraiser: false,
+            ParsedDate: null,
+            PartyId: null,
+            PartySubTypeXID: '',
+            PartyTitle: '',
+            Time: '',
+            Total: 0,
+        };
         this.initPartyDetails();
     }
 

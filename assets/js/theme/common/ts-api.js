@@ -1,7 +1,7 @@
 export default class TSApi {
     constructor() {
-        this.baseUrl = window.theme_settings.ts_tsapi_base_url;
-        this.hostPartyBaseUrl = window.theme_settings.ts_tsapi_host_party_base_url;
+        this.baseUrl = `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_base_url}`;
+        this.hostPartyBaseUrl = `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_host_party_base_url}`;
     }
 
     fullUrl(uri) {
@@ -103,33 +103,33 @@ export default class TSApi {
      * Consultant Detail Page
      */
 
-    // Consultant - About Me
     getConsultantInfo(cid) {
         const uri = `/consultant/info?cid=${cid}`;
 
-        return fetch(this.fullUrl(uri), {
-            method: 'GET',
-            headers: { Accept: 'application/json' },
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
         });
     }
 
-    // Consultant - My Story
     getConsultantStory(cid) {
         const uri = `/consultant/mystory?cid=${cid}`;
 
-        return fetch(this.fullUrl(uri), {
-            method: 'GET',
-            headers: { Accept: 'application/json' },
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
         });
     }
 
-    // Consultant - My Parties
     getConsultantParties(cid) {
         const uri = `/consultant/parties?cid=${cid}`;
 
-        return fetch(this.fullUrl(uri), {
-            method: 'GET',
-            headers: { Accept: 'application/json' },
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
         });
     }
 

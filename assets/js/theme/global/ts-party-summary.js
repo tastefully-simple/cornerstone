@@ -230,8 +230,10 @@ class PartySummary {
         let guestRecipient = `<span class="guest-recipient">${guest.Recipient}</span>`;
         guestRecipient = guest.Booked ? (star + guestRecipient) : guestRecipient;
         $row.append($('<td>').append(guestRecipient));
-        const total = guest.GuestOrderTotal.toFixed(2);
-        $row.append($('<td>').append(`$${total}`));
+        const total = guest.GuestOrderTotal > 0
+            ? `$${guest.GuestOrderTotal.toFixed(2)}`
+            : `( $${Math.abs(guest.GuestOrderTotal.toFixed(2))} )`;
+        $row.append($('<td>').append(total));
         $('#partyOrders tbody').append($row);
     }
 

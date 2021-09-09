@@ -504,7 +504,7 @@ class FindAConsultant {
         const html =
             `<div class="find-consultant-m">
                 <img class="consultant-img"
-                     src="https://tso.tastefullysimple.com/_/media/images/noconsultantphoto.png"
+                     src="https://consultant.api.tastefullysimple.com/image/profile/noconsultantphoto.png"
                      alt="Photograph thumbnail of ${this.consultant.name}"
                      style="display: initial;">
                 ${this.consultantInfoHtml()}

@@ -28,6 +28,7 @@ import tsJoinProcess from './global/ts-join-process';
 import tsCookieConfig from './global/ts-cookie-config';
 import tsPartyDetails from './global/ts-party-details';
 import tsPartySummary from './global/ts-party-summary';
+import tsConsultant from './global/ts-consultant';
 
 export default class Global extends PageManager {
     onReady() {
@@ -61,5 +62,6 @@ export default class Global extends PageManager {
         tsJoinProcess(themeSettings);
         tsPartyDetails();
         tsPartySummary();
+        tsConsultant();
     }
 }

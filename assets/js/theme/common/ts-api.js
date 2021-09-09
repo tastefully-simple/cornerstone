@@ -1,7 +1,12 @@
 export default class TSApi {
     constructor() {
-        this.baseUrl = `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_base_url}`;
-        this.hostPartyBaseUrl = `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_host_party_base_url}`;
+        this.baseUrl = window.theme_settings.ts_api_environment 
+            ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_base_url}`
+            : `https:\/\/${window.theme_settings.ts_tsapi_base_url}`;
+
+        this.hostPartyBaseUrl = window.theme_settings.ts_api_environment
+            ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_host_party_base_url}`
+            : `https:\/\/${window.theme_settings.ts_tsapi_host_party_base_url}`;
     }
 
     fullUrl(uri) {

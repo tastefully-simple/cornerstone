@@ -252,7 +252,9 @@ export default class TSRouter {
     // }
 
     apiUrl(uri) {
-        return `https:\/\/${this.settings.ts_api_environment}-${this.settings.ts_tsapi_base_url}${uri}`;
+        return this.settings.ts_api_environment 
+            ? `https:\/\/${this.settings.ts_api_environment}-${this.settings.ts_tsapi_base_url}${uri}`
+            : `https:\/\/${this.settings.ts_tsapi_base_url}${uri}`;
     }
 
     getQuery() {

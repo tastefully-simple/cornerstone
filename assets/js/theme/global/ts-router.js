@@ -148,8 +148,7 @@ export default class TSRouter {
             this.showLoading();
 
             this.api.getConsultantInfo(consultantId)
-                .then(response => response.json())
-                .then(data => {
+                .done(data => {
                     TSCookie.setConsultantId(data.ConsultantId);
                     TSCookie.setConsultantName(data.Name);
                     TSCookie.setConsultantImage(data.Image);

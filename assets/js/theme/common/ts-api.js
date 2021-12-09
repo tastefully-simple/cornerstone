@@ -273,4 +273,24 @@ export default class TSApi {
             url: this.fullPartyUrl(uri),
         });
     }
+
+    getYumConsultants(customerId) {
+        const uri = `/cart/affiliations?customerId=${customerId}`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
+        });
+    }
+
+    setActiveYumConsultant(consultantId, customerid) {
+        const uri = `/cart/setpendingaffiliation?consultantId=${consultantId}&customerId=${customerid}&overridePending=1`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
+        });
+    }
 }

@@ -87,3 +87,10 @@
         --}}
     </ul>
 </nav>
+{{!-- @razoyo: added Yum Club info --}}
+{{ inject "customer" customer}}
+<script type="text/javascript">
+    var jsContext = JSON.parse({{jsContext}});
+    window.customer = jsContext.customer;
+</script>
+{{> components/account/consultant}}

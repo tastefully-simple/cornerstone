@@ -5,7 +5,7 @@ export default class ConsultantCard {
     getTemplate() {
         const template = new Promise((resolve, _reject) => {
             utils.api.getPage('/', {
-                template: 'common/consultant-card',
+                template: 'common/findConsultant/consultant-card',
             }, (err, res) => {
                 if (err) {
                     console.error('Error getting consultant-card template');

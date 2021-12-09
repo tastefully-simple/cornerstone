@@ -1,5 +1,4 @@
-{{!-- Consultant Search Modal --}}
-<div class="modal-general-alternate find-a-consultant" id="consultant-search">
+<div class="modal-general-alternate find-a-consultant consultant-search" id="consultant-search-account">
     <div class="genmodal-header">
         <h2>{{ lang 'ts_affiliation.consultant.search_title' }}</h2>
         <button type="button" class="modal-close" aria-label="Close" role="button">
@@ -13,7 +12,7 @@
                 <span></span>
             </p>
         </div>
-        <form onsubmit="return false" id="zipcode-search-form">
+        <form onsubmit="return false" id="zipcode-search-form-account">
             <article class="buy-wide-card zip-search">
                 <span class="form-title system-14">Search by zip code</span>
                 <div class="card-form system-12">
@@ -39,7 +38,7 @@
                 </div>
             </article>
         </form>
-        <form onsubmit="return false" id="name-search-form">
+        <form onsubmit="return false" id="name-search-form-account">
             <article class="buy-wide-card name-search">
                 <span class="form-title system-14">Search by consultant name</span>
                 <div class="card-form system-12">
@@ -59,7 +58,7 @@
                 </div>
             </article>
         </form>
-        <form onsubmit="return false" id="id-search-form">
+        <form onsubmit="return false" id="id-search-form-account">
             <article class="buy-wide-card id-search">
                 <span class="form-title system-14">Search by consultant ID</span>
                 <div class="card-form system-12">
@@ -78,41 +77,3 @@
         <button class="button-cancel consultantmodal-cancel-btn" type="button">cancel</button>
     </div>
 </div>
-
-{{!-- Consultant Search Result Modal --}}
-<div class="modal-general-alternate modal-results" id="consultant-search-results">
-    <div class="genmodal-header">
-        <h2>{{ lang 'ts_affiliation.consultant.results_title' }}</h2>
-        <a href="#" class="modal-close" aria-label="Close" role="button">
-            <span aria-hidden="true" class="close-modal-alternate"></span>
-        </a>
-    </div>
-    <div class="genmodal-body">
-        <div class="search-filter-wrapper">
-            <div class="return-search">
-                <div class="vertical-center">
-                    <i class="fas fa-caret-left"></i>
-                </div>
-                <button class="frame-caption return-search-text">Refine your search</button>
-            </div>
-        </div>
-        <article class="buy-wide-card"></article>
-        <div class="alertbox-error">
-            <h2 class="alert-title">Error</h2>
-            <p class="alert-message">
-                <span></span>
-            </p>
-        </div>
-    </div>
-    <div class="findmodal-footer">
-        <div class="next-step-wrapper">
-            <p class="next-step-selected-text system-12"></p>
-            <button class="button-cancel consultantmodal-cancel-btn" type="button">cancel</button>
-            <button class="button-alternate-disabled button-alternate-icon" id="consultant-continue" disabled>
-                continue
-            </button>
-        </div>
-    </div>
-</div>
-
-{{> components/common/consultant-parties }}

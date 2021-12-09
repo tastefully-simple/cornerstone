@@ -200,6 +200,12 @@
                 padding: 10px;
                 text-align:center;
                 width:100%;
+                .greeting {
+                    display: none;
+                    text-align: left;
+                    margin-top: 0;
+                    color: #000;
+                }
                 .return-search {
                     cursor: pointer;
                     display: flex;
@@ -241,6 +247,10 @@
                     text-align:right;
                     .next-step-selected-text {
                         margin-bottom:.5rem;
+                        &.yum-selected {
+                            text-align: left;
+                            margin-bottom: 45px;
+                        }
                         span {
                             color: $green-apple;
                         }

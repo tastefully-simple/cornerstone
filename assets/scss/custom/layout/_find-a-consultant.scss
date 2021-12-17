@@ -3,7 +3,7 @@
 // =============================================================================
 /* Choose A Consultant Styles  */
 #modal {
-    #consultant-search {
+    .consultant-search {
         .genmodal-body {
             max-height:500px;
             .alertbox-error {
@@ -47,7 +47,7 @@
     #no-consultants-continue {
         width: 60%;
     }
-    #consultant-search-results {
+    .consultant-search-results {
         display: none;
         height:100%;
         .frameheading-5 {
@@ -74,6 +74,18 @@
                 #consultants-qty {
                     margin: 10px 0;
                 }
+            }
+        }
+        .findmodal-footer {
+            .greeting {
+                display: none;
+                text-align: left;
+                margin-top: 0;
+                color: #000;
+            }
+            .yum-selected {
+                text-align: left;
+                margin-bottom: 45px;
             }
         }
     }
@@ -190,7 +202,7 @@
                     }
                 }
             }
-            #consultant-search {
+            .consultant-search {
                 .alertbox-error {
                     text-align: left;
                     p {

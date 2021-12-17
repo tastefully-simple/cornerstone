@@ -2,6 +2,24 @@
 // Tastefully Simple Account Styles
 // =============================================================================
 
+#yum-club-info {
+    display: none;
+    text-align: center;
+    margin-bottom: 36px;
+    p {
+        font-family: 'PT Serif';
+        margin-bottom: 0;
+        span {
+            font-weight: bold;
+        }
+        .icon-system-info {
+            height: 20px;
+            margin-left: .5rem;
+            width: 20px;
+            vertical-align: sub;
+        }
+    }
+}
 .account {
     &:not(.order-details) {
         .account-body {

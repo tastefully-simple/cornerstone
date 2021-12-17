@@ -19,10 +19,11 @@ import shippingModalInteraction from './global/shippingModalInteraction';
 import accordian from './global/accordian';
 import newsletterAlert from './global/newsletter-alert';
 import stickyHeader from './global/sticky-header';
-import findConsultant from './global/find-consultant';
+import FindConsultant from './global/ts-find-consultant';
 import findParty from './global/find-party';
 import tooltip from './global/tooltip';
 import tsCheckUserLogin from './global/ts-check-user-login';
+import tsAccount from './global/ts-account';
 import tsAddToCart from './global/ts-add-to-cart';
 import tsJoinProcess from './global/ts-join-process';
 import tsCookieConfig from './global/ts-cookie-config';
@@ -33,7 +34,7 @@ import tsConsultant from './global/ts-consultant';
 export default class Global extends PageManager {
     onReady() {
         const {
-            channelId, cartId, productId, categoryId, secureBaseUrl, maintenanceModeSettings, adminBarLanguage, showAdminBar, themeSettings,
+            adminBarLanguage, cartId, categoryId, channelId, maintenanceModeSettings, productId, secureBaseUrl, showAdminBar, themeSettings,
         } = this.context;
         cartPreview(secureBaseUrl, cartId);
         quickSearch();
@@ -54,7 +55,8 @@ export default class Global extends PageManager {
         newsletterAlert();
         stickyHeader();
         tsCookieConfig(themeSettings);
-        findConsultant(themeSettings);
+        const fc = new FindConsultant(themeSettings.ts_consultant_id);
+        fc.init();
         findParty(themeSettings);
         tooltip();
         tsCheckUserLogin();
@@ -63,5 +65,6 @@ export default class Global extends PageManager {
         tsPartyDetails();
         tsPartySummary();
         tsConsultant();
+        tsAccount(themeSettings.ts_consultant_id);
     }
 }

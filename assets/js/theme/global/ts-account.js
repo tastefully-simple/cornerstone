@@ -79,6 +79,11 @@ class Account extends FindAConsultant {
         $('.result-card.selected').show();
     }
 
+    /* Override parent function to do nothing. This is done on purpose. */
+    renderConsultant() {
+
+    }
+
     bindFindConsultantTrigger() {
         $('body').on(
             'click',

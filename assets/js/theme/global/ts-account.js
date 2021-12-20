@@ -11,6 +11,7 @@ class Account extends FindAConsultant {
         this.api = new TSApi();
         this.modalTemplate = 'common/findConsultant/find-consultant-account';
         this.activeYumConsultantName = '';
+        this.defaultYumConsultantName = 'Tastefully Simple';
         this.yumConsultants = [];
 
         // Identifiers
@@ -33,8 +34,8 @@ class Account extends FindAConsultant {
         }
 
         this.setConsultant(this.loadConsultant());
-        this.setYumConsultantName(this.getActiveYumConsultantName());
-        this.setYumConsultantNameText();
+        this.setActiveYumConsultantName(this.getActiveYumConsultantName());
+        this.setActiveYumConsultantNameText();
         this.initListeners();
     }
 
@@ -45,7 +46,7 @@ class Account extends FindAConsultant {
             });
     }
 
-    setYumConsultantName(name) {
+    setActiveYumConsultantName(name) {
         this.activeYumConsultantName = name;
     }
 
@@ -55,10 +56,10 @@ class Account extends FindAConsultant {
             const activeConsultant = activeConsultants[0];
             return [activeConsultant.FirstName, activeConsultant.LastName].join(' ');
         }
-        return this.activeYumConsultantName;
+        return this.defaultYumConsultantName;
     }
 
-    setYumConsultantNameText() {
+    setActiveYumConsultantNameText() {
         $('#yum-club-consultant').text(this.activeYumConsultantName);
     }
 
@@ -110,8 +111,8 @@ class Account extends FindAConsultant {
     async confirmSelection() {
         if (window.selectedId) {
             const consultantName = $('.selected .consultant-name').text();
-            this.setYumConsultantName(consultantName);
-            this.setYumConsultantNameText();
+            this.setActiveYumConsultantName(consultantName);
+            this.setActiveYumConsultantNameText();
             try {
                 await this.api.setActiveYumConsultant(window.selectedId, this.customerId);
             } catch (xhr) {

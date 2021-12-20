@@ -4,7 +4,7 @@
             <label class="form-label is-srOnly" for="search_query_adv">{{lang 'search.results.form_label'}}</label>
             <div class="form-prefixPostfix">
                 <input class="form-input" id="search_query_adv" name="search_query_adv" value="{{forms.search.query}}" placeholder="keyword or product #">
-                <button class="button--search" type="submit"><span class="icon-system-search-teal"></span></button>
+                <button class="button--search" type="submit" aria-labelledby="search-text"><span class="icon-system-search-teal"></span><span id="search-text" class="sr-only">Search</span></button>
             </div>
         </div>
     </fieldset>

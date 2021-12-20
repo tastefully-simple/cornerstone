@@ -52,9 +52,7 @@ module.exports = {
         path: path.resolve(__dirname, 'assets/dist'),
     },
     performance: {
-        hints: 'warning',
-        maxAssetSize: 1024 * 300,
-        maxEntrypointSize: 1024 * 300,
+        hints: false
     },
     plugins: [
         new CleanPlugin(['assets/dist'], {

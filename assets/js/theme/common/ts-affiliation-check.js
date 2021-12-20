@@ -20,7 +20,7 @@ export default class TSAffiliationCheck {
                         partyID: TSCookie.getPartyId(),
                     };
 
-                    this.api.affiliationCheck(affiliations);
+                    //this.api.affiliationCheck(affiliations);
                 }
             })
             .catch(err => console.warn('StorefrontAPI::getCart()', err));

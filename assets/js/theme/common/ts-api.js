@@ -7,6 +7,10 @@ export default class TSApi {
         this.hostPartyBaseUrl = window.theme_settings.ts_api_environment
             ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_host_party_base_url}`
             : `https:\/\/${window.theme_settings.ts_tsapi_host_party_base_url}`;
+
+        this.consultantBaseUrl = window.theme_settings.ts_api_environment
+            ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_consultant_base_url}`
+            : `https:\/\/${window.theme_settings.ts_tsapi_consultant_base_url}`;
     }
 
     fullUrl(uri) {
@@ -15,6 +19,10 @@ export default class TSApi {
 
     fullPartyUrl(uri) {
         return this.hostPartyBaseUrl + uri;
+    }
+
+    consultantUrl(uri) {
+        return this.consultantBaseUrl + uri;
     }
 
     welcomeCheck(email) {
@@ -291,6 +299,16 @@ export default class TSApi {
             type: 'GET',
             accepts: 'json',
             url: this.fullUrl(uri),
+        });
+    }
+
+    getIsCustomerConsultant(customerEmail) {
+        const uri = `/Info/isconsultant?emailAddress=${customerEmail}`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.consultantUrl(uri),
         });
     }
 }

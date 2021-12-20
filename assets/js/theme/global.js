@@ -29,6 +29,7 @@ import tsJoinProcess from './global/ts-join-process';
 import tsCookieConfig from './global/ts-cookie-config';
 import tsPartyDetails from './global/ts-party-details';
 import tsPartySummary from './global/ts-party-summary';
+import tsCartSubscription from './global/ts-cart-subscription';
 import tsConsultant from './global/ts-consultant';
 
 export default class Global extends PageManager {
@@ -66,5 +67,6 @@ export default class Global extends PageManager {
         tsPartySummary();
         tsConsultant();
         tsAccount(themeSettings.ts_consultant_id);
+        tsCartSubscription(themeSettings.ts_consultant_id);
     }
 }

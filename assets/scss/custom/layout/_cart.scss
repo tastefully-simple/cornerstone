@@ -111,3 +111,45 @@
         width: 100%;
     }
 }
+
+// =============================================================================
+// Cart Subscription Styles
+// =============================================================================
+#modal {
+    .modal-content {
+        #cart-sub-login {
+            .cart-sub-body {
+                max-height: none;
+                .alertbox-error {
+                    display: none;
+                }
+                .page-heading {
+                    margin-top: 20px;
+                    font-size: 22px;
+                    font-weight: 400;
+                    font-family: $FONT_FAMILY_SECONDARY,Arial,Helvetica,sans-serif;
+                    margin-bottom: 0;
+                }
+                .login-row {
+                    margin-top: 0;
+                    display: flex;
+                    flex-direction: column;
+                    .form-actions {
+                        display: flex;
+                    }
+                    .login-form {
+                        align-self: center;
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        margin: 0;
+                        .form-field {
+                            width: 55%;
+                            align-self: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

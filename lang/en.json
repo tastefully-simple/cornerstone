@@ -990,5 +990,8 @@
       "parties_caption": "Are you shopping with a party or fundraiser? Make sure your host gets credit for your order.",
       "tooltip_info": "What is a consultant? Our consultants are independent business owners who help you decide what's to eat! Help us ensure your consultant receives their commission or credit."
     }
+  },
+  "ts_cart_subscription": {
+    "login_title": "Ready to Yum?"
   }
 }

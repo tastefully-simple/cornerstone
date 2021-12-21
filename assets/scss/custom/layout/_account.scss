@@ -6,17 +6,37 @@
     display: none;
     text-align: center;
     margin-bottom: 36px;
-    p {
+    .yum-info-internal {
+        display: flex;
+        justify-content: center;
+    }
+    .yum-club-msg {
         font-family: 'PT Serif';
         margin-bottom: 0;
         span {
             font-weight: bold;
+            margin-left: 1ch;
+            margin-right: 1ch;
         }
         .icon-system-info {
             height: 20px;
             margin-left: .5rem;
             width: 20px;
             vertical-align: sub;
+        }
+    }
+    .icon-with-tooltip {
+        .tooltip-title {
+            color: $text-gray;
+            font: 700 14px 'Muli', sans-serif;
+            margin: 0;
+        }
+        .tooltip-side-right {
+            position: absolute;
+            left: 2vw;
+            text-align: left;
+            top: 50%;
+            transform: translateY(-50%);
         }
     }
 }

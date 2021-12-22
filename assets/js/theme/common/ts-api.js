@@ -311,4 +311,34 @@ export default class TSApi {
             url: this.consultantUrl(uri),
         });
     }
+
+    
+    login(data) {
+        const url = `/login.php?action=check_login`;
+
+        return $.ajax({
+            type: 'POST',
+            referrer: '/login.php',
+            referrerPolicy: "strict-origin-when-cross-origin",
+            mode: "cors",
+            credentials: "include",
+            url: (url),
+            data: data 
+        });
+    }
+
+    register(data) {
+        const url = `/login.php?action=save_new_account`;
+
+        return $.ajax({
+            redirect: "follow",
+            type: 'POST',
+            referrer: '/login.php?action=create_account',
+            referrerPolicy: "strict-origin-when-cross-origin",
+            mode: "cors",
+            credentials: "include",
+            url: (url),
+            data: data 
+        });
+    }
 }

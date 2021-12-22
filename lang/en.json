@@ -992,6 +992,7 @@
     }
   },
   "ts_cart_subscription": {
-    "login_title": "Ready to Yum?"
+    "auth_title": "Ready to Yum?",
+    "not_eligible_title": "Account Alert"
   }
 }

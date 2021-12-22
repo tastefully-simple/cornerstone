@@ -49,7 +49,6 @@ class CartSubscription extends FindAConsultant {
 
     logIn() {
         this.createModal();
-        
     }
     
     createModal(width = 550) {
@@ -60,7 +59,7 @@ class CartSubscription extends FindAConsultant {
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
             if (err) {
-                console.error('Failed to get common/cartSubscription/login. Error:', err);
+                console.error(`Failed to get ${template}. Error:`, err);
                 return false;
             } else if (res) {
                 this.loginModalLoaded(res);
@@ -72,20 +71,121 @@ class CartSubscription extends FindAConsultant {
         this.modal.updateContent(result);
     }
 
-    async login() {
+    async login(e) {
+        e.preventDefault();
+        const $loginForm = $(e.currentTarget);
         try {
-            await this.fetchLogin();
+            await this.fetchLogin(`${$loginForm.serialize()}&authenticity_token=${window.BCData.csrf_token}`);
         } catch (res) {
             //:TODO
             console.warn('fetchLogin:', res);
         }
     }
 
-    fetchLogin() {
-        return this.api.fetchLogin()
-            .done((data) => {
-                this.yumConsultants = data;
+    renderRegister() {
+        this.modalTemplate = 'common/cartSubscription/register';
+        const template = this.modalTemplate;
+        const options = { template };
+        utils.api.getPage('/', options, (err, registerHtml) => {
+            if (err) {
+                console.error(`Failed to get ${template}. Error:`, err);
+                return false;
+            }
+            this.modal.updateContent(registerHtml);
+        });
+    }
+
+    async register(e) {
+        e.preventDefault();
+        const $registerForm = $(e.currentTarget);
+        const customerEmail = $(e.currentTarget).find('#FormField_1_input').val();
+        debugger;
+        try {
+            await this.fetchRegister(`${$registerForm.serialize()}&authenticity_token=${window.BCData.csrf_token}`, customerEmail);
+        } catch (res) {
+            //:TODO
+            console.warn('fetchLogin:', res);
+        }
+    }
+
+    fetchRegister(data, customerEmail) {
+        return this.api.register(data)
+            .done((res) => {
+                const $resHtml = $(res);
+                if ($($resHtml).find('#alertBox-message-text').length > 0) {
+                    this.getInvalidRegister($($resHtml).find('#alertBox-message-text').text());
+                } else {
+                    this.registerConfirmation(customerEmail);
+                }
             });
+    }
+
+    registerConfirmation(customerEmail) {
+        //TODO don't need to set globally; check others
+        this.modalTemplate = 'common/cartSubscription/account-created';
+        const template = this.modalTemplate;
+        const options = { template };
+        utils.api.getPage('/', options, (err, confirmationHtml) => {
+            if (err) {
+                console.error(`Failed to get ${template}. Error:`, err);
+                return false;
+            }
+            const $confirmationHtml = $(confirmationHtml);
+            $confirmationHtml.find('#created-email').html(customerEmail);
+            this.modal.updateContent($confirmationHtml[0].outerHTML);
+            setTimeout(() => {}, 3000);
+            this.customerConsultant(); 
+        });
+    }
+
+    getInvalidRegister(errMsg) {
+        const template = 'common/alert/alert-error';
+        const options = { template };
+        utils.api.getPage('/', options, (err, invalidRegisterAlertHtml) => {
+            if (err) {
+                console.error(`Failed to get ${template}. Error:`, err);
+                return false;
+            }
+            this.invalidRegister(invalidRegisterAlertHtml, errMsg);
+        });
+    }
+
+    invalidRegister(html, errMsg) {
+        var $html = $(html);
+        $html.find('#alertBox-message-text').html(errMsg);
+        $('#modal .alertbox-success').hide();
+        $('#modal .account').prepend($html[0].outerHTML);
+    }
+
+    fetchLogin(data) {
+        return this.api.login(data)
+            .done((res) => {
+                const $resHtml = $(res);
+                if ($($resHtml).find('#alertBox-message-text').length > 0) {
+                    this.getWrongLogin($($resHtml).find('#alertBox-message-text').text());
+                } else {
+                    this.customerConsultant();
+                }
+            });
+    }
+
+    getWrongLogin(errMsg) {
+        const template = 'common/alert/alert-error';
+        const options = { template };
+        utils.api.getPage('/', options, (err, wrongLoginAlertHtml) => {
+            if (err) {
+                console.error(`Failed to get ${template}. Error:`, err);
+                return false;
+            }
+            this.wrongLogin(wrongLoginAlertHtml, errMsg);
+        });
+    }
+
+    wrongLogin(html, errMsg) {
+        var $html = $(html);
+        $html.find('#alertBox-message-text').html(errMsg);
+        $('#modal .alertbox-success').hide();
+        $('#modal .cart-sub-body').prepend($html[0].outerHTML);
     }
 
     async customerConsultant() {
@@ -98,7 +198,7 @@ class CartSubscription extends FindAConsultant {
     }
 
     activeAutoships() {
-
+        debugger;
     }
 
     renderAutoshipNotEligibleModal() {
@@ -123,8 +223,14 @@ class CartSubscription extends FindAConsultant {
         //Bind To checkout Button
         $('body').on('click', '.cart-actions .button--primary:not([disabled])', (e) => this.init(e));
 
-        //Bind login button
+        //Bind login submit
         $('body').on('submit', '#modal .login-form', (e) => this.login(e));
+
+        //Bind register submit
+        $('body').on('submit', '#modal .account .form', (e) => this.register(e));
+
+        //Bind register button
+        $('body').on('click', '#modal .new-customer .button--primary', (e) => this.renderRegister());
 
         //Bind cancel button
         $('body').on('click', '#modal .subscriptionmodal-cancel-btn', () => this.closeModal());

@@ -239,7 +239,7 @@ export default class FindAConsultant {
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
             if (err) {
-                console.error('Failed to get common/find-consultant. Error:', err);
+                console.error(`Failed to get${template}. Error:`, err);
                 return false;
             } else if (res) {
                 this.modalLoaded(res);
@@ -270,7 +270,7 @@ export default class FindAConsultant {
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
             if (err) {
-                console.error('Failed to get common/find-consultant. Error:', err);
+                console.error(`Failed to get ${template}. Error:`, err);
                 return false;
             } else if (res) {
                 this.modal.updateContent(res);

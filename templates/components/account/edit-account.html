@@ -23,13 +23,13 @@
                 <label class="form-label" for="account_companyname">
                     {{lang 'account.settings.company' }}
                 </label>
-                <input type="text" class="form-input" name="account_companyname" id="account_companyname" value="{{forms.edit_account.company_name}}">
+                <input type="text" class="form-input" name="account_companyname" id="account_companyname" value="{{forms.edit_account.company_name}}" maxlength="30">
             </div>
             <div class="form-field">
                 <label class="form-label" for="account_phone">
                     {{lang 'account.settings.phone' }}
                 </label>
-                <input type="text" class="form-input" name="account_phone" id="account_phone" value="{{forms.edit_account.phone}}">
+                <input type="text" class="form-input" name="account_phone" id="account_phone" value="{{forms.edit_account.phone}}" maxlength="10">
             </div>
             {{#each forms.edit_account.fields}}
                 {{{dynamicComponent 'components/common/forms'}}}

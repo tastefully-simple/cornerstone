@@ -9,6 +9,7 @@
 $brown: #4c3723;
 $burgundy: #610b31;
 $butterscotch: #ddcda6;
+$burnt-caramel: #854a0f;
 $caramel: #b46c20;
 $cream: #f0ebdf;
 $grape: #720f4b;
@@ -16,6 +17,7 @@ $light-burgundy: #7f4252;
 // Secondary
 $banana: #ffe438;
 $berry: #eb2257;
+$davys-gray: #575757;
 $gainsboro: #e2e2e2;
 $green: #2f722e;
 $green-hover: #859407;
@@ -653,7 +655,7 @@ label{
         }
     }
     &.tick-disabled{
-        color:$silver;
+        color:$davys-gray;
     }
 }
 .input-confirmed{
@@ -718,7 +720,7 @@ textarea{
     }
 }
 .close-tooltip{
-    color:$green-apple;
+    color:$text-gray;
     cursor:pointer;
     float:right;
     font-size:18px;
@@ -793,7 +795,7 @@ textarea{
         display:flex;
         justify-content:space-between;
         h2 {
-            color:$utility-green;
+            color:$text-gray;
         }
     }
     .alert-message {
@@ -817,6 +819,10 @@ textarea{
     color:$text-gray;
     a {
         font-weight:700;
+        color: $teal-hover;
+    }
+    &:hover {
+        color: $teal;
     }
     svg {
         fill:$teal;

@@ -7,17 +7,17 @@
     // Set all colors to white as the footer uses a generic config value that we cannot re-define
     .footer-info-col,
     .footer-bottom{
-        color: #fff;
+        color: $white;
         a,
         a:hover{
-            color:#fff;
+            color:$white;
         }
         button {
             padding:0;
         }
         .footer-copyright{
             &>.powered-by{
-                color: #fff;
+                color: $white;
             }
         }
     }
@@ -56,6 +56,9 @@
                 max-width:500px;
                 .form {
                     margin-bottom:0;
+                    .form-label {
+                        color: $white; 
+                    }
                     .form-field {
                         margin-bottom:0;
                         .newsletter-inputs {
@@ -109,12 +112,12 @@
                 padding-left:0;
                 .socialLinks {
                     .socialLinks-item {
-                        border:2px solid #fff;
+                        border:2px solid $white;
                         border-radius:50%;
                         padding:8px;
                         .icon{
                             svg{
-                                fill:#fff;
+                                fill:$white;
                             }
                         }
                     }

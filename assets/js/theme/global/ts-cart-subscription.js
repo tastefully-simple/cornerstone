@@ -57,7 +57,7 @@ class CartSubscription extends FindAConsultant {
     createLoginModal() {
         this.modal = defaultModal();
         $('#modal').width(this.modalWidth);
-        $('#modal').addClass('autoShip');
+        $('#modal').addClass('auto-ship');
         this.modal.open();
         const template = this.modalTemplate;
         const options = { template };
@@ -262,7 +262,7 @@ class CartSubscription extends FindAConsultant {
             } else {
                 this.modal = defaultModal();
                 $('#modal').width(this.modalWidth);
-                $('#modal').addClass('autoShip');
+                $('#modal').addClass('auto-ship');
                 this.modal.open();
                 this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
             }
@@ -302,7 +302,7 @@ class CartSubscription extends FindAConsultant {
             } else {
                 this.modal = defaultModal();
                 $('#modal').width(this.modalWidth);
-                $('#modal').addClass('autoShip');
+                $('#modal').addClass('auto-ship');
                 this.modal.open();
                 this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
             }
@@ -368,7 +368,7 @@ class CartSubscription extends FindAConsultant {
             } else {
                 this.modal = defaultModal();
                 $('#modal').width(this.modalWidth);
-                $('#modal').addClass('autoShip');
+                $('#modal').addClass('auto-ship');
                 this.modal.open();
                 this.modal.updateContent(registerHtml);
             }

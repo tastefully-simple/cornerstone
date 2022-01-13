@@ -993,6 +993,8 @@
   },
   "ts_cart_subscription": {
     "auth_title": "Ready to Yum?",
+    "choose_consultant_with_party_title": "This is a little complicated...",
+    "choose_consultant_title": "Choose your Yum Club Consultant",
     "not_eligible_title": "Account Alert"
   }
 }

@@ -1,0 +1,34 @@
+<div class="modal-general-alternate" id="choose-consultant-with-party">
+    <div class="genmodal-header">
+        <h2>{{ lang 'ts_cart_subscription.choose_consultant_with_party_title' }}</h2>
+        <button type="button" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true" class="close-modal-alternate"></span>
+        </button>
+    </div>
+    <div class="cart-sub-body">
+        <section class="page">
+            <main class="page-content page-content--textCenter">
+                <h1 class="frameheading-1 greeting">Hi, {{ customer.name }}</h1>
+                <p>Thanks for being a Yum Club autoship member with <strong class="active-yum"></strong>! This order contains Yum Club products and is being placed through <strong class="active-party"></strong><strong>'s</strong> party and a new consultant <strong class="active-consultant"></strong>. Subscriptions may only be linked to one consultant.</p>
+                <p>Select an option:</p>                
+                <div id="choose-consultant-options">
+                    <div id="yum-option">
+                        <label class="tick-enabled">
+                            <input type="radio" name="yum-consultant" value="yum">
+                            <span class="frametext">Keep your current Yum Club consultant <strong class="active-yum"></strong></span>
+                            <span class="frametext sub-text">Host <span class="active-party"></span>'s party will not be credited with this order.</span>
+                        </label>
+                    </div>
+                    <div id="current-option">
+                        <label class="tick-enabled">
+                            <input type="radio" name="current-consultant" value="current">
+                            <span class="frametext">Place this order with <strong class="active-party"></strong><strong>'s</strong> party and change your Yum Club Consultant to <strong class="active-consultant"></strong></span>
+                            <span class="frametext sub-text">Your Yum Club consultant will change to <strong class="active-consultant"></strong>. If you wish to place an order with this party, return to your cart and remove subscription product and keep your current Yum Club consultant.</span>
+                        </label>
+                    </div>
+                </div>
+                <button class="button-primary disabled" disabled="">select option above to checkout</button>
+            </main>
+        </section>
+    </div>
+</div>

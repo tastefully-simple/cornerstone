@@ -84,9 +84,10 @@ export default class TSApi {
     getConsultant(id) {
         const uri = `/search/shop/cid/${id}`;
 
-        return fetch(this.fullUrl(uri), {
-            method: 'GET',
-            headers: { Accept: 'application/json' },
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
         });
     }
 
@@ -302,6 +303,16 @@ export default class TSApi {
         });
     }
 
+    setPendingYumConsultant(consultantId, customerid) {
+        const uri = `/cart/setpendingaffiliation?consultantId=${consultantId}&customerId=${customerid}&overridePending=0`;
+
+        return $.ajax({
+            type: 'GET',
+            accepts: 'json',
+            url: this.fullUrl(uri),
+        });
+    }
+
     getIsCustomerConsultant(customerEmail) {
         const uri = `/Info/isconsultant?emailAddress=${customerEmail}`;
 
@@ -312,7 +323,6 @@ export default class TSApi {
         });
     }
 
-    
     login(data) {
         const url = `/login.php?action=check_login`;
 

@@ -1,6 +1,7 @@
 import { defaultModal } from '../global/modal';
 import FindAConsultant from './ts-find-consultant';
 import TSApi from '../common/ts-api';
+import TSCookie from '../common/ts-cookie';
 import utils from '@bigcommerce/stencil-utils';
 // For await
 import 'core-js/stable';
@@ -10,30 +11,32 @@ class CartSubscription extends FindAConsultant {
     constructor(tsConsultantId) {
         super(tsConsultantId);
         this.api = new TSApi();
+        this.activeConsultant = null;
+        this.activeConsultantName = null;
+        this.customerId = null;
         this.modalTemplate = 'common/cartSubscription/login';
-        this.customerId;
-
-        // Identifiers
+        this.modalwidth = 550;
+        this.yumConsultants = [];
 
         this.initListeners();
     }
 
     init(e) {
         e.preventDefault();
-        utils.api.cart.getCart({includeOptions: true}, (err, response) => {
-            err 
-              ? console.error(`Failed to get cart. Error: ${err}`) 
-              : this.subscriptionInCart(response);
+        utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
+            err
+                ? console.error(`Failed to get cart. Error: ${err}`)
+                : this.subscriptionInCart(response);
         });
     }
 
     subscriptionInCart(response) {
         this.customerId = response.customerId;
         this.customerEmail = response.email;
-        const physicalItems = response.lineItems.physicalItems; 
-        for (var i = 0; i < physicalItems.length; i++) {
+        const physicalItems = response.lineItems.physicalItems;
+        for (let i = 0; i < physicalItems.length; i++) {
             const options = physicalItems[i].options;
-            for (var j = 0; j < options.length; j++) {
+            for (let j = 0; j < options.length; j++) {
                 if (options[j].name.toLowerCase().includes('subscribe') && options[j].value.toLowerCase() !== 'one time only') {
                     this.customerLoggedIn();
                     return;
@@ -48,12 +51,12 @@ class CartSubscription extends FindAConsultant {
     }
 
     logIn() {
-        this.createModal();
+        this.createLoginModal();
     }
-    
-    createModal(width = 550) {
+
+    createLoginModal() {
         this.modal = defaultModal();
-        $('#modal').width(width);
+        $('#modal').width(this.modalWidth);
         this.modal.open();
         const template = this.modalTemplate;
         const options = { template };
@@ -68,6 +71,7 @@ class CartSubscription extends FindAConsultant {
     }
 
     loginModalLoaded(result) {
+        this.modal.open();
         this.modal.updateContent(result);
     }
 
@@ -76,9 +80,8 @@ class CartSubscription extends FindAConsultant {
         const $loginForm = $(e.currentTarget);
         try {
             await this.fetchLogin(`${$loginForm.serialize()}&authenticity_token=${window.BCData.csrf_token}`);
-        } catch (res) {
-            //:TODO
-            console.warn('fetchLogin:', res);
+        } catch (x) {
+            console.warn('fetchLogin:', 'Something Went Wrong');
         }
     }
 
@@ -99,12 +102,10 @@ class CartSubscription extends FindAConsultant {
         e.preventDefault();
         const $registerForm = $(e.currentTarget);
         const customerEmail = $(e.currentTarget).find('#FormField_1_input').val();
-        debugger;
         try {
             await this.fetchRegister(`${$registerForm.serialize()}&authenticity_token=${window.BCData.csrf_token}`, customerEmail);
-        } catch (res) {
-            //:TODO
-            console.warn('fetchLogin:', res);
+        } catch (x) {
+            console.warn('fetchRegister:', 'Something Went Wrong');
         }
     }
 
@@ -120,8 +121,13 @@ class CartSubscription extends FindAConsultant {
             });
     }
 
-    registerConfirmation(customerEmail) {
-        //TODO don't need to set globally; check others
+    async registerConfirmation(customerEmail) {
+        await utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
+            err
+                ? console.error(`Failed to get cart. Error: ${err}`)
+                : this.customerId = response.customerId;
+        });
+        this.customerEmail = customerEmail;
         this.modalTemplate = 'common/cartSubscription/account-created';
         const template = this.modalTemplate;
         const options = { template };
@@ -131,10 +137,10 @@ class CartSubscription extends FindAConsultant {
                 return false;
             }
             const $confirmationHtml = $(confirmationHtml);
-            $confirmationHtml.find('#created-email').html(customerEmail);
+            $confirmationHtml.find('#created-email').html(this.customerEmail);
             this.modal.updateContent($confirmationHtml[0].outerHTML);
             setTimeout(() => {}, 3000);
-            this.customerConsultant(); 
+            this.customerConsultant();
         });
     }
 
@@ -151,7 +157,7 @@ class CartSubscription extends FindAConsultant {
     }
 
     invalidRegister(html, errMsg) {
-        var $html = $(html);
+        const $html = $(html);
         $html.find('#alertBox-message-text').html(errMsg);
         $('#modal .alertbox-success').hide();
         $('#modal .account').prepend($html[0].outerHTML);
@@ -182,7 +188,7 @@ class CartSubscription extends FindAConsultant {
     }
 
     wrongLogin(html, errMsg) {
-        var $html = $(html);
+        const $html = $(html);
         $html.find('#alertBox-message-text').html(errMsg);
         $('#modal .alertbox-success').hide();
         $('#modal .cart-sub-body').prepend($html[0].outerHTML);
@@ -197,42 +203,198 @@ class CartSubscription extends FindAConsultant {
         }
     }
 
-    activeAutoships() {
-        debugger;
+    async activeAutoships() {
+        try {
+            await this.fetchYumConsultants();
+            this.setActiveConsultant();
+            this.activeConsultant ? this.matchingConsultants() : this.goToCheckout();
+        } catch (xhr) {
+            const readableError = JSON.parse(xhr.responseText || '{"error": "An error has occured"}');
+            console.warn('getYumConsultants:', readableError);
+        }
     }
 
-    renderAutoshipNotEligibleModal() {
-        this.modalTemplate = 'common/cartSubscription/autoshipNotEligible'; 
-        this.createModal();
+    setActiveConsultant() {
+        if (this.yumConsultants.length > 0) {
+            this.yumConsultants.forEach((c) => {
+                if (c.IsActive) {
+                    this.activeConsultant = c.ConsultantID.trim();
+                    this.activeConsultantName = `${c.FirstName} ${c.LastName}`;
+                }
+            });
+        }
     }
 
-    fetchIsCustomerConsultant() {
-        return this.api.getIsCustomerConsultant(this.customerEmail)
+    fetchYumConsultants() {
+        return this.api.getYumConsultants(this.customerId)
             .done((data) => {
                 this.yumConsultants = data;
             });
     }
-  
+
+    matchingConsultants() {
+        (TSCookie.getConsultantId() === this.activeConsultant || !TSCookie.getConsultantId()) ? this.goToCheckout() : this.partyAssociation();
+    }
+
+    partyAssociation() {
+        TSCookie.getPartyId()
+            ? this.renderChooseConsultantWithParty()
+            : this.renderChooseConsultant();
+    }
+
+    renderChooseConsultantWithParty() {
+        this.modalTemplate = 'common/cartSubscription/choose-consultant-with-party';
+        const template = this.modalTemplate;
+        const options = { template };
+        utils.api.getPage('/', options, (err, chooseConsultantHtml) => {
+            if (err) {
+                console.error(`Failed to get ${template}. Error:`, err);
+                return false;
+            }
+            const $chooseConsultantHtml = $(chooseConsultantHtml);
+            $chooseConsultantHtml.find('.active-yum').html(this.activeConsultantName);
+            $chooseConsultantHtml.find('.active-consultant').html(TSCookie.getConsultantName());
+            $chooseConsultantHtml.find('.active-party').html(TSCookie.getPartyHost());
+            if (typeof this.modal !== 'undefined') {
+                this.modal.open();
+                this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
+            } else {
+                this.modal = defaultModal();
+                $('#modal').width(this.modalWidth);
+                this.modal.open();
+                this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
+            }
+        });
+        $('body').on('click', '#choose-consultant-options input', (e) => {
+            $('#choose-consultant-options input').prop('checked', false);
+            $('#choose-consultant-options .sub-text').hide();
+            $(e.target).prop('checked', true);
+            $('.cart-sub-body button').prop('disabled', false);
+            $('.cart-sub-body button').text('Checkout');
+            $(e.target).siblings('.sub-text').show();
+        });
+        $('body').on('click', '.cart-sub-body button', () => {
+            if (!$('.cart-sub-body button').attr('disabled')) {
+                $('#choose-consultant-options input:checked').val() === 'current'
+                    ? this.setPendingYumConsultant(TSCookie.getConsultantId())
+                    : this.storeConsultantAffiliation(this.activeConsultant);
+            }
+        });
+    }
+
+    renderChooseConsultant() {
+        this.modalTemplate = 'common/cartSubscription/choose-consultant';
+        const template = this.modalTemplate;
+        const options = { template };
+        utils.api.getPage('/', options, (err, chooseConsultantHtml) => {
+            if (err) {
+                console.error(`Failed to get ${template}. Error:`, err);
+                return false;
+            }
+            const $chooseConsultantHtml = $(chooseConsultantHtml);
+            $chooseConsultantHtml.find('.active-yum').html(this.activeConsultantName);
+            $chooseConsultantHtml.find('.active-consultant').html(TSCookie.getConsultantName());
+            if (typeof this.modal !== 'undefined') {
+                this.modal.open();
+                this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
+            } else {
+                this.modal = defaultModal();
+                $('#modal').width(this.modalWidth);
+                this.modal.open();
+                this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
+            }
+        });
+        $('body').on('click', '#choose-consultant-options input', (e) => {
+            $('#choose-consultant-options input').prop('checked', false);
+            $(e.target).prop('checked', true);
+            $('.cart-sub-body button').prop('disabled', false);
+            $('.cart-sub-body button').text('Checkout');
+        });
+        $('body').on('click', '.cart-sub-body button', () => {
+            if (!$('.cart-sub-body button').attr('disabled')) {
+                $('#choose-consultant-options input:checked').val() === 'current'
+                    ? this.setPendingYumConsultant(TSCookie.getConsultantId())
+                    : this.storeConsultantAffiliation(this.activeConsultant);
+            }
+        });
+    }
+
+    async setPendingYumConsultant(consultantId) {
+        try {
+            await this.api.setPendingYumConsultant(consultantId, this.customerId);
+            this.goToCheckout();
+        } catch (xhr) {
+            const readableError = JSON.parse(xhr.responseText || '{"error": "An error has occured"}');
+            console.warn('setPendingYumConsultant:', readableError);
+        }
+    }
+
+    async storeConsultantAffiliation(consultantId) {
+        try {
+            await this.fetchConsultant(consultantId);
+            this.goToCheckout();
+        } catch (xhr) {
+            const readableError = JSON.parse(xhr.responseText || '{"error": "An error has occured"}');
+            console.warn('getConsultant:', readableError);
+        }
+    }
+
+    fetchConsultant(consultantId) {
+        return this.api.getConsultant(consultantId)
+            .done((data) => {
+                const consultant = data.Results[0];
+                TSCookie.setConsultantId(consultant.ConsultantId);
+                TSCookie.setConsultantName(consultant.Name);
+                TSCookie.setConsultantImage(consultant.Image);
+                TSCookie.setConsultantHasOpenParty(consultant.HasOpenParty);
+            });
+    }
+
+    renderAutoshipNotEligibleModal() {
+        this.modalTemplate = 'common/cartSubscription/autoship-not-eligible';
+        const template = this.modalTemplate;
+        const options = { template };
+        utils.api.getPage('/', options, (err, registerHtml) => {
+            if (err) {
+                console.error(`Failed to get ${template}. Error:`, err);
+                return false;
+            }
+            if (typeof this.modal !== 'undefined') {
+                this.modal.open();
+                this.modal.updateContent(registerHtml);
+            } else {
+                this.modal = defaultModal();
+                $('#modal').width(this.modalWidth);
+                this.modal.open();
+                this.modal.updateContent(registerHtml);
+            }
+        });
+    }
+
+    fetchIsCustomerConsultant() {
+        return this.api.getIsCustomerConsultant(this.customerEmail);
+    }
+
     goToCheckout() {
         window.location.href = '/checkout';
     }
 
     initListeners() {
         super.initListeners();
-        
-        //Bind To checkout Button
+
+        // Bind To checkout Button
         $('body').on('click', '.cart-actions .button--primary:not([disabled])', (e) => this.init(e));
 
-        //Bind login submit
+        // Bind login submit
         $('body').on('submit', '#modal .login-form', (e) => this.login(e));
 
-        //Bind register submit
+        // Bind register submit
         $('body').on('submit', '#modal .account .form', (e) => this.register(e));
 
-        //Bind register button
-        $('body').on('click', '#modal .new-customer .button--primary', (e) => this.renderRegister());
+        // Bind register button
+        $('body').on('click', '#modal .new-customer .button--primary', () => this.renderRegister());
 
-        //Bind cancel button
+        // Bind cancel button
         $('body').on('click', '#modal .subscriptionmodal-cancel-btn', () => this.closeModal());
     }
 }

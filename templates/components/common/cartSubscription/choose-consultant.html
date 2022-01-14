@@ -5,23 +5,23 @@
             <span aria-hidden="true" class="close-modal-alternate"></span>
         </button>
     </div>
-    <div class="cart-sub-body">
+    <div class="cart-sub-body autoship-choose">
         <section class="page">
-            <main class="page-content page-content--textCenter">
+            <main class="page-content">
                 <h1 class="frameheading-1 greeting">Hi, {{ customer.name }}</h1>
                 <p>Thanks for being a Yum Club autoship member with <strong class="active-yum"></strong>. Subscriptions may only be linked to one consultant. Select one below:</p>
                 <div id="choose-consultant-options">
                     <div id="yum-option">
+                        <h4 class="frameheading-4">Your current Yum Club consultant:</h4>
                         <label class="tick-enabled">
                             <input type="radio" name="yum-consultant" value="yum">
-                            <h4 class="frameheading-4">Your current Yum Club consultant:</h4>
                             <span class="frametext active-yum"></span>
                         </label>
                     </div>
                     <div id="current-option">
+                        <h4 class="frameheading-4">The Yum Club consultant you selected:</h4>
                         <label class="tick-enabled">
                             <input type="radio" name="current-consultant" value="current">
-                            <h4 class="frameheading-4">The Yum Club consultant you selected:</h4>
                             <span class="frametext active-consultant"></span>
                         </label>
                     </div>

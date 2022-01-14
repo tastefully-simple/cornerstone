@@ -14,6 +14,7 @@ class CartSubscription extends FindAConsultant {
         this.activeConsultant = null;
         this.activeConsultantName = null;
         this.customerId = null;
+        this.currentClass = 'auto-ship';
         this.modalTemplate = 'common/cartSubscription/login';
         this.modalwidth = 550;
         this.yumConsultants = [];
@@ -57,7 +58,9 @@ class CartSubscription extends FindAConsultant {
     createLoginModal() {
         this.modal = defaultModal();
         $('#modal').width(this.modalWidth);
-        $('#modal').addClass('auto-ship');
+        $('#modal').removeClass(this.currentClass);
+        this.currentClass = 'auto-ship login';
+        $('#modal').addClass(this.currentClass);
         this.modal.open();
         const template = this.modalTemplate;
         const options = { template };
@@ -256,13 +259,15 @@ class CartSubscription extends FindAConsultant {
             $chooseConsultantHtml.find('.active-yum').html(this.activeConsultantName);
             $chooseConsultantHtml.find('.active-consultant').html(TSCookie.getConsultantName());
             $chooseConsultantHtml.find('.active-party').html(TSCookie.getPartyHost());
+            $('#modal').removeClass(this.currentClass);
+            this.currentClass = 'auto-ship choose-with-party';
+            $('#modal').addClass(this.currentClass);
             if (typeof this.modal !== 'undefined') {
                 this.modal.open();
                 this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
             } else {
                 this.modal = defaultModal();
                 $('#modal').width(this.modalWidth);
-                $('#modal').addClass('auto-ship');
                 this.modal.open();
                 this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
             }
@@ -296,13 +301,15 @@ class CartSubscription extends FindAConsultant {
             const $chooseConsultantHtml = $(chooseConsultantHtml);
             $chooseConsultantHtml.find('.active-yum').html(this.activeConsultantName);
             $chooseConsultantHtml.find('.active-consultant').html(TSCookie.getConsultantName());
+            $('#modal').removeClass(this.currentClass);
+            this.currentClass = 'auto-ship choose';
+            $('#modal').addClass(this.currentClass);
             if (typeof this.modal !== 'undefined') {
                 this.modal.open();
                 this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
             } else {
                 this.modal = defaultModal();
                 $('#modal').width(this.modalWidth);
-                $('#modal').addClass('auto-ship');
                 this.modal.open();
                 this.modal.updateContent($chooseConsultantHtml[0].outerHTML);
             }
@@ -362,13 +369,15 @@ class CartSubscription extends FindAConsultant {
                 console.error(`Failed to get ${template}. Error:`, err);
                 return false;
             }
+            $('#modal').removeClass(this.currentClass);
+            this.currentClass = 'auto-ship not-eligible';
+            $('#modal').addClass(this.currentClass);
             if (typeof this.modal !== 'undefined') {
                 this.modal.open();
                 this.modal.updateContent(registerHtml);
             } else {
                 this.modal = defaultModal();
                 $('#modal').width(this.modalWidth);
-                $('#modal').addClass('auto-ship');
                 this.modal.open();
                 this.modal.updateContent(registerHtml);
             }

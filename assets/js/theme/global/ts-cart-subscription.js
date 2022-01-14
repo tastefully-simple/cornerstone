@@ -169,11 +169,19 @@ class CartSubscription extends FindAConsultant {
 
     fetchLogin(data) {
         return this.api.login(data)
-            .done((res) => {
+            .done(async (res) => {
                 const $resHtml = $(res);
                 if ($($resHtml).find('#alertBox-message-text').length > 0) {
                     this.getWrongLogin($($resHtml).find('#alertBox-message-text').text());
                 } else {
+                    await utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
+                        if (err) {
+                            console.error(`Failed to get cart. Error: ${err}`);
+                        } else {
+                            this.customerId = response.customerId;
+                            this.customerEmail = response.email;
+                        }
+                    });
                     this.customerConsultant();
                 }
             });

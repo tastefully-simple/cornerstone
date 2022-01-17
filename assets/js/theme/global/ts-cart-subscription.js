@@ -296,13 +296,11 @@ class CartSubscription extends FindAConsultant {
         $('body').on('click', '.cart-sub-body button', async () => {
             if (!$('.cart-sub-body button').attr('disabled')) {
                 if ($('#choose-consultant-options input:checked').val() === 'current') {
-                    if ( await this.setPendingYumConsultant(TSCookie.getConsultantId())) {
+                    if (await this.setPendingYumConsultant(TSCookie.getConsultantId())) {
                         this.goToCheckout();
                     }
-                } else {
-                    if (await this.storeConsultantAffiliation(this.activeConsultant)) {
-                        this.goToCheckout();
-                    }
+                } else if (await this.storeConsultantAffiliation(this.activeConsultant)) {
+                    this.goToCheckout();
                 }
             }
         });
@@ -342,13 +340,11 @@ class CartSubscription extends FindAConsultant {
         $('body').on('click', '.cart-sub-body button', async () => {
             if (!$('.cart-sub-body button').attr('disabled')) {
                 if ($('#choose-consultant-options input:checked').val() === 'current') {
-                    if ( await this.setPendingYumConsultant(TSCookie.getConsultantId())) {
+                    if (await this.setPendingYumConsultant(TSCookie.getConsultantId())) {
                         this.goToCheckout();
                     }
-                } else {
-                    if (await this.storeConsultantAffiliation(this.activeConsultant)) {
-                        this.goToCheckout();
-                    }
+                } else if (await this.storeConsultantAffiliation(this.activeConsultant)) {
+                    this.goToCheckout();
                 }
             }
         });

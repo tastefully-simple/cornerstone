@@ -17,6 +17,7 @@ class CartSubscription extends FindAConsultant {
         this.currentClass = 'auto-ship';
         this.modalTemplate = 'common/cartSubscription/login';
         this.modalwidth = 550;
+        this.tsimpleId = '0160785';
         this.yumConsultants = [];
 
         this.initListeners();
@@ -24,6 +25,9 @@ class CartSubscription extends FindAConsultant {
 
     init(e) {
         e.preventDefault();
+        if ($('#tsacf-shopdirect')[0] && $('#tsacf-shopdirect')[0].checked) {
+            this.storeConsultantAffiliation(this.tsimpleId);
+        }
         utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
             err
                 ? console.error(`Failed to get cart. Error: ${err}`)
@@ -288,11 +292,17 @@ class CartSubscription extends FindAConsultant {
             $('.cart-sub-body button').text('Checkout');
             $(e.target).siblings('.sub-text').show();
         });
-        $('body').on('click', '.cart-sub-body button', () => {
+        $('body').on('click', '.cart-sub-body button', async () => {
             if (!$('.cart-sub-body button').attr('disabled')) {
-                $('#choose-consultant-options input:checked').val() === 'current'
-                    ? this.setPendingYumConsultant(TSCookie.getConsultantId())
-                    : this.storeConsultantAffiliation(this.activeConsultant);
+                if ($('#choose-consultant-options input:checked').val() === 'current') {
+                    if ( await this.setPendingYumConsultant(TSCookie.getConsultantId())) {
+                        this.goToCheckout();
+                    }
+                } else {
+                    if (await this.storeConsultantAffiliation(this.activeConsultant)) {
+                        this.goToCheckout();
+                    }
+                }
             }
         });
     }
@@ -328,11 +338,17 @@ class CartSubscription extends FindAConsultant {
             $('.cart-sub-body button').prop('disabled', false);
             $('.cart-sub-body button').text('Checkout');
         });
-        $('body').on('click', '.cart-sub-body button', () => {
+        $('body').on('click', '.cart-sub-body button', async () => {
             if (!$('.cart-sub-body button').attr('disabled')) {
-                $('#choose-consultant-options input:checked').val() === 'current'
-                    ? this.setPendingYumConsultant(TSCookie.getConsultantId())
-                    : this.storeConsultantAffiliation(this.activeConsultant);
+                if ($('#choose-consultant-options input:checked').val() === 'current') {
+                    if ( await this.setPendingYumConsultant(TSCookie.getConsultantId())) {
+                        this.goToCheckout();
+                    }
+                } else {
+                    if (await this.storeConsultantAffiliation(this.activeConsultant)) {
+                        this.goToCheckout();
+                    }
+                }
             }
         });
     }
@@ -340,20 +356,22 @@ class CartSubscription extends FindAConsultant {
     async setPendingYumConsultant(consultantId) {
         try {
             await this.api.setPendingYumConsultant(consultantId, this.customerId);
-            this.goToCheckout();
+            return true;
         } catch (xhr) {
             const readableError = JSON.parse(xhr.responseText || '{"error": "An error has occured"}');
             console.warn('setPendingYumConsultant:', readableError);
+            return false;
         }
     }
 
     async storeConsultantAffiliation(consultantId) {
         try {
             await this.fetchConsultant(consultantId);
-            this.goToCheckout();
+            return true;
         } catch (xhr) {
             const readableError = JSON.parse(xhr.responseText || '{"error": "An error has occured"}');
             console.warn('getConsultant:', readableError);
+            return false;
         }
     }
 
@@ -397,6 +415,7 @@ class CartSubscription extends FindAConsultant {
     }
 
     goToCheckout() {
+        this.closeModal();
         window.location.href = '/checkout';
     }
 

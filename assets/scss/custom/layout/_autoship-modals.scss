@@ -92,7 +92,7 @@
             }
             div[class^="alertbox-"] {
                 margin-top: 2vh;
-                width: 80%;
+                width: 60%;
             }
             &.autoship-login {
                 .alertbox-error {
@@ -128,7 +128,12 @@
                     }
                     .new-customer {
                         float: none;
-                        width: 80%;
+                        @media only screen and (min-width:768px) {
+                            width: 60%;
+                        }
+                        button {
+                            margin-bottom: .5vh;
+                        }
                         .panel {
                             border: 2px solid $burgundy;
                             margin-bottom: 2vh;

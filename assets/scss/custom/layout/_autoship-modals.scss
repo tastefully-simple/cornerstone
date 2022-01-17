@@ -21,6 +21,7 @@
     }
     &.choose {
         max-height: 500px;
+        max-width: 600px;
         h4, p {
             margin-top: 0;
         }
@@ -63,10 +64,7 @@
                 margin: auto;
                 max-width: 80%;
                 @media only screen and (min-width:720px) {
-                    max-width: 60%;
-                }
-                @media only screen and (min-width:920px) {
-                    max-width: 50%;
+                    max-width: 61%;
                 }
                 #choose-consultant-options {
                     >div:first-child {

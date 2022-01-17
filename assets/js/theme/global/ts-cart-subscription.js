@@ -66,6 +66,7 @@ class CartSubscription extends FindAConsultant {
         this.currentClass = 'auto-ship login';
         $('#modal').addClass(this.currentClass);
         this.modal.open();
+        this.modalTemplate = 'common/cartSubscription/login';
         const template = this.modalTemplate;
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
@@ -425,6 +426,9 @@ class CartSubscription extends FindAConsultant {
 
         // Bind login submit
         $('body').on('submit', '#modal .login-form', (e) => this.login(e));
+
+        // Bind back to login
+        $('body').on('click', '#modal #to-login', () => this.createLoginModal());
 
         // Bind register submit
         $('body').on('submit', '#modal .account .form', (e) => this.register(e));

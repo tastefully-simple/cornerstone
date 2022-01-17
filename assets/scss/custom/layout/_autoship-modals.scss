@@ -27,10 +27,8 @@
         }
     }
     &.choose-with-party {
+        height: 68vh;
         max-height: 600px;
-        @media only screen and (min-width:500px) {
-            max-height: 500px;
-        }
     }
     .modal-content {
         height: 100%;
@@ -38,7 +36,7 @@
             height: 100%;
         }
         .cart-sub-body {
-            height: 95%;
+            height: calc(100% - 55px);
             overflow-y: auto;
             @media only screen and (max-height: 760px) {
                 height: 93%;
@@ -52,7 +50,7 @@
                 justify-content: space-between;
                 @media only screen and (min-width:490px) {
                     p {
-                        margin-bottom: 0;
+                        margin-bottom: .5rem;
                     }
                 }
             }
@@ -62,7 +60,9 @@
             }
             &.auto-choose {
                 margin: auto;
-                max-width: 80%;
+                @media only screen and (min-width:600px) {
+                    max-width: 80%;
+                }
                 @media only screen and (min-width:720px) {
                     max-width: 61%;
                 }

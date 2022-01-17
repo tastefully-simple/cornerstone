@@ -5,10 +5,10 @@
             <span aria-hidden="true" class="close-modal-alternate"></span>
         </button>
     </div>
-    <div class="cart-sub-body">
+    <div class="cart-sub-body auto-reg">
         <a id="to-login">back to login</a>
         <h1 class="page-heading">{{lang 'create_account.heading' }}</h1>
-        <div class="account account--fixed">
+        <div class="account">
             <div class="account-body">
                 {{#if forms.create_account.error}}
                     {{> components/common/alert/alert-error forms.create_account.error}}

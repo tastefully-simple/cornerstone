@@ -52,11 +52,25 @@
                 margin: auto;
                 max-width:80%;
             }
-            &.autoship-choose {
+            &.auto-choose {
+                margin: auto;
+                max-width: 80%;
+                @media only screen and (min-width:720px) {
+                    max-width: 60%;
+                }
                 #choose-consultant-options {
                     >div:first-child {
                         margin-bottom: 3vh;
                     }
+                }
+            }
+            &.auto-reg {
+                .account-body {
+                    margin: 0 auto;
+                    padding: 0 1rem;
+                }
+                .form-row {
+                    margin: 0 auto;
                 }
             }
             .page-heading {

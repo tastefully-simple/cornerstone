@@ -73,7 +73,7 @@ class Consultant {
                 .done((data) => {
                     const urlSlug = data.WebUrl.match(/\/web\/[a-z0-9\W]+/ig)[0];
                     this.consultantInfo = data;
-                    history.pushState(null, null, urlSlug);
+                    window.history.pushState(null, null, urlSlug);
                     this.renderResults(this.basicInfoData);
                 });
         }

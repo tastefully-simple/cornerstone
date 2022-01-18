@@ -202,7 +202,7 @@ export default class TSRouter {
 
         if (szUrl === '/party-details' || szUrl === '/closed-party') {
             const partyId = TSCookie.getPartyId();
-            history.pushState(null, null, `/p/${partyId}`);
+            window.history.pushState(null, null, `/p/${partyId}`);
 
             if (szUrl === '/closed-party') {
                 TSCookie.deleteParty();

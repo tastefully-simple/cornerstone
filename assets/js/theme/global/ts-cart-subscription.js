@@ -29,9 +29,11 @@ class CartSubscription extends FindAConsultant {
             this.storeConsultantAffiliation(this.tsimpleId);
         }
         utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
-            err
-                ? console.error(`Failed to get cart. Error: ${err}`)
-                : this.subscriptionInCart(response);
+            if (err) {
+                console.error(`Failed to get cart. Error: ${err}`);
+            } else {
+                this.subscriptionInCart(response);
+            }
         });
     }
 
@@ -52,7 +54,11 @@ class CartSubscription extends FindAConsultant {
     }
 
     customerLoggedIn() {
-        this.customerId ? this.customerConsultant() : this.logIn();
+        if (this.customerId) {
+            this.customerConsultant();
+        } else {
+            this.logIn();
+        }
     }
 
     logIn() {
@@ -132,9 +138,11 @@ class CartSubscription extends FindAConsultant {
 
     async registerConfirmation(customerEmail) {
         await utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
-            err
-                ? console.error(`Failed to get cart. Error: ${err}`)
-                : this.customerId = response.customerId;
+            if (err) {
+                console.error(`Failed to get cart. Error: ${err}`);
+            } else {
+                this.customerId = response.customerId;
+            }
         });
         this.customerEmail = customerEmail;
         this.modalTemplate = 'common/cartSubscription/account-created';
@@ -213,7 +221,11 @@ class CartSubscription extends FindAConsultant {
 
     async customerConsultant() {
         try {
-            await this.fetchIsCustomerConsultant() ? this.renderAutoshipNotEligibleModal() : this.activeAutoships();
+            if (await this.fetchIsCustomerConsultant()) {
+                this.renderAutoshipNotEligibleModal();
+            } else {
+                this.activeAutoships();
+            }
         } catch (xhr) {
             const readableError = JSON.parse(xhr.responseText || '{"error": "An error has occured"}');
             console.warn('getUserIsConsultant:', readableError);
@@ -224,7 +236,11 @@ class CartSubscription extends FindAConsultant {
         try {
             await this.fetchYumConsultants();
             this.setActiveConsultant();
-            this.activeConsultant ? this.matchingConsultants() : this.goToCheckout();
+            if (this.activeConsultant) {
+                this.matchingConsultants();
+            } else {
+                this.goToCheckout();
+            }
         } catch (xhr) {
             const readableError = JSON.parse(xhr.responseText || '{"error": "An error has occured"}');
             console.warn('getYumConsultants:', readableError);
@@ -250,13 +266,21 @@ class CartSubscription extends FindAConsultant {
     }
 
     matchingConsultants() {
-        (TSCookie.getConsultantId() === this.activeConsultant || !TSCookie.getConsultantId()) ? this.goToCheckout() : this.partyAssociation();
+        if (TSCookie.getConsultantId() === this.activeConsultant
+            || !TSCookie.getConsultantId()
+        ) {
+            this.goToCheckout();
+        } else {
+            this.partyAssociation();
+        }
     }
 
     partyAssociation() {
-        TSCookie.getPartyId()
-            ? this.renderChooseConsultantWithParty()
-            : this.renderChooseConsultant();
+        if (TSCookie.getPartyId()) {
+            this.renderChooseConsultantWithParty();
+        } else {
+            this.renderChooseConsultant();
+        }
     }
 
     renderChooseConsultantWithParty() {

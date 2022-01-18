@@ -324,31 +324,31 @@ export default class TSApi {
     }
 
     login(data) {
-        const url = `/login.php?action=check_login`;
+        const url = '/login.php?action=check_login';
 
         return $.ajax({
             type: 'POST',
             referrer: '/login.php',
-            referrerPolicy: "strict-origin-when-cross-origin",
-            mode: "cors",
-            credentials: "include",
-            url: (url),
-            data: data 
+            referrerPolicy: 'strict-origin-when-cross-origin',
+            mode: 'cors',
+            credentials: 'include',
+            url,
+            data,
         });
     }
 
     register(data) {
-        const url = `/login.php?action=save_new_account`;
+        const url = '/login.php?action=save_new_account';
 
         return $.ajax({
-            redirect: "follow",
+            redirect: 'follow',
             type: 'POST',
             referrer: '/login.php?action=create_account',
-            referrerPolicy: "strict-origin-when-cross-origin",
-            mode: "cors",
-            credentials: "include",
-            url: (url),
-            data: data 
+            referrerPolicy: 'strict-origin-when-cross-origin',
+            mode: 'cors',
+            credentials: 'include',
+            url,
+            data,
         });
     }
 }

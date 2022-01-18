@@ -50,6 +50,7 @@
     "ts_shop_more_url": "/shop/",
     "ts_tsapi_base_url": "tsapi.tastefullysimple.com",
     "ts_tsapi_host_party_base_url": "party.api.tastefullysimple.com",
+    "ts_tsapi_consultant_base_url": "consultant.api.tastefullysimple.com",
     "ts_help_email": "help@tastefullysimple.com",
     "ts_join_store_url": "https://tastefully-simple-inc-sandbox-4.mybigcommerce.com",
     "ts_consultant_id": "0160785",

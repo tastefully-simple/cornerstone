@@ -1,0 +1,50 @@
+<div class="modal-general-alternate" id="cart-sub-login">
+    <div class="genmodal-header">
+        <h2>{{ lang 'ts_cart_subscription.auth_title' }}</h2>
+        <button type="button" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true" class="close-modal-alternate"></span>
+        </button>
+    </div>
+    <div class="cart-sub-body autoship-login">
+        <div class="alertbox-success">
+            <p class="alert-message">
+                <span>Sign in or create an account to purchase Yum Club autoship subscription products</span>
+            </p>
+        </div>
+        <h3 class="page-heading">Sign in</h3>
+        <div class="login-row">
+            <form class="login-form form" action="{{urls.auth.check_login}}" method="post">
+                {{inject 'useValidEmail' (lang 'forms.validate.common.email_address')}}
+                {{inject 'enterPass' (lang 'forms.validate.common.password')}}
+                <div class="form-field">
+                    <label class="form-label" for="login_email">{{lang 'login.field_email'}}</label>
+                    <input class="form-input" name="login_email" id="login_email" type="email">
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="login_pass">{{lang 'login.field_password'}}</label>
+                    <input class="form-input" id="login_pass" type="password" name="login_pass" autocomplete="off">
+                </div>
+                <div class="form-actions">
+                    <input type="submit" class="button button--primary" value="{{lang 'login.submit_value' }}">
+                    <a class="forgot-password" href="{{urls.auth.forgot_password}}">{{lang 'login.forgot_password' }}</a>
+                </div>
+            </form>
+            {{#if settings.account_creation_enabled}}
+                <div class="new-customer">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">{{lang 'login.new_customer.heading' }}</h2>
+                        </div>
+                        <div class="panel-body">
+                            <p class="new-customer-intro">{{lang 'login.new_customer.intro' }}</p>
+                            <p>Make shopping even easier!</p>
+                            <p>Faster check-out and the ability to save a wish list are just two of the advantages of creating a FREE account with us.</p>
+                            <button class="button button--primary">{{lang 'login.new_customer.create_account' }}</button>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+

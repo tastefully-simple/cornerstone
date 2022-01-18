@@ -1,0 +1,33 @@
+<div class="modal-general-alternate" id="choose-consultant">
+    <div class="genmodal-header">
+        <h2>{{ lang 'ts_cart_subscription.choose_consultant_title' }}</h2>
+        <button type="button" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true" class="close-modal-alternate"></span>
+        </button>
+    </div>
+    <div class="cart-sub-body auto-choose">
+        <section class="page">
+            <main class="page-content">
+                <h1 class="frameheading-1 greeting">Hi, {{ customer.name }}</h1>
+                <p>Thanks for being a Yum Club autoship member with <strong class="active-yum"></strong>. Subscriptions may only be linked to one consultant. Select one below:</p>
+                <div id="choose-consultant-options">
+                    <div id="yum-option">
+                        <h4 class="frameheading-4">Your current Yum Club consultant:</h4>
+                        <label class="tick-enabled">
+                            <input type="radio" name="yum-consultant" value="yum">
+                            <span class="frametext active-yum"></span>
+                        </label>
+                    </div>
+                    <div id="current-option">
+                        <h4 class="frameheading-4">The Yum Club consultant you selected:</h4>
+                        <label class="tick-enabled">
+                            <input type="radio" name="current-consultant" value="current">
+                            <span class="frametext active-consultant"></span>
+                        </label>
+                    </div>
+                </div>
+                <button class="button-primary disabled" disabled="">select option above to checkout</button>
+            </main>
+        </section>
+    </div>
+</div>

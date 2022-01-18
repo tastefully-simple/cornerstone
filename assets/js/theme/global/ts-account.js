@@ -7,7 +7,7 @@ import 'regenerator-runtime/runtime';
 class Account extends FindAConsultant {
     constructor(tsConsultantId) {
         super(tsConsultantId);
-        this.customerId = window.customer.id;
+        this.customerId = window.customer.id; // TODO get customer id from cart utils
         this.api = new TSApi();
         this.modalTemplate = 'common/findConsultant/find-consultant-account';
         this.activeYumConsultantName = '';
@@ -52,6 +52,7 @@ class Account extends FindAConsultant {
 
     getActiveYumConsultantName() {
         if (this.yumConsultants.length > 0) {
+            // TODO do with foreach loop
             const activeConsultants = this.yumConsultants.filter(c => c.IsActive === true);
             const activeConsultant = activeConsultants[0];
             return [activeConsultant.FirstName, activeConsultant.LastName].join(' ');

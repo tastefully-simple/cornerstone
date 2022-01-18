@@ -1,0 +1,161 @@
+// =============================================================================
+// Tastefully Simple Autoship Styles
+// =============================================================================
+
+#modal.auto-ship {
+    height: 65vh;
+    margin: 0;
+    max-height: 450px;
+    min-height: 240px;
+    width: 80%;
+    @media only screen and (min-width:768px) {
+        max-width: 740px;
+        width: 50%;
+    }
+    &.login {
+        height: 90vh;
+        max-height: 90%;
+        #to-login {
+            margin-left: 15px;
+        }
+    }
+    &.choose {
+        max-height: 500px;
+        max-width: 600px;
+        h4, p {
+            margin-top: 0;
+        }
+    }
+    &.choose-with-party {
+        height: 68vh;
+        max-height: 600px;
+    }
+    .modal-content {
+        height: 100%;
+        .modal-general-alternate {
+            height: 100%;
+        }
+        .cart-sub-body {
+            height: calc(100% - 55px);
+            overflow-y: auto;
+            @media only screen and (max-height: 760px) {
+                height: 93%;
+            }
+            .page, .page-content{
+                height: 97%;
+            }
+            .page-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                @media only screen and (min-width:490px) {
+                    p {
+                        margin-bottom: .5rem;
+                    }
+                }
+            }
+            &.auto-ineligible {
+                margin: auto;
+                max-width:80%;
+            }
+            &.auto-choose {
+                margin: auto;
+                @media only screen and (min-width:600px) {
+                    max-width: 80%;
+                }
+                @media only screen and (min-width:720px) {
+                    max-width: 61%;
+                }
+                #choose-consultant-options {
+                    >div:first-child {
+                        margin-bottom: 3vh;
+                    }
+                }
+            }
+            &.auto-reg {
+                .account-body {
+                    margin: 0 auto;
+                    padding: 0 1rem;
+                }
+                .form-row {
+                    margin: 0 auto;
+                }
+            }
+            .page-heading {
+                font-size: 22px;
+                font-weight: 400;
+                font-family: $FONT_FAMILY_SECONDARY,Arial,Helvetica,sans-serif;
+                margin-bottom: 0;
+                margin-top: 20px;
+            }
+            .sub-text {
+                display: none;
+            }
+            button {
+                display: block;
+                margin: 2vh auto 2vh;
+            }
+            div[class^="alertbox-"] {
+                margin-top: 2vh;
+                width: 60%;
+            }
+            &.autoship-login {
+                .alertbox-error {
+                    display: none;
+                }
+                .login-row {
+                    margin-top: 0;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    .login-form {
+                        align-self: center;
+                        align-items: center;
+                        justify-content: center;
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        margin: 0;
+                        @media only screen and (min-width:768px) {
+                            width: 60%;
+                        }
+                        .form-field {
+                            align-self: center;
+                            align-items: center;
+                            justify-content: center;
+                            width: 80%;
+                        }
+                        .form-actions {
+                            align-items: center;
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: space-evenly;
+                            margin-bottom: 2vh;
+                            margin-top: 0;
+                        }
+                    }
+                    .new-customer {
+                        float: none;
+                        width: 80%;
+                        button {
+                            margin-bottom: .5vh;
+                        }
+                        .panel {
+                            border: 2px solid $burgundy;
+                            margin-bottom: 2vh;
+                            .panel-body {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+                .account-body {
+                    margin: 0 auto;
+                    max-width: 80%;
+                }
+            }
+        }
+    }
+}
+

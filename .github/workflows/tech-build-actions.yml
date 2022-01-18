@@ -40,7 +40,10 @@ jobs:
       env:
         URL: ${{ secrets.STENCIL_STORE_URL_TECH_SANDBOX }}
         TOKEN: ${{ secrets.STENCIL_ACCESS_TOKEN_TECH_SANDBOX }}
-      run: stencil init -u $URL -t $TOKEN -p 3000
+      run: stencil init -u $URL -t $TOKEN -p 3000 -h https://api.bigcommerce.com
+      
+    - name: Log stencil config
+      run: cat config.stencil.json
 
     - name: Publishing theme to Tech-Sandbox, automatically deleting oldest theme if necessary
       run: stencil push -a Tech-Sandbox -d

@@ -1,7 +1,6 @@
 // =============================================================================
 // Tastefully Simple Autoship Styles
 // =============================================================================
-
 #modal.auto-ship {
     height: 65vh;
     margin: 0;
@@ -146,6 +145,15 @@
                             margin-bottom: 2vh;
                             .panel-body {
                                 margin-bottom: 0;
+                            }
+                            .panel-title {
+                                font-weight: 400;
+                                font-family: "PT Serif",Arial,Helvetica,sans-serif;
+                                font-size: 22px;
+                                text-align: center;
+                            }
+                            .new-customer-intro {
+                                margin-bottom: 20px;
                             }
                         }
                     }

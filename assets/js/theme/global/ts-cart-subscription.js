@@ -436,7 +436,9 @@ class CartSubscription extends FindAConsultant {
     }
 
     goToCheckout() {
-        this.closeModal();
+        if (this.modal) {
+            this.closeModal();
+        }
         window.location.href = '/checkout';
     }
 

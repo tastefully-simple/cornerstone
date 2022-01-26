@@ -136,8 +136,8 @@ class CartSubscription extends FindAConsultant {
             });
     }
 
-    async registerConfirmation(customerEmail) {
-        await utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
+    registerConfirmation(customerEmail) {
+        utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
             if (err) {
                 console.error(`Failed to get cart. Error: ${err}`);
             } else {
@@ -193,9 +193,9 @@ class CartSubscription extends FindAConsultant {
                         } else {
                             this.customerId = response.customerId;
                             this.customerEmail = response.email;
+                            this.customerConsultant();
                         }
                     });
-                    this.customerConsultant();
                 }
             });
     }
@@ -283,7 +283,7 @@ class CartSubscription extends FindAConsultant {
         }
     }
 
-    renderChooseConsultantWithParty() {
+    async renderChooseConsultantWithParty() {
         this.modalTemplate = 'common/cartSubscription/choose-consultant-with-party';
         const template = this.modalTemplate;
         const options = { template };
@@ -330,7 +330,7 @@ class CartSubscription extends FindAConsultant {
         });
     }
 
-    renderChooseConsultant() {
+    async renderChooseConsultant() {
         this.modalTemplate = 'common/cartSubscription/choose-consultant';
         const template = this.modalTemplate;
         const options = { template };

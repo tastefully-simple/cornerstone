@@ -698,7 +698,7 @@ textarea{
 .tooltip-inner{
     background-color:$white;
     color:$text-gray;
-    position:absolute;
+    position:relative;
     padding:10px;
     @extend .tooltip-dropshadow;
     @extend .system-14;
@@ -724,6 +724,7 @@ textarea{
     cursor:pointer;
     float:right;
     font-size:18px;
+    line-height: 0;
     &::after{
         content:'';
         clear:both;
@@ -763,6 +764,48 @@ textarea{
     &>div{
         @extend .tooltip-inner;
     }
+}
+.tooltip-side-right{
+    width:300px;
+    @extend .tooltip-general;
+    &::before{
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right:10px solid $color-white;
+        content: "";
+        left: -10px;
+        position:absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9;
+    }
+    &>div{
+        @extend .tooltip-inner;
+    }
+}
+
+// Hides or shows tooltip via hover. Positioning not included.
+
+.icon-with-tooltip {
+
+    position: relative;
+
+    div[class^="tooltip-"] {
+
+        display: none;
+
+    }
+
+    &:hover {
+
+        div[class^="tooltip-"] {
+
+            display: block;
+
+        }
+
+    }
+
 }
 
 // Alerts

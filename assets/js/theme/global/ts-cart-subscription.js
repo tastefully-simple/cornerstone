@@ -444,7 +444,7 @@ class CartSubscription extends FindAConsultant {
 
     initListeners() {
         // Bind To checkout Button
-        $('body').on('click', '.cart-actions .button--primary:not([disabled])', (e) => this.init(e));
+        $('body').on('click', '.cart-actions .button--primary:not([disabled]):not(.view-consultant-parties)', (e) => this.init(e));
 
         // Bind login submit
         $('body').on('submit', '#modal .login-form', (e) => this.login(e));

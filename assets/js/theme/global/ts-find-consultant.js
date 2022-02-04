@@ -262,7 +262,7 @@ export default class FindAConsultant {
     }
 
     openConsultantParties(e) {
-        const template = 'common/consultant-parties';
+        const template = 'common/findConsultant/consultant-parties';
         $('#modal').removeClass('modal-results');
         this.modal = defaultModal();
         e.preventDefault();

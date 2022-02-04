@@ -102,6 +102,9 @@
                 margin: 2vh auto 2vh;
             }
             div[class^="alertbox-"] {
+                @media only screen and (max-width:720px) {
+                    width: 90%;
+                }
                 margin-top: 2vh;
                 width: 60%;
             }

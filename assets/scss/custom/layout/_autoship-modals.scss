@@ -8,7 +8,7 @@
     min-height: 240px;
     width: 80%;
     @media only screen and (min-width:768px) {
-        max-width: 740px;
+        max-width: 700px;
         width: 50%;
     }
     &.login {
@@ -19,7 +19,6 @@
     }
     &.choose {
         max-height: 500px;
-        max-width: 700px;
         h4, p {
             margin-top: 0;
         }

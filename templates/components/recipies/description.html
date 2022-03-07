@@ -1,0 +1,55 @@
+{{inject "schemaJson" product.warranty}}
+<script>
+	var jsContext = JSON.parse({{jsContext}});
+	const schema = JSON.parse(jsContext.schemaJson);
+</script>
+<div class="info" itemscope itemtype ="https://schema.org/Recipe">
+	<div class="ingredients">
+		<h2 class="info-title">Ingredients</h2>
+		<ul id="ingredients-list">
+			<script>
+				schema.Ingredients.forEach((i) => {
+					if (i.Name) {
+						var li = document.createElement("li");
+						const ul = document.getElementById("ingredients-list")
+						li.innerHTML = i.Name;
+						ul.append(li);       
+					}
+				}); 
+			</script>
+		</ul>
+	</div>
+	<h2 class="info-title">Directions</h2>
+		<ol id="directions-list">
+			<script>
+				schema.Procedure.ProcedureGroups.forEach((d) => {
+					if (d.Steps) {
+						d.Steps.forEach((s) => {
+							if (s.Note) {
+								var li = document.createElement("li");
+								const ul = document.getElementById("directions-list")
+								li.innerHTML = s.Note;
+								ul.append(li);       
+							}
+						});
+					}
+				}); 
+			</script>
+		</ol>
+	</div>
+	<div class="nutrition">
+		<h2 class="info-title">Nurtition</h2>
+		<p id="nutrition-list"></p>
+		<script>
+			console.log(schema.Nutrition);
+			for (const n in schema.Nutrition) {
+				if (schema.Nutrition[n]) {
+					var span = document.createElement("span");
+					const p = document.getElementById("nutrition-list")
+					span.innerHTML = `${n}: ${schema.Nutrition[n]}; `;
+					p.append(span);       
+				}
+			}
+		</script>
+	</div>
+</div>

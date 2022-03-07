@@ -1,0 +1,20 @@
+#recipe-page {
+    .recipe-top {
+        display: flex;
+        background-color: $COLOR_CREAM;
+        .recipe-top-left, .recipe-top-right {
+            width: 50%;
+            align-items: center;
+        }
+        .recipe-top-left {
+            display: flex;
+            flex-direction: column;
+            .productView-details {
+                width: unset;
+                padding: 0;
+            }
+        }
+        .recipe-top-right {
+        }
+    }
+}

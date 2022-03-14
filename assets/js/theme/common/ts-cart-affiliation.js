@@ -14,6 +14,7 @@ export default class TSCartAffiliation {
 
     renderTemplate() {
         const $wrapper = $('#ts-cart-affiliation .ts-cart-affiliation-wrapper');
+        $wrapper.attr('tabindex', '0');
 
         if (TSCookie.getConsultantId()) {
             this.template('cart/ts-selected-affiliation')

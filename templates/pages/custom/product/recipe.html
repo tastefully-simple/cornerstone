@@ -13,6 +13,7 @@ product:
 
 {{#partial "page"}}
 
+    {{> components/products/recipe-schema}}
     <div id="recipe-page">
         {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
 
@@ -20,7 +21,7 @@ product:
             {{> components/common/alert/alert-info message}}
         {{/each}}
 
-        <div itemscope itemtype="http://schema.org/Product">
+        <div itemscope itemtype="http://schema.org/Recipe">
             {{> components/products/recipe-view schema=true  }}
 
             {{{region name="product_below_content"}}}
@@ -28,8 +29,6 @@ product:
             {{#if product.videos.list.length}}
                 {{> components/products/videos product.videos}}
             {{/if}}
-
-            {{> components/products/tabs}}
 
             {{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}
                 {{> components/products/reviews reviews=product.reviews product=product urls=urls}}

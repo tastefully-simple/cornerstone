@@ -1,52 +1,73 @@
-{{inject "schemaJson" product.warranty}}
-<script>
-	var jsContext = JSON.parse({{jsContext}});
-	const schema = JSON.parse(jsContext.schemaJson);
-</script>
 <div class="info" itemscope itemtype ="https://schema.org/Recipe">
-	<div class="ingredients">
+	<div id="ingredients">
 		<h2 class="info-title">Ingredients</h2>
 		<ul id="ingredients-list">
 			<script>
-				schema.Ingredients.forEach((i) => {
+				recipe.Ingredients.forEach((i) => {
 					if (i.Name) {
 						var li = document.createElement("li");
 						const ul = document.getElementById("ingredients-list")
 						li.innerHTML = i.Name;
-						ul.append(li);       
+                        if (i.IsProduct || i.IsRecipe) {
+                            var a = document.createElement("a");
+                            a.setAttribute("class", "ingredients-link");
+                            if (i.IsProduct) {
+                                a.setAttribute("href", `/$recipes/${i.ProductUrl}/`);
+                            }
+                            if (i.IsRecipe) {
+                                a.setAttribute("href", `/${i.RecipeUrl}/`);
+                            }
+                            a.append(li);
+                            ul.append(a);       
+                        } else {
+                            ul.append(li);       
+                        }
 					}
 				}); 
 			</script>
 		</ul>
 	</div>
-	<h2 class="info-title">Directions</h2>
-		<ol id="directions-list">
-			<script>
-				schema.Procedure.ProcedureGroups.forEach((d) => {
-					if (d.Steps) {
-						d.Steps.forEach((s) => {
-							if (s.Note) {
-								var li = document.createElement("li");
-								const ul = document.getElementById("directions-list")
-								li.innerHTML = s.Note;
-								ul.append(li);       
-							}
-						});
-					}
-				}); 
-			</script>
-		</ol>
+    <div id="directions">
+        <h2 class="info-title">Directions</h2>
+        <script>
+            recipe.Procedure.ProcedureGroups.forEach((pg) => {
+                if (pg.Steps) {
+                    switch (pg.Format) {
+                        case "Numbered":
+                            var list = document.createElement("ol");
+                            break;
+                        case "Bulleted":
+                            var list = document.createElement("ul");
+                            break;
+                        default:
+                            var list = document.createElement("ul");
+                            list.setAttribute("style", "list-style-type: none");
+                    }
+                    const directions = document.getElementById("directions");
+                    list.setAttribute("id", "directions-list")
+                    directions.append(list);
+
+                    pg.Steps.forEach((s) => {
+                        if (s.Note) {
+                            var li = document.createElement("li");
+                            li.setAttribute("class", "direction-item");
+                            li.innerHTML = s.Note;
+                            list.append(li);       
+                        }
+                    });
+                }
+            }); 
+        </script>
 	</div>
-	<div class="nutrition">
+	<div id="nutrition">
 		<h2 class="info-title">Nurtition</h2>
 		<p id="nutrition-list"></p>
 		<script>
-			console.log(schema.Nutrition);
-			for (const n in schema.Nutrition) {
-				if (schema.Nutrition[n]) {
+			for (const n in recipe.Nutrition) {
+				if (recipe.Nutrition[n]) {
 					var span = document.createElement("span");
 					const p = document.getElementById("nutrition-list")
-					span.innerHTML = `${n}: ${schema.Nutrition[n]}; `;
+					span.innerHTML = `${n}: ${recipe.Nutrition[n]}; `;
 					p.append(span);       
 				}
 			}

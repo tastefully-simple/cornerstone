@@ -78,6 +78,19 @@ export default class Account extends PageManager {
 
         this.bindDeleteAddress();
         this.bindDeletePaymentMethod();
+
+        this.autocompletePhoneNumberDashes();
+    }
+
+    // Will automatically added dashes for the phone number field on Edit Account page (ex. 123-456-7890)
+    autocompletePhoneNumberDashes() {
+        var phoneInputField = document.querySelector('#account_phone');
+
+        phoneInputField.addEventListener('keyup', function(e){
+            if (event.key != 'Backspace' && (phoneInputField.value.length === 3 || phoneInputField.value.length === 7)){
+                phoneInputField.value += '-';
+            }
+        });
     }
 
     /**
@@ -326,9 +339,28 @@ export default class Account extends PageManager {
         const $password2Element = $(password2Selector);
         const currentPasswordSelector = `${formEditSelector} [data-field-type="CurrentPassword"]`;
         const $currentPassword = $(currentPasswordSelector);
+        const phoneNumberSelector = "#account_phone";
+        const $phoneNumberElement = $(phoneNumberSelector);
 
         // This only handles the custom fields, standard fields are added below
         editValidator.add(validationModel);
+
+        // Form validation on Account Edit page where a user attempts to enter all zeroes (000-000-0000)
+        if ($phoneNumberElement) {
+            editValidator.add({
+                selector: phoneNumberSelector,
+                validate: (cb, val) => {
+                    let result = true;
+
+                    if (val === '000-000-0000') {
+                        result = false;
+                    }
+
+                    cb(result);
+                },
+                errorMessage: this.context.phoneNumberZeroes,
+            });
+        }
 
         if ($emailElement) {
             editValidator.remove(emailSelector);

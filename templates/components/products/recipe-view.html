@@ -90,7 +90,7 @@
                     Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
                     for variant/rule image replacement
                 --}}
-                <ul class="productView-thumbnails"{{#gt product.images.length 1}} data-slick='{
+                <ul class="images" {{#gt product.images.length 1}} data-slick='{
                         "infinite": true,
                         "mobileFirst": true,
                         "slidesToShow": 1,
@@ -101,7 +101,7 @@
                         "autoplaySpeed": 3000
                     }'{{/gt}}>
                     {{#each product.images}}
-                        <li class="productView-thumbnail">
+                        <li class="image">
                             {{> components/common/responsive-img
                                 image=this
                                 fallback_size=theme_settings.product_size

@@ -656,7 +656,8 @@
           "password": "You must enter your current password.",
           "first_name": "You must enter a first name.",
           "last_name": "You must enter a last name.",
-          "phone": "You must enter a phone number."
+          "phone": "You must enter a phone number.",
+          "phonezeroes": "You cannot enter all zeroes for a phone number."
         },
         "reorder": {
           "select_item": "Please select one or more items to reorder."

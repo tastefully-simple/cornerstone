@@ -11,7 +11,9 @@ class PartyDetails {
         this.pid = TSCookie.getPartyId();
         this.partyInfo = {
             Consultant: '',
+            ConsultantEmail: '',
             ConsultantId: '',
+            ConsultantPhone: '',
             ConsultantXid: null,
             Date: '',
             FundraisingOrganization: '',
@@ -67,6 +69,8 @@ class PartyDetails {
         document.getElementById('hpPartyDetailDate').innerHTML = this.partyInfo.Date;
         document.getElementById('hpPartyDetailTime').innerHTML = this.partyInfo.Time;
         document.getElementById('hpPartyDetailConsultant').innerHTML = this.partyInfo.Consultant;
+        document.getElementById('hpPartyDetailConsultantPhone').innerHTML = this.partyInfo.ConsultantPhone;
+        document.getElementById('hpPartyDetailConsultantEmail').innerHTML = this.partyInfo.ConsultantEmail;
         document.getElementById('hpPartyDetailTotal').innerHTML = `$${this.partyInfo.Total}`;
         const getUrl = window.location;
         const szPartyUrl = `${getUrl.protocol}//${getUrl.host}/p/${this.partyInfo.PartyId}`;

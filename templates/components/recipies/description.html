@@ -1,0 +1,76 @@
+<div class="info" itemscope itemtype ="https://schema.org/Recipe">
+	<div id="ingredients">
+		<h2 class="info-title">Ingredients</h2>
+		<ul id="ingredients-list">
+			<script>
+				recipe.Ingredients.forEach((i) => {
+					if (i.Name) {
+						var li = document.createElement("li");
+						const ul = document.getElementById("ingredients-list")
+						li.innerHTML = i.Name;
+                        if (i.IsProduct || i.IsRecipe) {
+                            var a = document.createElement("a");
+                            a.setAttribute("class", "ingredients-link");
+                            if (i.IsProduct) {
+                                a.setAttribute("href", `/$recipes/${i.ProductUrl}/`);
+                            }
+                            if (i.IsRecipe) {
+                                a.setAttribute("href", `/${i.RecipeUrl}/`);
+                            }
+                            a.append(li);
+                            ul.append(a);       
+                        } else {
+                            ul.append(li);       
+                        }
+					}
+				}); 
+			</script>
+		</ul>
+	</div>
+    <div id="directions">
+        <h2 class="info-title">Directions</h2>
+        <script>
+            recipe.Procedure.ProcedureGroups.forEach((pg) => {
+                if (pg.Steps) {
+                    switch (pg.Format) {
+                        case "Numbered":
+                            var list = document.createElement("ol");
+                            break;
+                        case "Bulleted":
+                            var list = document.createElement("ul");
+                            break;
+                        default:
+                            var list = document.createElement("ul");
+                            list.setAttribute("style", "list-style-type: none");
+                    }
+                    const directions = document.getElementById("directions");
+                    list.setAttribute("id", "directions-list")
+                    directions.append(list);
+
+                    pg.Steps.forEach((s) => {
+                        if (s.Note) {
+                            var li = document.createElement("li");
+                            li.setAttribute("class", "direction-item");
+                            li.innerHTML = s.Note;
+                            list.append(li);       
+                        }
+                    });
+                }
+            }); 
+        </script>
+	</div>
+	<div id="nutrition">
+		<h2 class="info-title">Nurtition</h2>
+		<p id="nutrition-list"></p>
+		<script>
+			for (const n in recipe.Nutrition) {
+				if (recipe.Nutrition[n]) {
+					var span = document.createElement("span");
+					const p = document.getElementById("nutrition-list")
+					span.innerHTML = `${n}: ${recipe.Nutrition[n]}; `;
+					p.append(span);       
+				}
+			}
+		</script>
+	</div>
+</div>

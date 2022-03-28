@@ -1,0 +1,10 @@
+{{inject "schemaJson" product.warranty}}
+<script>
+    var jsContext = JSON.parse({{jsContext}});
+    const recipe = JSON.parse(jsContext.schemaJson);
+
+    var schema = document.createElement("script");
+    schema.setAttribute("type", "application/ld+json");
+    schema.innerHTML = JSON.stringify(recipe.Schema);
+    document.head.prepend(schema);
+</script>

@@ -90,7 +90,7 @@
                     Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
                     for variant/rule image replacement
                 --}}
-                <ul class="images" {{#gt product.images.length 1}} data-slick='{
+                <ul class="productView-thumbnails images" {{#gt product.images.length 1}} data-slick='{
                         "infinite": true,
                         "mobileFirst": true,
                         "slidesToShow": 1,
@@ -116,24 +116,25 @@
         </div>
     </div>
 
-    <div class="quick-info">
-        {{#each product.custom_fields}}
-            {{#if name '==' 'Makes'}}
-                <span>Makes: <strong>{{value}}</strong></span>
-            {{/if}}
-            {{#if name '==' 'Active Time'}}
-                <span>Active Time: <strong>{{value}}</strong></span>
-            {{/if}}
-            {{#if name '==' 'Total Time'}}
-                <span>Total Time: <strong>{{value}}</strong></span>
-            {{/if}}
-            {{name}}
-        {{/each}}
-    </div>
+    <div class="recipe-main">
+        <div class="quick-info">
+            {{#each product.custom_fields}}
+                {{#if name '==' 'Makes'}}
+                    <span>{{name}}: <strong>{{value}}</strong></span>
+                {{/if}}
+                {{#if name '==' 'Active Time'}}
+                    <span>{{name}}: <strong>{{value}}</strong></span>
+                {{/if}}
+                {{#if name '==' 'Total Time'}}
+                    <span>{{name}}: <strong>{{value}}</strong></span>
+                {{/if}}
+            {{/each}}
+        </div>
 
-    <article class="productView-description">
-        {{> components/recipies/description}}
-    </article>
+        <article class="productView-description">
+            {{> components/recipes/description}}
+        </article>
+    </div>
 </div>
 
 <div id="previewModal" class="modal modal--large" data-reveal>

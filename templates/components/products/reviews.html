@@ -1,9 +1,11 @@
 {{#if reviews.total}}
 <section class="toggle productReviews" id="product-reviews" data-product-reviews>
     <div class="review-sep">
-        <h2>read the latest reviews</h2>
-        <span class="toggle-title">{{lang 'products.reviews.header' total=reviews.total}}</span>
-        <button class="button-primary" data-reveal-id="modal-review-form" role="button">submit a review</button>
+        <div class="review-sep-inner">
+            <h2>read the latest reviews</h2>
+            <span class="toggle-title">{{lang 'products.reviews.header' total=reviews.total}}</span>
+            <button class="button-primary" data-reveal-id="modal-review-form" role="button">submit a review</button>
+        </div>
     </div>
     <div class="toggle-content is-open" id="productReviews-content" aria-hidden="false">
         <ul class="productReviews-list" id="productReviews-list">

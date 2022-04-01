@@ -7,21 +7,21 @@
 					if (i.Name) {
 						var li = document.createElement("li");
 						const ul = document.getElementById("ingredients-list")
-						li.innerHTML = i.Name;
                         if (i.IsProduct || i.IsRecipe) {
                             var a = document.createElement("a");
                             a.setAttribute("class", "ingredients-link");
+                            a.innerHTML = i.Name;
                             if (i.IsProduct) {
                                 a.setAttribute("href", `/$recipes/${i.ProductUrl}/`);
                             }
                             if (i.IsRecipe) {
                                 a.setAttribute("href", `/${i.RecipeUrl}/`);
                             }
-                            a.append(li);
-                            ul.append(a);       
+                            li.append(a);
                         } else {
-                            ul.append(li);       
+                            li.innerHTML = i.Name;
                         }
+                        ul.append(li);       
 					}
 				}); 
 			</script>
@@ -44,7 +44,7 @@
                             list.setAttribute("style", "list-style-type: none");
                     }
                     const directions = document.getElementById("directions");
-                    list.setAttribute("id", "directions-list")
+                    list.setAttribute("class", "directions-list")
                     directions.append(list);
 
                     pg.Steps.forEach((s) => {

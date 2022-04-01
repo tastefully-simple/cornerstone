@@ -20,6 +20,11 @@
                 margin-bottom: 0;
                 padding-right: 0;
                 width: 100%;
+                .productView-thumbnails {
+                    img {
+                        width: 100%;
+                    }
+                }
                 .slick-slider {
                     display: flex;
                     margin-bottom: 0;
@@ -76,7 +81,7 @@
                 }
             }
             #directions {
-                #directions-list {
+                .directions-list {
                     .direction-item {
                         b {
                             color: $burgundy;

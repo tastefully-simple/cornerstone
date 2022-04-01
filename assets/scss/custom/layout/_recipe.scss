@@ -1,8 +1,12 @@
 #recipe-page {
+    .productView {
+        margin-left: -2rem;
+        width: 100vw;
+    }
     .recipe-top {
         align-items: center;
         display: flex;
-        background-color: $COLOR_CREAM;
+        background-color: $cream;
         .recipe-top-left, .recipe-top-right {
             width: 50%;
             align-items: center;
@@ -13,12 +17,22 @@
             .productView-details {
                 width: unset;
                 padding: 0;
+                .addthis_toolbox {
+                    margin-top: 1rem;
+                    .socialLinks-title {
+                        top: -18px;
+                        .socialLinks-titleText {
+                            background-color: $cream;
+                        }
+                    }
+                }
             }
         }
         .recipe-top-right {
             .productView-images {
                 margin-bottom: 0;
                 padding-right: 0;
+                padding-left: 0;
                 width: 100%;
                 .productView-thumbnails {
                     img {
@@ -89,6 +103,116 @@
                         }
                     }
                 }
+            }
+        }
+    }
+    .productReviews {
+        margin: auto;
+        width: 75%;
+        .review-sep {
+            background-color: $wan-white;
+            left: 0;
+            margin-bottom: 2rem;
+            position: absolute;
+            width: 100vw;
+            .review-sep-inner {
+                align-items: center;
+                display: flex;
+                margin: auto;
+                padding: 1rem 2rem;
+                width: 80%;
+            }
+            h2 {
+                margin: 0;
+            }
+            .toggle-title {
+                margin-bottom: 0;
+                margin-left: 1rem;
+            }
+            .button-primary {
+                margin: 0 0 0 auto;
+            }
+        }
+        .productReviews-list {
+            margin-top: 5rem;
+        }
+        .productReview {
+            &::after {
+                border-bottom: 2px solid $gainsboro;
+                content: '';
+                display: block;
+                margin: auto auto 2rem;
+                width: 99%;
+            }
+            .productReview-author {
+                margin-bottom: 0;
+                @extend .frame-subhead;
+            }
+            .rating-title {
+                align-items: center;
+                display: flex;
+                .productReview-title {
+                    margin-left: 1ch;
+                }
+                .productReview-rating {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width:540px) {
+    #recipe-page {
+        .productView {
+            margin-left: -1.5rem;
+        }
+        .recipe-top {
+            flex-direction: column;
+            .recipe-top-left, .recipe-top-right {
+                width: 100%;
+            }
+            .recipe-top-left {
+                .productView-title {
+                    margin-top: 1rem;
+                    text-align: center;
+                }
+            }
+        }
+        .recipe-main {
+            .quick-info {
+                flex-direction: column;
+                span {
+                    display: block;
+                }
+            }
+            .info {
+                width: 90%;
+                #ingredients {
+                    ul {
+                        columns: 1;
+                        margin: auto;
+                        list-style-position: inside;
+                    }
+                }
+            }
+        }
+        .productReviews {
+            width: 100%;
+            .review-sep {
+                position: relative;
+                margin-left: -1.5rem;
+                .review-sep-inner {
+                    flex-direction: column;
+                    justify-content: center;
+                    width: auto;
+                    .button-primary {
+                        margin: 1rem auto auto;
+                    }
+                }
+            }
+            .productReviews-list {
+                margin-top: 1rem;
             }
         }
     }

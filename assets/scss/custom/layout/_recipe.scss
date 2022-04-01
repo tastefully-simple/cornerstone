@@ -51,12 +51,39 @@
                 margin-left: .5rem;
             }
         }
-        #ingredients {
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-            ul {
-                column-count: 2;
+        .info {
+            margin: auto;
+            width: 60%;
+            h2 {
+                text-align: center;
+            }
+            #ingredients {
+                ul {
+                    column-count: 2;
+                }
+                a {
+                    align-items: center;
+                    color: $burgundy;
+                    display: flex;
+                    font-size: 16px;
+                    font-weight: 900;
+                    text-decoration: none;
+                    &::after {
+                        content: '';
+                        margin-left: 1ch;
+                        @extend .icon-system-addtocart;
+                    }
+                }
+            }
+            #directions {
+                #directions-list {
+                    .direction-item {
+                        b {
+                            color: $burgundy;
+                            font-weight: 900;
+                        }
+                    }
+                }
             }
         }
     }

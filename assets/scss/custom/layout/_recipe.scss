@@ -1,5 +1,6 @@
 #recipe-page {
     .recipe-top {
+        align-items: center;
         display: flex;
         background-color: $COLOR_CREAM;
         .recipe-top-left, .recipe-top-right {
@@ -15,6 +16,48 @@
             }
         }
         .recipe-top-right {
+            .productView-images {
+                margin-bottom: 0;
+                padding-right: 0;
+                width: 100%;
+                .slick-slider {
+                    display: flex;
+                    margin-bottom: 0;
+                }
+                .slick-slide {
+                    display: flex;
+                }
+                .slick-dots {
+                    bottom: -2vw;
+                    margin-bottom: 0;
+                    position: absolute;
+                }
+            }
+        }
+    }
+    .recipe-main {
+        margin-top: 2vw;
+        .quick-info {
+            border-bottom: 1px solid;
+            border-top: 1px solid;
+            display:flex;
+            justify-content: space-between;
+            margin: 4vw auto 0;
+            max-width: 80%;
+            padding: 1.5rem 1rem;
+            strong {
+                color: $burgundy;
+                font-weight: 800;
+                margin-left: .5rem;
+            }
+        }
+        #ingredients {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            ul {
+                column-count: 2;
+            }
         }
     }
 }

@@ -23,6 +23,7 @@
                                 {{/if}}
                             {{/if}}
                                 {{> components/products/ratings rating=product.rating}}
+                                <span class="productView-numberReviews">({{product.num_reviews}})</span>
                             {{#if product.num_reviews '>' 0}}
                                 <a href="{{product.url}}#product-reviews">
                                     read product reviews

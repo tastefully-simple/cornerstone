@@ -24,14 +24,6 @@
                             {{/if}}
                                 {{> components/products/ratings rating=product.rating}}
                                 <span class="productView-numberReviews">({{product.num_reviews}})</span>
-                            {{#if product.num_reviews '>' 0}}
-                                <a href="{{product.url}}#product-reviews">
-                                    read product reviews
-                                    {{! lang 'products.reviews.link_to_review' total=product.num_reviews}}
-                                </a>
-                            {{else}}
-                                <span>{{lang 'products.reviews.link_to_review' total=product.num_reviews}}</span>
-                            {{/if}}
                         {{/if}}
                         {{#if settings.show_product_reviews}}
                             <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"

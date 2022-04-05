@@ -1,7 +1,15 @@
+.recipe-container {
+    overflow: hidden;
+    margin-bottom: 0;
+    .container {
+        padding: 0;
+    }
+}
+
 #recipe-page {
     .productView {
-        margin-left: -2rem;
         width: 100vw;
+        margin: 0;
     }
     .recipe-top {
         align-items: center;
@@ -14,6 +22,9 @@
         .recipe-top-left {
             display: flex;
             flex-direction: column;
+            .productView-title {
+                text-align: center;
+            }
             .productView-details {
                 width: unset;
                 padding: 0;
@@ -35,6 +46,9 @@
                 padding-left: 0;
                 width: 100%;
                 .productView-thumbnails {
+                    .slick-list {
+                        margin: 0;
+                    }
                     img {
                         width: 100%;
                     }
@@ -47,15 +61,29 @@
                     display: flex;
                 }
                 .slick-dots {
-                    bottom: -2vw;
+                    bottom: -30px;
                     margin-bottom: 0;
                     position: absolute;
+                    li {
+                        button {
+                            background-color: $gainsboro;
+                            border-color: $gainsboro;
+                        }
+                        &.slick-active {
+                            button {
+                                &::before {
+                                    background-color: $burgundy;
+                                    border-color: $burgundy;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
     .recipe-main {
-        margin-top: 2vw;
+        margin-top: 2rem;
         .quick-info {
             border-bottom: 1px solid;
             border-top: 1px solid;
@@ -64,6 +92,9 @@
             margin: 4vw auto 0;
             max-width: 80%;
             padding: 1.5rem 1rem;
+            span {
+                margin: 0 auto;
+            }
             strong {
                 color: $burgundy;
                 font-weight: 800;
@@ -79,6 +110,7 @@
             #ingredients {
                 ul {
                     column-count: 2;
+                    list-style-type: none;
                 }
                 a {
                     align-items: center;
@@ -87,11 +119,13 @@
                     font-size: 16px;
                     font-weight: 900;
                     text-decoration: none;
+                    /* Hide the icon entirely for now
                     &::after {
                         content: '';
                         margin-left: 1ch;
                         @extend .icon-system-addtocart;
                     }
+                    */
                 }
             }
             #directions {
@@ -167,6 +201,23 @@
         .productView {
             margin-left: -1.5rem;
         }
+    }
+}
+@media only screen and (min-width: 1921px) {
+    #recipe-page {
+        .productView {
+            width: 100%;
+        }
+        .productReviews {
+            .review-sep {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width:540px) {
+    #recipe-page {
         .recipe-top {
             flex-direction: column;
             .recipe-top-left, .recipe-top-right {

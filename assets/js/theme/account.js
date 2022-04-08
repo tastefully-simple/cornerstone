@@ -84,10 +84,10 @@ export default class Account extends PageManager {
 
     // Will automatically added dashes for the phone number field on Edit Account page (ex. 123-456-7890)
     autocompletePhoneNumberDashes() {
-        const phoneInputField = document.querySelector('#account_phone');
+        var phoneInputField = document.querySelector('#account_phone');
 
-        phoneInputField.addEventListener('keyup', (event) => {
-            if (event.key !== 'Backspace' && (phoneInputField.value.length === 3 || phoneInputField.value.length === 7)) {
+        phoneInputField.addEventListener('keyup', function(e){
+            if (event.key != 'Backspace' && (phoneInputField.value.length === 3 || phoneInputField.value.length === 7)){
                 phoneInputField.value += '-';
             }
         });
@@ -339,7 +339,7 @@ export default class Account extends PageManager {
         const $password2Element = $(password2Selector);
         const currentPasswordSelector = `${formEditSelector} [data-field-type="CurrentPassword"]`;
         const $currentPassword = $(currentPasswordSelector);
-        const phoneNumberSelector = '#account_phone';
+        const phoneNumberSelector = "#account_phone";
         const $phoneNumberElement = $(phoneNumberSelector);
 
         // This only handles the custom fields, standard fields are added below

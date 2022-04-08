@@ -992,5 +992,12 @@
       "parties_caption": "Are you shopping with a party or fundraiser? Make sure your host gets credit for your order.",
       "tooltip_info": "What is a consultant? Our consultants are independent business owners who help you decide what's to eat! Help us ensure your consultant receives their commission or credit."
     }
+  },
+  "ts_cart_subscription": {
+    "auth_title": "Ready to Yum?",
+    "choose_consultant_with_party_title": "This is a little complicated...",
+    "choose_consultant_title": "Choose your Yum Club Consultant",
+    "create_account_intro": "Create an account to save and manage your subscriptions. You'll also be able to check-out quicker and have the ability to save a wish list just by creating a FREE account with us.",
+    "not_eligible_title": "Account Alert"
   }
 }

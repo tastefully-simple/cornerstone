@@ -114,17 +114,33 @@
 
     <div class="recipe-main">
         <div class="quick-info">
-            {{#each product.custom_fields}}
-                {{#if name '==' 'Makes'}}
-                    <span>{{name}}: <strong>{{value}}</strong></span>
-                {{/if}}
-                {{#if name '==' 'Active Time'}}
-                    <span>{{name}}: <strong>{{value}}</strong></span>
-                {{/if}}
-                {{#if name '==' 'Total Time'}}
-                    <span>{{name}}: <strong>{{value}}</strong></span>
-                {{/if}}
-            {{/each}}
+            <script>
+                var quickInfo = document.querySelector('.quick-info');
+                for (const property in recipe.Recipe) {
+                    if (property === 'Makes' || property === 'ActiveTime' || property === 'TotalTime') {
+                        var title = '';
+                        switch (property) {
+                            case 'Makes':
+                                title = 'Makes';
+                                break;
+                            case 'ActiveTime':
+                                title = 'Active Time';
+                                break;
+                            case 'TotalTime':
+                                title = 'Total Time';
+                                break;
+                            default:
+                                title = property;
+                        }
+                        var span = document.createElement("span");
+                        var strong = document.createElement("strong");
+                        span.innerHTML = `${title}: `;
+                        strong.innerHTML = recipe.Recipe[property];
+                        span.append(strong);
+                        quickInfo.append(span);
+                    }
+                }
+            </script>
         </div>
 
         <article class="productView-description">

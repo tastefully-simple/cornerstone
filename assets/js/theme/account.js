@@ -80,9 +80,13 @@ export default class Account extends PageManager {
         this.bindDeletePaymentMethod();
 
         this.autocompletePhoneNumberDashes();
+        this.phoneInputReformat();
     }
 
-    // Will automatically added dashes for the phone number field on Edit Account page (ex. 123-456-7890)
+    /**
+     * Will automatically added dashes for the phone number field on Edit Profile page (ex. 123-456-7890)
+     * as a customer inputs their phone number
+     */
     autocompletePhoneNumberDashes() {
         const phoneInputField = document.querySelector('#account_phone');
 
@@ -91,6 +95,20 @@ export default class Account extends PageManager {
                 phoneInputField.value += '-';
             }
         });
+    }
+
+    /**
+     * Reformats how a stored 10 digit phone number is displayed in the Edit Profile area for phone number field (1234567890 -> 123-456-7890)
+     */
+    phoneInputReformat() {
+        const phoneValue = $('input[type=tel]').val();
+        const tenDigitNum = /^\d{10}$/;
+        let formattedPhoneNumber = '';
+
+        if (tenDigitNum.test(phoneValue)) {
+            formattedPhoneNumber = `${phoneValue.substring(0, 3)}-${phoneValue.substring(3, 6)}-${phoneValue.substring(6, 10)}`;
+            $('input[type=tel]').val(formattedPhoneNumber);
+        }
     }
 
     /**

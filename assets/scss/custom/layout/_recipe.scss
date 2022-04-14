@@ -15,6 +15,7 @@
         align-items: center;
         display: flex;
         background-color: $cream;
+        max-height: 410px;
         .recipe-top-left, .recipe-top-right {
             width: 50%;
             align-items: center;
@@ -51,6 +52,7 @@
                     }
                     img {
                         width: 100%;
+                        max-height: 410px
                     }
                 }
                 .slick-slider {

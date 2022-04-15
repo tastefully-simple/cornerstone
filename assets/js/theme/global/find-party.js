@@ -141,22 +141,6 @@ class FindAParty {
     openPartyBarDropdown(target) {
         target.toggleClass('active');
 
-        const accord = target.next();
-
-        if (accord.css('max-height') === '0px') {
-            accord.css('max-height', (accord.prop('scrollHeight')));
-
-            // Scroll down when showing party bar's options
-            $('.header.is-open .navPages').animate({ scrollTop: accord.offset().top });
-            // TST-164 for Safari
-            // this code won't be applied to other browsers
-            // because .navPages-container's overflow CSS property
-            // is only set on Safari
-            $('.header.is-open .navPages-container').animate({ scrollTop: accord.offset().top });
-        } else {
-            accord.css('max-height', 0);
-        }
-
         const $findPartyBarArrow = this.$findParty.find('.partybar-arrow');
         if (target.hasClass('active')) {
             // Change arrow pointing down when party bar opened
@@ -175,6 +159,26 @@ class FindAParty {
             this.hasOpenPartiesWithPartySelected();
         } else {
             this.noOpenParties();
+        }
+
+        // TST-614 - Removed party test HTML code from partybar.html which threw off reading scrollHeight value
+        // So had to move the logic of setting the max-height to after the HTML code for party-accordian class
+        // is updated from the above if-else statements. That way the scrollHeight property is read the correct
+        // value based on the dynamically-updated HTMl code.
+        const accord = target.next();
+
+        if (accord.css('max-height') === '0px') {
+            accord.css('max-height', (accord.prop('scrollHeight')));
+
+            // Scroll down when showing party bar's options
+            $('.header.is-open .navPages').animate({ scrollTop: accord.offset().top });
+            // TST-164 for Safari
+            // this code won't be applied to other browsers
+            // because .navPages-container's overflow CSS property
+            // is only set on Safari
+            $('.header.is-open .navPages-container').animate({ scrollTop: accord.offset().top });
+        } else {
+            accord.css('max-height', 0);
         }
     }
 

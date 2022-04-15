@@ -275,3 +275,22 @@
 
     }
 }
+
+//
+// Recipes Header
+// -----------------------------------------------------------------------------
+
+.recipes-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .page-heading-recipes {
+        position: absolute;
+        display: flex;
+        text-align: center;
+        .page-heading {
+            color: $white;
+            text-transform: lowercase;
+        }
+    }
+}

@@ -9,7 +9,7 @@
 
 
 .body {
-    margin-bottom: spacing("double") * 2;
+    margin-bottom: 0 em;
     margin-top: spacing("single"); // 1
 
     @include breakpoint("medium") {

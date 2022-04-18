@@ -12,18 +12,18 @@
                             a.setAttribute("class", "ingredients-link");
                             a.innerHTML = i.Name;
                             if (i.IsProduct) {
-                                a.setAttribute("href", `/$recipes/${i.ProductUrl}/`);
+                                a.setAttribute("href", `/${recipes}/${i.ProductURL}/`);
                             }
                             if (i.IsRecipe) {
-                                a.setAttribute("href", `/${i.RecipeUrl}/`);
+                                a.setAttribute("href", `/${i.RecipeURL}/`);
                             }
                             li.append(a);
                         } else {
                             li.innerHTML = i.Name;
                         }
-                        ul.append(li);       
+                        ul.append(li);
 					}
-				}); 
+				});
 			</script>
 		</ul>
 	</div>

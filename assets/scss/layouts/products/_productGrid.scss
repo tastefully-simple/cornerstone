@@ -150,6 +150,8 @@ $product-card-margin: stencilString('categorypage_product_card_margin');
         justify-content: left;
         .product {
             padding-top: 0.75em;
+            margin-right: stencilString('categorypage_product_card_margin') !important;
+            margin-left: stencilString('categorypage_product_card_margin') !important;
         }
     }
 

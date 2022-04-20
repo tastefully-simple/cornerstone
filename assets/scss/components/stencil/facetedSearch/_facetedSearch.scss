@@ -112,8 +112,6 @@
 //
 // -----------------------------------------------------------------------------
 .facetedSearch-refineFilters {
-    display: none;
-
     @include breakpoint("medium") {
         display: block; // 1
     }

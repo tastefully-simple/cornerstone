@@ -148,6 +148,9 @@ $product-card-margin: stencilString('categorypage_product_card_margin');
         display: flex;
         flex-wrap: wrap;
         justify-content: left;
+        .product {
+            padding-top: 0.75em;
+        }
     }
 
     .flex-list-item {

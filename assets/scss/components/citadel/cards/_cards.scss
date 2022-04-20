@@ -22,7 +22,7 @@
         .card-figcaption {
             opacity: 1;
         }
-    }    
+    }
 }
 
 .card-figure {
@@ -69,12 +69,14 @@
 
 .card-image {
     @include lazy-loaded-img;
+    position: absolute;
+    top: 0;
     border: 0;
-    width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    -o-object-fit: cover;
+    object-fit: cover;
+    height: 100%;
     /* Object-fit polyfill */
-    font-family: 'object-fit: contain;';
+    font-family: 'object-fit: cover;';
 }
 
 .card-title {

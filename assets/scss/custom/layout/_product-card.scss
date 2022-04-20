@@ -4,14 +4,9 @@
 
 .productGrid {
     .product {
-        margin-left: stencilString('categorypage_product_card_margin');
-        margin-right: stencilString('categorypage_product_card_margin');
-    }
-    .product {
         @include card-dropshadow();
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        width:40%;
+        margin:1rem 2.5%;
+        width:45%;
         .card-figure {
             .card-figcaption {
                 display:block;
@@ -39,6 +34,26 @@
             }
             .out-of-stock-message {
                 display:none;
+            }
+        }
+    }
+}
+
+.productGrid .recipes-page-content {
+    .product {
+        margin-left: stencilString('categorypage_product_card_margin');
+        margin-right: stencilString('categorypage_product_card_margin');
+    }
+    .product {
+        @include card-dropshadow();
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: 40%;
+        .card-figure {
+            .card-figcaption {
+                .quickview {
+                    display:none;
+                }
             }
         }
     }

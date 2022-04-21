@@ -10,7 +10,7 @@
                         if (i.IsProduct || i.IsRecipe) {
                             var a = document.createElement("a");
                             a.setAttribute("class", "ingredients-link");
-                            a.innerHTML = i.Name;
+                            a.innerHTML = `${i.Quantity_Gross} ${i.Unit} ${i.Name}`;
                             if (i.IsProduct) {
                                 a.setAttribute("href", `${i.ProductURL}`);
                             }

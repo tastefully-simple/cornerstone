@@ -15,7 +15,6 @@
         align-items: center;
         display: flex;
         background-color: $cream;
-        max-height: 410px;
         .recipe-top-left, .recipe-top-right {
             width: 50%;
             align-items: center;
@@ -222,6 +221,10 @@
 }
 
 @media only screen and (max-width:540px) {
+    #productReviews-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
     #recipe-page {
         .recipe-top {
             flex-direction: column;
@@ -257,7 +260,6 @@
             width: 100%;
             .review-sep {
                 position: relative;
-                margin-left: -1.5rem;
                 .review-sep-inner {
                     flex-direction: column;
                     justify-content: center;

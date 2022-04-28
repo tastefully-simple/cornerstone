@@ -44,6 +44,24 @@
                 return Cookies.get('name');
             },
 
+            // Consultant Phone
+            setConsultantPhone: function(phone) {
+                Cookies.set('phone', phone, { domain: cookieDomain });
+            },
+
+            getConsultantPhone: function() {
+                return Cookies.get('phone');
+            },
+
+            // Consultant Email
+            setConsultantEmail: function(email) {
+                Cookies.set('email', email, { domain: cookieDomain });
+            },
+
+            getConsultantEmail: function() {
+                return Cookies.get('email');
+            },
+
             // Consultant Has Open Party?
             setConsultantHasOpenParty: function(copenparty) {
                 Cookies.set('copenparty', copenparty, { domain: cookieDomain });

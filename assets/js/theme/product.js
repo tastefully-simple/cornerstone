@@ -8,7 +8,7 @@ import ProductDetails from './common/product-details';
 import videoGallery from './product/video-gallery';
 import { classifyForm } from './common/utils/form-utils';
 import modalFactory, { modalTypes } from './global/modal';
-import TSCopyLink from './common/ts-copy-link.js';
+import TSCopyLink from './common/ts-copy-link';
 
 const { WRITE_REVIEW } = modalTypes;
 

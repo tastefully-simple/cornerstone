@@ -12,6 +12,8 @@ export default class Auth extends PageManager {
         this.validationDictionary = createTranslationDictionary(context);
         this.formCreateSelector = 'form[data-create-account-form]';
         this.recaptcha = $('.g-recaptcha iframe[src]');
+        this.phoneNumberSelector = '[data-label="Phone Number"]';
+        this.$phoneNumberElement = $(this.phoneNumberSelector);
     }
 
     registerLoginValidation($loginForm) {
@@ -111,10 +113,6 @@ export default class Auth extends PageManager {
         const $passwordElement = $(passwordSelector);
         const password2Selector = `${this.formCreateSelector} [data-field-type='ConfirmPassword']`;
         const $password2Element = $(password2Selector);
-        const primaryPhoneSelector = '[data-label="Primary Phone"]';
-        const $primaryPhoneElement = $(primaryPhoneSelector);
-        const mobilePhoneSelector = '[data-label="Mobile Phone"]';
-        const $mobilePhoneElement = $(mobilePhoneSelector);
 
         createAccountValidator.add(validationModel);
 
@@ -165,27 +163,10 @@ export default class Auth extends PageManager {
             );
         }
 
-        // Form validation for Primary Phone filed on Create Account page where a user attempts to enter all zeroes (000-000-0000)
-        if ($primaryPhoneElement) {
+        // Form validation for Phone Number filed on Create Account page where a user attempts to enter all zeroes (000-000-0000)
+        if (this.$phoneNumberElement) {
             createAccountValidator.add({
-                selector: primaryPhoneSelector,
-                validate: (cb, val) => {
-                    let result = true;
-
-                    if (val === '000-000-0000') {
-                        result = false;
-                    }
-
-                    cb(result);
-                },
-                errorMessage: this.context.phoneNumberZeroes,
-            });
-        }
-
-        // Form validation for Mobile Phone filed on Create Account page where a user attempts to enter all zeroes (000-000-0000)
-        if ($mobilePhoneElement) {
-            createAccountValidator.add({
-                selector: mobilePhoneSelector,
+                selector: this.phoneNumberSelector,
                 validate: (cb, val) => {
                     let result = true;
 
@@ -211,53 +192,27 @@ export default class Auth extends PageManager {
     }
 
     /**
-     * We need to update the Primary Phone number field on Create Account page due to it being a field that comes from
+     * We need to update the Phone Number field on Create Account page due to it being a field that comes from
      * BC's Advanced Setting > Account Signup Form > Address Fields
      * Update the input field's type to "tel" for telephone and added maxlength and add regex pattern for dashes
      */
-    updatePrimaryPhoneInputField() {
-        const primaryPhoneInputField = document.querySelector('[data-label="Primary Phone"]');
+    updatePhoneNumberInputField() {
+        const phoneNumberInputField = document.querySelector(this.phoneNumberSelector);
 
-        primaryPhoneInputField.type = 'tel';
-        primaryPhoneInputField.setAttribute('maxlength', '12');
-        primaryPhoneInputField.setAttribute('pattern', '[0-9]{3}-[0-9]{3}-[0-9]{4}');
+        phoneNumberInputField.type = 'tel';
+        phoneNumberInputField.setAttribute('maxlength', '12');
+        phoneNumberInputField.setAttribute('pattern', '[0-9]{3}-[0-9]{3}-[0-9]{4}');
     }
 
     /**
-     * We need to update the Mobile Phone number field on Create Account page due to it being a field that comes from
-     * BC's Advanced Setting > Account Signup Form > Address Fields
-     * Update the input field's type to "tel" for telephone and added maxlength and add regex pattern for dashes
+     * Will automatically added dashes for the Phone Number field on Edit Account page (ex. 123-456-7890)
      */
-    updateMobilePhoneInputField() {
-        const mobilePhoneInputField = document.querySelector('[data-label="Mobile Phone"]');
+    autocompleteDashesForPhoneNumber() {
+        const phoneNumberInputField = document.querySelector(this.phoneNumberSelector);
 
-        mobilePhoneInputField.type = 'tel';
-        mobilePhoneInputField.setAttribute('maxlength', '12');
-        mobilePhoneInputField.setAttribute('pattern', '[0-9]{3}-[0-9]{3}-[0-9]{4}');
-    }
-
-    /**
-     * Will automatically added dashes for the Primary Phone field on Edit Account page (ex. 123-456-7890)
-     */
-    autocompleteDashesForPrimaryPhone() {
-        const primaryPhoneInputField = document.querySelector('[data-label="Primary Phone"]');
-
-        primaryPhoneInputField.addEventListener('keyup', (event) => {
-            if (event.key !== 'Backspace' && (primaryPhoneInputField.value.length === 3 || primaryPhoneInputField.value.length === 7)) {
-                primaryPhoneInputField.value += '-';
-            }
-        });
-    }
-
-    /**
-     * Will automatically added dashes for the Mobile Phone field on Edit Account page (ex. 123-456-7890)
-     */
-    autocompleteDashesForMobilePhone() {
-        const mobilePhoneInputField = document.querySelector('[data-label="Mobile Phone"]');
-
-        mobilePhoneInputField.addEventListener('keyup', (event) => {
-            if (event.key !== 'Backspace' && (mobilePhoneInputField.value.length === 3 || mobilePhoneInputField.value.length === 7)) {
-                mobilePhoneInputField.value += '-';
+        phoneNumberInputField.addEventListener('keyup', (event) => {
+            if (event.key !== 'Backspace' && (phoneNumberInputField.value.length === 3 || phoneNumberInputField.value.length === 7)) {
+                phoneNumberInputField.value += '-';
             }
         });
     }
@@ -294,10 +249,9 @@ export default class Auth extends PageManager {
             this.registerCreateAccountValidator($createAccountForm);
         }
 
-        this.updatePrimaryPhoneInputField();
-        this.updateMobilePhoneInputField();
-
-        this.autocompleteDashesForPrimaryPhone();
-        this.autocompleteDashesForMobilePhone();
+        if (window.location.href.indexOf('create_account') > -1) {
+            this.updatePhoneNumberInputField();
+            this.autocompleteDashesForPhoneNumber();
+        }
     }
 }

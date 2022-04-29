@@ -249,9 +249,9 @@ export default class Auth extends PageManager {
             this.registerCreateAccountValidator($createAccountForm);
         }
 
-        if (window.location.href.indexOf("create_account") > -1) {
-          this.updatePhoneNumberInputField();
-          this.autocompleteDashesForPhoneNumber();
+        if (window.location.href.indexOf('create_account') > -1) {
+            this.updatePhoneNumberInputField();
+            this.autocompleteDashesForPhoneNumber();
         }
     }
 }

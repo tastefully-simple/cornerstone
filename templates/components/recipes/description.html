@@ -7,23 +7,23 @@
 					if (i.Name) {
 						var li = document.createElement("li");
 						const ul = document.getElementById("ingredients-list")
-						li.innerHTML = i.Name;
                         if (i.IsProduct || i.IsRecipe) {
                             var a = document.createElement("a");
                             a.setAttribute("class", "ingredients-link");
+                            a.innerHTML = `${i.Quantity_Gross} ${i.Unit} ${i.Name}`;
                             if (i.IsProduct) {
-                                a.setAttribute("href", `/$recipes/${i.ProductUrl}/`);
+                                a.setAttribute("href", `${i.ProductURL}`);
                             }
                             if (i.IsRecipe) {
-                                a.setAttribute("href", `/${i.RecipeUrl}/`);
+                                a.setAttribute("href", `${i.RecipeURL}`);
                             }
-                            a.append(li);
-                            ul.append(a);       
+                            li.append(a);
                         } else {
-                            ul.append(li);       
+                            li.innerHTML = `${i.Quantity_Gross} ${i.Unit} ${i.Name}`;
                         }
+                        ul.append(li);
 					}
-				}); 
+				});
 			</script>
 		</ul>
 	</div>
@@ -44,7 +44,7 @@
                             list.setAttribute("style", "list-style-type: none");
                     }
                     const directions = document.getElementById("directions");
-                    list.setAttribute("id", "directions-list")
+                    list.setAttribute("class", "directions-list")
                     directions.append(list);
 
                     pg.Steps.forEach((s) => {
@@ -52,15 +52,15 @@
                             var li = document.createElement("li");
                             li.setAttribute("class", "direction-item");
                             li.innerHTML = s.Note;
-                            list.append(li);       
+                            list.append(li);
                         }
                     });
                 }
-            }); 
+            });
         </script>
 	</div>
 	<div id="nutrition">
-		<h2 class="info-title">Nurtition</h2>
+		<h2 class="info-title">Nutrition</h2>
 		<p id="nutrition-list"></p>
 		<script>
 			for (const n in recipe.Nutrition) {
@@ -68,7 +68,7 @@
 					var span = document.createElement("span");
 					const p = document.getElementById("nutrition-list")
 					span.innerHTML = `${n}: ${recipe.Nutrition[n]}; `;
-					p.append(span);       
+					p.append(span);
 				}
 			}
 		</script>

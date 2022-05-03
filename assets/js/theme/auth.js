@@ -12,6 +12,8 @@ export default class Auth extends PageManager {
         this.validationDictionary = createTranslationDictionary(context);
         this.formCreateSelector = 'form[data-create-account-form]';
         this.recaptcha = $('.g-recaptcha iframe[src]');
+        this.phoneNumberSelector = '[data-label="Phone Number"]';
+        this.$phoneNumberElement = $(this.phoneNumberSelector);
     }
 
     registerLoginValidation($loginForm) {
@@ -161,6 +163,23 @@ export default class Auth extends PageManager {
             );
         }
 
+        // Form validation for Phone Number filed on Create Account page where a user attempts to enter all zeroes (000-000-0000)
+        if (this.$phoneNumberElement) {
+            createAccountValidator.add({
+                selector: this.phoneNumberSelector,
+                validate: (cb, val) => {
+                    let result = true;
+
+                    if (val === '000-000-0000') {
+                        result = false;
+                    }
+
+                    cb(result);
+                },
+                errorMessage: this.context.phoneNumberZeroes,
+            });
+        }
+
         $createAccountForm.on('submit', event => {
             createAccountValidator.performCheck();
 
@@ -169,6 +188,32 @@ export default class Auth extends PageManager {
             }
 
             event.preventDefault();
+        });
+    }
+
+    /**
+     * We need to update the Phone Number field on Create Account page due to it being a field that comes from
+     * BC's Advanced Setting > Account Signup Form > Address Fields
+     * Update the input field's type to "tel" for telephone and added maxlength and add regex pattern for dashes
+     */
+    updatePhoneNumberInputField() {
+        const phoneNumberInputField = document.querySelector(this.phoneNumberSelector);
+
+        phoneNumberInputField.type = 'tel';
+        phoneNumberInputField.setAttribute('maxlength', '12');
+        phoneNumberInputField.setAttribute('pattern', '[0-9]{3}-[0-9]{3}-[0-9]{4}');
+    }
+
+    /**
+     * Will automatically added dashes for the Phone Number field on Edit Account page (ex. 123-456-7890)
+     */
+    autocompleteDashesForPhoneNumber() {
+        const phoneNumberInputField = document.querySelector(this.phoneNumberSelector);
+
+        phoneNumberInputField.addEventListener('keyup', (event) => {
+            if (event.key !== 'Backspace' && (phoneNumberInputField.value.length === 3 || phoneNumberInputField.value.length === 7)) {
+                phoneNumberInputField.value += '-';
+            }
         });
     }
 
@@ -202,6 +247,11 @@ export default class Auth extends PageManager {
 
         if ($createAccountForm.length) {
             this.registerCreateAccountValidator($createAccountForm);
+        }
+
+        if (window.location.href.indexOf('create_account') > -1) {
+            this.updatePhoneNumberInputField();
+            this.autocompleteDashesForPhoneNumber();
         }
     }
 }

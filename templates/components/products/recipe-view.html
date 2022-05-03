@@ -1,3 +1,6 @@
+<script>
+    document.getElementById("main-content").classList.add("recipe-container");
+</script>
 <div class="productView" {{#if settings.data_tag_enabled}} data-event-type="product" data-entity-id="{{product.id}}" data-name="{{product.title}}" data-product-category="{{#each product.category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{product.brand.name}}" data-product-price="{{#if product.price.with_tax}}{{product.price.with_tax.value}}{{else}}{{product.price.without_tax.value}}{{/if}}" data-product-variant="single-product-option"{{/if}}>
 {{#each product.reviews.messages}}
         {{#if error}}
@@ -23,14 +26,7 @@
                                 {{/if}}
                             {{/if}}
                                 {{> components/products/ratings rating=product.rating}}
-                            {{#if product.num_reviews '>' 0}}
-                                <a href="{{product.url}}#product-reviews">
-                                    read product reviews
-                                    {{! lang 'products.reviews.link_to_review' total=product.num_reviews}}
-                                </a>
-                            {{else}}
-                                <span>{{lang 'products.reviews.link_to_review' total=product.num_reviews}}</span>
-                            {{/if}}
+                                <span class="productView-numberReviews">({{product.num_reviews}})</span>
                         {{/if}}
                         {{#if settings.show_product_reviews}}
                             <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"
@@ -90,7 +86,7 @@
                     Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
                     for variant/rule image replacement
                 --}}
-                <ul class="images" {{#gt product.images.length 1}} data-slick='{
+                <ul class="productView-thumbnails images" {{#gt product.images.length 1}} data-slick='{
                         "infinite": true,
                         "mobileFirst": true,
                         "slidesToShow": 1,
@@ -116,24 +112,41 @@
         </div>
     </div>
 
-    <div class="quick-info">
-        {{#each product.custom_fields}}
-            {{#if name '==' 'Makes'}}
-                <span>Makes: <strong>{{value}}</strong></span>
-            {{/if}}
-            {{#if name '==' 'Active Time'}}
-                <span>Active Time: <strong>{{value}}</strong></span>
-            {{/if}}
-            {{#if name '==' 'Total Time'}}
-                <span>Total Time: <strong>{{value}}</strong></span>
-            {{/if}}
-            {{name}}
-        {{/each}}
-    </div>
+    <div class="recipe-main">
+        <div class="quick-info">
+            <script>
+                var quickInfo = document.querySelector('.quick-info');
+                for (const property in recipe.Recipe) {
+                    if (property === 'Makes' || property === 'ActiveTime' || property === 'TotalTime') {
+                        var title = '';
+                        switch (property) {
+                            case 'Makes':
+                                title = 'Makes';
+                                break;
+                            case 'ActiveTime':
+                                title = 'Active Time';
+                                break;
+                            case 'TotalTime':
+                                title = 'Total Time';
+                                break;
+                            default:
+                                title = property;
+                        }
+                        var span = document.createElement("span");
+                        var strong = document.createElement("strong");
+                        span.innerHTML = `${title}: `;
+                        strong.innerHTML = recipe.Recipe[property];
+                        span.append(strong);
+                        quickInfo.append(span);
+                    }
+                }
+            </script>
+        </div>
 
-    <article class="productView-description">
-        {{> components/recipies/description}}
-    </article>
+        <article class="productView-description">
+            {{> components/recipes/description}}
+        </article>
+    </div>
 </div>
 
 <div id="previewModal" class="modal modal--large" data-reveal>
@@ -141,3 +154,4 @@
     <div class="modal-content"></div>
     <div class="loadingOverlay"></div>
 </div>
+

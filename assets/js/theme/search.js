@@ -120,13 +120,13 @@ export default class Search extends CatalogPage {
 
         let nextTabIdx;
         switch (eventKey) {
-        case leftArrowKey:
-            nextTabIdx = activeTabIdx === 0 ? lastTabIdx : activeTabIdx - 1;
-            break;
-        case rightArrowKey:
-            nextTabIdx = activeTabIdx === lastTabIdx ? 0 : activeTabIdx + 1;
-            break;
-        default: break;
+            case leftArrowKey:
+                nextTabIdx = activeTabIdx === 0 ? lastTabIdx : activeTabIdx - 1;
+                break;
+            case rightArrowKey:
+                nextTabIdx = activeTabIdx === lastTabIdx ? 0 : activeTabIdx + 1;
+                break;
+            default: break;
         }
 
         $($tabsCollection.get(nextTabIdx)).focus().trigger('click');

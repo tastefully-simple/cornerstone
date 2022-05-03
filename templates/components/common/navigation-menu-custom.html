@@ -1,16 +1,16 @@
 <nav class="navPages">
     <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
+        {{#each categories}}
+            <li class="navPages-item navPages-item-shop">
+                {{> components/common/navigation-list-custom}}
+            </li>
+        {{/each}}
         <li class="navPages-item navPages-item-join">
             <a class="navPages-action teal-text" href="/join-us/">join</a>
         </li>
         <li class="navPages-item navPages-item-host">
             <a class="navPages-action greenapple-text" href="/host">host</a>
         </li>
-        {{#each categories}}
-            <li class="navPages-item navPages-item-shop">
-                {{> components/common/navigation-list-custom}}
-            </li>
-        {{/each}}
         <li class="navPages-item navPages-item-recipes frame-text">
             <a class="navPages-action" href="/recipes">recipes</a>
         </li>

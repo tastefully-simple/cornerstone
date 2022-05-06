@@ -10,7 +10,7 @@
                         if (i.IsProduct || i.IsRecipe) {
                             var a = document.createElement("a");
                             a.setAttribute("class", "ingredients-link");
-                            a.innerHTML = `${i.Quantity_Gross} ${i.Unit} ${i.Name}`;
+                            a.innerHTML = `${i.IngredientDisplay}`;
                             if (i.IsProduct) {
                                 a.setAttribute("href", `${i.ProductURL}`);
                             }
@@ -19,7 +19,7 @@
                             }
                             li.append(a);
                         } else {
-                            li.innerHTML = `${i.Quantity_Gross} ${i.Unit} ${i.Name}`;
+                            li.innerHTML = `${i.IngredientDisplay}`;
                         }
                         ul.append(li);
 					}

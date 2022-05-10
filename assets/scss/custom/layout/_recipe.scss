@@ -133,6 +133,13 @@
                 }
             }
             #directions {
+                a.ingredients-link {
+                    align-items: center;
+                    color: $burgundy;
+                    font-size: 16px;
+                    font-weight: 900;
+                    text-decoration: none;
+                }
                 .directions-list {
                     .direction-item {
                         b {

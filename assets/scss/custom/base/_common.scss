@@ -110,7 +110,7 @@
 
 @media only screen and (min-width:960px){
     .container{
-        padding: 1rem 2rem;
+        padding: 0 2rem;
     }
 }
 
@@ -157,12 +157,5 @@
                 padding-left:.5rem;
             }
         }
-    }
-}
-
-@media only screen and (max-width:799px) {
-    .body {
-        margin-top: 35px;
-        margin-bottom: 10px;
     }
 }

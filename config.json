@@ -76,6 +76,7 @@
     "productpage_related_products_count": 10,
     "productpage_similar_by_views_count": 10,
     "categorypage_products_per_page": 15,
+    "recipespage_products_per_page": 15,
     "categorypage_product_card_margin": "5%",
     "shop_by_price_visibility": true,
     "brandpage_products_per_page": 12,

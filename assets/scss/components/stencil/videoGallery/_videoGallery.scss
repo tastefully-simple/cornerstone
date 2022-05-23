@@ -2,6 +2,15 @@
 // VIDEO GALLERY
 // =============================================================================
 
+.videoGallery {
+    margin: 4vw auto 0;
+    width: 80%;
+}
+
+.videoGallery h2 {
+    text-align: center;
+}
+
 .videoGallery-main {
     @include flex-video-container();
     margin-bottom: $videoGallery-spacing;

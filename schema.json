@@ -1521,6 +1521,46 @@
       },
       {
         "type": "select",
+        "label": "i18n.RecipesPage",
+        "id": "recipespage_products_per_page",
+        "force_reload": true,
+        "options": [
+          {
+            "value": 6,
+            "label": "6"
+          },
+          {
+            "value": 8,
+            "label": "8"
+          },
+          {
+            "value": 9,
+            "label": "9"
+          },
+          {
+            "value": 12,
+            "label": "12"
+          },
+          {
+            "value": 15,
+            "label": "15"
+          },
+          {
+            "value": 16,
+            "label": "16"
+          },
+          {
+            "value": 18,
+            "label": "18"
+          },
+          {
+            "value": 20,
+            "label": "20"
+          }
+        ]
+      },
+      {
+        "type": "select",
         "label": "i18n.BrandPage",
         "id": "brandpage_products_per_page",
         "force_reload": true,

@@ -54,7 +54,31 @@ export default class Category extends CatalogPage {
         } = this.validationDictionary;
         const $productListingContainer = $('#product-listing-container');
         const $facetedSearchContainer = $('#faceted-search-container');
-        const productsPerPage = this.context.categoryProductsPerPage;
+
+        /**
+         * Choose the FacetedSearch results template and amount of products per page
+         * according to the category URL
+         */
+        let productsPerPage;
+        let productListingComponent;
+
+        if (window.location.pathname === '/recipes/') {
+            productsPerPage = this.context.themeSettings.recipespage_products_per_page;
+            productListingComponent = 'recipes/product-listing';
+        } else {
+            productsPerPage = this.context.categoryProductsPerPage;
+            productListingComponent = 'category/product-listing';
+        }
+        /**
+         * Remove last card from the page when it is not loaded through FacetedSearch.
+         * This is going to prevent the page from showing 16 products per page (current setting for categories),
+         * displaying only 15 (current setting for recipes).
+         *
+         * This may need to be adjusted in case recipespage_products_per_page or categorypage_products_per_page
+         * are updated.
+         */
+        $('.productGrid li:last-child').remove();
+
         const requestOptions = {
             config: {
                 category: {
@@ -65,7 +89,7 @@ export default class Category extends CatalogPage {
                 },
             },
             template: {
-                productListing: 'category/product-listing',
+                productListing: productListingComponent,
                 sidebar: 'category/sidebar',
             },
             showMore: 'category/show-more',

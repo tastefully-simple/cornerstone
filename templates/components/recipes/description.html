@@ -7,19 +7,14 @@
 					if (i.Name) {
 						var li = document.createElement("li");
 						const ul = document.getElementById("ingredients-list")
-                        if (i.IsProduct || i.IsRecipe) {
+                        if (i.IsRecipe) {
                             var a = document.createElement("a");
                             a.setAttribute("class", "ingredients-link");
                             a.innerHTML = `${i.IngredientDisplay}`;
-                            if (i.IsProduct) {
-                                a.setAttribute("href", `${i.ProductURL}`);
-                            }
-                            if (i.IsRecipe) {
-                                a.setAttribute("href", `${i.RecipeURL}`);
-                            }
+							a.setAttribute("href", `${i.RecipeURL}`);
                             li.append(a);
                         } else {
-                            li.innerHTML = `${i.IngredientDisplay}`;
+                            li.innerHTML = `${i.Display}`;
                         }
                         ul.append(li);
 					}

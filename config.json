@@ -348,7 +348,10 @@
       "mastercard",
       "visa"
     ],
-    "lazyload_mode": "lazyload+lqip"
+    "lazyload_mode": "lazyload+lqip",
+    "recipe_search_status": "1",
+    "recipe_search_category_shop_filter_id": "25",
+    "recipe_search_category_recipe_filter_id": "271"
   },
   "read_only_files": [
     "/assets/scss/components/citadel",
@@ -389,7 +392,10 @@
       "images": {},
       "settings": {
         "ts_api_environment": "qa1",
-        "google_tagmanager_status": "2"
+        "google_tagmanager_status": "2",
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "25",
+        "recipe_search_category_recipe_filter_id": "271"
       }
     },
     {
@@ -415,7 +421,10 @@
         "ts_api_environment": "qa1",
         "ts_affiliation_timer": 60,
         "zoy_dev_mode": false,
-        "google_tagmanager_status": "2"
+        "google_tagmanager_status": "2",
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "25",
+        "recipe_search_category_recipe_filter_id": "271"
       }
     },
     {
@@ -444,7 +453,10 @@
         "ts_affiliation_timer": 60,
         "zoy_dev_mode": false,
         "google_tagmanager_status": "1",
-        "google_tagmanager_code": "GTM-PD7HGB2"
+        "google_tagmanager_code": "GTM-PD7HGB2",
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "25",
+        "recipe_search_category_recipe_filter_id": "271"
       }
     },
     {
@@ -472,7 +484,10 @@
         "ts_join_store_url": "https://join.tastefullysimple.com",
         "ts_affiliation_timer": 1440,
         "ts_debug_mode": false,
-        "zoy_dev_mode": false
+        "zoy_dev_mode": false,
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "25",
+        "recipe_search_category_recipe_filter_id": "271"
       }
     }
   ]

@@ -12,6 +12,10 @@ const leftArrowKey = 37;
 const rightArrowKey = 39;
 
 export default class Search extends CatalogPage {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(context) {
+        super(context);
+    }
     formatCategoryTreeForJSTree(node) {
         const nodeData = {
             text: node.data,
@@ -171,6 +175,11 @@ export default class Search extends CatalogPage {
         this.$productListingContainer = $('#product-listing-container');
         this.$facetedSearchContainer = $('#faceted-search-container');
         this.$contentResultsContainer = $('#search-results-content');
+
+        // Verifies if the recipe search is enabled
+        if (this.context.themeSettings.recipe_search_status === '1') {
+            this.initRecipeSearch();
+        }
 
         // Init faceted search
         if ($('#facetedSearch').length > 0) {
@@ -369,5 +378,66 @@ export default class Search extends CatalogPage {
         }
 
         return false;
+    }
+    initRecipeSearch() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentCategory = urlParams.get('category');
+        const recipesCategoryId = this.context.themeSettings.recipe_search_category_recipe_filter_id;
+        const productsCategoryId = this.context.themeSettings.recipe_search_category_shop_filter_id;
+
+        /**
+         * If the current search results page is not recipes, make a request to count how many recipes were found
+         * for the current query and set the results together with the results page link
+         */
+        if (typeof currentCategory !== 'undefined' && currentCategory === recipesCategoryId) {
+            this.getResultsCount('Products', productsCategoryId, this.context.themeSettings.categorypage_products_per_page);
+        } else {
+            // We are displaying recipes in the search results. Count how many products can be found for the same query
+            this.getResultsCount('Recipes', recipesCategoryId, this.context.themeSettings.recipespage_products_per_page);
+        }
+    }
+    getResultsCount(type, categoryId, limitPage) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const headers = {
+            'stencil-options': '{"render_with":"recipes/empty,recipes/empty,recipes/empty,recipes/search-results-content-count"}',
+            'x-xsrf-token': window.BCData && window.BCData.csrf_token ? window.BCData.csrf_token : '',
+            'x-requested-with': 'stencil-utils',
+            'accept-language': ' en-US,en;q=0.5',
+        };
+        const config = {
+            method: 'GET',
+            headers,
+            credentials: 'include',
+        };
+
+        // Set new params for the search results URL
+        urlParams.set('category', categoryId);
+        urlParams.set('page', 1);
+        urlParams.set('limit', limitPage);
+
+        // Create URL for the search results
+        const url = `${window.location.origin + window.location.pathname}?${urlParams.toString()}`;
+
+        return fetch(url, config)
+            .then(async r => {
+                const response = await r.json();
+                if (typeof response !== 'undefined' && typeof response['components/recipes/search-results-content-count'] !== 'undefined') {
+                    // eslint-disable-next-line radix
+                    const totalItemsFound = parseInt(response['components/recipes/search-results-content-count']);
+                    // If items are found, create a link and display it
+                    if (totalItemsFound > 0) {
+                        document.getElementById(`${type}-search-results-count`).innerHTML = '';
+                        const searchResultsLink = document.createElement('a');
+                        searchResultsLink.href = url;
+                        searchResultsLink.innerHTML = `${type}(${totalItemsFound})`;
+                        document.getElementById(`${type}-search-results-count`).appendChild(searchResultsLink);
+                    } else {
+                        document.getElementById(`${type}-search-results-count`).innerHTML = `${type}(0)`;
+                    }
+                } else {
+                    document.getElementById(`${type}-recipe-search-results-count`).innerHTML = `${type}(0)`;
+                }
+            })
+            .catch((err) => console.error(err));
     }
 }

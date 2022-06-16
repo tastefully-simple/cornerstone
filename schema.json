@@ -1946,6 +1946,37 @@
             "label": "i18n.SpecifyDimensions"
           }
         ]
+      },
+      {
+        "type": "heading",
+        "content": "i18n.RecipeSearchHeading"
+      },
+      {
+        "type": "select",
+        "label": "i18n.RecipeSearchStatus",
+        "id": "recipe_search_status",
+        "options": [
+          {
+            "value": "1",
+            "label": "i18n.RecipeSearchStatusEnabled"
+          },
+          {
+            "value": "2",
+            "label": "i18n.RecipeSearchStatusDisabled"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "label": "i18n.RecipeSearchCategoryShopFilterId",
+        "force_reload": true,
+        "id": "recipe_search_category_shop_filter_id"
+      },
+      {
+        "type": "text",
+        "label": "i18n.RecipeSearchCategoryRecipeFilterId",
+        "force_reload": true,
+        "id": "recipe_search_category_recipe_filter_id"
       }
     ]
   },

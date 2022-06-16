@@ -1,5 +1,5 @@
 name: Publish Production BigCommerce
-
+# This workflow is triggered on creation of releases on the master branch only.
 on:
   release:
     types:
@@ -32,8 +32,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     - name: Install Stencil CLI Dependency
-      run: npm install -g @bigcommerce/stencil-cli
-
+      run: npm install -g @bigcommerce/stencil-cli@3.10.1
+      # must remove the 3.10.1 specific version at some point.
+      
     - name: Install Dependencies
       run: npm ci
 
@@ -41,7 +42,7 @@ jobs:
       env:
         URL: ${{ secrets.STENCIL_STORE_URL_PRODUCTION }}
         TOKEN: ${{ secrets.STENCIL_ACCESS_TOKEN_PRODUCTION }}
-      run: stencil init -u $URL -t $TOKEN -p 3000
+      run: stencil init -u $URL -t $TOKEN -p 3000 -h https://api.bigcommerce.com
 
     - name: Publishing theme to Production, automatically deleting oldest theme if necessary
       run: stencil push -a Production -d

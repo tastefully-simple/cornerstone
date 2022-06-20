@@ -11,6 +11,9 @@ product_results:
     {{#if pagination.product_results.next}}
         <link rel="next" href="{{pagination.product_results.next}}">
     {{/if}}
+    {{#if theme_settings.recipe_search_status '==' '1'}}
+        {{>components/recipes/search-results-head}}
+    {{/if}}
 {{/partial}}
 
 {{#partial "page"}}
@@ -27,13 +30,21 @@ product_results:
         </span>
         <ul role="tablist" class="navBar-section account-navigation" data-search-page-tabs>
             <li role="presentation" class="navBar-item">
-                <a aria-describedby="search-tabs-widget-description" role="tab" aria-controls="product-listing-container" id="search-results-product-count" class="navBar-action" href="{{forms.search.product_url}}" data-product-results-toggle>
-                    {{>components/search/product-count}}
+                <a aria-describedby="search-tabs-widget-description" role="tab" aria-controls="product-listing-container" id="search-results-product-count" class="navBar-action" href="{{forms.search.product_url}}">
+                    {{#if theme_settings.recipe_search_status '==' '1'}}
+                        {{>components/recipes/regular-product-count}}
+                    {{else}}
+                        {{>components/search/product-count}}
+                    {{/if}}
                 </a>
             </li>
             <li role="presentation" class="navBar-item">
-                <a aria-describedby="search-tabs-widget-description" role="tab" aria-controls="search-results-content" id="search-results-content-count" class="navBar-action" href="{{forms.search.content_url}}" data-content-results-toggle>
-                    {{>components/search/content-count}}
+                <a aria-describedby="search-tabs-widget-description" role="tab" aria-controls="search-results-content" id="search-results-content-count" class="navBar-action">
+                    {{#if theme_settings.recipe_search_status '==' '1'}}
+                        {{>components/recipes/search-results-count}}
+                    {{else}}
+                        {{>components/search/content-count}}
+                    {{/if}}
                 </a>
             </li>
             {{#unless product_results.faceted_search_enabled}}
@@ -144,6 +155,8 @@ product_results:
         {{{region name="search_below_content"}}}
     </main>
 </section>
-
+{{#if theme_settings.recipe_search_status '==' '1'}}
+    {{> components/recipes/search-results-scripts}}
+{{/if}}
 {{/partial}}
 {{> layout/base}}

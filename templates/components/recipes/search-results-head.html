@@ -1,0 +1,15 @@
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var category = urlParams.get('category');
+
+    var style = document.createElement('style');
+    document.head.appendChild(style);
+
+    if (category && category != '{{ theme_settings.recipe_search_category_recipe_filter_id }}') {
+        //print css to hide left sidebar
+        style.sheet.insertRule('#faceted-search-container {display: none}');
+    } else {
+        // hide product card price and quickview button for recipes
+        style.sheet.insertRule('.card-text .price-section, .quickview {display:none !important}');
+    }
+</script>

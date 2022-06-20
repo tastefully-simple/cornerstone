@@ -1,0 +1,16 @@
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var category = urlParams.get('category');
+
+    if (category && category == '{{ theme_settings.recipe_search_category_recipe_filter_id }}') {
+        // Currently displaying the recipes search results
+        document.getElementById('Products-search-results-count').innerHTML = "{{lang 'search.results.searching_products' }}";
+        document.getElementById('product-listing-container').className = 'recipes-page-content';
+    } else {
+        // Currently displaying the regular products search results
+        document.getElementById('Recipes-search-results-count').innerHTML = "{{lang 'search.results.searching_recipes' }}";
+        // Changes the class of the sidebar so it can be both hidden but also still exists.
+        // The sidebar needs to exist in order to get the ajax pagination working
+        document.getElementById('faceted-search-container').className = 'hidden-sidebar';
+    }
+</script>

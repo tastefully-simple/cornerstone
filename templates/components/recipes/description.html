@@ -59,7 +59,7 @@
 		<p id="nutrition-list"></p>
 		<script>
 			var nutrientsList = '';
-			recipe.Nutritents.forEach((nutrient, i) => {
+			recipe.Nutrients.forEach((nutrient, i) => {
 				if (nutrient.Name) {
 					var nutrientValue;
 					if (typeof nutrient.Value !== 'undefined' && nutrient.Value !== null && nutrient.Value) {
@@ -79,7 +79,7 @@
 						var newNutrient = 0;
 					}
 					nutrientsList += `${nutrient.Name} ${newNutrient}`;
-					nutrientsList += recipe.Nutritents.length === (i+1) ? '.' : ', ';
+					nutrientsList += recipe.Nutrients.length === (i+1) ? '.' : ', ';
 				}
 			});
 			document.getElementById("nutrition-list").innerHTML = nutrientsList;

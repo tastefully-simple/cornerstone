@@ -487,7 +487,9 @@
         "zoy_dev_mode": false,
         "recipe_search_status": "1",
         "recipe_search_category_shop_filter_id": "25",
-        "recipe_search_category_recipe_filter_id": "271"
+        "recipe_search_category_recipe_filter_id": "271",
+        "google_tagmanager_status": "1",
+        "google_tagmanager_code": "GTM-PD7HGB2"
       }
     }
   ]

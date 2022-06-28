@@ -76,6 +76,7 @@
     "productpage_related_products_count": 10,
     "productpage_similar_by_views_count": 10,
     "categorypage_products_per_page": 15,
+    "google_tagmanager_status": "2",
     "categorypage_product_card_margin": "5%",
     "shop_by_price_visibility": true,
     "brandpage_products_per_page": 12,
@@ -386,7 +387,8 @@
       },
       "images": {},
       "settings": {
-        "ts_api_environment": "qa1"
+        "ts_api_environment": "qa1",
+        "google_tagmanager_status": "2"
       }
     },
     {
@@ -410,8 +412,9 @@
       "images": {},
       "settings": {
         "ts_api_environment": "qa1",
-        "ts_affiliation_timer": 15,
-        "zoy_dev_mode": false
+        "ts_affiliation_timer": 60,
+        "zoy_dev_mode": false,
+        "google_tagmanager_status": "2"
       }
     },
     {
@@ -437,8 +440,10 @@
         "ts_current_store_base_url": "https://tastefully-simple-sandbox-1.mybigcommerce.com",
         "ts_shop_more_url": "/shop/",
         "ts_join_store_url": "https://tastefully-simple-inc-sandbox-5.mybigcommerce.com",
-        "ts_affiliation_timer": 15,
-        "zoy_dev_mode": false
+        "ts_affiliation_timer": 60,
+        "zoy_dev_mode": false,
+        "google_tagmanager_status": "1",
+        "google_tagmanager_code": "GTM-PD7HGB2"
       }
     },
     {
@@ -466,7 +471,12 @@
         "ts_join_store_url": "https://join.tastefullysimple.com",
         "ts_affiliation_timer": 1440,
         "ts_debug_mode": false,
-        "zoy_dev_mode": false
+        "zoy_dev_mode": false,
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "25",
+        "recipe_search_category_recipe_filter_id": "271",
+        "google_tagmanager_status": "1",
+        "google_tagmanager_code": "GTM-PD7HGB2"
       }
     }
   ]

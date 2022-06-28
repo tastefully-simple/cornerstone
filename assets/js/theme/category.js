@@ -21,9 +21,9 @@ export default class Category extends CatalogPage {
         });
 
         // Load all filters and hide the "show more" links
-        $('#facetedSearch ul[data-has-more-results="true"]').each(() => {
-            const facet = $(this).attr('data-facet');
-            self.getMoreFacetResults(facet, this);
+        $('#facetedSearch ul[data-has-more-results="true"]').each((index, element) => {
+            const facet = $(element).attr('data-facet');
+            self.getMoreFacetResults(facet, element);
         });
 
         compareProducts(this.context.urls);

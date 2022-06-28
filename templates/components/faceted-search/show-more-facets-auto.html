@@ -1,0 +1,28 @@
+{{#each facets}}
+    {{#if facet '===' ../all_facets}}
+        {{#each items}}
+            <li class="navList-item">
+                <a
+                href="{{url}}"
+                class="navList-action navList-action--checkbox{{#if selected}} is-active{{/if}}"
+                rel="nofollow"
+                data-id="{{id}}"
+                data-faceted-search-facet
+                >
+                    {{{title}}}
+                    {{#if ../show_product_counts}}
+                        {{#if count}}
+                            <span>({{count}})</span>
+                        {{/if}}
+                    {{/if}}
+
+                    <span class="navList-action-close" aria-hidden="true">
+                            <svg class="icon">
+                                <use xlink:href="#icon-close"/>
+                            </svg>
+                        </span>
+                </a>
+            </li>
+        {{/each}}
+    {{/if}}
+{{/each}}

@@ -1,8 +1,9 @@
-import { hooks } from '@bigcommerce/stencil-utils';
+import { api, hooks } from '@bigcommerce/stencil-utils';
 import CatalogPage from './catalog';
 import compareProducts from './global/compare-products';
 import FacetedSearch from './common/faceted-search';
 import { createTranslationDictionary } from '../theme/common/utils/translations-utils';
+import urlUtils from './common/utils/url-utils';
 
 export default class Category extends CatalogPage {
     constructor(context) {
@@ -11,11 +12,18 @@ export default class Category extends CatalogPage {
     }
 
     onReady() {
+        const self = this;
         $('[data-button-type="add-cart"]').on('click', (e) => {
             $(e.currentTarget).next().attr({
                 role: 'status',
                 'aria-live': 'polite',
             });
+        });
+
+        // Load all filters and hide the "show more" links
+        $('#facetedSearch ul[data-has-more-results="true"]').each(() => {
+            const facet = $(this).attr('data-facet');
+            self.getMoreFacetResults(facet, this);
         });
 
         compareProducts(this.context.urls);
@@ -35,6 +43,24 @@ export default class Category extends CatalogPage {
         });
 
         this.ariaNotifyNoProducts();
+    }
+
+    getMoreFacetResults(facet, ulResult) {
+        const facetUrl = urlUtils.getUrl();
+
+        api.getPage(facetUrl, {
+            template: 'category/show-more-auto',
+            params: {
+                list_all: facet,
+            },
+        }, (err, response) => {
+            if (err) {
+                throw new Error(err);
+            }
+            $(ulResult).html(response);
+        });
+
+        return true;
     }
 
     ariaNotifyNoProducts() {

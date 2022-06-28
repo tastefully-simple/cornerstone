@@ -123,3 +123,31 @@
         font-weight: bold;
     }
 }
+
+#facetedSearch {
+    a.toggleLink {
+        display: none;
+    }
+    .navList {
+        height: 180px;
+        display: block;
+        overflow-y: scroll;
+    }
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: $white;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #f2f2f2;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}

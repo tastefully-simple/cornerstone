@@ -289,3 +289,46 @@
         display: inline-block !important;
     }
 }
+
+@media print {
+    .partybar {
+        display: none;
+    }
+    .header, .footer, #consent-manager-update-banner, #consent-manager,
+    .product-options, .productView-rating {
+        display: none;
+    }
+
+    .body {
+        margin-top: -100px;
+    }
+
+    .productView-title {
+        text-align: left !important;
+        font-size: 50pt;
+        font-weight: bold;
+        zoom: 1.5;
+    }
+
+    .recipe-top {
+        zoom: 0.5;
+    }
+    .quick-info {
+        position: absolute;
+        top: 200px;
+        zoom: 0.7;
+    }
+
+    .productView-description {
+        text-align: left !important;
+        zoom: 0.8;
+    }
+
+    .info-title {
+        text-align: left !important;
+    }
+
+    #recipe-page .recipe-main .info {
+        width: 100%;
+    }
+}

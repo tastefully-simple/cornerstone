@@ -7,15 +7,7 @@
 					if (i.Name) {
 						var li = document.createElement("li");
 						const ul = document.getElementById("ingredients-list")
-                        if (i.IsRecipe) {
-                            var a = document.createElement("a");
-                            a.setAttribute("class", "ingredients-link");
-                            a.innerHTML = `${i.IngredientDisplay}`;
-							a.setAttribute("href", `${i.RecipeURL}`);
-                            li.append(a);
-                        } else {
-                            li.innerHTML = `${i.Display}`;
-                        }
+						li.innerHTML = `${i.Display}`;
                         ul.append(li);
 					}
 				});

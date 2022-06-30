@@ -295,13 +295,21 @@
         display: none;
     }
 
+    nav {
+        display: none;
+    }
+
+    .productView-thumbnails {
+        max-width: 70%;
+        float: right;
+    }
     .body {
         margin-top: -100px;
     }
 
     .productView-title {
         text-align: left !important;
-        font-size: 50pt;
+        font-size: 40px;
         font-weight: bold;
         zoom: 1.5;
     }
@@ -311,8 +319,10 @@
     }
     .quick-info {
         position: absolute;
-        top: 200px;
+        top: 15%;
         zoom: 0.7;
+        width: 60%;
+        border: 0 !important;
     }
 
     .productView-description {

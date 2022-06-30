@@ -1,4 +1,4 @@
-import { hooks } from '@bigcommerce/stencil-utils';
+import { api, hooks } from '@bigcommerce/stencil-utils';
 import CatalogPage from './catalog';
 import FacetedSearch from './common/faceted-search';
 import compareProducts from './global/compare-products';
@@ -165,6 +165,19 @@ export default class Search extends CatalogPage {
     }
 
     onReady() {
+        const currentCategory = urlParams.get('category');
+        const recipesCategoryId = this.context.themeSettings.recipe_search_category_recipe_filter_id;
+        const self = this;
+
+        if (typeof currentCategory !== 'undefined' && currentCategory === recipesCategoryId) {
+            // We are searching for recipes, therefore the sidebar is being displayed.
+            // Load all filters and hide the "show more" links
+            $('#facetedSearch ul[data-has-more-results="true"]').each((index, element) => {
+                const facet = $(element).attr('data-facet');
+                self.getMoreFacetResults(facet, element);
+            });
+        }
+
         compareProducts(this.context.urls);
         this.setupSortByQuerySearchParam();
 
@@ -243,6 +256,24 @@ export default class Search extends CatalogPage {
         setTimeout(() => {
             $('[data-search-aria-message]').removeClass('u-hidden');
         }, 100);
+    }
+
+    getMoreFacetResults(facet, ulResult) {
+        const facetUrl = urlUtils.getUrl();
+
+        api.getPage(facetUrl, {
+            template: 'search/show-more-auto',
+            params: {
+                list_all: facet,
+            },
+        }, (err, response) => {
+            if (err) {
+                throw new Error(err);
+            }
+            $(ulResult).html(response);
+        });
+
+        return true;
     }
 
     loadTreeNodes(node, cb) {
@@ -390,10 +421,10 @@ export default class Search extends CatalogPage {
          * for the current query and set the results together with the results page link
          */
         if (typeof currentCategory !== 'undefined' && currentCategory === recipesCategoryId) {
-            this.getResultsCount('Products', productsCategoryId, this.context.themeSettings.categorypage_products_per_page);
+            this.getResultsCount('products', productsCategoryId, this.context.themeSettings.categorypage_products_per_page);
         } else {
             // We are displaying recipes in the search results. Count how many products can be found for the same query
-            this.getResultsCount('Recipes', recipesCategoryId, this.context.themeSettings.recipespage_products_per_page);
+            this.getResultsCount('recipes', recipesCategoryId, this.context.themeSettings.recipespage_products_per_page);
         }
     }
     getResultsCount(type, categoryId, limitPage) {

@@ -165,6 +165,7 @@ export default class Search extends CatalogPage {
     }
 
     onReady() {
+        const urlParams = new URLSearchParams(window.location.search);
         const currentCategory = urlParams.get('category');
         const recipesCategoryId = this.context.themeSettings.recipe_search_category_recipe_filter_id;
         const self = this;

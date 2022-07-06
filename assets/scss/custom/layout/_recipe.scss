@@ -120,7 +120,6 @@
                     color: $burgundy;
                     display: flex;
                     font-size: 16px;
-                    font-weight: 900;
                     text-decoration: none;
                     /* Hide the icon entirely for now
                     &::after {
@@ -130,9 +129,13 @@
                     }
                     */
                 }
+                a.product-link {
+                    font-weight: 900;
+                }
 
                 a.recipe-link {
                     display: inline-block;
+                    font-style: italic;
                 }
             }
             #directions {

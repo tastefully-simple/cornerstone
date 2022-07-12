@@ -332,7 +332,6 @@ export default class Search extends CatalogPage {
         const $contentListingContainer = $('#search-results-content');
         const $facetedSearchContainer = $('#faceted-search-container');
         const $searchHeading = $('#search-results-heading');
-        const $searchCount = $('#search-results-product-count');
         const $contentCount = $('#search-results-content-count');
         const productsPerPage = this.context.searchProductsPerPage;
         const requestOptions = {
@@ -363,7 +362,6 @@ export default class Search extends CatalogPage {
             } else {
                 $productListingContainer.html(content.productListing);
                 $facetedSearchContainer.html(content.sidebar);
-                $searchCount.html(content.productCount);
                 this.showProducts(false);
             }
 

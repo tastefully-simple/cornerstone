@@ -88,7 +88,9 @@ export default class Category extends CatalogPage {
         let productsPerPage;
         let productListingComponent;
 
-        if (window.location.pathname === '/recipes/') {
+        const pathName = window.location.pathname;
+
+        if (pathName.search('/recipes/') !== -1) {
             productsPerPage = this.context.themeSettings.recipespage_products_per_page;
             productListingComponent = 'recipes/product-listing';
         } else {

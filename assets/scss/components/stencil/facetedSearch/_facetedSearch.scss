@@ -125,9 +125,12 @@
 }
 
 #facetedSearch {
-    a.toggleLink {
-        display: none;
+    .accordion-content {
+        a.toggleLink {
+            display: none;
+        }
     }
+
     .navList {
         height: 180px;
         display: block;

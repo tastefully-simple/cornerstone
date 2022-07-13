@@ -53,24 +53,7 @@
 			var nutrientsList = '';
 			recipe.Nutrients.forEach((nutrient, i) => {
 				if (nutrient.Name) {
-					var nutrientValue;
-					if (typeof nutrient.Value !== 'undefined' && nutrient.Value !== null && nutrient.Value) {
-						nutrientValue = nutrient.Value;
-						var nutrientAmount = nutrientValue.toString().replace(',', '.');
-						var nutrientUnit = nutrientValue.toString().replace(/[0-9.]/g, '');
-						nutrientAmount = nutrientAmount.replace(/[^0-9$.,]/g, '');
-
-						if (nutrient.Name == '<b>Total Fat:&nbsp;</b>' || nutrient.Name == '<b>Sat. Fat:&nbsp;</b>') {
-							// Round to nearest half
-							nutrientAmount = nutrientAmount == 0 ? 0 : (Math.round(parseFloat(nutrientAmount) * 2) / 2).toFixed(1);
-						} else {
-							nutrientAmount = Math.round(nutrientAmount);
-						}
-						var newNutrient = `${nutrientAmount}${nutrientUnit}`;
-					} else {
-						var newNutrient = 0;
-					}
-					nutrientsList += `${nutrient.Name} ${newNutrient}`;
+					nutrientsList += `${nutrient.Display}`;
 					nutrientsList += recipe.Nutrients.length === (i+1) ? '.' : ', ';
 				}
 			});

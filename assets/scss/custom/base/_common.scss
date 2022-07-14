@@ -75,7 +75,6 @@
 }
 .link-copied-text.copied {
     opacity: 1;
-    display: block !important;
 }
 
 /* Tooltips */
@@ -121,7 +120,7 @@
         .tst-accordion-item {
             transition:margin 0.4s ease-out;
             margin-bottom:1rem;
-            &.open {
+            &.open { 
                 transition:margin 0.4s ease;
                 &:not(:last-of-type) {
                     margin-bottom:5rem;

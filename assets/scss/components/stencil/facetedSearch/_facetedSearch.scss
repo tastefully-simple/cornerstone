@@ -123,3 +123,44 @@
         font-weight: bold;
     }
 }
+
+#facetedSearch {
+    .accordion-content {
+        a.toggleLink {
+            display: none;
+        }
+    }
+
+    .navList {
+        height: 180px;
+        display: block;
+    }
+    .accordion-content {
+        overflow-y: scroll;
+    }
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: $white;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: $aluminum;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}
+
+#recipes-search-results-count, #recipes-search-results-count a, #products-search-results-count, #products-search-results-count a {
+    font-size: 20px;
+}
+
+#search-results-content-count:first-letter, #search-results-product-count:first-letter {
+    text-transform: uppercase !important;
+}

@@ -113,7 +113,6 @@
             }
             #ingredients {
                 ul {
-                    column-count: 2;
                     list-style-type: none;
                 }
                 a {
@@ -121,7 +120,6 @@
                     color: $burgundy;
                     display: flex;
                     font-size: 16px;
-                    font-weight: 900;
                     text-decoration: none;
                     /* Hide the icon entirely for now
                     &::after {
@@ -131,12 +129,26 @@
                     }
                     */
                 }
+                a.product-link {
+                    font-weight: 900;
+                }
+
+                a.recipe-link {
+                    display: inline-block;
+                    font-style: italic;
+                }
             }
             #directions {
+                a.ingredients-link {
+                    align-items: center;
+                    color: $burgundy;
+                    font-size: 16px;
+                    font-weight: 900;
+                    text-decoration: none;
+                }
                 .directions-list {
                     .direction-item {
                         b {
-                            color: $burgundy;
                             font-weight: 900;
                         }
                     }
@@ -273,5 +285,63 @@
                 margin-top: 1rem;
             }
         }
+    }
+}
+#ingredients {
+    .product-link {
+        display: inline-block !important;
+    }
+}
+
+@media print {
+    .partybar {
+        display: none;
+    }
+    .header, .footer, #consent-manager-update-banner, #consent-manager,
+    .product-options, .productView-rating {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .productView-thumbnails {
+        max-width: 70%;
+        float: right;
+    }
+    .body {
+        margin-top: -100px;
+    }
+
+    .productView-title {
+        text-align: left !important;
+        font-size: 40px;
+        font-weight: bold;
+        zoom: 1.5;
+    }
+
+    .recipe-top {
+        zoom: 0.5;
+    }
+    .quick-info {
+        position: absolute;
+        top: 15%;
+        zoom: 0.7;
+        width: 60%;
+        border: 0 !important;
+    }
+
+    .productView-description {
+        text-align: left !important;
+        zoom: 0.8;
+    }
+
+    .info-title {
+        text-align: left !important;
+    }
+
+    #recipe-page .recipe-main .info {
+        width: 100%;
     }
 }

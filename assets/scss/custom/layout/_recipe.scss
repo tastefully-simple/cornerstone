@@ -293,21 +293,12 @@
     }
 }
 
-#cost-per-saving {
-    display: none;
-    text-align: center;
-    span {
-        color: $COLOR_SECONDARY_200;
-        font-weight: 900;
-    }
-}
-
 @media print {
     .partybar {
         display: none;
     }
     .header, .footer, #consent-manager-update-banner, #consent-manager,
-    .addthis_toolbox, .productView-rating {
+    .product-options, .productView-rating {
         display: none;
     }
 

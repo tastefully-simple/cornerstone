@@ -1546,6 +1546,46 @@
       },
       {
         "type": "select",
+        "label": "i18n.RecipesPage",
+        "id": "recipespage_products_per_page",
+        "force_reload": true,
+        "options": [
+          {
+            "value": 6,
+            "label": "6"
+          },
+          {
+            "value": 8,
+            "label": "8"
+          },
+          {
+            "value": 9,
+            "label": "9"
+          },
+          {
+            "value": 12,
+            "label": "12"
+          },
+          {
+            "value": 15,
+            "label": "15"
+          },
+          {
+            "value": 16,
+            "label": "16"
+          },
+          {
+            "value": 18,
+            "label": "18"
+          },
+          {
+            "value": 20,
+            "label": "20"
+          }
+        ]
+      },
+      {
+        "type": "select",
         "label": "i18n.BrandPage",
         "id": "brandpage_products_per_page",
         "force_reload": true,
@@ -1906,6 +1946,37 @@
             "label": "i18n.SpecifyDimensions"
           }
         ]
+      },
+      {
+        "type": "heading",
+        "content": "i18n.RecipeSearchHeading"
+      },
+      {
+        "type": "select",
+        "label": "i18n.RecipeSearchStatus",
+        "id": "recipe_search_status",
+        "options": [
+          {
+            "value": "1",
+            "label": "i18n.RecipeSearchStatusEnabled"
+          },
+          {
+            "value": "2",
+            "label": "i18n.RecipeSearchStatusDisabled"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "label": "i18n.RecipeSearchCategoryShopFilterId",
+        "force_reload": true,
+        "id": "recipe_search_category_shop_filter_id"
+      },
+      {
+        "type": "text",
+        "label": "i18n.RecipeSearchCategoryRecipeFilterId",
+        "force_reload": true,
+        "id": "recipe_search_category_recipe_filter_id"
       }
     ]
   },

@@ -1293,6 +1293,13 @@
     "uk": "Сторінка категорії",
     "zh": "分类页"
   },
+  "i18n.RecipesPage": {
+    "default": "Recipes page",
+    "fr": "Page des Recettes",
+    "it": "Pagina Recetas",
+    "uk": "Рецепти категорії",
+    "zh": "分类页"
+  },
   "i18n.BrandPage": {
     "default": "Brand page",
     "fr": "Page de la marque",
@@ -1433,13 +1440,56 @@
     "uk": "Зображення марки в поданні галереї",
     "zh": "在图库查看品牌图片"
   },
-  "i18n.ProductSwatchImages": {
+  "i18n.RecipeSearchHeading": {
+    "default": "Recipe Search",
+    "fr": "Recherche de recette",
+    "it": "Ricerca ricetta",
+    "uk": "Пошук рецептів",
+    "zh": "食谱搜索"
+  },
+  "i18n.RecipeSearchStatus": {
+    "default": "Status",
+    "fr": "Statut",
+    "it": "Stato",
+    "uk": "Статус",
+    "zh": "地位"
+  },
+  "i18n.RecipeSearchStatusEnabled": {
+    "default": "Enabled",
+    "fr": "Activé",
+    "it": "Abilitato",
+    "uk": "Увімкнен",
+    "zh": "启用"
+  },
+  "i18n.RecipeSearchStatusDisabled": {
+    "default": "Disabled",
+    "fr": "Désactivé",
+    "it": "Disabilitato",
+    "uk": "Вимкнено",
+    "zh": "已禁用"
+  },
+  "i18n.RecipeSearchCategoryShopFilterId": {
+    "default": "Shop Category Filter ID",
+    "fr": "ID de filtre de catégorie Shop",
+    "it": "ID filtro categoria Shop",
+    "uk": "Ідентифікатор фільтра категорії Shop",
+    "zh": "商店类别过滤器 ID"
+  },
+  "i18n.RecipeSearchCategoryRecipeFilterId": {
+    "default": "Recipe Category Filter ID",
+    "fr": "ID de filtre de catégorie de Recette",
+    "it": "ID filtro categoria ricetta",
+    "uk": "Ідентифікатор фільтра категорії рецепта",
+    "zh": "配方类别过滤器 ID"
+  },
+    "i18n.ProductSwatchImages": {
     "default": "Product swatch images",
     "fr": "Images d’échantillons de produits",
     "it": "Immagini campioni di prodotto",
     "uk": "Зображення продукту",
     "zh": "产品切换图片"
   },
+
   "i18n.Standard": {
     "default": "Standard",
     "fr": "Standard",

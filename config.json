@@ -53,7 +53,7 @@
     "ts_help_email": "help@tastefullysimple.com",
     "ts_join_store_url": "https://tastefully-simple-inc-sandbox-4.mybigcommerce.com",
     "ts_consultant_id": "0160785",
-    "ts_affiliation_timer": 15,
+    "ts_affiliation_timer": 60,
     "ts_debug_mode": true,
     "zoy_dev_mode": true,
     "hide_breadcrumbs": false,
@@ -75,7 +75,8 @@
     "productpage_reviews_count": 10,
     "productpage_related_products_count": 10,
     "productpage_similar_by_views_count": 10,
-    "categorypage_products_per_page": 15,
+    "categorypage_products_per_page": 16,
+    "recipespage_products_per_page": 15,
     "google_tagmanager_status": "2",
     "categorypage_product_card_margin": "5%",
     "shop_by_price_visibility": true,
@@ -347,7 +348,10 @@
       "mastercard",
       "visa"
     ],
-    "lazyload_mode": "lazyload+lqip"
+    "lazyload_mode": "lazyload+lqip",
+    "recipe_search_status": "1",
+    "recipe_search_category_shop_filter_id": "25",
+    "recipe_search_category_recipe_filter_id": "271"
   },
   "read_only_files": [
     "/assets/scss/components/citadel",
@@ -388,7 +392,10 @@
       "images": {},
       "settings": {
         "ts_api_environment": "qa1",
-        "google_tagmanager_status": "2"
+        "google_tagmanager_status": "2",
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "25",
+        "recipe_search_category_recipe_filter_id": "271"
       }
     },
     {
@@ -414,7 +421,10 @@
         "ts_api_environment": "qa1",
         "ts_affiliation_timer": 60,
         "zoy_dev_mode": false,
-        "google_tagmanager_status": "2"
+        "google_tagmanager_status": "2",
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "25",
+        "recipe_search_category_recipe_filter_id": "271"
       }
     },
     {
@@ -443,7 +453,10 @@
         "ts_affiliation_timer": 60,
         "zoy_dev_mode": false,
         "google_tagmanager_status": "1",
-        "google_tagmanager_code": "GTM-PD7HGB2"
+        "google_tagmanager_code": "GTM-PD7HGB2",
+        "recipe_search_status": "1",
+        "recipe_search_category_shop_filter_id": "23",
+        "recipe_search_category_recipe_filter_id": "247"
       }
     },
     {
@@ -474,7 +487,7 @@
         "zoy_dev_mode": false,
         "recipe_search_status": "1",
         "recipe_search_category_shop_filter_id": "25",
-        "recipe_search_category_recipe_filter_id": "271",
+        "recipe_search_category_recipe_filter_id": "573",
         "google_tagmanager_status": "1",
         "google_tagmanager_code": "GTM-PD7HGB2"
       }

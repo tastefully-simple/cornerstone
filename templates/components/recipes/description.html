@@ -48,7 +48,7 @@
 	</div>
 	<div id="nutrition">
 		<h2 class="info-title">Nutrition</h2>
-		<p id="nutrition-list"></p>
+		<p id="nutrition-list"><b>Per serving:</b> <i>(does not include optional toppings)</i> </p>
 		<script>
 			var nutrientsList = '';
 			recipe.Nutrients.forEach((nutrient, i) => {
@@ -57,7 +57,7 @@
 					nutrientsList += recipe.Nutrients.length === (i+1) ? '.' : ', ';
 				}
 			});
-			document.getElementById("nutrition-list").innerHTML = nutrientsList;
+			document.getElementById("nutrition-list").innerHTML += nutrientsList;
 		</script>
 		<br>
 	</div>

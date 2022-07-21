@@ -77,6 +77,16 @@
                 {{#unless is_ajax}}
                     {{> components/common/share}}
                 {{/unless}}
+                <p id="cost-per-saving">Cost per Serving: <span></span></p>
+                <script>
+                    if (typeof recipe.Recipe.CostPerServing !== 'undefined') {
+                        var span = document.createElement('span');
+                        span.innerHTML = recipe.Recipe.CostPerServing;
+                        var costPerSaving = document.getElementById('cost-per-saving');
+                        costPerSaving.appendChild(span);
+                        costPerSaving.style.display = 'block';
+                    }
+                </script>
             </section>
         </div>
 

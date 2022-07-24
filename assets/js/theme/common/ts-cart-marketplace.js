@@ -9,6 +9,7 @@ export default class TsCartMarketplace {
 
         this.bindCheckoutButtonClickEvent();
         this.initListeners();
+        this.validateCart();
     }
 
     initListeners() {
@@ -21,27 +22,32 @@ export default class TsCartMarketplace {
 
     bindCheckoutButtonClickEvent() {
         $('#page-wrapper').on('click', '.cart-actions .button--primary', (event) => {
+            const that = this;
             if (!$(this.checkoutButton).attr('disabled')) {
                 event.preventDefault();
-                utils.api.cart.getCart({}, (err, response) => {
-                    const products = response.lineItems.physicalItems;
-                    let marketplaceProducts = 0;
-                    // Count how many items have the brand "marketplace_brand"
-                    products.forEach((product) => {
-                        if (product.brand === this.themeSettings.marketplace_brand) {
-                            marketplaceProducts++;
-                        }
-                    });
+                that.validateCart(this);
+            }
+        });
+    }
 
-                    // if this is a mixed cart, prevent the checkout and display a popup
-                    if (products.length !== marketplaceProducts) {
-                        this.modal = defaultModal();
-                        this.modal.open({ size: 'small' });
-                        this.modal.updateContent($('#marketplace-popup-container').html());
-                    } else {
-                        this.submit();
-                    }
-                });
+    validateCart(checkoutButton = false) {
+        utils.api.cart.getCart({}, (err, response) => {
+            const products = response.lineItems.physicalItems;
+            let marketplaceProducts = 0;
+            // Count how many items have the brand "marketplace_brand"
+            products.forEach((product) => {
+                if (product.brand === this.themeSettings.marketplace_brand) {
+                    marketplaceProducts++;
+                }
+            });
+
+            // if this is a mixed cart, prevent the checkout and display a popup
+            if (products.length !== marketplaceProducts) {
+                this.modal = defaultModal();
+                this.modal.open({ size: 'small' });
+                this.modal.updateContent($('#marketplace-popup-container').html());
+            } else if (checkoutButton) {
+                checkoutButton.submit();
             }
         });
     }

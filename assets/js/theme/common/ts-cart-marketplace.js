@@ -25,12 +25,12 @@ export default class TsCartMarketplace {
             const that = this;
             if (!$(this.checkoutButton).attr('disabled')) {
                 event.preventDefault();
-                that.validateCart(this);
+                that.validateCart(true);
             }
         });
     }
 
-    validateCart(checkoutButton = false) {
+    validateCart(redirect = false) {
         utils.api.cart.getCart({}, (err, response) => {
             const products = response.lineItems.physicalItems;
             let marketplaceProducts = 0;
@@ -42,12 +42,12 @@ export default class TsCartMarketplace {
             });
 
             // if this is a mixed cart, prevent the checkout and display a popup
-            if (products.length !== marketplaceProducts) {
+            if (marketplaceProducts > 0 && products.length !== marketplaceProducts) {
                 this.modal = defaultModal();
                 this.modal.open({ size: 'small' });
                 this.modal.updateContent($('#marketplace-popup-container').html());
-            } else if (checkoutButton) {
-                checkoutButton.submit();
+            } else if (redirect) {
+                window.location = '/checkout';
             }
         });
     }

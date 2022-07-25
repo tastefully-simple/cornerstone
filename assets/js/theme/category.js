@@ -46,7 +46,11 @@ export default class Category extends CatalogPage {
     }
 
     getMoreFacetResults(facet, ulResult) {
-        const facetUrl = urlUtils.getUrl();
+        let facetUrl = urlUtils.getUrl();
+        if (facetUrl === '/recipes/') {
+            const recipesPerPage = this.context.themeSettings.recipespage_products_per_page;
+            facetUrl = `/recipes/?limit=${recipesPerPage}`;
+        }
 
         api.getPage(facetUrl, {
             template: 'category/show-more-auto',
@@ -93,6 +97,40 @@ export default class Category extends CatalogPage {
         if (pathName.search('/recipes/') !== -1) {
             productsPerPage = this.context.themeSettings.recipespage_products_per_page;
             productListingComponent = 'recipes/product-listing';
+
+            const countTotalRecipes = $('.productGrid li').length;
+
+            if (countTotalRecipes > productsPerPage) {
+                /**
+                 * Remove last recipe card when no limit is set in the query string
+                 */
+                $('.productGrid li:last-child').remove();
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentRecipeLimit = urlParams.get('limit');
+
+            // If no limit is set on the current URL, add it to all:
+            if (currentRecipeLimit !== productsPerPage) {
+                // 1. Pagination Links
+                $('ul.pagination-list li').each((index, element) => {
+                    $(element).children('a')[0].href += `&limit=${productsPerPage}`;
+                });
+
+                // 2. Subcategories and filters
+                $('#faceted-search-container .sidebarBlock ul.navList').each((indexNavlist, navlist) => {
+                    $(navlist).children('li').each((index, element) => {
+                        $(element).children('a')[0].href += `?limit=${productsPerPage}`;
+                    });
+                });
+
+                // 3. Filters
+                $('#faceted-search-container .accordion-block ul.navList').each((indexNavlist, navlist) => {
+                    $(navlist).children('li').each((index, element) => {
+                        $(element).children('a')[0].href += `&limit=${productsPerPage}`;
+                    });
+                });
+            }
         } else {
             productsPerPage = this.context.categoryProductsPerPage;
             productListingComponent = 'category/product-listing';

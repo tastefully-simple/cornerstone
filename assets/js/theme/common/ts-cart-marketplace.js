@@ -1,6 +1,5 @@
 import utils from '@bigcommerce/stencil-utils';
 import { defaultModal } from '../global/modal';
-import $ from 'jquery';
 
 export default class TsCartMarketplace {
     constructor(themeSettings) {

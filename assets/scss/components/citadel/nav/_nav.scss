@@ -23,7 +23,9 @@
 .navList-action.is-active {
     font-weight: $navList-action-fontWeight--active;
 }
-
+.navList-action.is-selected {
+    font-weight: normal !important;
+}
 
 // NavList action checkbox
 // -----------------------------------------------------------------------------

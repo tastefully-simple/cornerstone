@@ -2,13 +2,23 @@
     {{#if facet '===' ../all_facets}}
         {{#each items}}
             <li class="navList-item">
+                {{#if ../../all_facets '===' 'category'}}
                 <a
                 href="{{url}}"
-                class="navList-action navList-action--checkbox{{#if selected}} is-active{{/if}}"
+                class="navList-action navList-action--checkbox {{#if selected}} is-selected{{/if}}"
                 rel="nofollow"
                 data-id="{{id}}"
                 data-faceted-search-facet
                 >
+                {{else}}
+                <a
+                        href="{{url}}"
+                        class="navList-action navList-action--checkbox {{#if selected}} is-active{{/if}}"
+                        rel="nofollow"
+                        data-id="{{id}}"
+                        data-faceted-search-facet
+                >
+                {{/if}}
                     {{{title}}}
                     {{#if ../show_product_counts}}
                         {{#if count}}
@@ -22,6 +32,9 @@
                             </svg>
                         </span>
                 </a>
+                {{#if children}}
+                    {{> components/faceted-search/facets/hierarchy-children-auto children}}
+                {{/if}}
             </li>
         {{/each}}
     {{/if}}

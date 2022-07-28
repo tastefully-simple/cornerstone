@@ -1,0 +1,18 @@
+{{!-- Marketplace Popup --}}
+<div id="marketplace-popup-container" style="display: none">
+    <div class="modal-general-alternate find-a-consultant" id="marketplace-popup">
+        <div class="genmodal-header">
+            <h2>{{ lang 'ts_cart_marketplace.popup.title' }}</h2>
+            <button type="button" class="modal-close" aria-label="Close" role="button">
+                <span aria-hidden="true" class="close-modal-alternate"></span>
+            </button>
+        </div>
+        <div class="genmodal-body marketplace-modal-body">
+            <p class="party-palooza-header"><img src="{{cdn 'assets/img/party_palooza_header.png'}}" alt="Party Palooza Header"/></p>
+            <p>{{ lang 'ts_cart_marketplace.popup.description' }}</p>
+        </div>
+        <div class="genmodal-footer marketplace-modal-footer">
+            <button class="button button--primary marketplac-modal-cancel-btn" type="button">{{ lang 'ts_cart_marketplace.popup.button_label' }}</button>
+        </div>
+    </div>
+</div>

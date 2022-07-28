@@ -351,7 +351,8 @@
     "lazyload_mode": "lazyload+lqip",
     "recipe_search_status": "1",
     "recipe_search_category_shop_filter_id": "25",
-    "recipe_search_category_recipe_filter_id": "271"
+    "recipe_search_category_recipe_filter_id": "271",
+    "marketplace_brand": "Party Palooza"
   },
   "read_only_files": [
     "/assets/scss/components/citadel",
@@ -395,7 +396,8 @@
         "google_tagmanager_status": "2",
         "recipe_search_status": "1",
         "recipe_search_category_shop_filter_id": "25",
-        "recipe_search_category_recipe_filter_id": "271"
+        "recipe_search_category_recipe_filter_id": "271",
+        "marketplace_brand": "Party Palooza"
       }
     },
     {
@@ -424,7 +426,8 @@
         "google_tagmanager_status": "2",
         "recipe_search_status": "1",
         "recipe_search_category_shop_filter_id": "25",
-        "recipe_search_category_recipe_filter_id": "271"
+        "recipe_search_category_recipe_filter_id": "271",
+        "marketplace_brand": "Party Palooza"
       }
     },
     {
@@ -456,7 +459,8 @@
         "google_tagmanager_code": "GTM-PD7HGB2",
         "recipe_search_status": "1",
         "recipe_search_category_shop_filter_id": "23",
-        "recipe_search_category_recipe_filter_id": "247"
+        "recipe_search_category_recipe_filter_id": "247",
+        "marketplace_brand": "Party Palooza"
       }
     },
     {
@@ -489,7 +493,8 @@
         "recipe_search_category_shop_filter_id": "25",
         "recipe_search_category_recipe_filter_id": "573",
         "google_tagmanager_status": "1",
-        "google_tagmanager_code": "GTM-PD7HGB2"
+        "google_tagmanager_code": "GTM-PD7HGB2",
+        "marketplace_brand": "Party Palooza"
       }
     }
   ]

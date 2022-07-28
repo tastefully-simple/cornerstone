@@ -99,6 +99,23 @@
             }
         }
     }
+
+    #marketplace-popup {
+        p {
+            font-size: 12px;
+        }
+
+        .marketplace-modal-body {
+            background: $white;
+            padding-left: 40px !important;
+            padding-right: 40px !important;
+        }
+
+        .marketplace-modal-footer, .party-palooza-header {
+            text-align: center !important;
+            background-color: $white !important;
+        }
+    }
 }
 
 // Cart Preview (cart icon)

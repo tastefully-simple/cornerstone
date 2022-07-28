@@ -48,16 +48,16 @@
 	</div>
 	<div id="nutrition">
 		<h2 class="info-title">Nutrition</h2>
-		<p id="nutrition-list"></p>
+		<p id="nutrition-list"><b>Per serving:</b>  <span id="nutrition-list-content"></span></p>
 		<script>
-			var nutrientsList = '';
+			var nutrientsList = recipe.Nutrition && recipe.Nutrition.NutritionBasis ? `<i>${recipe.Nutrition.NutritionBasis} </i>` : '';
 			recipe.Nutrients.forEach((nutrient, i) => {
 				if (nutrient.Name) {
 					nutrientsList += `${nutrient.Display}`;
 					nutrientsList += recipe.Nutrients.length === (i+1) ? '.' : ', ';
 				}
 			});
-			document.getElementById("nutrition-list").innerHTML = nutrientsList;
+			document.getElementById("nutrition-list-content").innerHTML = nutrientsList;
 		</script>
 		<br>
 	</div>

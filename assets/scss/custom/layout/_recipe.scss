@@ -7,6 +7,12 @@
 }
 
 #recipe-page {
+    .videoGallery-main {
+        padding-bottom: 56.3%;
+        @include breakpoint("small") {
+            padding-bottom: 48.5%;
+        }
+    }
     .productView {
         width: 100vw;
         margin: 0;

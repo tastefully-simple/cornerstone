@@ -364,16 +364,9 @@ export default class Search extends CatalogPage {
                 $contentCount.html(content.contentCount);
                 this.showContent(false);
             } else {
-                const categorySearch = url.query.category;
-
                 $productListingContainer.html(content.productListing);
                 $facetedSearchContainer.html(content.sidebar);
-                if (recipesCategoryId === categorySearch) {
-                    $recipeSearchCount.html(content.productCount.replace('Products', 'Recipes'));
-                } else {
-                    $searchCount.html(content.productCount);
-                }
-
+                $recipeSearchCount.html(content.productCount.replace('Products', 'Recipes'));
                 this.showProducts(false);
             }
 

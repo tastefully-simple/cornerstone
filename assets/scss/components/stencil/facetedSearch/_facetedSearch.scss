@@ -164,3 +164,18 @@
 #search-results-content-count:first-letter, #search-results-product-count:first-letter {
     text-transform: uppercase !important;
 }
+
+#recipe_search_message {
+    margin-top: 1em;
+    font-family: arial, helvetica, sans-serif;
+    text-align: center;
+    font-size: 22px;
+    display: none;
+    a {
+        font-size: 22px;
+    }
+}
+
+.recipe-search-results-heading .page-heading {
+    margin-bottom: 0;
+}

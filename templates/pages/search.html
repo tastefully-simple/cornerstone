@@ -23,6 +23,19 @@ product_results:
         <div id="search-results-heading">
             {{>components/search/heading}}
         </div>
+        <h3 id="recipe_search_message"></h3>
+        <script>
+            // recipePageMessage can be edited in the Scripts Manager
+            var urlParams = new URLSearchParams(window.location.search);
+            var currentCategoryRecipeSearch = parseInt(urlParams.get('category'));
+            var configCategoryRecipeSearch = parseInt('{{theme_settings.recipe_search_category_recipe_filter_id}}');
+
+            if (currentCategoryRecipeSearch === configCategoryRecipeSearch && typeof recipePageMessage !== 'undefined') {
+                document.getElementById('recipe_search_message').innerHTML = recipePageMessage;
+                document.getElementById('recipe_search_message').style.display = 'block';
+                document.getElementById('search-results-heading').className += 'recipe-search-results-heading';
+            }
+        </script>
     {{/if}}
     <nav class="navBar navBar--sub search-nav">
         <span id="search-tabs-widget-description" class="aria-description--hidden">

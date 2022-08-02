@@ -82,7 +82,7 @@
                                 width:100%;
                                 &>.navPages-action {
                                     display:block;
-                                    left:50%;
+                                    margin-left: 47px;
                                     position:absolute;
                                     border-bottom:3px solid $wan-white;
                                     padding-bottom:0;
@@ -435,6 +435,9 @@
 /* iPhone-specific media queries to deal with webkit's scroll issue on the mobile menu */
 @supports (-webkit-touch-callout: none) {
     @media only screen and (max-width:800px) {
+        .navPages-item-shop + .navPages-item-shop {
+            margin-left: 100px;
+        }
         .navPages-container {
             overflow-y:scroll;
             -webkit-overflow-scrolling:auto;
@@ -454,5 +457,14 @@
                 }
             }
         }
+    }
+}
+
+@media only screen and (max-width:800px) {
+    .navPages-item-shop + .navPages-item-shop {
+        margin-left: 100px;
+    }
+    .navPage-subMenu {
+        margin-top: 50px;
     }
 }

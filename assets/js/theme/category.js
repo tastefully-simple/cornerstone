@@ -95,7 +95,8 @@ export default class Category extends CatalogPage {
         const pathName = window.location.pathname;
 
         if (pathName.search('/recipes/') !== -1) {
-            productsPerPage = this.context.themeSettings.recipespage_products_per_page;
+            // eslint-disable-next-line radix
+            productsPerPage = parseInt(this.context.themeSettings.recipespage_products_per_page);
             productListingComponent = 'recipes/product-listing';
 
             const countTotalRecipes = $('.productGrid li').length;
@@ -108,7 +109,8 @@ export default class Category extends CatalogPage {
             }
 
             const urlParams = new URLSearchParams(window.location.search);
-            const currentRecipeLimit = urlParams.get('limit');
+            // eslint-disable-next-line radix
+            const currentRecipeLimit = urlParams.get('limit') ? parseInt(urlParams.get('limit')) : false;
 
             // If no limit is set on the current URL, add it to all:
             if (currentRecipeLimit !== productsPerPage) {

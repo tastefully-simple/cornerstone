@@ -15,14 +15,8 @@
         <div class="recipe-top-left">
             <section class="productView-details product-data">
                 <div class="productView-product">
-                    <h1 class="productView-title" {{#if schema}}itemprop="name"{{/if}}>{{product.title}}</h1>
-                    <span class="productView-recipe-description" id="recipe_description"></span>
-                    <script>
-                        if (recipe && recipe.Recipe && recipe.Recipe.Description) {
-                            document.getElementById('recipe_description').innerHTML = recipe.Recipe.Description;
-                        }
-                    </script>
-                    <div class="productView-rating"{{#if product.num_reviews '>' 0}}{{#if schema}} itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"{{/if}}{{/if}}>
+                    <h1 class="productView-title">{{product.title}}</h1>
+                    <div class="productView-rating">
                         {{#if settings.show_product_rating}}
                             {{> components/products/ratings rating=product.rating}}
                             <span class="productView-numberReviews">({{product.num_reviews}})</span>

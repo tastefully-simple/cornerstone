@@ -16,6 +16,13 @@
             <section class="productView-details product-data">
                 <div class="productView-product">
                     <h1 class="productView-title">{{product.title}}</h1>
+                    <span class="productView-recipe-description" id="recipe_description"></span>
+                    <script>
+                        if (recipe && recipe.Recipe && recipe.Recipe.Description) {
+                            const recipeDescription = recipe.Recipe.Description;
+                            document.getElementById('recipe_description').innerHTML = recipeDescription.replace(/^(.{250}[^\s]*).*/, "$1");
+                        }
+                    </script>
                     <div class="productView-rating">
                         {{#if settings.show_product_rating}}
                             {{> components/products/ratings rating=product.rating}}

@@ -9,10 +9,7 @@
 #recipe-page {
     .videoGallery-main {
         padding-bottom: 56.3%;
-    }
-
-    @include breakpoint("small") {
-        .videoGallery-main {
+        @media only screen and (max-width:800px)  {
             padding-bottom: 48.5% !important;
         }
     }

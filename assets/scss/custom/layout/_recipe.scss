@@ -9,8 +9,11 @@
 #recipe-page {
     .videoGallery-main {
         padding-bottom: 56.3%;
-        @include breakpoint("small") {
-            padding-bottom: 48.5%;
+    }
+
+    @include breakpoint("small") {
+        .videoGallery-main {
+            padding-bottom: 48.5% !important;
         }
     }
     .productView {
@@ -26,7 +29,7 @@
         margin-right: 10%;
         display: block;
     }
-    
+
     .recipe-top {
         align-items: center;
         display: flex;

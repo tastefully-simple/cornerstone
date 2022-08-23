@@ -319,15 +319,11 @@
 }
 
 @media print {
-    .partybar {
+    .partybar, #product-reviews, nav, iframe {
         display: none;
     }
     .header, .footer, #consent-manager-update-banner, #consent-manager,
     .addthis_toolbox, .productView-rating {
-        display: none;
-    }
-
-    nav {
         display: none;
     }
 
@@ -351,10 +347,18 @@
     }
     .quick-info {
         position: absolute;
-        top: 15%;
+        top: 20%;
         zoom: 0.7;
         width: 60%;
         border: 0 !important;
+        display: block !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        float: left;
+    }
+
+    .quick-info span {
+        padding-right: 20px;
     }
 
     .productView-description {
@@ -368,5 +372,21 @@
 
     #recipe-page .recipe-main .info {
         width: 100%;
+    }
+
+    .productView-recipe-description {
+        padding-top: 20px !important;
+        text-align: left !important;
+        margin-left: 0 !important;
+    }
+    #cost-per-saving {
+        text-align: left !important;
+        width: 100% !important;
+        padding-top: 10px !important;
+    }
+
+    .productView-details {
+        width: 100% !important;
+        text-align: left !important;;
     }
 }

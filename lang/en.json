@@ -485,7 +485,9 @@
       "save": "Save Wish List",
       "delete_alert": "Are you sure you want to delete your Wish List(s)? This action cannot be undone.",
       "create_new": "Create New Wish List",
-      "add_to_default": "Add to My Wish List"
+      "add_to_default": "Add to My Wish List",
+      "copy_link": "Copy Link",
+      "link_copied": "Copied!"
     }
   },
   "page": {

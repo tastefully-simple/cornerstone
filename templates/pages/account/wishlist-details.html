@@ -14,7 +14,8 @@
             <div class="panel share-wishlist">
                 <div class="panel-body">
                     <h5>{{lang 'account.wishlists.share_intro'}}</h5>
-                    <input class="form-input" value="{{settings.base_url}}{{wishlist.share_url}}" readonly>
+                    <input class="form-input" id="wishlist_url" value="{{settings.base_url}}{{wishlist.share_url}}" readonly>
+                    <div class="share-wishlist-button"><a href="javascript:void(0);" onclick="javascript:copyToClipboard('wishlist_url');" class="button button--primary" id="button_copy_wishlist">{{lang 'account.wishlists.copy_link'}}</a> </div>
                 </div>
             </div>
         {{/if}}
@@ -25,7 +26,20 @@
     {{else}}
         {{> components/common/alert/alert-info (lang 'account.wishlists.empty_wishlist')}}
     {{/if}}
+<script>
+    function copyToClipboard(elementId) {
+        var inputWishlistUrl = document.getElementById(elementId);
+        var buttonCopyWishlist = document.getElementById('button_copy_wishlist');
 
+        inputWishlistUrl.select();
+        document.execCommand("copy");
+        buttonCopyWishlist.innerHTML = "{{lang 'account.wishlists.link_copied'}}"
+
+        setTimeout(() => {
+            buttonCopyWishlist.innerHTML = "{{lang 'account.wishlists.copy_link'}}";
+        }, 3000);
+    }
+</script>
 </div>
 {{/partial}}
 {{> layout/base}}

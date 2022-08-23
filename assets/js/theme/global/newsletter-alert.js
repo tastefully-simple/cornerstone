@@ -70,7 +70,7 @@ class NewsletterSignup {
             if (showPromo) {
                 this.successMessage(
                     'Good things are coming your way!',
-                    'Use promo code: JHUP53 for 10% off on your $60 purchase',
+                    'Thank you for subscribing! Check your email inbox for exciting news and offers from Tastefully Simple. Your email address is safe with us. We will never sell or rent your Personal Information.',
                 );
             } else {
                 this.successMessage('Success!', 'You have been subscribed.');

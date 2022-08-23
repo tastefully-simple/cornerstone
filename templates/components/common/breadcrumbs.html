@@ -8,7 +8,17 @@
                        href="{{url}}"
                        {{#if @last}}aria-current="page"{{/if}}
                     >
-                        <span itemprop="name">{{name}}</span>
+                        <span itemprop="name">
+                            {{#if name '===' 'Account Profile'}}
+                                {{lang 'account.nav.settings'}}
+                            {{else if name "==" "Orders"}}
+                                {{lang 'account.nav.orders'}}
+                            {{else if name "==" "Address Book"}}
+                                {{lang 'account.nav.addresses'}}
+                            {{else}}
+                                {{name}}
+                            {{/if}}
+                            </span>
                     </a>
                     <meta itemprop="position" content="{{add @index 1}}" />
                 </li>

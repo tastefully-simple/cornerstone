@@ -16,7 +16,7 @@
                 </div>
             {{/if}}
         {{/or}}
-        <a href="{{url}}" 
+        <a href="{{url}}"
            class="card-figure__link"
            aria-label="{{name}},{{> components/products/product-aria-label}}"
            {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}
@@ -95,7 +95,7 @@
         --}}
         <h3 class="card-title">
             <a aria-label="{{name}},{{> components/products/product-aria-label}}"
-               href="{{url}}" 
+               href="{{url}}"
                {{#if settings.data_tag_enabled}} data-event-type="product-click" {{/if}}>{{name}}</a>
         </h3>
 
@@ -110,7 +110,7 @@
         {{#and rating show_rating}}
             <p class="card-text" data-test-info-type="productRating">
                 <span class="rating--small">
-                    {{> components/products/ratings rating=rating}}
+                    {{> components/products/ratings rating=rating}}<span style="font-size: 11px">({{num_reviews}})</span>
                 </span>
             </p>
         {{/and}}

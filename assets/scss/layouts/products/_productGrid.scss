@@ -162,3 +162,24 @@ $product-card-margin: stencilString('categorypage_product_card_margin');
     }
 }
 
+.category-page-content {
+    padding-top: 50px;
+    .flex-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        .product {
+            padding-top: 0.75em;
+            @media only screen and (max-width: 800px) {
+                margin-right: stencilString('categorypage_product_card_margin') !important;
+                margin-left: stencilString('categorypage_product_card_margin') !important;
+            }
+        }
+    }
+
+    .flex-list-item {
+        display: flex;
+        padding: 0em;
+        width: 100%;
+    }
+}

@@ -107,7 +107,7 @@
                         "autoplaySpeed": 3000
                     }'{{/gt}}>
                     {{#each product.images}}
-                        <li class="image">
+                        <li class="image" id="recipe-thumbnail-image">
                             {{> components/common/responsive-img
                                 image=this
                                 fallback_size=theme_settings.product_size

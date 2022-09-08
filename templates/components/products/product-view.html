@@ -86,14 +86,7 @@
                         {{/if}}
                     {{/if}}
                         {{> components/products/ratings rating=product.rating}}
-                    {{#if product.num_reviews '>' 0}}
-                        <a href="{{product.url}}#product-reviews">
-                            read product reviews
-                            {{! lang 'products.reviews.link_to_review' total=product.num_reviews}}
-                        </a>
-                    {{else}}
-                        <span>{{lang 'products.reviews.link_to_review' total=product.num_reviews}}</span>
-                    {{/if}}
+                    <span class="productView-numberReviews">({{product.num_reviews}})</span>
                 {{/if}}
                 {{#if settings.show_product_reviews}}
                     <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"
@@ -107,7 +100,7 @@
                 {{/if}}
             </div>
             {{#each product.custom_fields}}
-                {{#if name '==' "product_short_description"}} 
+                {{#if name '==' "product_short_description"}}
                 <p class="productView-shortDescription">{{{value}}}</dd>
                 {{/if}}
             {{/each}}
@@ -211,7 +204,7 @@
 
                 {{#if theme_settings.show_custom_fields_tabs '!==' true}}
                     {{#each product.custom_fields}}
-                        {{#inArray (split "product_short_description") name}} 
+                        {{#inArray (split "product_short_description") name}}
                             {{! Hidden Custom Fields}}
                         {{else}}
                         <dt class="productView-info-name">{{name}}:</dt>

@@ -35,5 +35,31 @@ product:
             {{/all}}
         </div>
     </div>
+<script>
+    document.onreadystatechange = function(){
+        /**
+         * Creates a customized print preview page. Only the elements inside of
+         * .recipe-print-layer will be printed.
+         */
+        if(document.readyState === 'complete'){
+            const recipeBody = document.getElementsByClassName('recipe-main')[0].innerHTML;
+            const recipeTitle = document.getElementsByClassName('productView-product')[0].innerHTML;
+            const recipeImage = document.getElementById('recipe-thumbnail-image').innerHTML;
+
+            const printLayer = document.createElement('div');
+            printLayer.className = 'recipe-print-layer';
+
+            const target = document.querySelector('.footer');
+            target.parentNode.insertBefore(printLayer, target);
+
+            var printContent = `${recipeImage}<div id="recipe-print-title">${recipeTitle}</div><div id="recipe-print-body">${recipeBody}</div>`;
+            document.getElementsByClassName('recipe-print-layer')[0].innerHTML = printContent;
+
+            const costPerSaving = document.getElementById('cost-per-saving').innerHTML;
+            const recipeDescription = document.querySelector('#recipe-print-title .productView-recipe-description').innerHTML;
+            document.querySelector('#recipe-print-title .productView-recipe-description').innerHTML = `${recipeDescription} ${costPerSaving}`;
+        }
+    }
+</script>
 {{/partial}}
 {{> layout/base}}

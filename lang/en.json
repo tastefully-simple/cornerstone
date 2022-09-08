@@ -291,12 +291,12 @@
     "breadcrumb": "Your Account",
     "nav": {
       "overview": "Overview",
-      "orders": "Orders",
+      "orders": "Order History",
       "returns": "Returns",
       "messages": "Messages ({num_new_messages})",
       "wishlists": "Wish Lists ({num_wishlists})",
       "recently_viewed": "Recently Viewed",
-      "settings": "Profile",
+      "settings": "Account Profile",
       "addresses": "Addresses",
       "payment_methods": "Payment Methods",
       "preferences": "Communication Preferences"
@@ -319,7 +319,7 @@
       "merchant_said": "{store_name} said:"
     },
     "orders": {
-      "heading": "Orders",
+      "heading": "Order History",
       "none": "You haven't placed any orders with us. When you do, their status will appear on this page.",
       "return": {
         "already_returned": "This order contains no products that can be returned. Have you already returned all of the items within this order?",
@@ -448,7 +448,7 @@
       }
     },
     "settings": {
-      "heading": "Profile",
+      "heading": "Account Profile",
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email Address",

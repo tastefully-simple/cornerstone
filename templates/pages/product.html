@@ -31,7 +31,9 @@ product:
         {{> components/products/tabs}}
 
         {{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}
+        <div id="recipe-page">
             {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
+        </div>
         {{/all}}
     </div>
 {{/partial}}

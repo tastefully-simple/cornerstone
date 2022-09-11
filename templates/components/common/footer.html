@@ -20,7 +20,7 @@
 {{/if}}
 <footer class="footer" role="contentinfo">
     <div class="footer-loveit">
-        <a href="/guarantee" title="Love it Guarantee">
+        <a href="/guarantee" title="Love it Guarantee" id="footer-img-link">
             <picture id="footer_picture">
             </picture>
             <script>
@@ -37,21 +37,37 @@
                     var footerImgAlt = "Backed by Our Love it Guarantee. Shop Now text on a background showing cooking preparation";
                 }
 
+                //Set new footer title
+                document.getElementById('footer-img-link').title = footerImgAlt;
+                
+                // Create Default footer image
                 var footerPicture = document.getElementById('footer_picture');
                 var footerImg = document.createElement("img");
                 footerImg.setAttribute('alt', footerImgAlt);
+                footerImg.setAttribute('src', footerImages[961]);
+                footerImg.setAttribute('id', 'default-footer-img')
+                footerPicture.appendChild(footerImg);
 
-                var footerImgUrl;
-                if (screen.width <= 600) {
-                    footerImgUrl = footerImages["600"];
-                } else if (screen.width <= 960) {
-                    footerImgUrl = footerImages["960"];
-                } else {
-                    footerImgUrl = footerImages["961"];
+                // Update image according to the browser window size
+                function updateFooterByWindowSize() {
+                    var footerImg = document.getElementById('default-footer-img');
+                    var footerImgUrl;
+
+                    if (window.innerWidth <= 600) {
+                        footerImgUrl = footerImages["600"];
+                    } else if (window.innerWidth <= 960) {
+                        footerImgUrl = footerImages["960"];
+                    } else {
+                        footerImgUrl = footerImages["961"];
+                    }
+                    footerImg.src=footerImgUrl
                 }
 
-                footerImg.setAttribute('src', footerImgUrl);
-                footerPicture.appendChild(footerImg);
+                updateFooterByWindowSize();
+                addEventListener('resize', (event) => {
+                    console.log('resize');
+                    updateFooterByWindowSize();
+                });
             </script>
         </a>
     </div>

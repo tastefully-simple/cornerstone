@@ -171,8 +171,10 @@ $product-card-margin: stencilString('categorypage_product_card_margin');
         .product {
             padding-top: 0.75em;
             @media only screen and (max-width: 800px) {
-                margin-right: stencilString('categorypage_product_card_margin') !important;
-                margin-left: stencilString('categorypage_product_card_margin') !important;
+                width: 44%;
+                .add-to-cart-btn {
+                    top: 45px;
+                }
             }
         }
     }

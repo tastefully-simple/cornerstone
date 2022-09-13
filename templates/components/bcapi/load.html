@@ -1,0 +1,38 @@
+<script>
+    /**
+     * This component looks for all layers whose IDs begin with bcapi_ and tries to
+     * make an AJAX call to a BigCommerce page with the same URL Key.
+     * If the content is found, it will load it into the layer.
+     *
+     *
+     * This feature provides the ability of potentially allowing the client to make changes
+     * to any location of the site, as long as a bcapi_ div is placed there.
+     */
+
+    /**
+     * @param resultContainer
+     */
+    function loadBcApi(resultContainer) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                if (xmlhttp.status == 200) {
+                    document.getElementById(resultContainer).innerHTML = xmlhttp.responseText;
+                }
+                else {
+                    console(`Could not load content for ${resultContainer}`);
+                }
+            }
+        };
+
+        const requestUrl = '/' + resultContainer + '/';
+
+        xmlhttp.open("GET", requestUrl, true);
+        xmlhttp.send();
+    }
+    const bcapiDivs = document.querySelectorAll('div[id^="bcapi_"]')
+
+    bcapiDivs.forEach((element, index) => {
+        loadBcApi(element.id);
+    });
+</script>

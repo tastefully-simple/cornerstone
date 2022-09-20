@@ -82,6 +82,7 @@
 .card-title {
     font-size: $card-title-fontSize;
     margin: $card-title-margin;
+    height: 38px;
 
     > a {
         color: $card-title-color;

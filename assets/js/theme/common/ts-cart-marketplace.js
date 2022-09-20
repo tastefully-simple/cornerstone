@@ -45,7 +45,7 @@ export default class TsCartMarketplace {
                 this.modal = defaultModal();
                 this.modal.open({ size: 'small' });
                 this.modal.updateContent($('#marketplace-popup-container').html());
-            } else if (redirect) {
+            } else if (redirect && $('.view-consultant-parties').attr('class') === undefined) {
                 window.location = '/checkout';
             }
         });

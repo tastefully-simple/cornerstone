@@ -80,9 +80,19 @@
 }
 
 .card-title {
+
     font-size: $card-title-fontSize;
     margin: $card-title-margin;
-    height: 38px;
+    height: 48px;
+    line-height: 16px;
+    overflow: hidden;
+    text-align: center;
+    /* autoprefixer: off */
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    display: -webkit-inline-box;
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
 
     > a {
         color: $card-title-color;
@@ -130,10 +140,6 @@
 
 .card-body {
     text-align: center;
-
-    @include breakpoint("small") {
-        text-align: left;
-    }
 }
 
 

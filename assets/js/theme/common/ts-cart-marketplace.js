@@ -46,7 +46,7 @@ export default class TsCartMarketplace {
                 this.modal.open({ size: 'small' });
                 this.modal.updateContent($('#marketplace-popup-container').html());
             } else if (redirect === true && ($('.view-consultant-parties').attr('class') === undefined
-                || $('.view-consultant-parties').attr('class').indexOf('framelink-sm')) !== -1 ) {
+                || $('.view-consultant-parties').attr('class').indexOf('framelink-sm')) !== -1) {
                 window.location = '/checkout';
             }
         });

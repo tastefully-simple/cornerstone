@@ -126,13 +126,17 @@ class FacetedSearch {
 
     updateAllFacets(facet, ulResult) {
         let facetUrl = urlUtils.getUrl();
+        let resultTemplate = 'category/show-more-auto';
+
         if (facetUrl === '/recipes/') {
             const recipesPerPage = this.context.themeSettings.recipespage_products_per_page;
             facetUrl = `/recipes/?limit=${recipesPerPage}`;
+        } else {
+            resultTemplate = 'search/show-more-auto';
         }
 
         api.getPage(facetUrl, {
-            template: 'category/show-more-auto',
+            template: resultTemplate,
             params: {
                 list_all: facet,
             },

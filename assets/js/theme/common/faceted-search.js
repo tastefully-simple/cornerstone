@@ -131,7 +131,7 @@ class FacetedSearch {
         if (facetUrl === '/recipes/') {
             const recipesPerPage = this.context.themeSettings.recipespage_products_per_page;
             facetUrl = `/recipes/?limit=${recipesPerPage}`;
-        } else {
+        } else if (facetUrl.indexOf('/recipes/') === -1) {
             resultTemplate = 'search/show-more-auto';
         }
 

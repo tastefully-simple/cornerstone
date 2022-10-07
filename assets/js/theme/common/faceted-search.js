@@ -116,6 +116,38 @@ class FacetedSearch {
 
         // Bind events
         this.bindEvents();
+        const self = this;
+        // Load all filters and hide the "show more" links
+        $('#facetedSearch ul[data-has-more-results="true"]').each((index, element) => {
+            const facet = $(element).attr('data-facet');
+            self.updateAllFacets(facet, element);
+        });
+    }
+
+    updateAllFacets(facet, ulResult) {
+        let facetUrl = urlUtils.getUrl();
+        let resultTemplate = 'category/show-more-auto';
+
+        if (facetUrl === '/recipes/') {
+            const recipesPerPage = this.context.themeSettings.recipespage_products_per_page;
+            facetUrl = `/recipes/?limit=${recipesPerPage}`;
+        } else if (facetUrl.indexOf('/recipes/') === -1) {
+            resultTemplate = 'search/show-more-auto';
+        }
+
+        api.getPage(facetUrl, {
+            template: resultTemplate,
+            params: {
+                list_all: facet,
+            },
+        }, (err, response) => {
+            if (err) {
+                throw new Error(err);
+            }
+            $(ulResult).html(response);
+        });
+
+        return true;
     }
 
     updateView() {

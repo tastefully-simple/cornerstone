@@ -318,75 +318,72 @@
     }
 }
 
+.recipe-print-layer {
+    display: none;
+}
+
 @media print {
-    .partybar, #product-reviews, nav, iframe {
-        display: none;
-    }
     .header, .footer, #consent-manager-update-banner, #consent-manager,
-    .addthis_toolbox, .productView-rating {
+    .addthis_toolbox, .productView-rating, .footer, .productView, #main-content, .partybar, nav {
         display: none;
     }
 
-    .productView-thumbnails {
-        max-width: 70%;
-        float: right;
-    }
-    .body {
-        margin-top: -100px;
-    }
-
-    .productView-title {
-        text-align: left !important;
-        font-size: 40px;
-        font-weight: bold;
-        zoom: 1.5;
-    }
-
-    .recipe-top {
-        zoom: 0.5;
-    }
-    .quick-info {
-        position: absolute;
-        top: 20%;
-        zoom: 0.7;
-        width: 60%;
-        border: 0 !important;
-        display: block !important;
-        margin-left: 0 !important;
-        padding-left: 0 !important;
-        float: left;
-    }
-
-    .quick-info span {
-        padding-right: 20px;
-    }
-
-    .productView-description {
-        text-align: left !important;
-        zoom: 0.8;
-    }
-
-    .info-title {
-        text-align: left !important;
-    }
-
-    #recipe-page .recipe-main .info {
-        width: 100%;
-    }
-
-    .productView-recipe-description {
-        padding-top: 20px !important;
-        text-align: left !important;
-        margin-left: 0 !important;
-    }
-    #cost-per-saving {
-        text-align: left !important;
-        width: 100% !important;
-        padding-top: 10px !important;
-    }
-
-    .productView-details {
-        width: 100% !important;
-        text-align: left !important;;
+    .recipe-print-layer {
+        .productView-description {
+            font-size: 14px;
+        }
+        display: block;
+        h1 {
+            font-size: 30px;
+            color: $text-gray;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        ul, ol, dl {
+            margin-bottom: 5px;
+        }
+        img {
+            max-width: 20%;
+            float: right;
+            margin-left: 20px;
+        }
+        #ingredients-list {
+            list-style: none;
+            list-style-type: none;
+        }
+        .recipe-print-body {
+            padding-top: 10px;
+            display: block;
+            clear: both;
+        }
+        .productView-description {
+            padding: 0 !important;
+        }
+        .product-link {
+            color: $burgundy;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .quick-info {
+            clear: both;
+            margin-top: 20px;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
+            display:flex;
+            justify-content: space-between;
+            margin: 4vw auto 0;
+            max-width: 100%;
+            padding: 10px 10px;
+            span {
+                margin: 0 auto;
+            }
+            strong {
+                color: $burgundy;
+                font-weight: 800;
+                margin-left: .5rem;
+            }
+        }
     }
 }

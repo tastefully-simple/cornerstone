@@ -61,15 +61,15 @@ export default class {
     registerValidation(context) {
         this.context = context;
         this.validator.add([{
-            selector: '[name="revrating"]',
+            selector: '#rating-rate',
             validate: 'presence',
             errorMessage: safeString(this.context.reviewRating),
         }, {
-            selector: '[name="revtitle"]',
+            selector: '#revtitle',
             validate: 'presence',
             errorMessage: safeString(this.context.reviewSubject),
         }, {
-            selector: '[name="revtext"]',
+            selector: '#revtext',
             validate: 'presence',
             errorMessage: safeString(this.context.reviewComment),
         }, {

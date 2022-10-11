@@ -119,17 +119,16 @@ export default class Category extends CatalogPage {
                     $(element).children('a')[0].href += `&limit=${productsPerPage}`;
                 });
 
-                // 2. Subcategories and filters
                 $('#faceted-search-container .sidebarBlock ul.navList').each((indexNavlist, navlist) => {
+                    let itemUrl;
                     $(navlist).children('li').each((index, element) => {
-                        $(element).children('a')[0].href += `?limit=${productsPerPage}`;
-                    });
-                });
+                        itemUrl = $(element).children('a')[0].href;
 
-                // 3. Filters
-                $('#faceted-search-container .accordion-block ul.navList').each((indexNavlist, navlist) => {
-                    $(navlist).children('li').each((index, element) => {
-                        $(element).children('a')[0].href += `&limit=${productsPerPage}`;
+                        if (itemUrl.indexOf('?') === -1) {
+                            $(element).children('a')[0].href += `?limit=${productsPerPage}`;
+                        } else {
+                            $(element).children('a')[0].href += `&limit=${productsPerPage}`;
+                        }
                     });
                 });
             }

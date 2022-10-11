@@ -20,20 +20,55 @@
 {{/if}}
 <footer class="footer" role="contentinfo">
     <div class="footer-loveit">
-        <a href="/guarantee" title="Love it Guarantee">
-            <picture>
-                <source
-                    media="(max-width:600px)"
-                    srcset="{{cdn 'assets/img/loveitguaranteebanner-600px-nobtn.jpg'}}">
-                <source
-                    media="(max-width:960px)"
-                    srcset="{{cdn 'assets/img/loveitguaranteebanner-960px-nobtn.jpg'}}">
-                <source
-                    media="(min-width:960px)"
-                    srcset="{{cdn 'assets/img/loveitguaranteebanner-1920px-nobtn.jpg'}}">
-                <img src="{{cdn 'assets/img/loveitguaranteebanner-600px-nobtn.jpg'}}"
-                     alt="Backed by Our Love it Guarantee. Shop Now text on a background showing cooking preparation"/>
+        <a href="/guarantee" title="Love it Guarantee" id="footer-img-link">
+            <picture id="footer_picture">
             </picture>
+            <script>
+
+                if (typeof footerImages === 'undefined') {
+                    var footerImages = {
+                        600: "{{cdn 'assets/img/loveitguaranteebanner-600px-nobtn.jpg'}}",
+                        960: "{{cdn 'assets/img/loveitguaranteebanner-960px-nobtn.jpg'}}",
+                        961: "{{cdn 'assets/img/loveitguaranteebanner-1920px-nobtn.jpg'}}"
+                    }
+                }
+
+                if (typeof footerImgAlt === 'undefined') {
+                    var footerImgAlt = "Backed by Our Love it Guarantee. Shop Now text on a background showing cooking preparation";
+                }
+
+                //Set new footer title
+                document.getElementById('footer-img-link').title = footerImgAlt;
+                
+                // Create Default footer image
+                var footerPicture = document.getElementById('footer_picture');
+                var footerImg = document.createElement("img");
+                footerImg.setAttribute('alt', footerImgAlt);
+                footerImg.setAttribute('src', footerImages[961]);
+                footerImg.setAttribute('id', 'default-footer-img')
+                footerPicture.appendChild(footerImg);
+
+                // Update image according to the browser window size
+                function updateFooterByWindowSize() {
+                    var footerImg = document.getElementById('default-footer-img');
+                    var footerImgUrl;
+
+                    if (window.innerWidth <= 600) {
+                        footerImgUrl = footerImages["600"];
+                    } else if (window.innerWidth <= 960) {
+                        footerImgUrl = footerImages["960"];
+                    } else {
+                        footerImgUrl = footerImages["961"];
+                    }
+                    footerImg.src=footerImgUrl
+                }
+
+                updateFooterByWindowSize();
+                addEventListener('resize', (event) => {
+                    console.log('resize');
+                    updateFooterByWindowSize();
+                });
+            </script>
         </a>
     </div>
     <section class="footer-info">
@@ -144,3 +179,5 @@
         </div>
     </section>
 </footer>
+
+{{> components/bcapi/load }}

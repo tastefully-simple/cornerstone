@@ -46,4 +46,4 @@ jobs:
       run: cat config.stencil.json
 
     - name: Publishing theme to Tech-Sandbox, automatically deleting oldest theme if necessary
-      run: stencil push -a Tech-Sandbox -c TS.com - Technology Sandbox
+      run: stencil push -a Tech-Sandbox -c TS.com - Technology Sandbox -d

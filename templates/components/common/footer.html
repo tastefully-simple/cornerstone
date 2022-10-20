@@ -39,7 +39,7 @@
 
                 //Set new footer title
                 document.getElementById('footer-img-link').title = footerImgAlt;
-                
+
                 // Create Default footer image
                 var footerPicture = document.getElementById('footer_picture');
                 var footerImg = document.createElement("img");
@@ -65,7 +65,6 @@
 
                 updateFooterByWindowSize();
                 addEventListener('resize', (event) => {
-                    console.log('resize');
                     updateFooterByWindowSize();
                 });
             </script>
@@ -178,6 +177,8 @@
             </div>
         </div>
     </section>
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <div class="elfsight-app-44513817-57c9-4834-917d-7b9e9ba8a63f"></div>
 </footer>
 
 {{> components/bcapi/load }}

@@ -29,6 +29,16 @@
     <p class="link-copied-text subhead-14 teal-text" style="margin-bottom: 0; display: none">Copied to clipboard</p>
 
     <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=632a4235560f0d00125e7830&product=sop" async="async"></script>
+    <!-- Temporary fix suggested by ShareThis -->
+    <script>
+        window.onload = (event) => {
+            document.querySelector('a[data-network="email"]').addEventListener("click", (e) => {
+                var subject = "I'd like to share a link with you";
+                var body = window.location.href;
+                window.location.href = "mailto:?subject=" + subject + "&body=" + body;
+            })
+        };
+    </script>
 {{/if}}
 {{#if settings.facebook_like_button.enabled}}
     <iframe

@@ -332,9 +332,12 @@ export default class Search extends CatalogPage {
         const $contentListingContainer = $('#search-results-content');
         const $facetedSearchContainer = $('#faceted-search-container');
         const $searchHeading = $('#search-results-heading');
+        const $searchCount = $('#search-results-product-count');
         const $recipeSearchCount = $('#search-results-content-count');
         const $contentCount = $('#search-results-content-count');
         const productsPerPage = this.context.searchProductsPerPage;
+        const recipesCategoryId = this.context.themeSettings.recipe_search_category_recipe_filter_id;
+        const currentCategory = urlParams.get('category');
 
         const requestOptions = {
             template: {
@@ -354,12 +357,9 @@ export default class Search extends CatalogPage {
         };
 
         this.facetedSearch = new FacetedSearch(requestOptions, (content) => {
-            const currentCategory = urlParams.get('category');
-            const recipesCategoryId = this.context.themeSettings.recipe_search_category_recipe_filter_id;
-            const url = Url.parse(window.location.href, true);
-
             $searchHeading.html(content.heading);
 
+            const url = Url.parse(window.location.href, true);
             if (url.query.section === 'content') {
                 $contentListingContainer.html(content.contentListing);
                 $contentCount.html(content.contentCount);
@@ -368,6 +368,10 @@ export default class Search extends CatalogPage {
                 $productListingContainer.html(content.productListing);
                 $facetedSearchContainer.html(content.sidebar);
                 $recipeSearchCount.html(content.productCount.replace('Products', 'Recipes'));
+                this.showProducts(false);
+            } else {
+                $productListingContainer.html(content.productListing);
+                $facetedSearchContainer.html(content.sidebar);
                 this.showProducts(false);
             }
 

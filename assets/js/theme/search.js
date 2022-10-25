@@ -337,6 +337,7 @@ export default class Search extends CatalogPage {
         const $contentCount = $('#search-results-content-count');
         const productsPerPage = this.context.searchProductsPerPage;
         const recipesCategoryId = this.context.themeSettings.recipe_search_category_recipe_filter_id;
+        const currentCategory = urlParams.get('category');
 
         const requestOptions = {
             template: {
@@ -363,10 +364,14 @@ export default class Search extends CatalogPage {
                 $contentListingContainer.html(content.contentListing);
                 $contentCount.html(content.contentCount);
                 this.showContent(false);
-            } else {
+            } else if (recipesCategoryId === currentCategory) {
                 $productListingContainer.html(content.productListing);
                 $facetedSearchContainer.html(content.sidebar);
                 $recipeSearchCount.html(content.productCount.replace('Products', 'Recipes'));
+                this.showProducts(false);
+            } else {
+                $productListingContainer.html(content.productListing);
+                $facetedSearchContainer.html(content.sidebar);
                 this.showProducts(false);
             }
 

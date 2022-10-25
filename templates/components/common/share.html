@@ -4,10 +4,10 @@
         <div class="socialLinks-title">
             <span class="socialLinks-titleText teal-text frameheading-3">Share</span>
         </div>
-        <ul class="socialLinks social-links">
+        <ul class="socialLinks social-links" id="app">
             {{#each settings.add_this.buttons}}
                 <li class="socialLinks-item socialLinks-item--{{service}}">
-                    <a class="icon-social-{{service}} addthis_button_{{service}} icon icon--{{service}}" {{{annotation}}}>
+                    <a class="st-custom-button icon-social-{{service}} addthis_button_{{service}} icon icon--{{service}}" {{{annotation}}} data-network="{{service}}">
                         {{#if service '===' 'email'}}
                             <svg>
                                 <use xlink:href="#icon-envelope"/>
@@ -24,18 +24,21 @@
                 <button class="button-secondary socialLinks-copy" type="button">Copy Link</button>
             </li>
         </ul>
-        <script type="text/javascript"
-                defer src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e94ed470ee51e32"></script>
-        <script>
-            window.addEventListener('DOMContentLoaded', function() {
-                if (typeof(addthis) === "object") {
-                    addthis.toolbox('.addthis_toolbox');
-                }
-            });
-        </script>
     </div>
     <!-- Copy link to clipboard notification. Hidden by default -->
     <p class="link-copied-text subhead-14 teal-text" style="margin-bottom: 0; display: none">Copied to clipboard</p>
+
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=632a4235560f0d00125e7830&product=sop" async="async"></script>
+    <!-- Temporary fix suggested by ShareThis -->
+    <script>
+        window.onload = (event) => {
+            document.querySelector('a[data-network="email"]').addEventListener("click", (e) => {
+                var subject = "I'd like to share a link with you";
+                var body = window.location.href;
+                window.location.href = "mailto:?subject=" + subject + "&body=" + body;
+            })
+        };
+    </script>
 {{/if}}
 {{#if settings.facebook_like_button.enabled}}
     <iframe

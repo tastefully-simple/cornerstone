@@ -270,7 +270,7 @@ class FindAParty {
                     <p>${consultant} doesn't have any open parties</p>
                 </div>
                 <div class="partybar-button">
-                    <button type="button" class="subhead-16 view-all-parties">view all parties</button>
+                    <button type="button" class="subhead-16 view-all-parties">search all parties</button>
                 </div>
             </div>`;
 

@@ -32,7 +32,12 @@
     <!-- Temporary fix suggested by ShareThis -->
     <script>
         window.onload = (event) => {
+            // Remove all events from the email button
+            document.getElementsByClassName('socialLinks-item--email')[0].outerHTML =
+                document.getElementsByClassName('socialLinks-item--email')[0].outerHTML;
             document.querySelector('a[data-network="email"]').addEventListener("click", (e) => {
+                e.preventDefault();
+
                 var subject = "I'd like to share a link with you";
                 var body = window.location.href;
                 window.location.href = "mailto:?subject=" + subject + "&body=" + body;

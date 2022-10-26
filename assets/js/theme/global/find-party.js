@@ -215,7 +215,7 @@ class FindAParty {
                 </div>
                 <div class="partybar-button">
                     <p class="subhead-14">
-                        <button type="button" class="view-all-parties">edit</button>
+                        <button type="button" class="view-all-parties">change</button>
                         <span class="white-text">&verbar;</span>
                         <button type="button" class="remove-party">remove party</button>
                     </p>

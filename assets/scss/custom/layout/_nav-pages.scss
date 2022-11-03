@@ -72,32 +72,19 @@
                         padding-top:0;
                         position:relative;
                         .navPages-item {
-                            &.navPages-item-recipes,
-                            &.navPages-item-blog {
-                                display:none;
-                            }
-                            &.navPages-item-shop {
+                            &.navPages-item-shop, &.navPages-item-recipes, &.navPages-item-blog, &.navPages-item-join, &.navPages-item-host {
                                 margin-right:.75rem;
-                                padding:0 1.5rem 1.5rem;
+                                padding:0 1.5rem 0;
                                 width:100%;
                                 &>.navPages-action {
                                     display:block;
-                                    margin-left: 47px;
-                                    position:absolute;
-                                    border-bottom:3px solid $wan-white;
                                     padding-bottom:0;
                                     top:0;
-                                    transform:translateX(-50%);
-                                    &::after {
-                                        border-bottom:3px solid $burgundy;
-                                        width:90px;
-                                    }
                                 }
                             }
                             &>.navPages-action {
-                                text-align:center;
+                                text-align: left;
                                 &::after {
-                                    border-bottom:6px solid $wan-white;
                                     content:'';
                                     display:block;
                                     margin:6px auto 0;
@@ -316,7 +303,6 @@
                                 display:flex;
                                 .navPage-childList {
                                     .navPage-childList-item {
-                                        margin:.5rem 0;
                                         .navPage-childList-action{
                                             line-height:inherit;
                                             margin:0;
@@ -462,10 +448,7 @@
 }
 
 @media only screen and (max-width:800px) {
-    .navPages-item-shop + .navPages-item-shop {
-        margin-left: 100px;
-    }
     .navPage-subMenu {
-        margin-top: 50px;
+        margin-left: 10px;
     }
 }

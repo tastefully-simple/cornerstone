@@ -1,13 +1,12 @@
 {{#if settings.add_this.buttons}}
-    <div class="addthis_toolbox addthis_32x32_style" addthis:url="{{url}}"
-         addthis:title="{{title}}">
+    <div class="sharethis_toolbox sharethis_32x32_style">
         <div class="socialLinks-title">
             <span class="socialLinks-titleText teal-text frameheading-3">Share</span>
         </div>
         <ul class="socialLinks social-links" id="app">
             {{#each settings.add_this.buttons}}
                 <li class="socialLinks-item socialLinks-item--{{service}}">
-                    <a class="st-custom-button icon-social-{{service}} addthis_button_{{service}} icon icon--{{service}}" {{{annotation}}} data-network="{{service}}">
+                    <a class="st-custom-button icon-social-{{service}} sharethis_button_{{service}} icon icon--{{service}}" {{{annotation}}} data-network="{{service}}">
                         {{#if service '===' 'email'}}
                             <svg>
                                 <use xlink:href="#icon-envelope"/>

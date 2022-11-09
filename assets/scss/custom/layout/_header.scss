@@ -295,12 +295,12 @@
             background-color: $gainsboro;
             border-color: $gainsboro;
             box-shadow: 4px 5px 7px rgba(0, 0, 0, 0.2);
-            left: calc(100% - 8px) !important;
-            padding: 0rem 1rem;
-            padding-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
             top: 30px !important;
             transform: translateX(-50%);
-            width:130px;
+            width: 200px;
+            text-align: right;
+            left: 50px !important;
             &.is-open {
                 &:before,
                 &:after {
@@ -316,6 +316,7 @@
             }
             ul {
                 &>li {
+                    height: 25px;
                     &>a {
                         display:block;
                         text-decoration: none;

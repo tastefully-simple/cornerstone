@@ -212,18 +212,19 @@
                                     }
                                 }
                                 &.navPages-item-join {
-                                    order:2;
+                                    order:4;
                                 }
                                 &.navPages-item-host {
-                                    order:3;
+                                    order:5;
                                 }
                                 &.navPages-item-recipes {
                                     display:block;
-                                    order:4;
+                                    order:2;
+                                    font-weight: bold;
                                 }
                                 &.navPages-item-blog {
                                     display:block;
-                                    order:5;
+                                    order:3;
                                 }
                                 &>.navPages-action {
                                     border:none;

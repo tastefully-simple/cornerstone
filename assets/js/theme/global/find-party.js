@@ -196,7 +196,7 @@ class FindAParty {
                     <button type="button" class="subhead-16 view-consultant-parties">view ${consultant}'s parties</button>
                 </div>
                 <div class="partybar-button">
-                    <button type="button" class="subhead-16 view-all-parties">view all parties</button>
+                    <button type="button" class="subhead-16 view-all-parties">search all parties</button>
                 </div>
             </div>`;
 
@@ -215,7 +215,7 @@ class FindAParty {
                 </div>
                 <div class="partybar-button">
                     <p class="subhead-14">
-                        <button type="button" class="view-all-parties">edit</button>
+                        <button type="button" class="view-all-parties">change</button>
                         <span class="white-text">&verbar;</span>
                         <button type="button" class="remove-party">remove party</button>
                     </p>
@@ -270,7 +270,7 @@ class FindAParty {
                     <p>${consultant} doesn't have any open parties</p>
                 </div>
                 <div class="partybar-button">
-                    <button type="button" class="subhead-16 view-all-parties">view all parties</button>
+                    <button type="button" class="subhead-16 view-all-parties">search all parties</button>
                 </div>
             </div>`;
 

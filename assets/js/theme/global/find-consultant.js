@@ -111,11 +111,13 @@ class FindAConsultant {
 
         // Open consultant parties modal in
         // party bar mobile
-        $('.partybar').on(
-            'click',
-            '.view-consultant-parties',
-            (e) => this.openConsultantParties(e),
-        );
+        $('.partybar').each((index, element) => {
+            $(element).on(
+                'click',
+                '.view-consultant-parties',
+                (e) => this.openConsultantParties(e),
+            );
+        });
 
         // Trigger modal when the modaltrigger-consult class is present
         $('.modaltrigger-consult').on(
@@ -487,7 +489,7 @@ class FindAConsultant {
     }
 
     renderConsultantInMobileMenu() {
-        $('.navPages-container .navPages').prepend(this.$findConsultant);
+        $('#mobile_consultant').append(this.$findConsultant);
 
         if (this.isExternalConsultant()) {
             if (TSCookie.getConsultantId() === this.consultant.id) {
@@ -688,6 +690,13 @@ export default function (themeSettings) {
     $(document).ready(() => {
         const consultant = new FindAConsultant(
             document.querySelector('.headertoplinks-consult'),
+            'common/find-consultant',
+            tsConsultantId,
+        );
+
+        // eslint-disable-next-line no-new
+        new FindAConsultant(
+            document.querySelector('#find-a-consultant-mobile'),
             'common/find-consultant',
             tsConsultantId,
         );

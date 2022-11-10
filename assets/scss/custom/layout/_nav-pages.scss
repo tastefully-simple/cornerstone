@@ -149,7 +149,7 @@
                                 padding:.75rem 0;
                                 &::after {
                                     content:'\f0da';
-                                    font-family:'Font Awesome 5 Free';
+                                    font-family:'Font Awesome 5 Pro';
                                     font-size:1.2em;
                                 }
                                 &.is-open {
@@ -222,8 +222,7 @@
                                 .navPages-action {
                                     &:active,
                                     &:focus,
-                                    &:hover,
-                                    &.activePage {
+                                    &:hover {
                                         color: $burnt-caramel;
                                     }
                                     &:not(.navPage-childList-action) {
@@ -450,5 +449,23 @@
 @media only screen and (max-width:800px) {
     .navPage-subMenu {
         margin-left: 10px;
+    }
+    .navPages-item-shop:first-child,  .navPages-item-recipes a, .navPages-item-blog a,
+    .navPages-item-join a, .navPages-item-host a {
+            color: $burgundy !important;
+    }
+    .navPages-item-consultant-fundraiser {
+        .partybar-main-text {
+            font-size: 14px;
+        }
+        .headertoplinks-consult {
+            width: 100%;
+            height: 64px;
+        }
+        .partybar-container {
+            .fa-party-horn-light {
+                font-size: 18px;
+            }
+        }
     }
 }

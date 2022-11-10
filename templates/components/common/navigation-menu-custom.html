@@ -14,19 +14,17 @@
             <a class="navPages-action" href="//blog.tastefullysimple.com">blog</a>
         </li>
         <li class="navPages-item navPages-item-join">
-            <a class="navPages-action teal-text" href="/join-us/">join</a>
+            <a class="navPages-action" href="/join-us/">join</a>
         </li>
         <li class="navPages-item navPages-item-host">
-            <a class="navPages-action  greenapple-text" href="/host">host</a>
+            <a class="navPages-action" href="/host">host</a>
+        </li>
+        <li class="navPages-item navPages-item-consultant-fundraiser">
+            <div id="mobile_consultant" style="display: block; position: relative; float: left; width: 50%"></div>
+            <div id="mobile_partybar" style="display: block; position: relative; float: left; width: 50%"></div>
         </li>
     </ul>
     <ul class="navPages-list navPages-list--user">
-        <li class="navPages-item navPages-item-recipes frame-text">
-            <a class="navPages-action" href="/recipes/">recipes</a>
-        </li>
-        <li class="navPages-item navPages-item-blog frame-text">
-            <a class="navPages-action" href="//blog.tastefullysimple.com">blog</a>
-        </li>
         {{#if currency_selector.currencies.length '>' 1}}
             <li class="navPages-item">
                 <a class="navPages-action has-subMenu" href="#" data-collapsible="navPages-currency" aria-controls="navPages-currency" aria-expanded="false">
@@ -47,11 +45,6 @@
                         {{/each}}
                     </ul>
                 </div>
-            </li>
-        {{/if}}
-        {{#if settings.gift_certificates_enabled}}
-            <li class="navPages-item">
-                <a class="navPages-action" href="{{urls.gift_certificate.purchase}}">{{lang 'common.gift_cert'}}</a>
             </li>
         {{/if}}
         {{#if customer.store_credit.value '>' 0}}
@@ -113,6 +106,11 @@
                     </ul>
                 </div>
             </li>
+            {{#if settings.gift_certificates_enabled}}
+            <li class="navPages-item">
+                <a class="navPages-action" href="{{urls.gift_certificate.purchase}}">{{lang 'common.gift_cert'}}</a>
+            </li>
+            {{/if}}
             <li class="navPages-item">
                 <a class="navPages-action" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
             </li>

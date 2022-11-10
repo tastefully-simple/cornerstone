@@ -42,9 +42,16 @@ product:
          * .recipe-print-layer will be printed.
          */
         if(document.readyState === 'complete'){
+            let recipeImage;
             const recipeBody = document.getElementsByClassName('recipe-main')[0].innerHTML;
             const recipeTitle = document.getElementsByClassName('productView-product')[0].innerHTML;
-            const recipeImage = document.getElementById('recipe-thumbnail-image').innerHTML;
+
+            if (document.getElementById('recipe-thumbnail-image')) {
+                recipeImage = document.getElementById('recipe-thumbnail-image').innerHTML;
+            } else if (document.querySelectorAll('.slick-slide')){
+                // Get first image from the slideshow
+                recipeImage = `<img src="${document.querySelectorAll('#slick-slide00 img')[0].src}" />`;
+            }
 
             const printLayer = document.createElement('div');
             printLayer.className = 'recipe-print-layer';
@@ -52,8 +59,7 @@ product:
             const target = document.querySelector('.footer');
             target.parentNode.insertBefore(printLayer, target);
 
-            var printContent = `${recipeImage}<div id="recipe-print-title">${recipeTitle}</div><div id="recipe-print-body">${recipeBody}</div>`;
-            document.getElementsByClassName('recipe-print-layer')[0].innerHTML = printContent;
+            document.getElementsByClassName('recipe-print-layer')[0].innerHTML = `${recipeImage}<div id="recipe-print-title">${recipeTitle}</div><div id="recipe-print-body">${recipeBody}</div>`;
 
             const costPerSaving = document.getElementById('cost-per-saving').innerHTML;
             const recipeDescription = document.querySelector('#recipe-print-title .productView-recipe-description').innerHTML;

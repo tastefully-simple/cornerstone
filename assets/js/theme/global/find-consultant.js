@@ -521,7 +521,7 @@ class FindAConsultant {
                     <p class="frame-subhead">
                         <span>is my consultant</span>
                         <button type="button" class="framelink-sm">
-                            <span class="consultant-edit">edit</span>
+                            <span class="consultant-edit">change</span>
                         </button>
                         <span class="verbar">&verbar;</span>
                         <button type="button" class="framelink-sm">

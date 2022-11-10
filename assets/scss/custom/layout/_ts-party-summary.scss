@@ -21,7 +21,7 @@
 }
 
 .summary-separator {
-    max-width: 800px;    
+    max-width: 800px;
     margin: auto;
     hr {
         margin-bottom: 20px
@@ -31,7 +31,7 @@
 .share-link {
     display: none;
     margin-top: 10px;
-    @extend .addthis_toolbox;
+    @extend .sharethis_toolbox;
     border-color: $green-apple;
     &.visible {
         display: inline-block;
@@ -119,7 +119,7 @@
             font-weight: normal;
             th {
                 padding: 5px 5px 2px 5px;
-                width: unset; 
+                width: unset;
             }
             th:nth-child(1) {
                 padding-left: 15px;
@@ -127,7 +127,7 @@
             tbody {
                 tr {
                     td:first-child {
-                        text-align: left; 
+                        text-align: left;
                         padding-left: 15px;
                     }
                     td {
@@ -176,7 +176,7 @@
                     .icon-toggle-plus, .icon-toggle-minus {
                         height: 18px;
                         width: 18px;
-                    }   
+                    }
                 }
             }
         }
@@ -240,7 +240,7 @@
                         padding-top: 7px;
                     }
                     .section-title {
-                        margin: 0px 0px 15px !important; 
+                        margin: 0px 0px 15px !important;
                         font-weight: normal;
                         text-transform: none;
                         color: black;
@@ -293,7 +293,7 @@
                                 .pointer-circle {
                                     width: 25px;
                                     height: 25px;
-                                    top: -7px; 
+                                    top: -7px;
                                     border: 2px solid #fff;
                                     display: flex;
                                     justify-content: center;

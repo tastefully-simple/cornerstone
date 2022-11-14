@@ -518,17 +518,19 @@ class FindAConsultant {
     consultantInfoHtml() {
         const html =
             `<div class="consultant-info">
-                <p class="framelink-xl consultant-name">${this.consultant.name}</p>
                 <div class="consultant-info-control">
                     <p class="frame-subhead">
-                        <span>is my consultant</span>
-                        <button type="button" class="framelink-sm">
+                        <span id="my-consultant-mobile">My consultant</span>
+                        <p class="framelink-xl consultant-name">${this.consultant.name}</p>
+                        <span id="my-consultant-desktop">is my consultant</span>
+                        <button type="button" class="framelink-sm consultant-edit-button">
                             <span class="consultant-edit">change</span>
                         </button>
                         <span class="verbar">&verbar;</span>
                         <button type="button" class="framelink-sm">
                             <span class="cart-affilitiate-btn consultant-remove">remove</span>
                         </button>
+                       
                     </p>
                 </div>
             </div>`;
@@ -690,13 +692,6 @@ export default function (themeSettings) {
     $(document).ready(() => {
         const consultant = new FindAConsultant(
             document.querySelector('.headertoplinks-consult'),
-            'common/find-consultant',
-            tsConsultantId,
-        );
-
-        // eslint-disable-next-line no-new
-        new FindAConsultant(
-            document.querySelector('#find-a-consultant-mobile'),
             'common/find-consultant',
             tsConsultantId,
         );

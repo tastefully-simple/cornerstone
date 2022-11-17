@@ -196,7 +196,7 @@ class FindAParty {
                     <button type="button" class="subhead-16 view-consultant-parties">view ${consultant}'s parties</button>
                 </div>
                 <div class="partybar-button">
-                    <button type="button" class="subhead-16 view-all-parties">view all parties</button>
+                    <button type="button" class="subhead-16 view-all-parties">search all parties</button>
                 </div>
             </div>`;
 

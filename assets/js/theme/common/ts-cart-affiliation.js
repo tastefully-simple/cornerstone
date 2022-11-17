@@ -167,7 +167,7 @@ export default class TSCartAffiliation {
                 </p>
                 <p>
                     <button type="button" class="framelink-sm cart-affiliate-btn view-all-parties">
-                        view all parties
+                        search all parties
                     </button>
                 </p>
             </div>`;

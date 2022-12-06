@@ -412,7 +412,7 @@ class FindAParty {
         const $findPartyBarText = this.$findParty.find('.partybar-main-text');
         $findPartyBarText.html(this.partyGreeting(hostname));
 
-        const $navPages = $('.navPages-container .navPages');
+        const $navPages = $('#mobile_partybar');
 
         /* Party bar does not have a background color by default
          * and need to set the background color to apple green.
@@ -596,11 +596,16 @@ export default function (themeSettings) {
     const tsConsultantId = themeSettings.ts_consultant_id;
 
     $(document).ready(() => {
-        const party = new FindAParty(
-            $('#partybar-find'),
-            'common/find-party',
-            tsConsultantId,
-        );
+        const party = true;
+
+        $('.partybar-container').each((index, element) => {
+            // eslint-disable-next-line no-new
+            new FindAParty(
+                $(element),
+                'common/find-party',
+                tsConsultantId,
+            );
+        });
 
         return party;
     });

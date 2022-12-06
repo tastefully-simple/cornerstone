@@ -132,7 +132,7 @@
                 .tst-accordion-title{
                     &::after{
                         content:'\f0d8';
-                        font:700 15px 'Font Awesome 5 Free';
+                        font:700 15px 'Font Awesome 5 Pro';
                     }
                 }
                 .tst-accordion-body {
@@ -154,7 +154,7 @@
             cursor:pointer;
             &::after {
                 content:'\f0d7';
-                font:700 15px 'Font Awesome 5 Free';
+                font:700 15px 'Font Awesome 5 Pro';
                 padding-left:.5rem;
             }
         }

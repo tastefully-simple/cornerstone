@@ -171,6 +171,42 @@
 
 
 @media only screen and (min-width:801px) {
+    #navPages-mainmenu-catshop.is-open::before {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid #e2e2e2;
+        content: '';
+        height: 0;
+        left: 31%;
+        position: absolute;
+        top: 20px;
+        width: 0;
+    }
+    .navPage-subMenu-item::marker, .navPage-childList-item::marker {
+        list-style: none !important;
+        font-variant-numeric: unset;
+        content: "" !important;
+    }
+    .navPage-subMenu-item > .navPage-subMenu-action {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        font: 900 16px Muli;
+    }
+    .sticky-header {
+        #navPages-catshop {
+            top: 80px;
+            ul {
+                list-style: none !important;
+            }
+        }
+    }
+    #navPages-catshop {
+        width: 780px !important;
+        left: -390px !important;
+        margin-left: 50% !important;
+        top: 107px;
+    }
     .header {
         .header-main {
             .container {
@@ -256,27 +292,6 @@
                             }
                         }
                         .navPage-subMenu {
-                            &.is-open {
-                                left:50%;
-                                min-width:760px;
-                                max-width:960px;
-                                top:30px;
-                                transform:translateX(-50%);
-                                width:900%;
-                                &::before {
-                                    border-left: 5px solid transparent;
-                                    border-right: 5px solid transparent;
-                                    border-bottom: 5px solid $gainsboro;
-                                    content:'';
-                                    height: 0px;
-                                    left:43%;
-                                    position:absolute;
-                                    top:-5px;
-                                    transform:translateX(-50%);
-                                    width: 0px;
-                                    z-index:99;
-                                }
-                            }
                             .navPage-subMenu-item {
                                 float:none;
                                 padding:0 !important; //!important required to override !important
@@ -380,6 +395,60 @@
 }
 
 @media only screen and (min-width:1020px) {
+
+
+    .navPage-subMenu-item::marker, .navPage-childList-item::marker {
+        list-style: none !important;
+        font-variant-numeric: unset;
+        content: "" !important;
+    }
+    .navPage-subMenu-item > .navPage-subMenu-action {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        font: 900 16px Muli;
+    }
+    .sticky-header {
+        #navPages-catshop {
+            top: 80px;
+            ul {
+                list-style: none !important;
+            }
+        }
+    }
+    #navPages-mainmenu-catshop.is-open::before {
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid #e2e2e2;
+        content: '';
+        height: 0;
+        left: 31%;
+        position: absolute;
+        top: 20px;
+        width: 0;
+    }
+    #navPages-catshop {
+        width: 1000px !important;
+        left: -500px !important;
+        margin-left: 50% !important;
+        top: 115px;
+
+        .navPage-subMenu-list li.navPage-subMenu-item:nth-child(1) {
+            width: 15%;
+        }
+        .navPage-subMenu-list li.navPage-subMenu-item:nth-child(2) {
+            width: 20%;
+        }
+        .navPage-subMenu-list li.navPage-subMenu-item:nth-child(3) {
+            width: 28%;
+        }
+        .navPage-subMenu-list li.navPage-subMenu-item:nth-child(4) {
+            width: 20%;
+        }
+        .navPage-subMenu-list li.navPage-subMenu-item:nth-child(5) {
+            width: 13%;
+        }
+    }
     .header {
         .header-main {
             .container {

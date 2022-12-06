@@ -37,7 +37,9 @@
         {{~inject 'secureBaseUrl' settings.secure_base_url}}
         {{~inject 'cartId' cart_id}}
         {{~inject 'template' template}}
+
         <script src="https://kit.fontawesome.com/b258ff8a4b.js" crossorigin="anonymous"></script>
+        {{#block "additional_head"}}{{/block}}
     </head>
     <body>
         {{> components/common/gtm-body }}

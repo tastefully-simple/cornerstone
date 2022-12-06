@@ -47,7 +47,7 @@
             .productView-details {
                 width: unset;
                 padding: 0;
-                .addthis_toolbox {
+                .sharethis_toolbox {
                     margin-top: 1rem;
                     .socialLinks-title {
                         top: -18px;
@@ -324,7 +324,7 @@
 
 @media print {
     .header, .footer, #consent-manager-update-banner, #consent-manager,
-    .addthis_toolbox, .productView-rating, .footer, .productView, #main-content, .partybar, nav {
+    .sharethis_toolbox, .productView-rating, .footer, .productView, #main-content, .partybar, nav, iframe#launcher {
         display: none;
     }
 

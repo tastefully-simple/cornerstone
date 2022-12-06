@@ -269,3 +269,19 @@
     <div class="modal-content"></div>
     <div class="loadingOverlay"></div>
 </div>
+
+<style>
+    @media print {
+        .sharethis_toolbox, .productView-rating, .productView, #main-content {
+            display: revert !important;
+        }
+
+        #product_tabs_footer, .sharethis_toolbox, .form-wishlist, .slick-list, #product-reviews, iframe, #add-to-cart-wrapper {
+            display: none !important;
+        }
+
+        .body {
+            margin-top: 0 !important;
+        }
+    }
+</style>

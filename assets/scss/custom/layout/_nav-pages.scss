@@ -521,12 +521,26 @@
         font-weight: 500;
         font-size: 14px;
         padding-top: 3px;
+        padding-right: 10px;
     }
     #my-consultant-mobile {
         display: none;
     }
 }
 @media only screen and (max-width:800px) {
+
+    #partybar-mobile-container {
+        padding-top: 8px;
+        display: block;
+        padding-bottom: 8px;
+    }
+    #party-icon-mobile {
+        top: 12px;
+        position: relative;
+    }
+    #find-party-mobile-text {
+        width: 70%;
+    }
     #my-consultant-desktop {
         display: none;
     }
@@ -543,6 +557,7 @@
     .navPages-item-consultant-fundraiser {
         height: 63px;
         float: left;
+        width: 100%;
         .partybar-accordion {
             position: absolute;
             width: 200%;
@@ -554,6 +569,7 @@
             position: relative;
             float: left;
             width: 50%;
+            height: 63px !important;
         }
         .partybar-main-text {
             line-height: 14px;
@@ -573,14 +589,14 @@
             display: none !important;
         }
         .frame-subhead {
-            font-size: 12px;
+            font-size: 11px;
         }
         #consultant-link-top {
             padding: 0 !important;
             height: 63px;
             float: left;
         }
-        .consultant-info {
+        .consultant-info, .partybar {
             span {
                 font-size: 11px;
             }
@@ -593,5 +609,14 @@
                 overflow: hidden;
             }
         }
+    }
+}
+#mobile_partybar {
+    .partybar {
+        height: 63px;
+    }
+    .host-name {
+        font-size: 14px !important;
+        height: 17px !important;
     }
 }

@@ -52,7 +52,7 @@
                     }
                 }
                 .navPages {
-                    background-color: $white;
+                    background-color: transparent;
                     display:flex;
                     flex-direction:column;
                     padding:0;
@@ -74,7 +74,6 @@
                         .navPages-item {
                             &.navPages-item-shop, &.navPages-item-recipes, &.navPages-item-blog, &.navPages-item-join, &.navPages-item-host {
                                 margin-right:.75rem;
-                                padding:0 1.5rem 0;
                                 width:100%;
                                 &>.navPages-action {
                                     display:block;
@@ -88,7 +87,6 @@
                                     content:'';
                                     display:block;
                                     margin:6px auto 0;
-                                    padding-top:.15rem;
                                     width:150px;
                                 }
                             }
@@ -449,6 +447,9 @@
             width: 13%;
         }
     }
+    .consultant-bar-open #navPages-catshop {
+        top: 135px !important;
+    }
     .header {
         .header-main {
             .container {
@@ -528,6 +529,14 @@
     }
 }
 @media only screen and (max-width:800px) {
+    .navPages-item {
+        &.navPages-item-shop, &.navPages-item-recipes, &.navPages-item-blog, &.navPages-item-join, &.navPages-item-host {
+            padding: 0 1.5rem 0;
+        }
+    }
+    .navPages-container {
+        background: $white;
+    }
 
     #partybar-mobile-container {
         padding-top: 8px;

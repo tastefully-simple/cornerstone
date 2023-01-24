@@ -160,11 +160,9 @@ export default class ConsultantParties {
                 cname: $selectedPartyCard.data('cname'),
                 cimg: $selectedPartyCard.data('cimg'),
             };
-
+            this.savePartyCookies(party);
             // Update green party bar text
             this.updatePartyBarText(party.host);
-
-            this.savePartyCookies(party);
         } else {
             // To account for user not choosing to
             // select a party with selected consultant
@@ -187,6 +185,8 @@ export default class ConsultantParties {
         } else {
             this.modal.close();
         }
+        $('.partybar-accordion').css('max-height', '0px');
+        window.location.reload();
     }
 
     savePartyCookies(party) {
@@ -226,7 +226,25 @@ export default class ConsultantParties {
 
     updatePartyBarText(host) {
         if (this.selectedPid) {
-            $('.partybar-main-text').html(`<span><strong>${host}</strong> is my host</span>`);
+            $('#partybar-find').html(`<div class="consultant-info">
+                <div class="consultant-info-control">
+                    <p class="frame-subhead">
+                        <span id="my-host-mobile">My host</span>
+                        <p class="framelink-xl host-name">${host}</p>
+                        <button type="button" class="framelink-sm view-party" id="view-single-party">
+                            <span class="consultant-edit">view</span>
+                        </button>
+                        <span class="verbar">&verbar;</span>
+                        <button type="button" class="framelink-sm view-all-parties" id="change-current-party">
+                            <span class="consultant-edit">change</span>
+                        </button>
+                        <span class="verbar">&verbar;</span>
+                        <button type="button" class="framelink-sm" style="padding: 0" id="remove-current-party">
+                            <span class="cart-affilitiate-btn remove-party">remove</span>
+                        </button>
+                    </p>
+                </div>
+            </div>`);
         } else {
             $('.partybar-main-text').html(`<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`);
         }

@@ -77,7 +77,7 @@ class FindAParty {
                 || TSCookie.getConsultantId() === this.TS_CONSULTANT_ID
             ) {
                 this.createModal(e, this.modalTemplate);
-            } else {
+            } else if (!document.getElementById('remove-current-party') || window.innerWidth >= SCREEN_MIN_WIDTH) {
                 this.openPartyBarDropdown(this.$findParty);
             }
         });
@@ -209,7 +209,7 @@ class FindAParty {
 
     hasOpenPartiesWithPartySelected() {
         const html =
-            `<div class="partybar-accordion-items">
+            `<div class="partybar-accordion-items hide-on-mobile">
                 <div class="partybar-button">
                     <button type="button" class="view-party">view party</button>
                 </div>
@@ -283,12 +283,32 @@ class FindAParty {
 
     partyGreeting(hostname) {
         if (hostname) {
-            return `<span><strong>${hostname}</strong> is my host</span>`;
+            return `<div class="consultant-info">
+                <div class="consultant-info-control">
+                    <p class="frame-subhead">
+                        <span id="my-host-mobile">My host</span>
+                        <p class="framelink-xl host-name">${hostname}</p>
+                        <button type="button" class="framelink-sm view-party" id="view-single-party">
+                            <span class="consultant-edit">view</span>
+                        </button>
+                        <span class="verbar">&verbar;</span>
+                        <button type="button" class="framelink-sm view-all-parties" id="change-current-party">
+                            <span class="consultant-edit">change</span>
+                        </button>
+                        <span class="verbar">&verbar;</span>
+                        <button type="button" class="framelink-sm" style="padding: 0" id="remove-current-party">
+                            <span class="cart-affilitiate-btn remove-party">remove</span>
+                        </button>
+                    </p>
+                </div>
+            </div>`;
         } else if (TSCookie.getPartyId() === 'null') {
             return `<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`;
         }
 
-        return 'Find a Party or Fundraiser';
+        return '<div id="partybar-mobile-container"><span class="fak fa-party-horn-light" aria-hidden="true" id="party-icon-mobile"></span>\n' +
+            '        <button type="button" class="partybar-main-text" id="find-party-mobile-text">Find a Party or Fundraiser</button>\n' +
+            '        <span class="fa fa-caret-right partybar-arrow" aria-hidden="true"></span></div>';
     }
 
     modalLoaded(result) {
@@ -409,10 +429,34 @@ class FindAParty {
     renderPartyBar($party) {
         // Partybar Greeting Text
         const hostname = TSCookie.getPartyHost();
-        const $findPartyBarText = this.$findParty.find('.partybar-main-text');
-        $findPartyBarText.html(this.partyGreeting(hostname));
 
-        const $navPages = $('.navPages-container .navPages');
+        $('#partybar-find').html(this.partyGreeting(hostname));
+
+        // View party
+        const $viewPartyButton = this.$findPartyBar.find('#view-single-party');
+        $viewPartyButton.on('click', () => {
+            window.location.href = `/p/${this.party.id}`;
+        });
+
+        // Change party
+        const $changePartyButton = this.$findPartyBar.find('#change-current-party');
+        $changePartyButton.on('click', (e) => {
+            this.createModal(e, this.modalTemplate);
+        });
+
+        // Remove party
+        const $removeParty = this.$findPartyBar.find('#remove-current-party');
+        $removeParty.on('click', () => {
+            TSCookie.deleteParty();
+
+            if (this.isOnPartyDetailsPage()) {
+                window.location.href = HOST_PAGE;
+            } else {
+                window.location.reload();
+            }
+        });
+
+        const $navPages = $('#mobile_partybar');
 
         /* Party bar does not have a background color by default
          * and need to set the background color to apple green.
@@ -596,11 +640,16 @@ export default function (themeSettings) {
     const tsConsultantId = themeSettings.ts_consultant_id;
 
     $(document).ready(() => {
-        const party = new FindAParty(
-            $('#partybar-find'),
-            'common/find-party',
-            tsConsultantId,
-        );
+        const party = true;
+
+        $('.partybar-container').each((index, element) => {
+            // eslint-disable-next-line no-new
+            new FindAParty(
+                $(element),
+                'common/find-party',
+                tsConsultantId,
+            );
+        });
 
         return party;
     });

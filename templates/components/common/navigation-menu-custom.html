@@ -19,14 +19,12 @@
         <li class="navPages-item navPages-item-host">
             <a class="navPages-action greenapple-text" href="/host">host</a>
         </li>
+        <li class="navPages-item navPages-item-consultant-fundraiser">
+            <div id="mobile_consultant" style="display: block; position: relative; float: left; width: 50%"></div>
+            <div id="mobile_partybar" style="display: block; position: relative; float: left; width: 50%; height: 63px !important"></div>
+        </li>
     </ul>
     <ul class="navPages-list navPages-list--user">
-        <li class="navPages-item navPages-item-recipes frame-text">
-            <a class="navPages-action" href="/recipes/">recipes</a>
-        </li>
-        <li class="navPages-item navPages-item-blog frame-text">
-            <a class="navPages-action" href="//blog.tastefullysimple.com">blog</a>
-        </li>
         {{#if currency_selector.currencies.length '>' 1}}
             <li class="navPages-item">
                 <a class="navPages-action has-subMenu" href="#" data-collapsible="navPages-currency" aria-controls="navPages-currency" aria-expanded="false">
@@ -49,11 +47,6 @@
                 </div>
             </li>
         {{/if}}
-        {{#if settings.gift_certificates_enabled}}
-            <li class="navPages-item">
-                <a class="navPages-action" href="{{urls.gift_certificate.purchase}}">{{lang 'common.gift_cert'}}</a>
-            </li>
-        {{/if}}
         {{#if customer.store_credit.value '>' 0}}
             <li class="navPages-item">
                 <a class="navPages-action navPages-action--storeCredit">
@@ -68,10 +61,10 @@
         {{/if}}
         {{#if customer}}
             <li class="navPages-item">
-                <a class="navPages-action navPages-action-account has-subMenu title-case" href="{{urls.account.index}}" data-collapsible="navPages-account">
+                <a class="navPages-action navPages-action-account has-subMenu title-case" id="account-submenu-nav" href="{{urls.account.index}}" data-collapsible="navPages-account" aria-expanded="true">
                     Hi, {{ first (split customer.name " ") }}
                 </a>
-                <div class="navPage-subMenu" id="navPages-account" aria-hidden="true" tabindex="-1">
+                <div class="navPage-subMenu is-open" id="navPages-account" aria-hidden="false" tabindex="-1">
                     <ul class="navPage-subMenu-list">
                         <li class="navPage-subMenu-item">
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.details}}">{{lang 'account.nav.settings'}}</a>
@@ -89,9 +82,6 @@
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.inbox}}">{{lang 'account.mobile_nav.messages'}}</a>
                         </li>
                         --}}
-                        <li class="navPage-subMenu-item">
-                            <a class="navPage-subMenu-action navPages-action" href="{{urls.account.addresses}}">{{lang 'account.nav.addresses'}}</a>
-                        </li>
                         {{#if settings.show_payment_methods}}
                             <li class="navPage-subMenu-item">
                                 <a class="navPage-subMenu-action navPages-action" href="{{urls.account.payment_methods.all}}">{{lang 'account.nav.payment_methods'}}</a>
@@ -110,18 +100,21 @@
                             <a class="navPage-subMenu-action navPages-action" href="{{urls.account.recent_items}}">{{lang 'account.nav.recently_viewed'}}</a>
                         </li>
                         --}}
+                        <li class="avPage-subMenu-item">
+                            <a class="navPage-subMenu-action navPages-action" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
+                        </li>
                     </ul>
                 </div>
             </li>
-            <li class="navPages-item">
-                <a class="navPages-action" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
-            </li>
         {{else}}
-            <li class="navPages-item">
-                <a class="navPages-action" href="{{urls.auth.login}}">{{lang 'common.login'}}</a>
-                {{#if settings.account_creation_enabled}}
-                    {{lang 'common.or'}} <a class="navPages-action" href="{{urls.auth.create_account}}">{{lang 'common.sign_up'}}</a>
-                {{/if}}
+            <li class="navPages-item" style="padding-bottom: 50px">
+                <span style="font-weight: 900;
+    font-size: 16px;
+    color: #00757d"><a class="" style="font-weight: 900;
+    font-size: 16px; text-decoration: none;
+    color: #00757d" href="{{urls.auth.login}}">sign in</a> / <a class="" style="font-weight: 900;
+    font-size: 16px;
+    color: #00757d; text-decoration: none" href="{{urls.auth.create_account}}">register</a></span>
             </li>
         {{/if}}
         {{#if theme_settings.social_icon_placement_top}}

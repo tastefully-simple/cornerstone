@@ -7,6 +7,11 @@ class StickyHeader {
         window.addEventListener('scroll', () => (
             this.onScroll(this.$header, this.sticky, this.config.screenMinWidth)
         ));
+
+        // Change the position of the mega menu if the Consultant bar is being displayed
+        if (window.Cookies.get('cid') !== undefined) {
+            document.getElementById('headerMain').classList.add('consultant-bar-open');
+        }
     }
 
     onScroll($mainHeader, sticky, screenMinWidth) {

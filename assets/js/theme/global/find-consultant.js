@@ -111,13 +111,11 @@ class FindAConsultant {
 
         // Open consultant parties modal in
         // party bar mobile
-        $('.partybar').each((index, element) => {
-            $(element).on(
-                'click',
-                '.view-consultant-parties',
-                (e) => this.openConsultantParties(e),
-            );
-        });
+        $('.partybar').on(
+            'click',
+            '.view-consultant-parties',
+            (e) => this.openConsultantParties(e),
+        );
 
         // Trigger modal when the modaltrigger-consult class is present
         $('.modaltrigger-consult').on(
@@ -489,7 +487,7 @@ class FindAConsultant {
     }
 
     renderConsultantInMobileMenu() {
-        $('#mobile_consultant').append(this.$findConsultant);
+        $('.navPages-container .navPages').prepend(this.$findConsultant);
 
         if (this.isExternalConsultant()) {
             if (TSCookie.getConsultantId() === this.consultant.id) {
@@ -518,19 +516,17 @@ class FindAConsultant {
     consultantInfoHtml() {
         const html =
             `<div class="consultant-info">
+                <p class="framelink-xl consultant-name">${this.consultant.name}</p>
                 <div class="consultant-info-control">
                     <p class="frame-subhead">
-                        <span id="my-consultant-mobile">My consultant</span>
-                        <p class="framelink-xl consultant-name">${this.consultant.name}</p>
-                        <span id="my-consultant-desktop">is my consultant</span>
-                        <button type="button" class="framelink-sm consultant-edit-button">
+                        <span>is my consultant</span>
+                        <button type="button" class="framelink-sm">
                             <span class="consultant-edit">change</span>
                         </button>
                         <span class="verbar">&verbar;</span>
                         <button type="button" class="framelink-sm">
                             <span class="cart-affilitiate-btn consultant-remove">remove</span>
                         </button>
-                       
                     </p>
                 </div>
             </div>`;

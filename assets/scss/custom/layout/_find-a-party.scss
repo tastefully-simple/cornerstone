@@ -68,7 +68,7 @@
         align-items: center;
         cursor: pointer;
         display: flex;
-        padding: 0.5px 1.0rem;
+        padding: 0.6rem 1.5rem;
         .fa-caret-right,
         .fa-caret-down {
             transition: rotate 0.2s ease-in-out;
@@ -96,7 +96,7 @@
       transition: max-height 0.2s ease-out;
       width: 100%;
 
-      .partybar-accordion-items {
+      .partybar-accordion-items { 
           padding: 0.4rem;
       }
     }
@@ -179,7 +179,4 @@
             font-weight: 700;
         }
     }
-}
-#view-single-party {
-    padding-left: 0;
 }

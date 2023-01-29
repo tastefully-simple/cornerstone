@@ -183,7 +183,7 @@ export default class TSCartAffiliation {
             `<div class="cart-affiliate-party">
                 <p class="cart-affiliate-party-name frame-subhead">
                     <span class="frameheading-4">${phost}</span>
-                    is my host<button type="button" class="framelink-sm remove-party">remove</button>
+                    is my host <button type="button" class="framelink-sm remove-party">remove</button>
                 </p>
             </div>`;
 

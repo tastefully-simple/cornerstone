@@ -640,16 +640,24 @@ export default function (themeSettings) {
     const tsConsultantId = themeSettings.ts_consultant_id;
 
     $(document).ready(() => {
-        const party = true;
+        let party = true;
 
-        $('.partybar-container').each((index, element) => {
-            // eslint-disable-next-line no-new
-            new FindAParty(
-                $(element),
+        if (window.location.pathname === '/cart.php') {
+            party = new FindAParty(
+                $('#partybar-find'),
                 'common/find-party',
                 tsConsultantId,
             );
-        });
+        } else {
+            $('.partybar-container').each((index, element) => {
+                // eslint-disable-next-line no-new
+                new FindAParty(
+                    $(element),
+                    'common/find-party',
+                    tsConsultantId,
+                );
+            });
+        }
 
         return party;
     });

@@ -31,10 +31,11 @@ export default class TsCartMarketplace {
 
     validateCart(redirect = false) {
         utils.api.cart.getCart({}, (err, response) => {
-            let products;
-            if (response === Array) {
+            let products = [];
+
+            if (typeof response[0] !== 'undefined' && response[0].lineItems !== 'undefined') {
                 products = response[0].lineItems.physicalItems;
-            } else {
+            } else if (typeof response !== 'undefined' && typeof response.lineItems !== 'undefined') {
                 products = response.lineItems.physicalItems;
             }
 

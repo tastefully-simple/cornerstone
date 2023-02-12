@@ -629,3 +629,10 @@
         height: 17px !important;
     }
 }
+#account-submenu-nav {
+    color: $teal;
+    padding-bottom: 0;
+    &::after {
+        content: none;
+    }
+}

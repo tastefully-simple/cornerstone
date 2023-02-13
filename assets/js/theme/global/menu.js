@@ -19,7 +19,6 @@ class Menu {
 
         // Auto-bind
         this.onMenuClick = this.onMenuClick.bind(this);
-        this.onDocumentClick = this.onDocumentClick.bind(this);
 
         // Listen
         this.bindEvents();
@@ -53,12 +52,10 @@ class Menu {
 
     bindEvents() {
         this.$menu.on('click', this.onMenuClick);
-        this.$body.on('click', this.onDocumentClick);
     }
 
     unbindEvents() {
         this.$menu.off('click', this.onMenuClick);
-        this.$body.off('click', this.onDocumentClick);
     }
 
     onMenuClick(event) {
@@ -69,10 +66,6 @@ class Menu {
 
             this.collapseNeighbors($neighbors);
         }
-    }
-
-    onDocumentClick() {
-        this.collapseAll();
     }
 }
 

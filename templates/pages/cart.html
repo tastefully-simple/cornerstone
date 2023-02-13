@@ -66,8 +66,14 @@ cart: true
 
         {{> components/cart/modals/find-affiliate}}
     </main>
-
-
 </div>
+<style>
+    .partybar {
+        display: none;
+    }
+    #mobile_partybar .partybar {
+        display: block !important;
+    }
+</style>
 {{/partial}}
 {{> layout/base-cart}}

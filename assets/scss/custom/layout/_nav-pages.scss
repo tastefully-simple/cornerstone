@@ -491,9 +491,6 @@
 /* iPhone-specific media queries to deal with webkit's scroll issue on the mobile menu */
 @supports (-webkit-touch-callout: none) {
     @media only screen and (max-width:800px) {
-        .navPages-item-shop + .navPages-item-shop {
-            margin-left: 100px;
-        }
         .navPages-container {
             overflow-y:scroll;
             -webkit-overflow-scrolling:auto;
@@ -546,9 +543,10 @@
     #party-icon-mobile {
         top: 12px;
         position: relative;
+        padding-left: 20px;
     }
     #find-party-mobile-text {
-        width: 70%;
+        width: 60%;
     }
     #my-consultant-desktop {
         display: none;
@@ -627,6 +625,11 @@
     .host-name {
         font-size: 14px !important;
         height: 17px !important;
+    }
+    .consultant-info-control {
+        button {
+            padding: 0;
+        }
     }
 }
 #account-submenu-nav {

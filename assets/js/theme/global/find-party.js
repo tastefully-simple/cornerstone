@@ -296,7 +296,7 @@ class FindAParty {
                             <span class="consultant-edit">change</span>
                         </button>
                         <span class="verbar">&verbar;</span>
-                        <button type="button" class="framelink-sm" style="padding: 0" id="remove-current-party">
+                        <button type="button" class="framelink-sm" id="remove-current-party">
                             <span class="cart-affilitiate-btn remove-party">remove</span>
                         </button>
                     </p>

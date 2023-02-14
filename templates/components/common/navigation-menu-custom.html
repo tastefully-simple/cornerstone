@@ -62,7 +62,7 @@
         {{#if customer}}
             <li class="navPages-item">
                 <a class="navPages-action navPages-action-account has-subMenu title-case" id="account-submenu-nav" href="{{urls.account.index}}" data-collapsible="navPages-account" aria-expanded="true">
-                    Hi, {{ first (split customer.name " ") }}
+                    Hi, {{ first (split customer.name " ") }}!
                 </a>
                 <div class="navPage-subMenu is-open" id="navPages-account" aria-hidden="false" tabindex="-1">
                     <ul class="navPage-subMenu-list">

@@ -169,9 +169,9 @@ class FindAParty {
 
         if (accord.css('max-height') === '0px') {
             accord.css('max-height', (accord.prop('scrollHeight')));
-
             // Scroll down when showing party bar's options
             $('.header.is-open .navPages').animate({ scrollTop: accord.offset().top });
+            $('#navigation-menu-custom').animate({ margin: '79px auto auto auto' }, 100);
             // TST-164 for Safari
             // this code won't be applied to other browsers
             // because .navPages-container's overflow CSS property
@@ -179,6 +179,7 @@ class FindAParty {
             $('.header.is-open .navPages-container').animate({ scrollTop: accord.offset().top });
         } else {
             accord.css('max-height', 0);
+            $('#navigation-menu-custom').animate({ margin: '0 auto auto auto' }, 100);
         }
     }
 

@@ -11,9 +11,6 @@
                 const newCid = cid ? cid.trim() : cid;
 
                 Cookies.set('cid', newCid, { domain: cookieDomain });
-
-                // Add class to header in order to reposition the "Shop" menu
-                document.getElementById('headerMain').classList.add('consultant-bar-open');
             },
 
             getConsultantId: function() {
@@ -135,9 +132,6 @@
                 Cookies.remove('cimg', { domain: cookieDomain });
                 Cookies.remove('afid', { domain: cookieDomain });
                 Cookies.remove('copenparty', { domain: cookieDomain });
-
-                // Remove class to reposition the Shop menu
-                document.getElementById('headerMain').classList.remove('consultant-bar-open');
             },
 
             deleteOldTSCookies: function() {

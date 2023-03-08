@@ -63,5 +63,11 @@ export default class Global extends PageManager {
         tsPartyDetails();
         tsPartySummary();
         tsConsultant();
+
+        // Open mobile account menu by default
+        const accountMenu = document.getElementById('navPages-account-main');
+        if (accountMenu) {
+            accountMenu.classList.add('is-open');
+        }
     }
 }

@@ -31,7 +31,14 @@ export default class TsCartMarketplace {
 
     validateCart(redirect = false) {
         utils.api.cart.getCart({}, (err, response) => {
-            const products = response.lineItems.physicalItems;
+            let products = [];
+
+            if (typeof response[0] !== 'undefined' && response[0].lineItems !== 'undefined') {
+                products = response[0].lineItems.physicalItems;
+            } else if (typeof response !== 'undefined' && typeof response.lineItems !== 'undefined') {
+                products = response.lineItems.physicalItems;
+            }
+
             let marketplaceProducts = 0;
             // Count how many items have the brand "marketplace_brand"
             products.forEach((product) => {

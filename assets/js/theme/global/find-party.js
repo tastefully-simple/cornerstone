@@ -169,9 +169,9 @@ class FindAParty {
 
         if (accord.css('max-height') === '0px') {
             accord.css('max-height', (accord.prop('scrollHeight')));
-
             // Scroll down when showing party bar's options
             $('.header.is-open .navPages').animate({ scrollTop: accord.offset().top });
+            $('#navigation-menu-custom').animate({ margin: '79px auto auto auto' }, 100);
             // TST-164 for Safari
             // this code won't be applied to other browsers
             // because .navPages-container's overflow CSS property
@@ -179,6 +179,7 @@ class FindAParty {
             $('.header.is-open .navPages-container').animate({ scrollTop: accord.offset().top });
         } else {
             accord.css('max-height', 0);
+            $('#navigation-menu-custom').animate({ margin: '0 auto auto auto' }, 100);
         }
     }
 
@@ -283,7 +284,25 @@ class FindAParty {
 
     partyGreeting(hostname) {
         if (hostname) {
-            return `<span><strong>${hostname}</strong> is my host</span>`;
+            return `<div class="consultant-info">
+                <div class="consultant-info-control">
+                    <p class="frame-subhead">
+                        <span id="my-host-mobile">My host</span>
+                        <p class="framelink-xl host-name">${hostname}</p>
+                        <button type="button" class="framelink-sm view-party" id="view-single-party">
+                            <span class="consultant-edit">view</span>
+                        </button>
+                        <span class="verbar">&verbar;</span>
+                        <button type="button" class="framelink-sm view-all-parties" id="change-current-party">
+                            <span class="consultant-edit">change</span>
+                        </button>
+                        <span class="verbar">&verbar;</span>
+                        <button type="button" class="framelink-sm" id="remove-current-party">
+                            <span class="cart-affilitiate-btn remove-party">remove</span>
+                        </button>
+                    </p>
+                </div>
+            </div>`;
         } else if (TSCookie.getPartyId() === 'null') {
             return `<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`;
         }
@@ -596,11 +615,24 @@ export default function (themeSettings) {
     const tsConsultantId = themeSettings.ts_consultant_id;
 
     $(document).ready(() => {
-        const party = new FindAParty(
-            $('#partybar-find'),
-            'common/find-party',
-            tsConsultantId,
-        );
+        let party = true;
+
+        if (window.location.pathname === '/cart.php') {
+            party = new FindAParty(
+                $('#partybar-find'),
+                'common/find-party',
+                tsConsultantId,
+            );
+        } else {
+            $('.partybar-container').each((index, element) => {
+                // eslint-disable-next-line no-new
+                new FindAParty(
+                    $(element),
+                    'common/find-party',
+                    tsConsultantId,
+                );
+            });
+        }
 
         return party;
     });

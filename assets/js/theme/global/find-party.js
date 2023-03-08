@@ -77,7 +77,7 @@ class FindAParty {
                 || TSCookie.getConsultantId() === this.TS_CONSULTANT_ID
             ) {
                 this.createModal(e, this.modalTemplate);
-            } else if (!document.getElementById('remove-current-party') || window.innerWidth >= SCREEN_MIN_WIDTH) {
+            } else {
                 this.openPartyBarDropdown(this.$findParty);
             }
         });
@@ -210,7 +210,7 @@ class FindAParty {
 
     hasOpenPartiesWithPartySelected() {
         const html =
-            `<div class="partybar-accordion-items hide-on-mobile">
+            `<div class="partybar-accordion-items">
                 <div class="partybar-button">
                     <button type="button" class="view-party">view party</button>
                 </div>
@@ -307,9 +307,7 @@ class FindAParty {
             return `<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`;
         }
 
-        return '<div id="partybar-mobile-container"><span class="fak fa-party-horn-light" aria-hidden="true" id="party-icon-mobile"></span>\n' +
-            '        <button type="button" class="partybar-main-text" id="find-party-mobile-text">Find a Party or Fundraiser</button>\n' +
-            '        <span class="fa fa-caret-right partybar-arrow" aria-hidden="true"></span></div>';
+        return 'Find a Party or Fundraiser';
     }
 
     modalLoaded(result) {
@@ -430,34 +428,10 @@ class FindAParty {
     renderPartyBar($party) {
         // Partybar Greeting Text
         const hostname = TSCookie.getPartyHost();
+        const $findPartyBarText = this.$findParty.find('.partybar-main-text');
+        $findPartyBarText.html(this.partyGreeting(hostname));
 
-        $('#partybar-find').html(this.partyGreeting(hostname));
-
-        // View party
-        const $viewPartyButton = this.$findPartyBar.find('#view-single-party');
-        $viewPartyButton.on('click', () => {
-            window.location.href = `/p/${this.party.id}`;
-        });
-
-        // Change party
-        const $changePartyButton = this.$findPartyBar.find('#change-current-party');
-        $changePartyButton.on('click', (e) => {
-            this.createModal(e, this.modalTemplate);
-        });
-
-        // Remove party
-        const $removeParty = this.$findPartyBar.find('#remove-current-party');
-        $removeParty.on('click', () => {
-            TSCookie.deleteParty();
-
-            if (this.isOnPartyDetailsPage()) {
-                window.location.href = HOST_PAGE;
-            } else {
-                window.location.reload();
-            }
-        });
-
-        const $navPages = $('#mobile_partybar');
+        const $navPages = $('.navPages-container .navPages');
 
         /* Party bar does not have a background color by default
          * and need to set the background color to apple green.

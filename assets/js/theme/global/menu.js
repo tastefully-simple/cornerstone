@@ -22,21 +22,6 @@ class Menu {
 
         // Listen
         this.bindEvents();
-        this.initListeners();
-        this.updateMenuLocation();
-    }
-
-    initListeners() {
-        $(window).on('resize', () => this.updateMenuLocation());
-    }
-    updateMenuLocation() {
-        if (window.innerWidth <= 800) {
-            // Mobile menu. Move it to the original location
-            $('#navPages-mainmenu-catshop').after($('#navPages-catshop'));
-        } else {
-            // Desktop menu. Move it to after the header
-            $('.header-logo').after($('#navPages-catshop'));
-        }
     }
 
     collapseAll() {

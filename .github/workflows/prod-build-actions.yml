@@ -1,11 +1,11 @@
 name: Publish Production BigCommerce
-# This workflow is triggered on creation of releases on the master branch only.
+# This workflow is triggered on creation of releases on the Mock branch only.
 on:
   release:
     types:
       - created
     branches:
-      master
+      Mock
 
 jobs:
   build:

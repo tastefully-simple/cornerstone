@@ -85,8 +85,15 @@
                             <meta itemprop="reviewCount" content="{{product.num_reviews}}">
                         {{/if}}
                     {{/if}}
+                    {{#if product.num_reviews '>' 0}}
+                    <a href="#recipe-page" class="ratingLink">
                         {{> components/products/ratings rating=product.rating}}
                     <span class="productView-numberReviews">({{product.num_reviews}})</span>
+                    </a>
+                    {{else}}
+                    {{> components/products/ratings rating=product.rating}}
+                    <span class="productView-numberReviews">({{product.num_reviews}})</span>
+                    {{/if}}
                 {{/if}}
                 {{#if settings.show_product_reviews}}
                     <a href="{{product.url}}{{#if is_ajax}}#write_review{{/if}}"

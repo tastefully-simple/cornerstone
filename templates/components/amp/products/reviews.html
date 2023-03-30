@@ -8,6 +8,7 @@
                 {{#each reviews.list}}
                 <li class="productReview">
                     <article itemprop="review" itemscope itemtype="http://schema.org/Review">
+                        <meta itemprop="itemReviewed" content="{{../product.title}}">
                         <header>
                             <span class="productReview-rating rating--small" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
                                 {{> components/amp/products/ratings rating=rating}}

@@ -4,14 +4,8 @@ class TSSeoProcess {
     }
 
     seoNoFollow() {
-        $('a[href^="https://join.tastefullysimple.com"]').attr(
-            "rel",
-            "nofollow"
-        );
-        $('a[href^="https://tscentral.tastefullysimple.com"]').attr(
-            "rel",
-            "nofollow"
-        );
+        $('a[href*="join.tastefullysimple.com"]').attr("rel", "nofollow");
+        $('a[href*="tscentral.tastefullysimple.com"]').attr("rel", "nofollow");
     }
 }
 

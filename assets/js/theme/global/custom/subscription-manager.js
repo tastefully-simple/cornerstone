@@ -38,7 +38,6 @@ function getProductsImageList(products) {
     let images = '';
     // eslint-disable-next-line guard-for-in
     for (const key in products) {
-        console.log(products[key]);
         images += `<img src="${products[key].images[0].src}">`;
     }
 
@@ -126,7 +125,6 @@ function hasSubscriptions(customerId) {
             if (response === true) {
                 // show component if the customer has active subscriptions
                 $('#subscription-manager-block').show();
-                console.log('show');
             }
         },
     });

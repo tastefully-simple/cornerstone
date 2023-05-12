@@ -703,6 +703,25 @@
       }
     }
   },
+  "subscriptions": {
+    "add_to_next_delivery": "Add to next delivery",
+    "one_time_delivery_message1": "Want to save on shipping but just need this once?",
+    "one_time_delivery_message2": "Add one time only to your next autoship delivery.",
+    "future_deliveries_message1": "you have TS to You Autoship!",
+    "future_deliveries_message2": "Want to add this item to your subscription?",
+    "add_to_future_deliveries": "Add to Future Deliveries",
+    "next_order": "Next order:",
+    "products": "Products in this delivery",
+    "subscription": "Subscription",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "recurring_products": "Recurring products in this delivery",
+    "one_time": "One time only product added to this delivery",
+    "one_time_description": "One time only products will not be sent in future deliveries in this subscription",
+    "product_added": "Product added to delivery",
+    "next_order_message": "This product will be added to the next scheduled order",
+    "done": "Done"
+  },
   "products": {
     "current_stock": "Current Stock:",
     "quantity": "Qty",

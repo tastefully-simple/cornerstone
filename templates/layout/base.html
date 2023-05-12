@@ -55,11 +55,13 @@
         {{~inject 'urls' urls}}
         {{~inject 'secureBaseUrl' settings.secure_base_url}}
         {{~inject 'cartId' cart_id}}
+        {{~inject 'customerId' customer.id}}
         {{~inject 'channelId' settings.channel_id}}
         {{~inject 'template' template}}
         {{~inject 'validationDictionaryJSON' (langJson 'validation_messages')}}
         {{~inject 'validationFallbackDictionaryJSON' (langJson 'validation_fallback_messages')}}
         {{~inject 'validationDefaultDictionaryJSON' (langJson 'default_messages')}}
+        {{~inject 'subscriptionManagement' theme_settings.subscription_management}}
 
         {{!-- add fontawesome --}}
         <script src="https://kit.fontawesome.com/b258ff8a4b.js" crossorigin="anonymous"></script>

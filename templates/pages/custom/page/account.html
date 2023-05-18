@@ -1,0 +1,54 @@
+{{#partial "page"}}
+
+{{> components/common/custom/account-breadcrumbs title=page.title}}
+
+<section class="page">
+    {{#unless theme_settings.hide_page_heading }}
+    <h1 class="page-heading">{{ page.title }}</h1>
+    {{/unless}}
+
+    {{#if page.sub_pages}}
+    <nav class="navBar navBar--sub">
+        <ul class="navBar-section account-navigation">
+            {{#each page.sub_pages}}
+            <li class="navBar-item"><a class="navBar-action" href="{{url}}">{{title}}</a></li>
+            {{/each}}
+        </ul>
+    </nav>
+    {{/if}}
+
+    {{{region name="page_builder_content"}}}
+
+    <div class="page-content page-content--centered">
+        {{#if customer.id '>' 0}}
+        {{#replace '%%Syndicate%%' page.content}}
+        {{> components/page/rss_feed}}
+        {{else}}
+        {{> components/account/navigation}}
+        <p>{{{page.content}}}</p>
+        {{/replace}}
+        {{else}}
+        <script>window.location = '/';</script>
+        {{/if}}
+    </div>
+
+    {{#if page.feed}}
+    <ul>
+        {{#each page.feed}}
+        <li>
+            <h6><a href="{{url}}" target="_blank">{{title}}</a></h6>
+            <p>{{content}}</p>
+        </li>
+        {{/each}}
+    </ul>
+    {{/if}}
+</section>
+<script>
+    // Set current tab as Active
+    const tabId = window.location.pathname.replaceAll('/', '');
+    document.getElementById(`tab-${tabId}`).classList.add('is-active');
+</script>
+
+{{/partial}}
+
+{{> layout/base}}

@@ -20,6 +20,9 @@
                 <a class="navBar-action" href="{{urls.account.orders.all}}">{{lang 'account.nav.orders'}}</a>
             </li>
         {{/if}}
+        <li class="navBar-item" id="tab-manage-subscriptions">
+            <a class="navBar-action" href="/manage-subscriptions/">{{lang 'account.nav.manage_subscriptions'}}</a>
+        </li>
         {{#if settings.returns_enabled}}
             {{#if account_page '===' 'returns'}}
                 <li class="navBar-item is-active">{{lang 'account.nav.returns'}}</li>

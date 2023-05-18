@@ -112,7 +112,7 @@ a.ratingLink{
     .slick-prev{
         left:0;
     }
-    #recipe-page{
+    #product-reviews{
         scroll-margin-top: 300px;    
     }
 }
@@ -125,7 +125,7 @@ a.ratingLink{
 
 // Accordion styles (desktop first to avoid unsetting transitions)
 @media only screen and (max-width:800px) {
-    #recipe-page{
+    #product-reviews{
         scroll-margin-top: 100px;    
     }
     .tst-accordion {

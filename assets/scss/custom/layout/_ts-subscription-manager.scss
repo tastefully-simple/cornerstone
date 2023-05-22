@@ -270,7 +270,7 @@
   display: none;
   border-top: 1px solid $burgundy;
   padding-top: 10px;
-  max-width: 340px;
+  max-width: max-content;
 
   &#subscription--container-next {
     margin-top: 10px;
@@ -301,6 +301,9 @@
     padding-left: unset;
     width: 100%;
     display: block;
+  }
+  .subscription--container {
+  font-size: 0.8rem;
   }
 }
 

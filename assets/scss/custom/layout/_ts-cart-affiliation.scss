@@ -24,7 +24,7 @@
             width: 305px;
             .alert-title {
                 text-align: left;
-            } 
+            }
         }
         #ts-affiliate-cart-form-wrapper {
             margin-bottom: 5px;
@@ -140,20 +140,20 @@
     #ts-cart-affiliation {
         margin-right: 4px;
         width: 100%;
-    
+
         &::after {
           content: " ";
-           display: block; 
-           height: 0; 
+           display: block;
+           height: 0;
            clear: both;
         }
-    
+
         .ts-cart-affiliation-wrapper {
             float: right;
             text-align: right;
         }
     }
-    
+
     // Checkout button
     .cart-actions {
         justify-content: center;
@@ -206,4 +206,11 @@
         cursor: pointer;
         width: 30px;
     }
+}
+#autoship-consultant-continue, #find-consultant-confirm-step, #autoship-consultant-confirmation {
+    display: none;
+}
+#autoship-consultant-confirmation {
+    background: none;
+    box-shadow: none;
 }

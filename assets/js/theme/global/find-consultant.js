@@ -7,6 +7,7 @@ import pagination from '../common/pagination';
 import ConsultantCard from '../common/consultant-card';
 import ConsultantParties from '../common/consultant-parties';
 import TSRemoveAffiliation from '../common/ts-remove-affiliation';
+import $ from 'jquery';
 
 // Search mode
 const NO_SEARCH = 0;
@@ -37,8 +38,8 @@ class FindAConsultant {
         this.screenMinWidth = 801;
         this.api = new TSApi();
         this.removeAffiliation = new TSRemoveAffiliation();
-
         this.setConsultant(this.loadConsultant());
+
         this.initListeners();
     }
 
@@ -81,6 +82,10 @@ class FindAConsultant {
                 this.createModal(e, this.modalTemplate);
             }
         });
+
+        if (!$(this.$findConsultant).hasClass('consultant-finder')) {
+            return;
+        }
 
         // Consultant edit button in cart page
         $('body').on(
@@ -203,6 +208,12 @@ class FindAConsultant {
         // Submit with consultant
         $('body').on('click', '#consultant-continue', () => this.continueWithSelection());
 
+        // Hide some information on the modal to display the "Confirmation" page for Autoship Consultants
+        $('body').on('click', '#autoship-consultant-continue', () => this.autoshipContinueWithSelection());
+
+        // Confirm selected consultant and save it using the API
+        $('body').on('click', '#autoship-consultant-confirm', () => this.autoshipConfirmConsultant());
+
         // Submit with Tastefully Simple
         $('body').on('click', '#no-consultants-continue', () => this.continueWithInternal());
 
@@ -211,14 +222,16 @@ class FindAConsultant {
 
         // Account for sticky header
         $(window).on('scroll', () => this.renderConsultant());
-
-        $('body').on('click', '.consultantmodal-cancel-btn', () => this.closeModal());
     }
 
     createModal(e, template) {
+        const md = defaultModal();
         $('#modal').removeClass('modal-results');
-        this.modal = defaultModal();
+        $('body').on('click', '.button-cancel', () => md.close());
+
+        this.modal = md;
         e.preventDefault();
+
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
@@ -407,10 +420,12 @@ class FindAConsultant {
             $('#consultant-search-results .selected').toggleClass('selected');
             $consultantCard.find('.consultant-header').hide();
             $('#consultant-continue').attr('disabled', false);
+            $('#autoship-consultant-continue').attr('disabled', false);
         } else {
             $consultantCard.find('.consultant-header').show();
             this.selectedId = null;
             $('#consultant-continue').attr('disabled', true);
+            $('#autoship-consultant-continue').attr('disabled', true);
         }
 
         $(e.target).closest('.consultant-card').toggleClass('selected');
@@ -436,6 +451,72 @@ class FindAConsultant {
         } else {
             this.displayError('Please select a consultant before continuing');
         }
+    }
+
+    /**
+     * Find a Consultant Autoship Modal
+     * Action for button "Continue" when a consultant is selected
+     */
+    autoshipContinueWithSelection() {
+        if (this.selectedId) {
+            this.autoshipHideNonSelectedConsultants();
+        } else {
+            this.displayError('Please select a consultant before continuing');
+        }
+    }
+
+    /**
+     * Find a Consultant Autoship Modal
+     * Hide all other consultants and display a "Confirm" button
+     */
+    autoshipHideNonSelectedConsultants() {
+        // Hide total consultant search results
+        $('#consultant-search-results-total').hide();
+
+        // Hide Consultant Search results pagination
+        $('.findmodal-pagination-container').hide();
+
+        // Show Confirm Consultant step
+        $('#find-consultant-confirm-step').show();
+
+        // Hide Continue step
+        $('#find-consultant-continue-step').hide();
+
+        // Show "Please confirm your choice" message
+        $('#autoship-consultant-confirmation').show();
+
+        // Enable "Confirm" button
+        $('#autoship-consultant-confirm').attr('disabled', false);
+
+        // Hide all result cards and display only the currently selected
+        $('.consultant-card').hide();
+        $('.consultant-card.selected').show();
+    }
+
+    /**
+     * Find a Consultant Autoship Modal — Confirm Button Action
+     * Send API request to save the consultant and close the modal
+     */
+    autoshipConfirmConsultant() {
+        // Disable "Confirm" button
+        $('#autoship-consultant-confirm').attr('disabled', true);
+
+        // window.subscriptionManager is set on subscription-manager.js
+        let setAffiliationUrl = `${window.subscriptionManager.tsApiUrl}/cart/setpendingaffiliation/`;
+        setAffiliationUrl += `?customerId=${window.subscriptionManager.customerId}&consultantid=${this.selectedId}&overridepending=0`;
+        const self = this;
+
+        $.ajax({
+            url: setAffiliationUrl,
+            type: 'GET',
+            dataType: 'JSON', // added data type
+            success(response) {
+                if (response) {
+                    // Close the modal
+                    self.closeModal();
+                }
+            },
+        });
     }
 
     continueWithInternal() {
@@ -472,7 +553,9 @@ class FindAConsultant {
     setConsultant(consultant) {
         this.consultant = consultant;
 
-        this.renderConsultant();
+        if (!$(this.$findConsultant).hasClass('consultant-finder')) {
+            this.renderConsultant();
+        }
     }
 
     renderConsultant() {
@@ -539,11 +622,16 @@ class FindAConsultant {
     }
 
     renderConsultantInHeader() {
+        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+            return;
+        }
         $('.header-top .header-top-links').prepend(this.$findConsultant);
 
         // Account for consultant in the sticky header
         const $header = $('#headerMain');
+
         const offsetTop = $header.offset().top;
+
         const isStickyHeader = $header.hasClass('sticky-header');
         const isStickyHeaderDisabled = !isStickyHeader && !(window.pageYOffset === offsetTop);
 
@@ -599,7 +687,7 @@ class FindAConsultant {
         $('.alertbox-error').hide();
         this.clearConsultantWindow();
 
-        const $matchingConsultants = $('<span>', { class: 'frame-caption matching' });
+        const $matchingConsultants = $('<span>', { class: 'frame-caption matching', id: 'consultant-search-results-total' });
         $matchingConsultants.text(`${response.TotalRecordCount} Consultant's Matching \"${this.searchQuery}\"`);
         $('#consultant-search-results .genmodal-body .search-filter-wrapper').append($matchingConsultants);
 
@@ -619,6 +707,11 @@ class FindAConsultant {
                 this.getPagination(response);
             }
         });
+
+        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+            $('#consultant-continue').hide();
+            $('#autoship-consultant-continue').show();
+        }
     }
 
     renderNoResults() {
@@ -692,6 +785,11 @@ export default function (themeSettings) {
     $(document).ready(() => {
         const consultant = new FindAConsultant(
             document.querySelector('.headertoplinks-consult'),
+            'common/find-consultant',
+            tsConsultantId,
+        );
+        const autoshipConsultant = new FindAConsultant(
+            document.querySelector('.consultant-finder'),
             'common/find-consultant',
             tsConsultantId,
         );

@@ -255,7 +255,6 @@ class FindAConsultant {
     }
 
     closeModal() {
-        console.log(this.modal);
         this.modal.close();
     }
 

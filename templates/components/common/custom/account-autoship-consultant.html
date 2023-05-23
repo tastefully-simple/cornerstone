@@ -1,0 +1,25 @@
+<div class="my-subscriptions-consultant" id="my-subscriptions-consultant">
+    <p class="current-consultant">{{lang 'subscriptions.current_consultant'}} <b id="current-consultant-name"></b></p>
+    <div class="icon-with-tooltip">
+        <span class="icon-system-info" data-dropdown="consultant-tooltip"></span>
+        {{> components/common/tooltip-square tooltip_content_id="consultant-tooltip" }}
+    </div>
+    <p class="change-consultant-link"><a href="#">{{lang 'subscriptions.change_consultant'}}</a></p>
+</div>
+<style>
+    .tooltip-content {
+        left: unset !important;
+        min-width: 200px;
+        right: -6px;
+        text-align: left;
+        top: 2px !important;
+    }
+
+    .tooltip-right::before {
+        right: 9% !important;
+    }
+
+    #consultant-tooltip {
+        font-size: 10px;
+    }
+</style>

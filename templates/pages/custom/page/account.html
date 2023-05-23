@@ -25,6 +25,7 @@
         {{> components/page/rss_feed}}
         {{else}}
         {{> components/account/navigation}}
+        {{> components/common/custom/account-autoship-consultant}}
         <p>{{{page.content}}}</p>
         {{/replace}}
         {{else}}
@@ -48,6 +49,11 @@
     const tabId = window.location.pathname.replaceAll('/', '');
     document.getElementById(`tab-${tabId}`).classList.add('is-active');
 </script>
+<style>
+    .navBar--sub {
+        margin-bottom: 0 !important;
+    }
+</style>
 
 {{/partial}}
 

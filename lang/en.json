@@ -721,7 +721,11 @@
     "one_time_description": "One time only products will not be sent in future deliveries in this subscription",
     "product_added": "Product added to delivery",
     "next_order_message": "This product will be added to the next scheduled order",
-    "done": "Done"
+    "done": "Done",
+    "current_consultant": "Your current TS to You Autoship consultant is:",
+    "change_consultant": "Change my consultant",
+    "consultant": "Your TS to You consultant earns commission on your TS to You Autoship subscriptions.",
+    "consultant_title": "What is a TS to You consultant?"
   },
   "products": {
     "current_stock": "Current Stock:",

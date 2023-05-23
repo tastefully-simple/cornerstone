@@ -74,7 +74,7 @@ export default class Global extends PageManager {
         }
 
         subscriptionManager(
-            this.context.customerId, this.context.productId,
+            this.context.customerId, this.context.productId ? this.context.productId : false,
             this.context.subscriptionManagement,
         );
     }

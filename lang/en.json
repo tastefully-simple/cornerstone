@@ -725,7 +725,8 @@
     "current_consultant": "Your current TS to You Autoship consultant is:",
     "change_consultant": "Change my consultant",
     "consultant": "Your TS to You consultant earns commission on your TS to You Autoship subscriptions.",
-    "consultant_title": "What is a TS to You consultant?"
+    "consultant_title": "What is a TS to You consultant?",
+    "consultant_selected": "You selected a new TS to You consultant. Please confirm your choice."
   },
   "products": {
     "current_stock": "Current Stock:",

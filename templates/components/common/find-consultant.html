@@ -105,7 +105,7 @@
         </div>
         {{#if customer}}
         <div id="autoship-consultant-confirmation">
-            <h2>Hi, {{ first (split customer.name " ") }}</h2>
+            <p style="font-weight: bold; font-size: 16px;">Hi, {{ customer.name }}</p>
             <p>{{lang 'subscriptions.consultant_selected'}} </p>
         </div>
         {{/if}}

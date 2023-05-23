@@ -7,6 +7,7 @@ import pagination from '../common/pagination';
 import ConsultantCard from '../common/consultant-card';
 import ConsultantParties from '../common/consultant-parties';
 import TSRemoveAffiliation from '../common/ts-remove-affiliation';
+import $ from 'jquery';
 
 // Search mode
 const NO_SEARCH = 0;
@@ -209,6 +210,9 @@ class FindAConsultant {
 
         // Hide some information on the modal to display the "Confirmation" page for Autoship Consultants
         $('body').on('click', '#autoship-consultant-continue', () => this.autoshipContinueWithSelection());
+
+        // Confirm selected consultant and save it using the API
+        $('body').on('click', '#autoship-consultant-confirm', () => this.autoshipConfirmConsultant());
 
         // Submit with Tastefully Simple
         $('body').on('click', '#no-consultants-continue', () => this.continueWithInternal());
@@ -451,7 +455,8 @@ class FindAConsultant {
     }
 
     /**
-     *
+     * Find a Consultant Autoship Modal
+     * Action for button "Continue" when a consultant is selected
      */
     autoshipContinueWithSelection() {
         if (this.selectedId) {
@@ -462,26 +467,57 @@ class FindAConsultant {
     }
 
     /**
+     * Find a Consultant Autoship Modal
      * Hide all other consultants and display a "Confirm" button
      */
     autoshipHideNonSelectedConsultants() {
+        // Hide total consultant search results
         $('#consultant-search-results-total').hide();
+
+        // Hide Consultant Search results pagination
         $('.findmodal-pagination-container').hide();
+
+        // Show Confirm Consultant step
         $('#find-consultant-confirm-step').show();
+
+        // Hide Continue step
         $('#find-consultant-continue-step').hide();
+
+        // Show "Please confirm your choice" message
         $('#autoship-consultant-confirmation').show();
 
+        // Enable "Confirm" button
+        $('#autoship-consultant-confirm').attr('disabled', false);
+
         // Hide all result cards and display only the currently selected
-        $('.consultant-card .result-card').hide();
-        $('.consultant-card .result-card selected').show();
+        $('.consultant-card').hide();
+        $('.consultant-card.selected').show();
     }
 
     /**
-     *
-     * @param selectedId
+     * Find a Consultant Autoship Modal — Confirm Button Action
+     * Send API request to save the consultant and close the modal
      */
     autoshipConfirmConsultant() {
+        // Disable "Confirm" button
+        $('#autoship-consultant-confirm').attr('disabled', true);
 
+        // window.subscriptionManager is set on subscription-manager.js
+        let setAffiliationUrl = `${window.subscriptionManager.tsApiUrl}/cart/setpendingaffiliation/`;
+        setAffiliationUrl += `?customerId=${window.subscriptionManager.customerId}&consultantid=${this.selectedId}&overridepending=0`;
+        const self = this;
+
+        $.ajax({
+            url: setAffiliationUrl,
+            type: 'GET',
+            dataType: 'JSON', // added data type
+            success(response) {
+                if (response) {
+                    // Close the modal
+                    self.closeModal();
+                }
+            },
+        });
     }
 
     continueWithInternal() {

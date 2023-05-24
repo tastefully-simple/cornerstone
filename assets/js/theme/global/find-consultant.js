@@ -28,6 +28,8 @@ const API_ERROR_MESSAGE = {
     errorMessage: 'An error has occurred.',
 };
 
+window.isAutoshipModal = false;
+
 class FindAConsultant {
     constructor(trigger, template, tsConsultantId) {
         this.$findConsultant = trigger;
@@ -65,28 +67,36 @@ class FindAConsultant {
     }
 
     initListeners() {
-        // Trigger modal or go to consultant page if clicking on
-        // consultant name
-        this.$findConsultant.addEventListener('click', (e) => {
-            // Github issue #179, go to consultant page
-            if (this.consultant.id
-                && this.consultant.id !== this.TS_CONSULTANT_ID
-                && e.target.tagName !== 'SMALL'
-                && !$(e.target).hasClass('consultant-edit')
-                && !$(e.target).hasClass('consultant-remove')
-            ) {
-                window.location = CONSULTANT_PAGE;
-            } else if ($(e.target).hasClass('consultant-remove')) {
-                this.removeAffiliation.openAlert();
-            } else {
+        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+            // Always trigger the modal if this is Autoship
+            this.$findConsultant.addEventListener('click', (e) => {
+                window.isAutoshipModal = true;
                 this.createModal(e, this.modalTemplate);
-            }
-        });
-
-        if (!$(this.$findConsultant).hasClass('consultant-finder')) {
-            return;
+            });
+        } else {
+            this.bindAll();
+            // Trigger modal or go to consultant page if clicking on
+            // consultant name
+            this.$findConsultant.addEventListener('click', (e) => {
+                window.isAutoshipModal = false;
+                // Github issue #179, go to consultant page
+                if (this.consultant.id
+                    && this.consultant.id !== this.TS_CONSULTANT_ID
+                    && e.target.tagName !== 'SMALL'
+                    && !$(e.target).hasClass('consultant-edit')
+                    && !$(e.target).hasClass('consultant-remove')
+                ) {
+                    window.location = CONSULTANT_PAGE;
+                } else if ($(e.target).hasClass('consultant-remove')) {
+                    this.removeAffiliation.openAlert();
+                } else {
+                    this.createModal(e, this.modalTemplate);
+                }
+            });
         }
+    }
 
+    bindAll() {
         // Consultant edit button in cart page
         $('body').on(
             'click',
@@ -225,11 +235,11 @@ class FindAConsultant {
     }
 
     createModal(e, template) {
-        const md = defaultModal();
+        window.currentConsultantModal = defaultModal();
         $('#modal').removeClass('modal-results');
-        $('body').on('click', '.button-cancel', () => md.close());
+        $('body').on('click', '.button-cancel', () => this.closeModal());
 
-        this.modal = md;
+        this.modal = window.currentConsultantModal;
         e.preventDefault();
 
         this.modal.open({ size: 'small' });
@@ -255,7 +265,7 @@ class FindAConsultant {
     }
 
     closeModal() {
-        this.modal.close();
+        window.currentConsultantModal.close();
     }
 
     openConsultantParties(e) {
@@ -503,7 +513,7 @@ class FindAConsultant {
 
         // window.subscriptionManager is set on subscription-manager.js
         let setAffiliationUrl = `${window.subscriptionManager.tsApiUrl}/cart/setpendingaffiliation/`;
-        setAffiliationUrl += `?customerId=${window.subscriptionManager.customerId}&consultantid=${this.selectedId}&overridepending=0`;
+        setAffiliationUrl += `?customerId=${window.subscriptionManager.customerId}&consultantid=${this.selectedId}&overridepending=1`;
         const self = this;
 
         $.ajax({
@@ -512,6 +522,7 @@ class FindAConsultant {
             dataType: 'JSON', // added data type
             success(response) {
                 if (response) {
+                    $('#current-consultant-name').html($('.selected .consultant-name').text());
                     // Close the modal
                     self.closeModal();
                 }
@@ -552,10 +563,7 @@ class FindAConsultant {
     // consultant = { id: string, name: null|string, image: string }
     setConsultant(consultant) {
         this.consultant = consultant;
-
-        if (!$(this.$findConsultant).hasClass('consultant-finder')) {
-            this.renderConsultant();
-        }
+        this.renderConsultant();
     }
 
     renderConsultant() {
@@ -625,6 +633,7 @@ class FindAConsultant {
         if ($(this.$findConsultant).hasClass('consultant-finder')) {
             return;
         }
+
         $('.header-top .header-top-links').prepend(this.$findConsultant);
 
         // Account for consultant in the sticky header
@@ -708,7 +717,7 @@ class FindAConsultant {
             }
         });
 
-        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+        if (window.isAutoshipModal) {
             $('#consultant-continue').hide();
             $('#autoship-consultant-continue').show();
         }
@@ -788,11 +797,14 @@ export default function (themeSettings) {
             'common/find-consultant',
             tsConsultantId,
         );
-        const autoshipConsultant = new FindAConsultant(
-            document.querySelector('.consultant-finder'),
-            'common/find-consultant',
-            tsConsultantId,
-        );
+
+        if (window.location.pathname === '/manage-subscriptions/') {
+            new FindAConsultant(
+                document.querySelector('.consultant-finder'),
+                'common/find-consultant',
+                tsConsultantId,
+            );
+        }
 
         return consultant;
     });

@@ -1,0 +1,87 @@
+#modal-autoship-sign-in {
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 30px;
+  .modal-autoship-message-container {
+    div {
+      background-color: #c9f2d0;
+      border-radius: 2px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 30px;
+      padding-right: 30px;
+      font-size: 13px;
+    }
+  }
+
+  .modal-autoship-form-container {
+    .modal-autoship-form {
+      width: 80%;
+      margin-left: 10%;
+      clear: both;
+      h3 {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .form-actions {
+        text-align: left;
+        .button {
+          padding: 0.5rem 2.25rem;
+        }
+      }
+      .login, .login-row {
+        margin-top: 0;
+        margin-bottom: 0;
+        .login-form {
+          width: 100%;
+          margin-top: 0;
+          .form-label {
+            font-size: 13px;
+          }
+          .form-input {
+            height: 35px;
+          }
+        }
+      }
+    }
+  }
+
+  .modal-autoship-new-customer-container {
+    margin-top: 20px;
+    .panel-body {
+      .button {
+        padding: 0.5rem 2.25rem;
+      }
+    }
+    .new-customer {
+      width: 100%;
+      .panel {
+        border: 1px solid #333;
+        .panel-body {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+    h2 {
+      font-weight: 700;
+      text-align: center;
+      width: 100%;
+    }
+    .login {
+      margin: 0 !important;
+      .panel-body {
+        p {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+#modal-consultant-item-removal, #modal-consultant-choose, #modal-consultant-choose-with-party {
+  padding-top: 30px;
+  p {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,20 @@
+{{#if customer.id '>' 0}}
+<div id="modal-consultant-choose" style="width: 500px; border: 1px solid black; height: 800px;">
+    <div style="width: 80%; margin-left: 10%;">
+        <p><b>Hi, {{ first (split customer.name " ") }}!</b></p>
+        <p>{{lang 'subscriptions.modals.choose_consultant'}}</p>
+        <p>{{lang 'subscriptions.modals.current_consultant'}}<BR>
+            <input type="radio" class="choose-consultant" name="consultant" value="X"/>
+        </p>
+        <p>{{lang 'subscriptions.modals.current_consultant'}}<BR>
+            <input type="radio" class="choose-consultant" name="consultant" value="X"/> #current-consultant
+        </p>
+        <p>{{lang 'subscriptions.modals.new_consultant'}}<BR>
+            <input type="radio" class="choose-consultant" name="consultant" value="X"/> #new-consultant
+        </p>
+        <p style="text-align: center"><a href="#">
+            <button class="button button--primary">{{lang 'subscriptions.modals.select_option'}}</button>
+        </a></p>
+    </div>
+</div>
+{{/if}}

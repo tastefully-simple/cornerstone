@@ -1,0 +1,12 @@
+{{#if customer.id '>' 0}}
+<div id="modal-consultant-item-removal" style="width: 500px; border: 1px solid black; height: 800px;">
+    <div style="width: 80%; margin-left: 10%;">
+        <p><b>Hi, {{ first (split customer.name " ") }}!</b></p>
+        <p>{{lang 'subscriptions.modals.consultant_message_1'}}</p>
+        <p>{{lang 'subscriptions.modals.consultant_message_2'}}</p>
+        <p style="text-align: center"><a href="#">
+            <button class="button button--primary">{{lang 'subscriptions.modals.return'}}</button>
+        </a></p>
+    </div>
+</div>
+{{/if}}

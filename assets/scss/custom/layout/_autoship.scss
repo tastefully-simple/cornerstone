@@ -85,3 +85,19 @@
     font-size: 15px;
   }
 }
+
+#modal-consultant-item-removal, #modal-consultant-choose, #modal-consultant-choose-with-party {
+  padding-top: 30px;
+  p {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width:800px) {
+  .custom-account-page-heading {
+    margin-bottom: 0 !important;
+  }
+  #my-subscriptions-consultant {
+    margin-top: 5px;
+  }
+}

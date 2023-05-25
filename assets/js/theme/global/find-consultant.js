@@ -580,6 +580,9 @@ class FindAConsultant {
     }
 
     renderConsultantInMobileMenu() {
+        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+            return;
+        }
         $('#mobile_consultant').append(this.$findConsultant);
 
         if (this.isExternalConsultant()) {

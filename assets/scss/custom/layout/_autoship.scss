@@ -1,8 +1,9 @@
 #modal-autoship-sign-in {
-  padding-top: 20px;
   padding-left: 40px;
   padding-right: 40px;
   padding-bottom: 30px;
+  margin-bottom: 20px;
+  height: 650px;
   .modal-autoship-message-container {
     div {
       background-color: #c9f2d0;
@@ -80,14 +81,7 @@
 }
 
 #modal-consultant-item-removal, #modal-consultant-choose, #modal-consultant-choose-with-party {
-  padding-top: 30px;
-  p {
-    font-size: 15px;
-  }
-}
-
-#modal-consultant-item-removal, #modal-consultant-choose, #modal-consultant-choose-with-party {
-  padding-top: 30px;
+  width: 500px;
   p {
     font-size: 15px;
   }
@@ -99,5 +93,53 @@
   }
   #my-subscriptions-consultant {
     margin-top: 5px;
+  }
+}
+
+#subscriptions-modal-container {
+  width: 500px;
+  max-height: 800px;
+  border-radius: 3px;
+  .modal-header {
+    background-color: #cccccc;
+    border-radius: 3px;
+    text-align: left;
+    color: #7f4252;
+    font-weight: bold;
+    padding: 0.7rem 2rem 0.7rem 2rem;
+    margin-bottom: 20px;
+    .modal-close {
+      color: #7f4252;
+      top: 5px;
+    }
+  }
+  input[type="radio"] {
+    accent-color: #7f4252;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+#modal-consultant-choose {
+  .modal-consultant-choose-body {
+    width: 80%;
+    margin-left: 10%;
+    p {
+      width: 100%;
+      clear: both;
+      display: block;
+      input[type="radio"], span {
+        display: block;
+        position: relative;
+        float: left;
+      }
+      span {
+        padding-left:10px;
+        padding-bottom: 5px;
+      }
+      button {
+        margin-top: 30px;
+      }
+    }
   }
 }

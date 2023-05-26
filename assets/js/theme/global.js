@@ -31,6 +31,7 @@ import tsPartySummary from './global/ts-party-summary';
 import tsConsultant from './global/ts-consultant';
 import tsSeoProcess from './global/ts-seo-process';
 import subscriptionManager from './global/custom/subscription-manager';
+import subscriptionCart from './global/custom/subscription-cart';
 
 export default class Global extends PageManager {
     onReady() {
@@ -73,9 +74,13 @@ export default class Global extends PageManager {
             accountMenu.classList.add('is-open');
         }
 
+        console.log('this.context.subscriptionManagement');
+        console.log(this.context.subscriptionManagement);
+
         subscriptionManager(
             this.context.customerId, this.context.productId ? this.context.productId : false,
-            this.context.subscriptionManagement,
+            this.context.subscriptionManagement, this.context.customerEmail,
         );
+        subscriptionCart();
     }
 }

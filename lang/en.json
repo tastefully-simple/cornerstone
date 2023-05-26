@@ -742,7 +742,12 @@
       "new_consultant": "The TS to You consultant you selected:",
       "select_option": "Select option above to check out",
       "choose_consultant_and_party": "Thanks for being a TS to You Autoshiop member with #consultant-name! This orer contains subscription products and is being placed through #party-name and a new consultant #consultant-new. Subscriptions may only be linked to one consultant.",
-      "select": "Select an option: "
+      "select": "Select an option: ",
+      "new_consultant_and_party": "Thanks for being a TS to You Autoship member with #current-consultant-name! This order contains subscription products and is being placed through #party-host-name's party and a new consultant #new-consultant-name.",
+      "new_consultant_and_party_keep_1": "Keep your current TS to You consultant #current-consultant-name.",
+      "new_consultant_and_party_keep_2": "Host #party-host-name will *not* be credited with this order",
+      "new_consultant_and_party_change_1": "Place this order with #party-host-name's party and change your TS to You Consultant to #new-consultant-name",
+      "new_consultant_and_party_change_2": "Your Ts to You consultant will change to #new-consultant-name. If you wish to place an order with this party, return to your cart and remove subscription product and keep your current TS to You Consultant."
     }
   },
   "products": {

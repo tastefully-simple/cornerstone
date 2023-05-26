@@ -124,7 +124,7 @@
   }
 }
 
-#modal-consultant-choose {
+#modal-consultant-choose, #modal-consultant-choose-with-party {
   .modal-consultant-choose-body {
     width: 80%;
     margin-left: 10%;
@@ -145,5 +145,11 @@
         margin-top: 30px;
       }
     }
+  }
+}
+
+#modal-consultant-choose-with-party {
+  .text-current-consultant, .text-new-consultant {
+    display: none !important;
   }
 }

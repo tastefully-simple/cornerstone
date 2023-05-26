@@ -103,7 +103,7 @@ class SubscriptionCart {
             $('#modal-consultant-choose button').prop('disabled', true);
             const selectedConsultant = $('#modal-consultant-choose input[name="consultant"]:checked').val();
 
-            if (selectedConsultant !== Cookies.get('cid')) {
+            if (selectedConsultant.toString() === Cookies.get('cid').toString()) {
                 this.setConsultantAsActive(selectedConsultant);
             } else {
                 this.goToCheckout();
@@ -323,6 +323,8 @@ class SubscriptionCart {
                     };
 
                     self.showModal('choose-consultant', map);
+                } else {
+                    self.goToCheckout();
                 }
             },
         });

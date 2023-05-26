@@ -1,9 +1,7 @@
 #modal-autoship-sign-in {
-  padding-left: 40px;
-  padding-right: 40px;
   padding-bottom: 30px;
   margin-bottom: 20px;
-  height: 650px;
+  height: 700px;
   .modal-autoship-message-container {
     div {
       background-color: #c9f2d0;
@@ -14,6 +12,12 @@
       padding-right: 30px;
       font-size: 13px;
     }
+  }
+
+  .modal-autoship-sign-in-body {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
   }
 
   .modal-autoship-form-container {

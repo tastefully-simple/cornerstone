@@ -153,6 +153,8 @@ class SubscriptionCart {
                 });
             } else if (this.hasAutoshipProducts(response)) {
                 this.isCustomerLogged();
+            } else {
+                this.goToCheckout();
             }
         });
     }
@@ -306,7 +308,7 @@ class SubscriptionCart {
                 if (response) {
                     // This is a consultant.
                     self.showModal('is-consultant');
-                } else if (Cookies.get('copenparty')) {
+                } else if (Cookies.get('copenparty') == true) {
                     self.verifyPartyAndConsultant();
                 } else {
                     self.verifyConsultantUpdates();

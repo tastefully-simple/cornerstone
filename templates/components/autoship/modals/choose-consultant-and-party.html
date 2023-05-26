@@ -1,18 +1,23 @@
 {{#if customer.id '>' 0}}
-<div id="modal-consultant-choose-with-party" style="width: 500px; border: 1px solid black; height: 800px;">
-    <div style="width: 80%; margin-left: 10%;">
+<div id="modal-consultant-choose-with-party">
+    <div class="modal-header">
+        {{lang 'subscriptions.modals.choose_tstu_consultant'}}
+        {{> components/common/modal/modal-close-btn}}
+    </div>
+    <div class="modal-consultant-choose-body">
         <p><b>Hi, {{ first (split customer.name " ") }}!</b></p>
-        <p>{{lang 'subscriptions.modals.choose_consultant_and_party'}}</p>
+        <p>{{lang 'subscriptions.modals.new_consultant_and_party'}}</p>
         <p>{{lang 'subscriptions.modals.select'}}</p>
         <p>
-            <input type="radio" class="choose-consultant" name="consultant" value="X"/> #select-current
+            <input type="radio" class="choose-consultant current-consultant" name="consultant" value="#current-consultant-id"/> <span>{{lang 'subscriptions.modals.new_consultant_and_party_keep_1'}}</span>
+            <span class="text-current-consultant">{{lang 'subscriptions.modals.new_consultant_and_party_keep_2'}}</span>
         </p>
         <p>
-            <input type="radio" class="choose-consultant" name="consultant" value="Y"/> #select-new
+            <input type="radio" class="choose-consultant new-consultant" name="consultant" value="#new-consultant-id"/> <span>{{lang 'subscriptions.modals.new_consultant_and_party_change_1'}}</span>
+            <span class="text-new-consultant">{{lang 'subscriptions.modals.new_consultant_and_party_change_2'}}</span>
         </p>
-
         <p style="text-align: center"><a href="#">
-            <button class="button button--primary">{{lang 'subscriptions.modals.select_option'}}</button>
+            <button class="button button--primary" disabled>{{lang 'subscriptions.modals.select_option'}}</button>
         </a></p>
     </div>
 </div>

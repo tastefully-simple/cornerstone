@@ -87,23 +87,37 @@ class SubscriptionCart {
         // Enable button on consultant choose modal when an option is selected
         $('body').on('change', '#modal-consultant-choose input[type=radio]', () => {
             $('#modal-consultant-choose button').prop('disabled', false);
+            $('#modal-consultant-choose button').html('Checkout');
         });
 
-        //
+        // Enable button on Choose Consultant and Party modal when an option is selected
+        // Also display/hide text under the selection
+        $('body').on('change', '#modal-consultant-choose-with-party input[type=radio]', (event) => {
+            $('#modal-consultant-choose-with-party button').prop('disabled', false);
+            $('#modal-consultant-choose-with-party button').html('Checkout');
+            console.log(event.target);
+        });
+
+        // Save consultant on "choose consultant" modal
         $('body').on('click', '#modal-consultant-choose .button--primary', () => {
-            this.saveConsultant();
+            this.saveConsultant('#modal-consultant-choose');
+        });
+
+        // Save consultant on "choose consultant and party" modal
+        $('body').on('click', '#modal-consultant-choose-with-party .button--primary', () => {
+            this.saveConsultant('#modal-consultant-choose-with-party');
         });
     }
 
     /**
      * Save consultant on the Consultant Choose modal
      */
-    saveConsultant() {
-        if (!$('#modal-consultant-choose button').prop('disabled')) {
-            $('#modal-consultant-choose button').prop('disabled', true);
-            const selectedConsultant = $('#modal-consultant-choose input[name="consultant"]:checked').val();
+    saveConsultant(modalId) {
+        if (!$(`${modalId} button`).prop('disabled')) {
+            $(`${modalId} button`).prop('disabled', true);
+            const selectedConsultant = $(`${modalId} input[name="consultant"]:checked`).val();
 
-            if (selectedConsultant !== Cookies.get('cid')) {
+            if (selectedConsultant.toString() === Cookies.get('cid').toString()) {
                 this.setConsultantAsActive(selectedConsultant);
             } else {
                 this.goToCheckout();
@@ -286,8 +300,51 @@ class SubscriptionCart {
                 if (response) {
                     // This is a consultant.
                     self.showModal('is-consultant');
+                } else if (Cookies.get('copenparty')) {
+                    self.verifyPartyAndConsultant();
                 } else {
                     self.verifyConsultantUpdates();
+                }
+            },
+        });
+    }
+
+    /**
+     * Verify if the current consultant is different from the new one, when the customer has selected a party
+     */
+    verifyPartyAndConsultant() {
+        const partyHostName = Cookies.get('phost');
+        const partyId = Cookies.get('pid');
+        const newConsultantName = Cookies.get('name');
+        const newConsultantId = Cookies.get('cid');
+        const self = this;
+
+        $.ajax({
+            url: `${window.subscriptionManager.tsApiUrl}/cart/affiliations/?customerId=${window.subscriptionManager.customerId}`,
+            type: 'GET',
+            dataType: 'JSON',
+            success(consultants) {
+                const activeConsultant = consultants.filter(c => c.IsActive === true)[0];
+
+                if (!activeConsultant) {
+                    // Set the current temp consultant as active
+                    self.setConsultantAsActive(newConsultantId);
+                } else if (newConsultantId !== activeConsultant.ConsultantID.replace(/ /g, '')) {
+                    // Ask customer to choose one
+                    // Map consultant data to template
+                    const map = {
+                        '#current-consultant-name': `${activeConsultant.FirstName} ${activeConsultant.LastName}`,
+                        '#party-host-name': partyHostName,
+                        '#party-id': partyId,
+                        '#new-consultant-name': newConsultantName,
+                        '#current-consultant-id': newConsultantName,
+                        '#new-consultant-id': '',
+                        '*not*': '<b>not</b>',
+                    };
+
+                    self.showModal('choose-consultant-and-party', map);
+                } else {
+                    self.goToCheckout();
                 }
             },
         });
@@ -323,6 +380,8 @@ class SubscriptionCart {
                     };
 
                     self.showModal('choose-consultant', map);
+                } else {
+                    self.goToCheckout();
                 }
             },
         });

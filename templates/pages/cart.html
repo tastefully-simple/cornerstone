@@ -2,6 +2,10 @@
 cart: true
 ---
 {{#partial "page"}}
+{{~inject 'subscriptionManagement' theme_settings.subscription_management}}
+{{~inject 'customerId' customer.id}}
+{{~inject 'customerEmail' customer.email}}
+{{~inject 'cartId' cart_id}}
 <div class="page">
 
     <main class="page-content cart-content" data-cart>
@@ -67,6 +71,8 @@ cart: true
         {{> components/cart/modals/find-affiliate}}
     </main>
 </div>
+<div id="subscriptions-modal-container" class="modal" data-reveal></div>
+
 <style>
     .partybar {
         display: none;

@@ -730,6 +730,9 @@
     "modals": {
       "sign_in_message": "Sign in or create an account to purchase TSTU Autoship subscription products.",
       "sign_in": "Sign in",
+      "account_alert": "Account Alert",
+      "ready": "Ready for TSTU Autoship?",
+      "choose_tstu_consultant": "Choose your TSTU Consultant",
       "create_account": "Create an account to save and manage your subscriptions. You'll also be able to check-out quicker and have the ability to save a wish list just by creating a FREE account with us.",
       "consultant_message_1": "It looks like you are a Tastefully Simple consultant. Please, use TS Central Orders to place your Autoship Order.",
       "consultant_message_2": "Please return to your cart to remove your subscription products.",

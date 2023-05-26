@@ -119,7 +119,7 @@ function displayAutoshipConsultant() {
     $.ajax({
         url: `${window.subscriptionManager.tsApiUrl}/cart/affiliations/?customerId=${window.subscriptionManager.customerId}`,
         type: 'GET',
-        dataType: 'JSON', // added data type
+        dataType: 'JSON',
         success(consultants) {
             if (consultants) {
                 // Get the current active consultant. There should be only one
@@ -254,8 +254,8 @@ async function updateSubscription(subscriptionId, productId) {
  * @param subscriptionManagement
  * @returns {boolean}
  */
-export default function (customerId, productId, subscriptionManagement) {
-    if (!customerId || !subscriptionManagement.enabled) {
+export default function (customerId, productId, subscriptionManagement, customerEmail) {
+    if (!subscriptionManagement.enabled) {
         return false;
     }
 
@@ -266,12 +266,23 @@ export default function (customerId, productId, subscriptionManagement) {
         tsApiUrl: window.theme_settings.ts_api_environment
             ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_base_url}`
             : `https:\/\/${window.theme_settings.ts_tsapi_base_url}`,
+        consultantApiUrl: window.theme_settings.ts_api_environment
+            ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.consultant_api_base_url}`
+            : `https:\/\/${window.theme_settings.consultant_api_base_url}`,
         subscriptions: [],
         subs: [],
         version: 'next',
-        customerId,
-        productId,
+        customerId: false,
+        customerEmail: false,
+        productId: false,
     };
+
+    if (!customerId) {
+        return false;
+    }
+
+    window.subscriptionManager.customerId = customerId;
+    window.subscriptionManager.customerEmail = customerEmail;
 
     $(document).ready(() => {
         // Verify if this customer has subscriptions
@@ -282,11 +293,12 @@ export default function (customerId, productId, subscriptionManagement) {
         return false;
     }
 
+    window.subscriptionManager.productId = productId;
+
     $(document).ready(() => {
         // Verify if this product has the Bold widget
         isAutoshipEnabled(productId);
     });
-
 
     $('body').on('click', '.subscription-select', (event) => {
         $('.subscriptions-continue').removeClass('disabled');

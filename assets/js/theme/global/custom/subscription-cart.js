@@ -86,16 +86,22 @@ class SubscriptionCart {
 
         // Enable button on consultant choose modal when an option is selected
         $('body').on('change', '#modal-consultant-choose input[type=radio]', () => {
-            $('#modal-consultant-choose button').prop('disabled', false);
-            $('#modal-consultant-choose button').html('Checkout');
+            $('#modal-consultant-choose .button--primary').prop('disabled', false);
+            $('#modal-consultant-choose .button--primary').html('Checkout');
         });
 
         // Enable button on Choose Consultant and Party modal when an option is selected
         // Also display/hide text under the selection
         $('body').on('change', '#modal-consultant-choose-with-party input[type=radio]', (event) => {
-            $('#modal-consultant-choose-with-party button').prop('disabled', false);
-            $('#modal-consultant-choose-with-party button').html('Checkout');
-            console.log(event.target);
+            $('#modal-consultant-choose-with-party .button--primary').prop('disabled', false);
+            $('#modal-consultant-choose-with-party .button--primary').html('Checkout');
+            if ($(event.target).hasClass('current-consultant')) {
+                $('.text-current-consultant').css('visibility', 'visible');
+                $('.text-new-consultant').css('visibility', 'hidden');
+            } else {
+                $('.text-current-consultant').css('visibility', 'hidden');
+                $('.text-new-consultant').css('visibility', 'visible');
+            }
         });
 
         // Save consultant on "choose consultant" modal
@@ -333,12 +339,13 @@ class SubscriptionCart {
                     // Ask customer to choose one
                     // Map consultant data to template
                     const map = {
-                        '#current-consultant-name': `${activeConsultant.FirstName} ${activeConsultant.LastName}`,
-                        '#party-host-name': partyHostName,
+                        '#current-consultant-name': `<b>${activeConsultant.FirstName} ${activeConsultant.LastName}</b>`,
+                        '#party-host-name-party': `<b>${partyHostName}'s</b>`,
+                        '#party-host-name': `<b>${partyHostName}</b>`,
                         '#party-id': partyId,
-                        '#new-consultant-name': newConsultantName,
+                        '#new-consultant-name': `<b>${newConsultantName}</b>`,
                         '#current-consultant-id': newConsultantName,
-                        '#new-consultant-id': '',
+                        '#new-consultant-id': newConsultantId,
                         '*not*': '<b>not</b>',
                     };
 

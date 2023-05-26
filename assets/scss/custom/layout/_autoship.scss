@@ -150,6 +150,11 @@
 
 #modal-consultant-choose-with-party {
   .text-current-consultant, .text-new-consultant {
-    display: none !important;
+    padding-left: 30px !important;
+    color: #7f4252;
+    visibility: hidden;
+  }
+  .choose-consultant-option {
+    width: 95%;
   }
 }

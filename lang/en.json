@@ -726,7 +726,24 @@
     "change_consultant": "Change my consultant",
     "consultant": "Your TS to You consultant earns commission on your TS to You Autoship subscriptions.",
     "consultant_title": "What is a TS to You consultant?",
-    "consultant_selected": "You selected a new TS to You consultant. Please confirm your choice."
+    "consultant_selected": "You selected a new TS to You consultant. Please confirm your choice.",
+    "modals": {
+      "sign_in_message": "Sign in or create an account to purchase TSTU Autoship subscription products.",
+      "sign_in": "Sign in",
+      "account_alert": "Account Alert",
+      "ready": "Ready for TSTU Autoship?",
+      "choose_tstu_consultant": "Choose your TSTU Consultant",
+      "create_account": "Create an account to save and manage your subscriptions. You'll also be able to check-out quicker and have the ability to save a wish list just by creating a FREE account with us.",
+      "consultant_message_1": "It looks like you are a Tastefully Simple consultant. Please, use TS Central Orders to place your Autoship Order.",
+      "consultant_message_2": "Please return to your cart to remove your subscription products.",
+      "return": "Return to Cart",
+      "choose_consultant": "Thanks for being a TS to You Autoshiop member with #consultant-name. Subscriptions may only be linked to one consultant. Select one below:",
+      "current_consultant": "Your current TS to You consultant:",
+      "new_consultant": "The TS to You consultant you selected:",
+      "select_option": "Select option above to check out",
+      "choose_consultant_and_party": "Thanks for being a TS to You Autoshiop member with #consultant-name! This orer contains subscription products and is being placed through #party-name and a new consultant #consultant-new. Subscriptions may only be linked to one consultant.",
+      "select": "Select an option: "
+    }
   },
   "products": {
     "current_stock": "Current Stock:",

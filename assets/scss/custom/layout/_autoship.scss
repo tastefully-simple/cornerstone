@@ -1,0 +1,145 @@
+#modal-autoship-sign-in {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+  height: 650px;
+  .modal-autoship-message-container {
+    div {
+      background-color: #c9f2d0;
+      border-radius: 2px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 30px;
+      padding-right: 30px;
+      font-size: 13px;
+    }
+  }
+
+  .modal-autoship-form-container {
+    .modal-autoship-form {
+      width: 80%;
+      margin-left: 10%;
+      clear: both;
+      h3 {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .form-actions {
+        text-align: left;
+        .button {
+          padding: 0.5rem 2.25rem;
+        }
+      }
+      .login, .login-row {
+        margin-top: 0;
+        margin-bottom: 0;
+        .login-form {
+          width: 100%;
+          margin-top: 0;
+          .form-label {
+            font-size: 13px;
+          }
+          .form-input {
+            height: 35px;
+          }
+        }
+      }
+    }
+  }
+
+  .modal-autoship-new-customer-container {
+    margin-top: 20px;
+    .panel-body {
+      .button {
+        padding: 0.5rem 2.25rem;
+      }
+    }
+    .new-customer {
+      width: 100%;
+      .panel {
+        border: 1px solid #333;
+        .panel-body {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+    h2 {
+      font-weight: 700;
+      text-align: center;
+      width: 100%;
+    }
+    .login {
+      margin: 0 !important;
+      .panel-body {
+        p {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+#modal-consultant-item-removal, #modal-consultant-choose, #modal-consultant-choose-with-party {
+  width: 500px;
+  p {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width:800px) {
+  .custom-account-page-heading {
+    margin-bottom: 0 !important;
+  }
+  #my-subscriptions-consultant {
+    margin-top: 5px;
+  }
+}
+
+#subscriptions-modal-container {
+  width: 500px;
+  max-height: 800px;
+  border-radius: 3px;
+  .modal-header {
+    background-color: #cccccc;
+    border-radius: 3px;
+    text-align: left;
+    color: #7f4252;
+    font-weight: bold;
+    padding: 0.7rem 2rem 0.7rem 2rem;
+    margin-bottom: 20px;
+    .modal-close {
+      color: #7f4252;
+      top: 5px;
+    }
+  }
+  input[type="radio"] {
+    accent-color: #7f4252;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+#modal-consultant-choose {
+  .modal-consultant-choose-body {
+    width: 80%;
+    margin-left: 10%;
+    p {
+      width: 100%;
+      clear: both;
+      display: block;
+      input[type="radio"], span {
+        display: block;
+        position: relative;
+        float: left;
+      }
+      span {
+        padding-left:10px;
+        padding-bottom: 5px;
+      }
+      button {
+        margin-top: 30px;
+      }
+    }
+  }
+}

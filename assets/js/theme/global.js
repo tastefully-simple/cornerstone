@@ -74,9 +74,6 @@ export default class Global extends PageManager {
             accountMenu.classList.add('is-open');
         }
 
-        console.log('this.context.subscriptionManagement');
-        console.log(this.context.subscriptionManagement);
-
         subscriptionManager(
             this.context.customerId, this.context.productId ? this.context.productId : false,
             this.context.subscriptionManagement, this.context.customerEmail,

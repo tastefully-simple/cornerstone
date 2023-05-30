@@ -4,6 +4,8 @@ import 'foundation-sites/js/foundation/foundation';
 import swal from '../../global/sweet-alert';
 import utils from '@bigcommerce/stencil-utils';
 
+window.allowSubscriptionCheckout = false;
+
 class SubscriptionCart {
     constructor() {
         this.getAutoshipProducts();
@@ -135,7 +137,7 @@ class SubscriptionCart {
      * Redirect customer to the checkout page
      */
     goToCheckout() {
-        window.location = '/checkout';
+        window.allowSubscriptionCheckout = true;
     }
 
     /**

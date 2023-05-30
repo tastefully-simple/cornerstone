@@ -138,6 +138,7 @@ class SubscriptionCart {
      */
     goToCheckout() {
         window.allowSubscriptionCheckout = true;
+        document.querySelector('.cart-actions .button--primary').click();
     }
 
     /**
@@ -156,7 +157,7 @@ class SubscriptionCart {
             } else if (this.hasAutoshipProducts(response)) {
                 this.isCustomerLogged();
             } else {
-                this.goToCheckout();
+                window.location = '/checkout';
             }
         });
     }

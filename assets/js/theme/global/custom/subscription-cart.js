@@ -311,7 +311,7 @@ class SubscriptionCart {
                 if (response) {
                     // This is a consultant.
                     self.showModal('is-consultant');
-                } else if (Cookies.get('copenparty') == true) {
+                } else if (Cookies.get('copenparty').toString() === 'true') {
                     self.verifyPartyAndConsultant();
                 } else {
                     self.verifyConsultantUpdates();
@@ -327,7 +327,7 @@ class SubscriptionCart {
         const partyHostName = Cookies.get('phost');
         const partyId = Cookies.get('pid');
         const newConsultantName = Cookies.get('name');
-        const newConsultantId = Cookies.get('cid');
+        const newConsultantId = Cookies.get('cid').toString();
         const self = this;
 
         $.ajax({

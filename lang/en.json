@@ -728,11 +728,11 @@
     "consultant_title": "What is a TS to You consultant?",
     "consultant_selected": "You selected a new TS to You consultant. Please confirm your choice.",
     "modals": {
-      "sign_in_message": "Sign in or create an account to purchase Ts to You Autoship subscription products.",
+      "sign_in_message": "Sign in or create an account to purchase TS to You Autoship subscription products.",
       "sign_in": "Sign in",
       "account_alert": "Account Alert",
-      "ready": "Ready for Ts to You Autoship?",
-      "choose_tstu_consultant": "Choose your Ts to You Consultant",
+      "ready": "Ready for TS to You Autoship?",
+      "choose_tstu_consultant": "Choose your TS to You Consultant",
       "create_account": "Create an account to save and manage your subscriptions. You'll also be able to check-out quicker and have the ability to save a wish list just by creating a FREE account with us.",
       "consultant_message_1": "It looks like you are a Tastefully Simple consultant. Please, use TS Central Orders to place your Autoship Order.",
       "consultant_message_2": "Please return to your cart to remove your subscription products.",
@@ -748,7 +748,7 @@
       "new_consultant_and_party_keep_1": "Keep your current TS to You consultant #current-consultant-name.",
       "new_consultant_and_party_keep_2": "Host #party-host-name will *not* be credited with this order",
       "new_consultant_and_party_change_1": "Place this order with #party-host-name-party party and change your TS to You Consultant to #new-consultant-name",
-      "new_consultant_and_party_change_2": "Your Ts to You consultant will change to #new-consultant-name. If you wish to place an order with this party, return to your cart and remove subscription product and keep your current TS to You Consultant."
+      "new_consultant_and_party_change_2": "Your TS to You consultant will change to #new-consultant-name. If you wish to place an order with this party, return to your cart and remove subscription product and keep your current TS to You Consultant."
     }
   },
   "products": {

@@ -3,13 +3,16 @@ import $ from 'jquery';
 import 'foundation-sites/js/foundation/foundation';
 import swal from '../../global/sweet-alert';
 import utils from '@bigcommerce/stencil-utils';
+import TSCookie from '../../common/ts-cookie';
+import ConsultantParties from '../../common/consultant-parties';
 
 window.allowSubscriptionCheckout = false;
 
 class SubscriptionCart {
-    constructor() {
+    constructor(tsConsultantId) {
         this.getAutoshipProducts();
         this.initListeners();
+        this.TS_CONSULTANT_ID = tsConsultantId;
     }
 
     /**
@@ -147,6 +150,8 @@ class SubscriptionCart {
      */
     init(e) {
         e.preventDefault();
+        this.verifyShopDirectlyWithTst();
+
         utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
             if (err) {
                 console.error(`Failed to get cart. Error: ${err}`);
@@ -160,6 +165,32 @@ class SubscriptionCart {
                 window.location = '/checkout';
             }
         });
+    }
+
+    /**
+     * Verify if the customer chose the option to shop wth Tastefully Simple
+     */
+    verifyShopDirectlyWithTst() {
+        if (document.getElementById('tsacf-shopdirect') &&
+            document.getElementById('tsacf-shopdirect').checked) {
+            // Set Tastefully Simple as the consultant
+            TSCookie.deleteParty();
+            TSCookie.setConsultantId(this.TS_CONSULTANT_ID);
+            TSCookie.setConsultantName('Tastefully Simple');
+            TSCookie.setConsultantImage(null);
+            TSCookie.setConsultantHasOpenParty(false);
+        }
+    }
+
+    /**
+     * Verifies if the current consultant has open parties
+     * @returns {any|boolean}
+     */
+    hasOpenParties() {
+        const pid = TSCookie.getPartyId();
+        const hasOpenParties = JSON.parse(TSCookie.getConsultantHasOpenParty());
+
+        return (hasOpenParties && pid === 'null');
     }
 
     /**
@@ -311,13 +342,29 @@ class SubscriptionCart {
                 if (response) {
                     // This is a consultant.
                     self.showModal('is-consultant');
-                } else if (Cookies.get('copenparty').toString() === 'true') {
+                } else if (self.hasOpenParties()) {
+                    // Show party selection modal
+                    this.showConsultantPartiesModal();
+                } else if (Cookies.get('copenparty') && Cookies.get('copenparty').toString() === 'true') {
                     self.verifyPartyAndConsultant();
                 } else {
                     self.verifyConsultantUpdates();
                 }
             },
         });
+    }
+
+    /**
+     * Ask customer to choose a party
+     */
+    showConsultantPartiesModal() {
+        const consultant = TSCookie.getConsultantData();
+        new ConsultantParties(
+            Cookies.get('cid'),
+            {},
+            consultant,
+            (() => {}),
+        );
     }
 
     /**
@@ -367,7 +414,7 @@ class SubscriptionCart {
      * If they are different, ask the customer to choose one of them
      */
     verifyConsultantUpdates() {
-        const newConsultant = Cookies.get('cid').replace(/ /g, '');
+        const newConsultant = Cookies.get('cid') ? Cookies.get('cid').replace(/ /g, '') : false;
         const self = this;
 
         $.ajax({
@@ -377,7 +424,7 @@ class SubscriptionCart {
             success(consultants) {
                 const activeConsultant = consultants.filter(c => c.IsActive === true)[0];
 
-                if (!activeConsultant) {
+                if (!activeConsultant && newConsultant) {
                     // Set the current temp consultant as active
                     self.setConsultantAsActive(newConsultant);
                 } else if (newConsultant !== activeConsultant.ConsultantID.replace(/ /g, '')) {
@@ -422,8 +469,8 @@ class SubscriptionCart {
     }
 }
 
-export default function () {
+export default function (themeSettings) {
     if (window.location.href.indexOf('/cart.php') > -1) {
-        return new SubscriptionCart();
+        return new SubscriptionCart(themeSettings.ts_consultant_id);
     }
 }

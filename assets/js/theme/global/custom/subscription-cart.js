@@ -153,6 +153,7 @@ class SubscriptionCart {
      * @param e
      */
     init(e) {
+        const self = this;
         e.preventDefault();
         this.verifyShopDirectlyWithTst();
 
@@ -163,8 +164,8 @@ class SubscriptionCart {
                     text: 'An error has happened. Please, try again later. (001)',
                     icon: 'error',
                 });
-            } else if (this.hasAutoshipProducts(response)) {
-                this.isCustomerLogged();
+            } else if (self.hasAutoshipProducts(response)) {
+                self.isCustomerLogged();
             } else {
                 window.location = '/checkout';
             }
@@ -194,7 +195,7 @@ class SubscriptionCart {
         const pid = TSCookie.getPartyId();
         const hasOpenParties = JSON.parse(TSCookie.getConsultantHasOpenParty());
 
-        return (hasOpenParties && pid === 'null');
+        return (hasOpenParties && (pid === 'null' || typeof pid === 'undefined' || !pid));
     }
 
     /**
@@ -348,7 +349,7 @@ class SubscriptionCart {
                     self.showModal('is-consultant');
                 } else if (self.hasOpenParties()) {
                     // Show party selection modal
-                    this.showConsultantPartiesModal();
+                    self.showConsultantPartiesModal();
                 } else if (Cookies.get('copenparty') && Cookies.get('copenparty').toString() === 'true') {
                     self.verifyPartyAndConsultant();
                 } else {

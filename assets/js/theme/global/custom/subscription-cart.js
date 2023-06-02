@@ -81,7 +81,7 @@ class SubscriptionCart {
         // Bind To checkout Button
         $('#page-wrapper').on('click', '.cart-actions .button--primary', (event) => {
             event.preventDefault();
-            if (window.boldCheckoutSubmitted === true) {
+            if (window.boldCheckoutSubmitted === true || window.allowSubscriptionCheckout === true) {
                 return;
             }
             this.init(event);
@@ -195,7 +195,7 @@ class SubscriptionCart {
         const pid = TSCookie.getPartyId();
         const hasOpenParties = JSON.parse(TSCookie.getConsultantHasOpenParty());
 
-        return (hasOpenParties && (pid === 'null' || typeof pid === 'undefined' || !pid));
+        return (hasOpenParties && (typeof pid === 'undefined' || !pid) && pid !== 'null');
     }
 
     /**
@@ -344,13 +344,14 @@ class SubscriptionCart {
             type: 'GET',
             dataType: 'JSON',
             success(response) {
+                const pid = TSCookie.getPartyId();
                 if (response) {
                     // This is a consultant.
                     self.showModal('is-consultant');
                 } else if (self.hasOpenParties()) {
                     // Show party selection modal
                     self.showConsultantPartiesModal();
-                } else if (Cookies.get('copenparty') && Cookies.get('copenparty').toString() === 'true') {
+                } else if (pid && pid !== 'null') {
                     self.verifyPartyAndConsultant();
                 } else {
                     self.verifyConsultantUpdates();
@@ -442,7 +443,6 @@ class SubscriptionCart {
                         '#new-consultant-id': newConsultant,
                         '#new-consultant-name': Cookies.get('name'),
                     };
-
                     self.showModal('choose-consultant', map);
                 } else {
                     self.goToCheckout();

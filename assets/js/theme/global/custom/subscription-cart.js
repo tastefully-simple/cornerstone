@@ -6,7 +6,10 @@ import utils from '@bigcommerce/stencil-utils';
 import TSCookie from '../../common/ts-cookie';
 import ConsultantParties from '../../common/consultant-parties';
 
+// This is set as TRUE when all conditions to proceed to the checkout are cleared
 window.allowSubscriptionCheckout = false;
+
+// This is set as TRUE after BOLD submits to their checkout. It prevents the modals from being displayed again
 window.boldCheckoutSubmitted = false;
 
 class SubscriptionCart {
@@ -158,6 +161,7 @@ class SubscriptionCart {
         this.verifyShopDirectlyWithTst();
 
         utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
+            const pid = TSCookie.getPartyId();
             if (err) {
                 console.error(`Failed to get cart. Error: ${err}`);
                 swal.fire({
@@ -166,7 +170,7 @@ class SubscriptionCart {
                 });
             } else if (self.hasAutoshipProducts(response)) {
                 self.isCustomerLogged();
-            } else {
+            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined')) {
                 window.location = '/checkout';
             }
         });

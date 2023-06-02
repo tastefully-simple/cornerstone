@@ -7,6 +7,7 @@ import TSCookie from '../../common/ts-cookie';
 import ConsultantParties from '../../common/consultant-parties';
 
 window.allowSubscriptionCheckout = false;
+window.boldCheckoutSubmitted = false;
 
 class SubscriptionCart {
     constructor(tsConsultantId) {
@@ -80,6 +81,9 @@ class SubscriptionCart {
         // Bind To checkout Button
         $('#page-wrapper').on('click', '.cart-actions .button--primary', (event) => {
             event.preventDefault();
+            if (window.boldCheckoutSubmitted === true) {
+                return;
+            }
             this.init(event);
         });
 

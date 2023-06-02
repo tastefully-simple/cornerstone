@@ -315,6 +315,7 @@ class SubscriptionCart {
      */
     fetchLogin(data) {
         const self = this;
+        const pid = TSCookie.getPartyId();
         return this.sendLoginRequest(data)
             .done(async (res) => {
                 const $resHtml = $(res);
@@ -331,7 +332,12 @@ class SubscriptionCart {
                         } else {
                             window.subscriptionManager.customerId = response.customerId;
                             window.subscriptionManager.customerEmail = response.email;
-                            self.isCustomerConsultant();
+
+                            if (self.hasAutoshipProducts(response)) {
+                                self.isCustomerLogged();
+                            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined')) {
+                                window.location = '/checkout';
+                            }
                         }
                     });
                 }

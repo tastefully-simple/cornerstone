@@ -20,6 +20,34 @@ class SubscriptionCart {
     }
 
     /**
+     * Renew the Current Customer API JWT token
+     * @TODO Unify this with the one on subscription-manager.js
+     * @returns {Promise<void>}
+     */
+    renewToken = async function renewToken() {
+        const resource = `/customer/current.jwt?app_client_id=${window.currentCustomer.bigcommerce_app_client_id}`;
+        window.currentCustomer.token = await fetch(resource)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.text();
+                }
+                swal.fire({
+                    text: 'An error has happened. Please, try again later. (001)',
+                    icon: 'error',
+                });
+                return response.status;
+            })
+            .catch(error => {
+                console.log(error);
+                swal.fire({
+                    text: 'An error has happened. Please, try again later. (002)',
+                    icon: 'error',
+                });
+                return -1;
+            });
+    }
+
+    /**
      * Replaces all occurrences of the string "mapArray key" with the "mapArray value" in the "template" string
      * @param template
      * @param mapArray
@@ -465,16 +493,24 @@ class SubscriptionCart {
      * Set a given consultant as active
      * @param consultantId
      */
-    setConsultantAsActive(consultantId) {
+    async setConsultantAsActive(consultantId) {
+        await this.renewToken();
         // window.subscriptionManager is set on subscription-manager.js
-        let setAffiliationUrl = `${window.subscriptionManager.tsApiUrl}/cart/setpendingaffiliation/`;
-        setAffiliationUrl += `?customerId=${window.subscriptionManager.customerId}&consultantid=${consultantId}&overridepending=1`;
+        const setAffiliationUrl = `${window.subscriptionManager.apiUrl}/Customers/${window.subscriptionManager.customerId}/affiliation/`;
         const self = this;
 
         $.ajax({
             url: setAffiliationUrl,
-            type: 'GET',
+            type: 'POST',
             dataType: 'JSON',
+            headers: {
+                'Content-Type': 'application/json',
+                'jwt-token': window.currentCustomer.token,
+            },
+            data: JSON.stringify({
+                consultantId,
+                overridePending: 1,
+            }),
             success(response) {
                 if (response) {
                     self.goToCheckout();

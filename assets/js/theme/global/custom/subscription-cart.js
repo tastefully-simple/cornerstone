@@ -509,7 +509,7 @@ class SubscriptionCart {
             },
             data: JSON.stringify({
                 consultantId,
-                overridePending: 1,
+                overridePending: 0,
             }),
             success(response) {
                 if (response) {

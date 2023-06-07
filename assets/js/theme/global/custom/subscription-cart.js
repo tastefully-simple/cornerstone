@@ -426,26 +426,34 @@ class SubscriptionCart {
             dataType: 'JSON',
             success(consultants) {
                 const activeConsultant = consultants.filter(c => c.IsActive === true)[0];
-                const tempConsultant = consultants.filter(c => c.IsActive === false)[0];
+                const activeConsultantId = activeConsultant ? activeConsultant.ConsultantID.replace(/ /g, '') : false;
+                const pendingConsultant = consultants.filter(c => c.IsActive === false)[0];
+                const pendingConsultantId = pendingConsultant ? pendingConsultant.ConsultantID.replace(/ /g, '') : false;
 
-                if (newConsultantId !== activeConsultant.ConsultantID.replace(/ /g, '') &&
-                    (typeof tempConsultant === 'undefined' || newConsultantId !== tempConsultant.ConsultantID.replace(/ /g, ''))) {
+                if (activeConsultantId === false && pendingConsultantId === false) {
+                    // Set newconsultant as pending
+                    self.setConsultantAsPending(newConsultantId);
+                    // Go to Checkout page
+                    self.goToCheckout();
+                } else if (newConsultantId === activeConsultantId || newConsultantId === pendingConsultantId) {
+                    // Go to the checkout
+                    self.goToCheckout();
+                } else {
+                    const consultantName = activeConsultantId ? `${activeConsultant.FirstName} ${activeConsultant.LastName}` : `${pendingConsultant.FirstName} ${pendingConsultant.LastName}`;
                     // Ask customer to choose one
                     // Map consultant data to template
                     const map = {
-                        '#current-consultant-name': `<b>${activeConsultant.FirstName} ${activeConsultant.LastName}</b>`,
+                        '#current-consultant-name': `<b>${consultantName}</b>`,
                         '#party-host-name-party': `<b>${partyHostName}'s</b>`,
                         '#party-host-name': `<b>${partyHostName}</b>`,
                         '#party-id': partyId,
                         '#new-consultant-name': `<b>${newConsultantName}</b>`,
-                        '#current-consultant-id': newConsultantName,
+                        '#current-consultant-id': activeConsultantId || pendingConsultant,
                         '#new-consultant-id': newConsultantId,
                         '*not*': '<b>not</b>',
                     };
 
                     self.showModal('choose-consultant-and-party', map);
-                } else {
-                    self.goToCheckout();
                 }
             },
         });
@@ -456,7 +464,7 @@ class SubscriptionCart {
      * If they are different, ask the customer to choose one of them
      */
     verifyConsultantUpdates() {
-        const newConsultant = Cookies.get('cid') ? Cookies.get('cid').replace(/ /g, '') : false;
+        const newConsultantId = Cookies.get('cid') ? Cookies.get('cid').replace(/ /g, '') : false;
         const self = this;
 
         $.ajax({
@@ -465,22 +473,30 @@ class SubscriptionCart {
             dataType: 'JSON',
             success(consultants) {
                 const activeConsultant = consultants.filter(c => c.IsActive === true)[0];
-                const tempConsultant = consultants.filter(c => c.IsActive === false)[0];
+                const activeConsultantId = activeConsultant ? activeConsultant.ConsultantID.replace(/ /g, '') : false;
+                const pendingConsultant = consultants.filter(c => c.IsActive === false)[0];
+                const pendingConsultantId = pendingConsultant ? pendingConsultant.ConsultantID.replace(/ /g, '') : false;
 
-                if (newConsultant !== activeConsultant.ConsultantID.replace(/ /g, '') &&
-                    (typeof tempConsultant === 'undefined' || newConsultant !== tempConsultant.ConsultantID.replace(/ /g, ''))) {
+                if (activeConsultantId === false && pendingConsultantId === false) {
+                    // Set newconsultant as pending
+                    self.setConsultantAsPending(newConsultantId);
+                    // Go to Checkout page
+                    self.goToCheckout();
+                } else if (newConsultantId === activeConsultantId || newConsultantId === pendingConsultantId) {
+                    // Go to the checkout
+                    self.goToCheckout();
+                } else {
+                    const consultantName = activeConsultantId ? `${activeConsultant.FirstName} ${activeConsultant.LastName}` : `${pendingConsultant.FirstName} ${pendingConsultant.LastName}`;
                     // Ask customer to choose one
                     // Map consultant data to template
                     const map = {
-                        '#current-consultant-id': activeConsultant.ConsultantID.replace(/ /g, ''),
-                        '#current-consultant-name': `${activeConsultant.FirstName} ${activeConsultant.LastName}`,
-                        '#consultant-name': `<b>${activeConsultant.FirstName} ${activeConsultant.LastName}</b>`,
-                        '#new-consultant-id': newConsultant,
+                        '#current-consultant-id': activeConsultantId || pendingConsultantId,
+                        '#current-consultant-name': consultantName,
+                        '#consultant-name': `<b>${consultantName}</b>`,
+                        '#new-consultant-id': newConsultantId,
                         '#new-consultant-name': Cookies.get('name'),
                     };
                     self.showModal('choose-consultant', map);
-                } else {
-                    self.goToCheckout();
                 }
             },
         });

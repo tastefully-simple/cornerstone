@@ -12,39 +12,38 @@ window.allowSubscriptionCheckout = false;
 // This is set as TRUE after BOLD submits to their checkout. It prevents the modals from being displayed again
 window.boldCheckoutSubmitted = false;
 
+/**
+ * Renew the Current Customer API JWT token
+ * @TODO Unify this with the one on subscription-manager.js
+ * @returns {Promise<void>}
+ */
+async function renewToken() {
+    const resource = `/customer/current.jwt?app_client_id=${window.currentCustomer.bigcommerce_app_client_id}`;
+    window.currentCustomer.token = await fetch(resource)
+        .then(response => {
+            if (response.status === 200) {
+                return response.text();
+            }
+            swal.fire({
+                text: 'An error has happened. Please, try again later. (001)',
+                icon: 'error',
+            });
+            return response.status;
+        })
+        .catch(error => {
+            swal.fire({
+                text: 'An error has happened. Please, try again later. (002)',
+                icon: 'error',
+            });
+            return -1;
+        });
+}
+
 class SubscriptionCart {
     constructor(tsConsultantId) {
         this.getAutoshipProducts();
         this.initListeners();
         this.TS_CONSULTANT_ID = tsConsultantId;
-    }
-
-    /**
-     * Renew the Current Customer API JWT token
-     * @TODO Unify this with the one on subscription-manager.js
-     * @returns {Promise<void>}
-     */
-    renewToken = async function renewToken() {
-        const resource = `/customer/current.jwt?app_client_id=${window.currentCustomer.bigcommerce_app_client_id}`;
-        window.currentCustomer.token = await fetch(resource)
-            .then(response => {
-                if (response.status === 200) {
-                    return response.text();
-                }
-                swal.fire({
-                    text: 'An error has happened. Please, try again later. (001)',
-                    icon: 'error',
-                });
-                return response.status;
-            })
-            .catch(error => {
-                console.log(error);
-                swal.fire({
-                    text: 'An error has happened. Please, try again later. (002)',
-                    icon: 'error',
-                });
-                return -1;
-            });
     }
 
     /**
@@ -164,7 +163,7 @@ class SubscriptionCart {
             const selectedConsultant = $(`${modalId} input[name="consultant"]:checked`).val();
 
             if (selectedConsultant.toString() === Cookies.get('cid').toString()) {
-                this.setConsultantAsActive(selectedConsultant);
+                this.setConsultantAsPending(selectedConsultant);
             } else {
                 this.goToCheckout();
             }
@@ -427,11 +426,10 @@ class SubscriptionCart {
             dataType: 'JSON',
             success(consultants) {
                 const activeConsultant = consultants.filter(c => c.IsActive === true)[0];
+                const tempConsultant = consultants.filter(c => c.IsActive === false)[0];
 
-                if (!activeConsultant) {
-                    // Set the current temp consultant as active
-                    self.setConsultantAsActive(newConsultantId);
-                } else if (newConsultantId !== activeConsultant.ConsultantID.replace(/ /g, '')) {
+                if (newConsultantId !== activeConsultant.ConsultantID.replace(/ /g, '') &&
+                    (typeof tempConsultant === 'undefined' || newConsultantId !== tempConsultant.ConsultantID.replace(/ /g, ''))) {
                     // Ask customer to choose one
                     // Map consultant data to template
                     const map = {
@@ -467,11 +465,10 @@ class SubscriptionCart {
             dataType: 'JSON',
             success(consultants) {
                 const activeConsultant = consultants.filter(c => c.IsActive === true)[0];
+                const tempConsultant = consultants.filter(c => c.IsActive === false)[0];
 
-                if (!activeConsultant && newConsultant) {
-                    // Set the current temp consultant as active
-                    self.setConsultantAsActive(newConsultant);
-                } else if (newConsultant !== activeConsultant.ConsultantID.replace(/ /g, '')) {
+                if (newConsultant !== activeConsultant.ConsultantID.replace(/ /g, '') &&
+                    (typeof tempConsultant === 'undefined' || newConsultant !== tempConsultant.ConsultantID.replace(/ /g, ''))) {
                     // Ask customer to choose one
                     // Map consultant data to template
                     const map = {
@@ -490,11 +487,11 @@ class SubscriptionCart {
     }
 
     /**
-     * Set a given consultant as active
+     * Set a given consultant as Pending
      * @param consultantId
      */
-    async setConsultantAsActive(consultantId) {
-        await this.renewToken();
+    async setConsultantAsPending(consultantId) {
+        await renewToken();
         // window.subscriptionManager is set on subscription-manager.js
         const setAffiliationUrl = `${window.subscriptionManager.apiUrl}/Customers/${window.subscriptionManager.customerId}/affiliation/`;
         const self = this;
@@ -511,11 +508,15 @@ class SubscriptionCart {
                 consultantId,
                 overridePending: 0,
             }),
-            success(response) {
-                if (response) {
-                    self.goToCheckout();
-                }
-            },
+        }).always((response) => {
+            if (response.responseText === 'Success') {
+                self.goToCheckout();
+            } else {
+                swal.fire({
+                    text: 'An error has happened. Please, try again later. (009)',
+                    icon: 'error',
+                });
+            }
         });
     }
 }

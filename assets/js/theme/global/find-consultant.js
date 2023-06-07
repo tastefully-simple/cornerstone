@@ -8,6 +8,7 @@ import ConsultantCard from '../common/consultant-card';
 import ConsultantParties from '../common/consultant-parties';
 import TSRemoveAffiliation from '../common/ts-remove-affiliation';
 import $ from 'jquery';
+import swal from './sweet-alert';
 
 // Search mode
 const NO_SEARCH = 0;
@@ -29,6 +30,72 @@ const API_ERROR_MESSAGE = {
 };
 
 window.isAutoshipModal = false;
+
+/**
+ * Renew the Current Customer API JWT token
+ * @TODO Unify this with the one on subscription-manager.js
+ * @returns {Promise<void>}
+ */
+async function renewToken() {
+    const resource = `/customer/current.jwt?app_client_id=${window.currentCustomer.bigcommerce_app_client_id}`;
+    window.currentCustomer.token = await fetch(resource)
+        .then(response => {
+            if (response.status === 200) {
+                return response.text();
+            }
+            swal.fire({
+                text: 'An error has happened. Please, try again later. (001)',
+                icon: 'error',
+            });
+            return response.status;
+        })
+        .catch(error => {
+            console.log(error);
+            swal.fire({
+                text: 'An error has happened. Please, try again later. (002)',
+                icon: 'error',
+            });
+            return -1;
+        });
+}
+
+/**
+ * Find a Consultant Autoship Modal — Confirm Button Action
+ * Send API request to save the consultant and close the modal
+ */
+async function autoshipConfirmConsultant(obj) {
+    await renewToken();
+    // Disable "Confirm" button
+    $('#autoship-consultant-confirm').attr('disabled', true);
+    const consultantId = `${obj.selectedId}`;
+
+    // window.subscriptionManager is set on subscription-manager.js
+    const setAffiliationUrl = `${window.subscriptionManager.apiUrl}/Customers/${window.subscriptionManager.customerId}/affiliation/`;
+
+    $.ajax({
+        url: setAffiliationUrl,
+        type: 'POST',
+        dataType: 'JSON',
+        headers: {
+            'Content-Type': 'application/json',
+            'jwt-token': window.currentCustomer.token,
+        },
+        data: JSON.stringify({
+            consultantId,
+            overridePending: 1,
+        }),
+    }).always((response) => {
+        if (response.responseText === 'Success') {
+            $('#current-consultant-name').html($('.selected .consultant-name').text());
+            obj.closeModal();
+        } else {
+            swal.fire({
+                text: 'An error has happened. Please, try again later.',
+                icon: 'error',
+            });
+        }
+    });
+}
 
 class FindAConsultant {
     constructor(trigger, template, tsConsultantId) {
@@ -97,6 +164,7 @@ class FindAConsultant {
     }
 
     bindAll() {
+        const self = this;
         // Consultant edit button in cart page
         $('body').on(
             'click',
@@ -222,7 +290,7 @@ class FindAConsultant {
         $('body').on('click', '#autoship-consultant-continue', () => this.autoshipContinueWithSelection());
 
         // Confirm selected consultant and save it using the API
-        $('body').on('click', '#autoship-consultant-confirm', () => this.autoshipConfirmConsultant());
+        $('body').on('click', '#autoship-consultant-confirm', () => autoshipConfirmConsultant(self));
 
         // Submit with Tastefully Simple
         $('body').on('click', '#no-consultants-continue', () => this.continueWithInternal());
@@ -501,33 +569,6 @@ class FindAConsultant {
         // Hide all result cards and display only the currently selected
         $('.consultant-card').hide();
         $('.consultant-card.selected').show();
-    }
-
-    /**
-     * Find a Consultant Autoship Modal — Confirm Button Action
-     * Send API request to save the consultant and close the modal
-     */
-    autoshipConfirmConsultant() {
-        // Disable "Confirm" button
-        $('#autoship-consultant-confirm').attr('disabled', true);
-
-        // window.subscriptionManager is set on subscription-manager.js
-        let setAffiliationUrl = `${window.subscriptionManager.tsApiUrl}/cart/setpendingaffiliation/`;
-        setAffiliationUrl += `?customerId=${window.subscriptionManager.customerId}&consultantid=${this.selectedId}&overridepending=1`;
-        const self = this;
-
-        $.ajax({
-            url: setAffiliationUrl,
-            type: 'GET',
-            dataType: 'JSON', // added data type
-            success(response) {
-                if (response) {
-                    $('#current-consultant-name').html($('.selected .consultant-name').text());
-                    // Close the modal
-                    self.closeModal();
-                }
-            },
-        });
     }
 
     continueWithInternal() {

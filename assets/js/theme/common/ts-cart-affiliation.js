@@ -80,7 +80,7 @@ export default class TSCartAffiliation {
             $(this.noSelectionError).hide();
 
             if (e.target === document.getElementById('tsacf-shopdirect')) {
-                $(this.checkoutButton).html('check out');
+                $(this.checkoutButton).html('checkout');
                 $(this.checkoutButton).removeAttr('disabled');
                 $(this.checkoutButton).removeAttr('onclick');
             } else {
@@ -223,7 +223,7 @@ export default class TSCartAffiliation {
     }
 
     enableCheckout() {
-        $(this.checkoutButton).html('check out');
+        $(this.checkoutButton).html('checkout');
         $(this.checkoutButton).removeAttr('onclick');
         $(this.checkoutButton).removeAttr('disabled');
     }

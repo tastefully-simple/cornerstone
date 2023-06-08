@@ -92,6 +92,11 @@
     margin-bottom: 0;
 }
 
+/* Unset underline from anchor review stars */
+a.ratingLink{
+    text-decoration: none;
+}
+
 @media only screen and (min-width:801px){
     .body {
         margin-top: 10px;
@@ -107,6 +112,9 @@
     .slick-prev{
         left:0;
     }
+    #product-reviews{
+        scroll-margin-top: 300px;    
+    }
 }
 
 @media only screen and (min-width:960px){
@@ -117,6 +125,9 @@
 
 // Accordion styles (desktop first to avoid unsetting transitions)
 @media only screen and (max-width:800px) {
+    #product-reviews{
+        scroll-margin-top: 100px;    
+    }
     .tst-accordion {
         .tst-accordion-item {
             transition:margin 0.4s ease-out;

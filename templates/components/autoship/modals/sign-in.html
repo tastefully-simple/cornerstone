@@ -1,0 +1,60 @@
+<div id="modal-autoship-sign-in">
+    <div class="modal-header">
+        {{lang 'subscriptions.modals.ready'}}
+        {{> components/common/modal/modal-close-btn}}
+    </div>
+    <div class="modal-autoship-sign-in-body">
+        <div class="modal-autoship-message-container">
+            <div>
+                {{lang 'subscriptions.modals.sign_in_message'}}
+            </div>
+        </div>
+        <div class="modal-autoship-form-container">
+            <div class="modal-autoship-form">
+                <h3>{{lang 'subscriptions.modals.sign_in'}}</h3>
+                <div class="login">
+                    <div class="login-row">
+                        <form class="login-form form" action="{{urls.auth.check_login}}" method="post">
+                            {{inject 'useValidEmail' (lang 'forms.validate.common.email_address')}}
+                            {{inject 'enterPass' (lang 'forms.validate.common.password')}}
+                            <div class="form-field">
+                                <label class="form-label" for="login_email">{{lang 'login.field_email'}}</label>
+                                <input class="form-input" name="login_email" id="login_email" type="email">
+                            </div>
+                            <div class="form-field">
+                                <label class="form-label" for="login_pass">{{lang 'login.field_password'}}</label>
+                                <input class="form-input" id="login_pass" type="password" name="login_pass"
+                                       autocomplete="off">
+                            </div>
+                            <div class="form-actions">
+                                <input type="submit" class="button button--primary" value="{{lang 'login.submit_value' }}">
+                                <a class="forgot-password" href="{{urls.auth.forgot_password}}">{{lang
+                                    'login.forgot_password' }}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-autoship-new-customer-container">
+            <div class="login">
+                <div class="new-customer">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">{{lang 'login.new_customer.heading' }}</h2>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{lang 'subscriptions.modals.create_account'}}</p>
+                            <p style="text-align: center">
+                                <a href="{{urls.auth.create_account}}">
+                                    <button class="button button--primary">{{lang 'login.new_customer.create_account' }}
+                                    </button>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+{{#if customer.id '>' 0}}
+    {{#if theme_settings.subscription_management.enabled }}
+    <div class="subscription-manager-block" id="subscription-manager-block">
+        <div id="subscription--container-next" class="subscription--container">
+            <p style="font-weight: 600">{{lang 'subscriptions.one_time_delivery_message1'}}<br/>{{lang 'subscriptions.one_time_delivery_message2'}}</p>
+            <a href="#" id="subscriptionManager--trigger-next" class="subscriptionManager--trigger">{{lang 'subscriptions.add_to_next_delivery'}}</a>
+        </div>
+
+        <div id="subscription--container-future" class="subscription--container">
+            <p style="font-weight: 600">Hey {{first (split customer.name " ") }} {{lang 'subscriptions.future_deliveries_message1' }}<br/>{{lang 'subscriptions.future_deliveries_message2'}}</p>
+            <a href="#" id="subscriptionManager--trigger-future" class="subscriptionManager--trigger">{{lang 'subscriptions.add_to_future_deliveries'}}</a>
+        </div>
+
+        <div id="subscriptionManager--next" class="modal subscription-manager" data-reveal style="display: none">
+            <div class="modal-header" style="background: #cccccc"><p>Select a delivery</p>
+                <button type="button" class="modal-close close-subscriptions" aria-label="Close" role="button">
+                    <span aria-hidden="true" class="close-modal-alternate"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p class="modal-delivery-message">This product will be added <b>one time only</b> to the delivery you select below:</p>
+                </div>
+                <div class="subscriptions-list">
+                    <div class="subscriptions-list-content"><br><br></div>
+                </div>
+            </div>
+            <div class="subscriptions-footer subscription-next-order-message">
+                <p class="modal-delivery-message" style="margin-right: 20px; ">{{lang 'subscriptions.next_order_message'}}</p>
+            </div>
+            <div class="subscriptions-footer">
+                <a href="#" class="subscriptions-cancel close-subscriptions">{{lang 'subscriptions.cancel'}}</a>
+                <a class="subscriptions-continue disabled" href="#">{{lang 'subscriptions.continue'}} <i class="far fa-chevron-right"></i></a>
+                <a class="subscriptions-done close-subscriptions" href="#">{{lang 'subscriptions.done'}} <i class="far fa-chevron-right"></i></a>
+            </div>
+        </div>
+        <div id="subscriptionManager--future" class="modal subscription-manager" data-reveal style="display: none">
+            <div class="modal-header" style="background: #cccccc"><p>Select a delivery</p>
+                <button type="button" class="modal-close close-subscriptions" aria-label="Close" role="button">
+                    <span aria-hidden="true" class="close-modal-alternate"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p class="modal-delivery-message">This product will be added <b>as recurring</b> to the delivery you select below:</p>
+                </div>
+                <div class="subscriptions-list">
+                    <div class="subscriptions-list-content"><br><br></div>
+                </div>
+            </div>
+            <div class="subscriptions-footer subscription-next-order-message">
+                <p class="modal-delivery-message" style="margin-right: 20px; ">{{lang 'subscriptions.next_order_message'}}</p>
+            </div>
+            <div class="subscriptions-footer">
+                <a href="#" class="subscriptions-cancel close-subscriptions">{{lang 'subscriptions.cancel'}}</a>
+                <a class="subscriptions-continue disabled" href="#">{{lang 'subscriptions.continue'}} <i class="far fa-chevron-right"></i></a>
+                <a class="subscriptions-done close-subscriptions" href="#">{{lang 'subscriptions.done'}} <i class="far fa-chevron-right"></i></a>
+            </div>
+        </div>
+        <div class="subscriptions-templates" style="display: none">
+            <div id="subscription-success-template--future">
+                <div class="subscription-card" style="display: flex; padding-top: 10px; padding-bottom: 20px;">
+                    <div class="subscription-card-left"></div>
+                    <div class="subscription-card-right">
+                        <div class="subscription-card-header">
+                            <p><b>{{lang 'subscriptions.next_order'}} #NextOrder</b></p>
+                            <p>{{lang 'subscriptions.recurring_products'}}</p>
+                        </div>
+                        <div class="subscription-card-products-list">#SubscriptionProducts#NewProduct</div>
+                        <div class="subscription-info"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="subscription-success-template--next">
+                <div class="subscription-card" style="display: flex; padding-top: 10px; padding-bottom: 20px;">
+                    <div class="subscription-card-left"></div>
+                    <div class="subscription-card-right">
+                        <div class="subscription-card-header">
+                            <p><b>{{lang 'subscriptions.next_order'}} #NextOrder</b></p>
+                            <p>{{lang 'subscriptions.products'}}</p>
+                        </div>
+                        <div class="subscription-card-products-list">#SubscriptionProducts</div>
+                        <div class="subscription-card-header">
+                            <p style="margin-top: 20px">{{lang 'subscriptions.one_time'}}</p>
+                        </div>
+                        <div class="subscription-card-products-list">#NewProduct</div>
+                        <div class="subscription-info">
+                            <p style="margin-top: 20px">{{lang 'subscriptions.one_time_description'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="subscription-card-template">
+                <div class="subscription-card" style="display: flex">
+                    <div class="subscription-card-left">
+                        <input class="subscription-select" type="radio" name="select-subscription" value="#Id">
+                    </div>
+                    <div class="subscription-card-right">
+                        <div class="subscription-card-header">
+                            <p>{{lang 'subscriptions.next_order'}} <b>#NextOrder</b></p>
+                            <p>{{lang 'subscriptions.products'}}</p>
+                        </div>
+                        <div class="subscription-card-products-list">#ProductsList</div>
+                        <div class="subscription-info">
+                            <p>{{lang 'subscriptions.subscription'}} - ##Id</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+{{/if}}

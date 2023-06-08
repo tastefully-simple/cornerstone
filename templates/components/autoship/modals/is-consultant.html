@@ -1,0 +1,16 @@
+{{#if customer.id '>' 0}}
+<div id="modal-consultant-item-removal">
+    <div class="modal-header">
+        {{lang 'subscriptions.modals.account_alert'}}
+        {{> components/common/modal/modal-close-btn}}
+    </div>
+    <div style="width: 80%; margin-left: 10%;">
+        <p><b>Hi, {{ first (split customer.name " ") }}!</b></p>
+        <p>{{lang 'subscriptions.modals.consultant_message_1'}}</p>
+        <p>{{lang 'subscriptions.modals.consultant_message_2'}}</p>
+        <p style="text-align: center"><a href="#">
+            <button class="button button--primary close-subscription-modal">{{lang 'subscriptions.modals.return'}}</button>
+        </a></p>
+    </div>
+</div>
+{{/if}}

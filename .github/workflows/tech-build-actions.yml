@@ -5,14 +5,17 @@ on:
    types: [closed]
    branches:
       dev
-
+      
+  # Allows you to run this workflow manually from the Actions tab - in that environment
+  workflow_dispatch:
+  
 jobs:
   build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [14.x]
+        node: [16.x]
 
     steps:
     - name: Checkout code
@@ -31,7 +34,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     - name: Install Stencil CLI Dependency
-      run: npm install -g @bigcommerce/stencil-cli@5.2.2
+      run: npm install -g @bigcommerce/stencil-cli
     
     - name: Install Dependencies
       run: npm ci

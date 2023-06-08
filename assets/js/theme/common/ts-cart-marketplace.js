@@ -54,7 +54,7 @@ export default class TsCartMarketplace {
                 this.modal.updateContent($('#marketplace-popup-container').html());
             } else if (redirect === true && ($('.view-consultant-parties').attr('class') === undefined
                 || $('.view-consultant-parties').attr('class').indexOf('framelink-sm')) !== -1) {
-                window.location = '/checkout';
+                // @TODO: adjust submit action to work with the Subscription Cart
             }
         });
     }

@@ -193,6 +193,15 @@
 
             setTest: function(value) {
                 Cookies.set('_test', value);
+            },
+
+            getConsultantData() {
+                return {
+                    name: this.getConsultantName(),
+                    id: this.getConsultantId(),
+                    image: this.getConsultantImage(),
+                    hasOpenParty: this.getConsultantHasOpenParty()
+                };
             }
         };
     })(window);

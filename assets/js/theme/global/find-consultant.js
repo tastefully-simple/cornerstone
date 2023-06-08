@@ -7,6 +7,8 @@ import pagination from '../common/pagination';
 import ConsultantCard from '../common/consultant-card';
 import ConsultantParties from '../common/consultant-parties';
 import TSRemoveAffiliation from '../common/ts-remove-affiliation';
+import $ from 'jquery';
+import swal from './sweet-alert';
 
 // Search mode
 const NO_SEARCH = 0;
@@ -27,6 +29,74 @@ const API_ERROR_MESSAGE = {
     errorMessage: 'An error has occurred.',
 };
 
+window.isAutoshipModal = false;
+
+/**
+ * Renew the Current Customer API JWT token
+ * @TODO Unify this with the one on subscription-manager.js
+ * @returns {Promise<void>}
+ */
+async function renewToken() {
+    const resource = `/customer/current.jwt?app_client_id=${window.currentCustomer.bigcommerce_app_client_id}`;
+    window.currentCustomer.token = await fetch(resource)
+        .then(response => {
+            if (response.status === 200) {
+                return response.text();
+            }
+            swal.fire({
+                text: 'An error has happened. Please, try again later. (001)',
+                icon: 'error',
+            });
+            return response.status;
+        })
+        .catch(error => {
+            console.log(error);
+            swal.fire({
+                text: 'An error has happened. Please, try again later. (002)',
+                icon: 'error',
+            });
+            return -1;
+        });
+}
+
+/**
+ * Find a Consultant Autoship Modal — Confirm Button Action
+ * Send API request to save the consultant and close the modal
+ */
+async function autoshipConfirmConsultant(obj) {
+    await renewToken();
+    // Disable "Confirm" button
+    $('#autoship-consultant-confirm').attr('disabled', true);
+    const consultantId = `${obj.selectedId}`;
+
+    // window.subscriptionManager is set on subscription-manager.js
+    const setAffiliationUrl = `${window.subscriptionManager.apiUrl}/Customers/${window.subscriptionManager.customerId}/affiliation/`;
+
+    $.ajax({
+        url: setAffiliationUrl,
+        type: 'POST',
+        dataType: 'JSON',
+        headers: {
+            'Content-Type': 'application/json',
+            'jwt-token': window.currentCustomer.token,
+        },
+        data: JSON.stringify({
+            consultantId,
+            overridePending: 1,
+        }),
+    }).always((response) => {
+        if (response.responseText === 'Success') {
+            $('#current-consultant-name').html($('.selected .consultant-name').text());
+            obj.closeModal();
+        } else {
+            swal.fire({
+                text: 'An error has happened. Please, try again later.',
+                icon: 'error',
+            });
+        }
+    });
+}
+
 class FindAConsultant {
     constructor(trigger, template, tsConsultantId) {
         this.$findConsultant = trigger;
@@ -37,8 +107,8 @@ class FindAConsultant {
         this.screenMinWidth = 801;
         this.api = new TSApi();
         this.removeAffiliation = new TSRemoveAffiliation();
-
         this.setConsultant(this.loadConsultant());
+
         this.initListeners();
     }
 
@@ -64,24 +134,37 @@ class FindAConsultant {
     }
 
     initListeners() {
-        // Trigger modal or go to consultant page if clicking on
-        // consultant name
-        this.$findConsultant.addEventListener('click', (e) => {
-            // Github issue #179, go to consultant page
-            if (this.consultant.id
-                && this.consultant.id !== this.TS_CONSULTANT_ID
-                && e.target.tagName !== 'SMALL'
-                && !$(e.target).hasClass('consultant-edit')
-                && !$(e.target).hasClass('consultant-remove')
-            ) {
-                window.location = CONSULTANT_PAGE;
-            } else if ($(e.target).hasClass('consultant-remove')) {
-                this.removeAffiliation.openAlert();
-            } else {
+        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+            // Always trigger the modal if this is Autoship
+            this.$findConsultant.addEventListener('click', (e) => {
+                window.isAutoshipModal = true;
                 this.createModal(e, this.modalTemplate);
-            }
-        });
+            });
+        } else {
+            this.bindAll();
+            // Trigger modal or go to consultant page if clicking on
+            // consultant name
+            this.$findConsultant.addEventListener('click', (e) => {
+                window.isAutoshipModal = false;
+                // Github issue #179, go to consultant page
+                if (this.consultant.id
+                    && this.consultant.id !== this.TS_CONSULTANT_ID
+                    && e.target.tagName !== 'SMALL'
+                    && !$(e.target).hasClass('consultant-edit')
+                    && !$(e.target).hasClass('consultant-remove')
+                ) {
+                    window.location = CONSULTANT_PAGE;
+                } else if ($(e.target).hasClass('consultant-remove')) {
+                    this.removeAffiliation.openAlert();
+                } else {
+                    this.createModal(e, this.modalTemplate);
+                }
+            });
+        }
+    }
 
+    bindAll() {
+        const self = this;
         // Consultant edit button in cart page
         $('body').on(
             'click',
@@ -203,6 +286,12 @@ class FindAConsultant {
         // Submit with consultant
         $('body').on('click', '#consultant-continue', () => this.continueWithSelection());
 
+        // Hide some information on the modal to display the "Confirmation" page for Autoship Consultants
+        $('body').on('click', '#autoship-consultant-continue', () => this.autoshipContinueWithSelection());
+
+        // Confirm selected consultant and save it using the API
+        $('body').on('click', '#autoship-consultant-confirm', () => autoshipConfirmConsultant(self));
+
         // Submit with Tastefully Simple
         $('body').on('click', '#no-consultants-continue', () => this.continueWithInternal());
 
@@ -211,14 +300,16 @@ class FindAConsultant {
 
         // Account for sticky header
         $(window).on('scroll', () => this.renderConsultant());
-
-        $('body').on('click', '.consultantmodal-cancel-btn', () => this.closeModal());
     }
 
     createModal(e, template) {
+        window.currentConsultantModal = defaultModal();
         $('#modal').removeClass('modal-results');
-        this.modal = defaultModal();
+        $('body').on('click', '.button-cancel', () => this.closeModal());
+
+        this.modal = window.currentConsultantModal;
         e.preventDefault();
+
         this.modal.open({ size: 'small' });
         const options = { template };
         utils.api.getPage('/', options, (err, res) => {
@@ -242,7 +333,7 @@ class FindAConsultant {
     }
 
     closeModal() {
-        this.modal.close();
+        window.currentConsultantModal.close();
     }
 
     openConsultantParties(e) {
@@ -407,10 +498,12 @@ class FindAConsultant {
             $('#consultant-search-results .selected').toggleClass('selected');
             $consultantCard.find('.consultant-header').hide();
             $('#consultant-continue').attr('disabled', false);
+            $('#autoship-consultant-continue').attr('disabled', false);
         } else {
             $consultantCard.find('.consultant-header').show();
             this.selectedId = null;
             $('#consultant-continue').attr('disabled', true);
+            $('#autoship-consultant-continue').attr('disabled', true);
         }
 
         $(e.target).closest('.consultant-card').toggleClass('selected');
@@ -436,6 +529,46 @@ class FindAConsultant {
         } else {
             this.displayError('Please select a consultant before continuing');
         }
+    }
+
+    /**
+     * Find a Consultant Autoship Modal
+     * Action for button "Continue" when a consultant is selected
+     */
+    autoshipContinueWithSelection() {
+        if (this.selectedId) {
+            this.autoshipHideNonSelectedConsultants();
+        } else {
+            this.displayError('Please select a consultant before continuing');
+        }
+    }
+
+    /**
+     * Find a Consultant Autoship Modal
+     * Hide all other consultants and display a "Confirm" button
+     */
+    autoshipHideNonSelectedConsultants() {
+        // Hide total consultant search results
+        $('#consultant-search-results-total').hide();
+
+        // Hide Consultant Search results pagination
+        $('.findmodal-pagination-container').hide();
+
+        // Show Confirm Consultant step
+        $('#find-consultant-confirm-step').show();
+
+        // Hide Continue step
+        $('#find-consultant-continue-step').hide();
+
+        // Show "Please confirm your choice" message
+        $('#autoship-consultant-confirmation').show();
+
+        // Enable "Confirm" button
+        $('#autoship-consultant-confirm').attr('disabled', false);
+
+        // Hide all result cards and display only the currently selected
+        $('.consultant-card').hide();
+        $('.consultant-card.selected').show();
     }
 
     continueWithInternal() {
@@ -471,7 +604,6 @@ class FindAConsultant {
     // consultant = { id: string, name: null|string, image: string }
     setConsultant(consultant) {
         this.consultant = consultant;
-
         this.renderConsultant();
     }
 
@@ -489,6 +621,9 @@ class FindAConsultant {
     }
 
     renderConsultantInMobileMenu() {
+        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+            return;
+        }
         $('#mobile_consultant').append(this.$findConsultant);
 
         if (this.isExternalConsultant()) {
@@ -539,11 +674,17 @@ class FindAConsultant {
     }
 
     renderConsultantInHeader() {
+        if ($(this.$findConsultant).hasClass('consultant-finder')) {
+            return;
+        }
+
         $('.header-top .header-top-links').prepend(this.$findConsultant);
 
         // Account for consultant in the sticky header
         const $header = $('#headerMain');
+
         const offsetTop = $header.offset().top;
+
         const isStickyHeader = $header.hasClass('sticky-header');
         const isStickyHeaderDisabled = !isStickyHeader && !(window.pageYOffset === offsetTop);
 
@@ -599,7 +740,7 @@ class FindAConsultant {
         $('.alertbox-error').hide();
         this.clearConsultantWindow();
 
-        const $matchingConsultants = $('<span>', { class: 'frame-caption matching' });
+        const $matchingConsultants = $('<span>', { class: 'frame-caption matching', id: 'consultant-search-results-total' });
         $matchingConsultants.text(`${response.TotalRecordCount} Consultant's Matching \"${this.searchQuery}\"`);
         $('#consultant-search-results .genmodal-body .search-filter-wrapper').append($matchingConsultants);
 
@@ -619,6 +760,11 @@ class FindAConsultant {
                 this.getPagination(response);
             }
         });
+
+        if (window.isAutoshipModal) {
+            $('#consultant-continue').hide();
+            $('#autoship-consultant-continue').show();
+        }
     }
 
     renderNoResults() {
@@ -695,6 +841,14 @@ export default function (themeSettings) {
             'common/find-consultant',
             tsConsultantId,
         );
+
+        if (window.location.pathname === '/manage-subscriptions/') {
+            new FindAConsultant(
+                document.querySelector('.consultant-finder'),
+                'common/find-consultant',
+                tsConsultantId,
+            );
+        }
 
         return consultant;
     });

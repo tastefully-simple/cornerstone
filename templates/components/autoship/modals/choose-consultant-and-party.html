@@ -1,0 +1,26 @@
+{{#if customer.id '>' 0}}
+<div id="modal-consultant-choose-with-party">
+    <div class="modal-header">
+        {{lang 'subscriptions.modals.complicated_header'}}
+        {{> components/common/modal/modal-close-btn}}
+    </div>
+    <div class="modal-consultant-choose-body">
+        <p><b>Hi, {{ first (split customer.name " ") }}!</b></p>
+        <p>{{lang 'subscriptions.modals.new_consultant_and_party'}}</p>
+        <p>{{lang 'subscriptions.modals.select'}}</p>
+        <p>
+            <input type="radio" class="choose-consultant current-consultant" name="consultant" value="#current-consultant-id"/>
+            <span class="choose-consultant-option">{{lang 'subscriptions.modals.new_consultant_and_party_keep_1'}}</span>
+            <span class="text-current-consultant">{{lang 'subscriptions.modals.new_consultant_and_party_keep_2'}}</span>
+        </p>
+        <p>
+            <input type="radio" class="choose-consultant new-consultant" name="consultant" value="#new-consultant-id"/>
+            <span class="choose-consultant-option">{{lang 'subscriptions.modals.new_consultant_and_party_change_1'}}</span>
+            <span class="text-new-consultant">{{lang 'subscriptions.modals.new_consultant_and_party_change_2'}}</span>
+        </p>
+        <p style="text-align: center"><a href="#">
+            <button class="button button--primary" disabled>{{lang 'subscriptions.modals.select_option'}}</button>
+        </a></p>
+    </div>
+</div>
+{{/if}}

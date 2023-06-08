@@ -103,13 +103,29 @@
                 <span></span>
             </p>
         </div>
+        {{#if customer}}
+        <div id="autoship-consultant-confirmation">
+            <p style="font-weight: bold; font-size: 16px;">Hi, {{ customer.name }}</p>
+            <p>{{lang 'subscriptions.consultant_selected'}} </p>
+        </div>
+        {{/if}}
     </div>
     <div class="findmodal-footer">
-        <div class="next-step-wrapper">
+        <div class="next-step-wrapper" id="find-consultant-continue-step">
             <p class="next-step-selected-text system-12"></p>
             <button class="button-cancel consultantmodal-cancel-btn" type="button">cancel</button>
             <button class="button-alternate-disabled button-alternate-icon" id="consultant-continue" disabled>
                 continue
+            </button>
+            <button class="button-alternate-disabled button-alternate-icon" id="autoship-consultant-continue" disabled>
+                continue
+            </button>
+        </div>
+
+        <div class="next-step-wrapper" id="find-consultant-confirm-step">
+            <button class="button-cancel consultantmodal-cancel-btn" type="button">cancel</button>
+            <button class="button-alternate-disabled button-alternate-icon" id="autoship-consultant-confirm" disabled>
+                confirm
             </button>
         </div>
     </div>

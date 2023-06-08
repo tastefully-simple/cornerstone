@@ -12,6 +12,7 @@
             {{#each reviews.list}}
             <li class="productReview">
                 <article itemprop="review" itemscope itemtype="http://schema.org/Review">
+                    <meta itemprop="itemReviewed" content="{{../product.title}}">
                     <header>
                         {{#if name}}
                             <meta itemprop="author" content="{{name}}">

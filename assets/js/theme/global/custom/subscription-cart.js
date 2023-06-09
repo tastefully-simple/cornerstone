@@ -186,6 +186,7 @@ class SubscriptionCart {
         const self = this;
         e.preventDefault();
         this.verifyShopDirectlyWithTst();
+        const cartBoldCheckout = document.querySelectorAll(".cart-item-title .definitionList .bold-subscriptions-interval-info");
 
         utils.api.cart.getCart({ includeOptions: true }, (err, response) => {
             const pid = TSCookie.getPartyId();
@@ -195,9 +196,9 @@ class SubscriptionCart {
                     text: 'An error has happened. Please, try again later. (001)',
                     icon: 'error',
                 });
-            } else if (self.hasAutoshipProducts(response)) {
+            } else if (self.hasAutoshipProducts(response) && cartBoldCheckout.length > 0) {
                 self.isCustomerLogged();
-            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined')) {
+            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined') || cartBoldCheckout.length === 0) {
                 window.location = '/checkout';
             }
         });

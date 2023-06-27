@@ -431,7 +431,7 @@ class SubscriptionCart {
                 const pendingConsultant = consultants.filter(c => c.IsActive === false)[0];
                 const pendingConsultantId = pendingConsultant ? pendingConsultant.ConsultantID.replace(/ /g, '') : false;
 
-                if (activeConsultantId === false && pendingConsultantId === false) {
+                if (activeConsultantId === false) {
                     // Set newconsultant as pending
                     self.setConsultantAsPending(newConsultantId);
                     // Go to Checkout page
@@ -478,7 +478,7 @@ class SubscriptionCart {
                 const pendingConsultant = consultants.filter(c => c.IsActive === false)[0];
                 const pendingConsultantId = pendingConsultant ? pendingConsultant.ConsultantID.replace(/ /g, '') : false;
 
-                if (activeConsultantId === false && pendingConsultantId === false) {
+                if (activeConsultantId === false) {
                     // Set newconsultant as pending
                     self.setConsultantAsPending(newConsultantId);
                     // Go to Checkout page

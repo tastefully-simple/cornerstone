@@ -37,6 +37,23 @@
             }
         }
     }
+    .hide-on-list {
+        display: none !important;
+    }
+    .hide-on-grid {
+        display: flex !important;
+    }
+    .row1 {
+        display: flex;
+        align-items: flex-end;
+        flex-flow: row;
+        height: 40px;
+        flex-basis: fit-content;
+        align-self: center;
+    }
+    .row2 {
+        margin-top: 0 !important;
+    }
 }
 
 .productGrid .recipes-page-content {

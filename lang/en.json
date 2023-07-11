@@ -766,6 +766,10 @@
     "file_option_set": "Currently: <a href=\"{url}\" target=\"_blank\">{name}</a>",
     "new": "New Products",
     "warranty": "Warranty Information",
+    "select_options": "Autoship",
+    "quick_add_to_cart": "Add to Cart",
+    "adding_to_cart": "Adding to cart...",
+    "added": "Added to cart",
     "reviews": {
       "hide": "Hide Reviews",
       "new": "Write a Review",

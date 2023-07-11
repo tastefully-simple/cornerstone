@@ -46,7 +46,7 @@
     "items": "{NUM, plural, =0{(0 items)} one {(# item)} other {(# items)}}",
     "checkout": {
       "address": {
-        "multiple": "check out with multiple addresses",
+        "multiple": "checkout with multiple addresses",
         "or": "or"
       },
       "button": "Select Option Above To Checkout",
@@ -66,8 +66,8 @@
       "update": "Update shipping cost"
     },
     "preview": {
-      "checkout_now": "Check out now",
-      "checkout_multiple": "or check out with multiple addresses",
+      "checkout_now": "Checkout now",
+      "checkout_multiple": "or checkout with multiple addresses",
       "view_cart": "View Cart"
     },
     "label": "Your Cart ({quantity, plural, one {# item} other {# items}})",
@@ -275,7 +275,7 @@
     "new_customer": {
       "heading": "New Customer?",
       "intro": "Create an account with us and you'll be able to:",
-      "fact1": "Check out faster",
+      "fact1": "Checkout faster",
       "fact2": "Save multiple shipping addresses",
       "fact3": "Access your order history",
       "fact4": "Track new orders",
@@ -740,7 +740,7 @@
       "choose_consultant": "Thanks for being a TS to You Autoship member with #consultant-name. Subscriptions may only be linked to one consultant. Select one below:",
       "current_consultant": "Your current TS to You consultant:",
       "new_consultant": "The TS to You consultant you selected:",
-      "select_option": "Select option above to check out",
+      "select_option": "Select option above to checkout",
       "choose_consultant_and_party": "Thanks for being a TS to You Autoship member with #consultant-name! This orer contains subscription products and is being placed through #party-name and a new consultant #consultant-new. Subscriptions may only be linked to one consultant.",
       "select": "Select an option: ",
       "complicated_header": "This is a little complicated...",
@@ -766,6 +766,10 @@
     "file_option_set": "Currently: <a href=\"{url}\" target=\"_blank\">{name}</a>",
     "new": "New Products",
     "warranty": "Warranty Information",
+    "select_options": "Autoship",
+    "quick_add_to_cart": "Add to Cart",
+    "adding_to_cart": "Adding to cart...",
+    "added": "Added to cart",
     "reviews": {
       "hide": "Hide Reviews",
       "new": "Write a Review",

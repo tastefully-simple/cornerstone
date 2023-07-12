@@ -37,6 +37,7 @@
                     </div>
                     <div class="row2">
                         <div>
+                            {{#if add_to_cart_url }}
                             <a
                               href="{{add_to_cart_url}}"
                               data-event-type="product-click"
@@ -46,14 +47,32 @@
                             >
                               {{lang 'products.add_to_cart'}}
                             </a>
-                            <span class="product-status-message aria-description--hidden">{{lang 'category.add_cart_announcement'}}</span>
+                            {{else}}
+                            <a
+                              href="{{add_to_cart_url}}"
+                              data-event-type="product-click"
+                              class="button-primary button--small add-to-cart-btn"
+                              style="visibility: hidden;"
+                              data-product-id="{{id}}"
+                            >
+                              {{lang 'products.add_to_cart'}}
+                            </a>
+                            {{/if}}
                         </div>
                     </div>
+                    {{#if add_to_cart_url }}
                     <div class="row3">
                         <div>
                             <a href="{{url}}" class="button-small ts-to-you-link"><img src="{{cdn 'assets/img/tstoyou.png'}}" width="50">{{lang 'products.select_options'}}</a>
                         </div>
                     </div>
+                    {{else}}
+                    <div class="row3" style="display: none;">
+                        <div>
+                            <a href="{{url}}" class="button-small ts-to-you-link"><img src="{{cdn 'assets/img/tstoyou.png'}}" width="50">{{lang 'products.select_options'}}</a>
+                        </div>
+                    </div> 
+                    {{/if}}
                 </div>
 
                 <input type="hidden" name="action" value="add">

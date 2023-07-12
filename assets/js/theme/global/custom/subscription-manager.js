@@ -112,7 +112,7 @@ function isAutoshipEnabled(productId) {
             // Display Button and message
             $(`#subscription--container-${window.subscriptionManager.version}`).show();
             const subscriptionModal = modalFactory(`#subscriptionManager--${window.subscriptionManager.version}`)[0];
-            // Show Add to Next Delivery (Widget Version 1)
+            // Show Add to Next Delivery (Widget Version 1) or This product is Autoship Eligible (Widget version 2)
             const $subscriptionManagerTrigger = $(`#subscriptionManager--trigger-${window.subscriptionManager.version}`);
             $subscriptionManagerTrigger.on('click', () => {
                 loadSubscriptionModal(subscriptionModal, $(`#subscriptionManager--${window.subscriptionManager.version}`).html());
@@ -120,6 +120,31 @@ function isAutoshipEnabled(productId) {
             $('body').on('click', '.close-subscriptions', () => {
                 subscriptionModal.close();
             });
+        },
+    });
+}
+
+/**
+ * Get the current active consultant and display it on the Manage Subscriptions page
+ */
+function displayAutoshipConsultant() {
+    $.ajax({
+        url: `${window.subscriptionManager.tsApiUrl}/cart/affiliations/?customerId=${window.subscriptionManager.customerId}`,
+        type: 'GET',
+        dataType: 'JSON',
+        success(consultants) {
+            if (consultants) {
+                // Get the current active consultant. There should be only one
+                const activeConsultant = consultants.filter(c => c.IsActive === true)[0];
+
+                // If there is an active consultant, display his name and last name on the Manage Subscriptions page
+                if (activeConsultant) {
+                    $('#current-consultant-name').html([activeConsultant.FirstName, activeConsultant.LastName].join(' '));
+
+                    // Display current consultant block on Manage Subscriptions page
+                    $('#my-subscriptions-consultant').show();
+                }
+            }
         },
     });
 }
@@ -137,6 +162,11 @@ function hasSubscriptions(customerId) {
             if (response === true) {
                 // show component if the customer has active subscriptions
                 $('#subscription-manager-block').show();
+
+                // If we are in the Manage Subscriptions page, display the current consultant name
+                if (window.location.pathname === '/manage-subscriptions/') {
+                    displayAutoshipConsultant();
+                }
             }
         },
     });
@@ -286,8 +316,8 @@ function toggleAutoshipButtons(subscriptionManagement) {
  * @param subscriptionManagement
  * @returns {boolean}
  */
-export default function (customerId, productId, subscriptionManagement) {
-    if (!customerId || !subscriptionManagement.enabled) {
+export default function (customerId, productId, subscriptionManagement, customerEmail) {
+    if (!subscriptionManagement.enabled) {
         return false;
     }
 
@@ -304,16 +334,42 @@ export default function (customerId, productId, subscriptionManagement) {
     window.subscriptionManager = {
         subscriptionCard: $('#subscription-card-template').html(),
         apiUrl: subscriptionManagement.api_url,
+        tsApiUrl: window.theme_settings.ts_api_environment
+            ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.ts_tsapi_base_url}`
+            : `https:\/\/${window.theme_settings.ts_tsapi_base_url}`,
+        consultantApiUrl: window.theme_settings.ts_api_environment
+            ? `https:\/\/${window.theme_settings.ts_api_environment}-${window.theme_settings.consultant_api_base_url}`
+            : `https:\/\/${window.theme_settings.consultant_api_base_url}`,
         subscriptions: [],
         subs: [],
         version: 'next',
-        customerId,
-        productId,
+        customerId: false,
+        customerEmail: false,
+        productId: false,
     };
-    // Verify if this customer has subscriptions
-    hasSubscriptions(customerId);
-    // Verify if this product has the Bold widget
-    isAutoshipEnabled(productId);
+
+    if (!customerId) {
+        return false;
+    }
+
+    window.subscriptionManager.customerId = customerId;
+    window.subscriptionManager.customerEmail = customerEmail;
+
+    $(document).ready(() => {
+        // Verify if this customer has subscriptions
+        hasSubscriptions(customerId);
+    });
+
+    if (!productId) {
+        return false;
+    }
+
+    window.subscriptionManager.productId = productId;
+
+    $(document).ready(() => {
+        // Verify if this product has the Bold widget
+        isAutoshipEnabled(productId);
+    });
 
     $('body').on('click', '.subscription-select', (event) => {
         $('.subscriptions-continue').removeClass('disabled');

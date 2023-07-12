@@ -45,6 +45,8 @@
         .grid-add-to-cart-form, .add-to-cart-flex-container {
             display: flex;
             flex-flow: column;
+            min-height: 115px;
+            place-content: space-between;
             .row1 {
                 order: 3;
             }

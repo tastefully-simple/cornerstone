@@ -126,14 +126,14 @@ class SubscriptionCart {
         // Enable button on consultant choose modal when an option is selected
         $('body').on('change', '#modal-consultant-choose input[type=radio]', () => {
             $('#modal-consultant-choose .button--primary').prop('disabled', false);
-            $('#modal-consultant-choose .button--primary').html('Checkout');
+            $('#modal-consultant-choose .button--primary').html('checkout');
         });
 
         // Enable button on Choose Consultant and Party modal when an option is selected
         // Also display/hide text under the selection
         $('body').on('change', '#modal-consultant-choose-with-party input[type=radio]', (event) => {
             $('#modal-consultant-choose-with-party .button--primary').prop('disabled', false);
-            $('#modal-consultant-choose-with-party .button--primary').html('Checkout');
+            $('#modal-consultant-choose-with-party .button--primary').html('checkout');
             if ($(event.target).hasClass('current-consultant')) {
                 $('.text-current-consultant').css('visibility', 'visible');
                 $('.text-new-consultant').css('visibility', 'hidden');

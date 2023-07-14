@@ -138,7 +138,7 @@
         float: left;
       }
       span {
-        padding-left:10px;
+        padding-left: 10px;
         padding-bottom: 5px;
       }
       button {
@@ -156,5 +156,22 @@
   }
   .choose-consultant-option {
     width: 95%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #modal-consultant-choose-with-party {
+    width: 100%;
+    .modal-consultant-choose-body {
+      width: 95%;
+      margin-left: 2.5%;
+      p {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+    .choose-consultant-option {
+      width: 90%;
+    }
   }
 }

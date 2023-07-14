@@ -11,12 +11,6 @@
   margin-bottom: 20px;
   color: $black;
 }
-.subscriptionManager--trigger {
-  &:hover {
-    color: $teal !important;
-  }
-}
-
 .subscription-manager {
   width: 400px;
   height: 70%;
@@ -238,6 +232,9 @@
   p {
     text-align: left;
     font-weight: 600;
+    &.pdp-delivery-message {
+      font-weight: 700;
+    }
   }
 }
 

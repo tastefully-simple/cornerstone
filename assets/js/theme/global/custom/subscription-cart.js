@@ -4,6 +4,7 @@ import 'foundation-sites/js/foundation/foundation';
 import swal from '../../global/sweet-alert';
 import utils from '@bigcommerce/stencil-utils';
 import TSCookie from '../../common/ts-cookie';
+import TSAffiliationCheck from '../../common/ts-affiliation-check';
 import ConsultantParties from '../../common/consultant-parties';
 
 // This is set as TRUE when all conditions to proceed to the checkout are cleared
@@ -176,6 +177,11 @@ class SubscriptionCart {
     goToCheckout() {
         window.allowSubscriptionCheckout = true;
         document.querySelector('.cart-actions .button--primary').click();
+    }
+
+    cartTSAffiliationCheck() {
+        const tsAffiliationCheck = new TSAffiliationCheck();
+        return tsAffiliationCheck;
     }
 
     /**
@@ -360,6 +366,7 @@ class SubscriptionCart {
                         } else {
                             window.subscriptionManager.customerId = response.customerId;
                             window.subscriptionManager.customerEmail = response.email;
+                            this.cartTSAffiliationCheck();
 
                             if (self.hasAutoshipProducts(response)) {
                                 self.isCustomerLogged();

@@ -42,7 +42,6 @@ async function renewToken() {
 
 class SubscriptionCart {
     constructor(tsConsultantId) {
-        this.getAutoshipProducts();
         this.initListeners();
         this.TS_CONSULTANT_ID = tsConsultantId;
     }
@@ -80,28 +79,6 @@ class SubscriptionCart {
             credentials: 'include',
             url,
             data,
-        });
-    }
-
-    /**
-     * Get autoship products from API
-     */
-    getAutoshipProducts() {
-        let subscriptionProductsData = false;
-        $.ajax({
-            url: `${window.subscriptionManager.apiUrl}/Products/available`,
-            type: 'GET',
-            dataType: 'JSON',
-            success(response) {
-                if (response) {
-                    const autoshipData = {
-                        timeout: new Date().getTime() + 3600000, // Data expires in 1 hour
-                        products: response,
-                    };
-                    subscriptionProductsData = JSON.stringify(autoshipData);
-                }
-                window.localStorage.setItem('subscription-products', subscriptionProductsData);
-            },
         });
     }
 
@@ -202,9 +179,9 @@ class SubscriptionCart {
                     text: 'An error has happened. Please, try again later. (001)',
                     icon: 'error',
                 });
-            } else if (self.hasAutoshipProducts(response) && cartBoldCheckout.length > 0) {
+            } else if (self.hasAutoshipProducts(response)) {
                 self.isCustomerLogged();
-            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined') || (cartBoldCheckout.length === 0 && !self.hasOpenParties())) {
+            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined') || (self.hasAutoshipProducts(response) === false && !self.hasOpenParties())) {
                 window.location = '/checkout';
             }
         });
@@ -242,12 +219,16 @@ class SubscriptionCart {
      * @returns {boolean}
      */
     hasAutoshipProducts(cart) {
-        const autoshipData = window.localStorage.getItem('subscription-products') ?
-            JSON.parse(window.localStorage.getItem('subscription-products')) : [];
+        const autoshipData = window.localStorage.getItem('boldSubscriptionsSuccessfulAddToCarts') ?
+            JSON.parse(window.localStorage.getItem('boldSubscriptionsSuccessfulAddToCarts')) : [];
 
-        for (let i = 0; i < cart.lineItems.physicalItems.length; i++) {
-            if (autoshipData.products.includes(cart.lineItems.physicalItems[i].productId)) {
-                return true;
+        if (autoshipData.length > 0) {
+            for (let i = 0; i < cart.lineItems.physicalItems.length; i++) {
+                for (let j = 0; j < autoshipData.length; j++) {
+                    if (autoshipData[j].line_item_id === cart.lineItems.physicalItems[i].id) {
+                        return true;
+                    }
+                }
             }
         }
 

@@ -226,7 +226,7 @@ async function renewToken() {
  * @param productId
  * @returns {Promise<void>}
  */
-async function updateSubscription(subscriptionId, productId) {
+async function updateSubscription(subscriptionId, productId, quantitySubscription) {
     await renewToken();
 
     $.ajax({
@@ -239,7 +239,7 @@ async function updateSubscription(subscriptionId, productId) {
         data: JSON.stringify({
             productId,
             variantId: '',
-            quantity: 1,
+            quantitySubscription,
         }),
         // eslint-disable-next-line no-unused-vars
         success(response) {
@@ -394,10 +394,11 @@ export default function (customerId, productId, subscriptionManagement, customer
 
     $('body').on('click', '.subscriptions-continue', () => {
         const selectedSubscription = $('input[name="select-subscription"]:checked').val();
+        const quantitySubscription = parseInt(document.getElementById('qty[]').value, 10);
         $('.subscriptions-continue').addClass('disabled');
 
         if (selectedSubscription !== undefined) {
-            updateSubscription(selectedSubscription, productId);
+            updateSubscription(selectedSubscription, productId, quantitySubscription);
         }
     });
 }

@@ -3,7 +3,7 @@ import _ from 'lodash';
 export default function ($container, current, total, displayNumPages, onGoTo) {
     const prevItem = (() => {
         const $item = $('<li>', { class: 'custom-pagination-item' });
-        const $link = $('<a>', { class: 'custom-pagination-link previous-button' });
+        const $link = $('<a class="custom-pagination-link previous-button"><span class="sr-only">Previous Page</span></a>');
         const $icon = $('<i>', { class: 'fas fa-caret-left' });
 
         // First page
@@ -20,7 +20,7 @@ export default function ($container, current, total, displayNumPages, onGoTo) {
 
     const nextItem = (() => {
         const $item = $('<li>', { class: 'custom-pagination-item' });
-        const $link = $('<a>', { class: 'custom-pagination-link next-button' });
+        const $link = $('<a class="custom-pagination-link next-button"><span class="sr-only">Next Page</span></a>');
         const $icon = $('<i>', { class: 'fas fa-caret-right' });
 
         // Last page

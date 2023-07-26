@@ -239,7 +239,7 @@ async function updateSubscription(subscriptionId, productId, quantitySubscriptio
         data: JSON.stringify({
             productId,
             variantId: '',
-            quantitySubscription,
+            quantity: quantitySubscription,
         }),
         // eslint-disable-next-line no-unused-vars
         success(response) {

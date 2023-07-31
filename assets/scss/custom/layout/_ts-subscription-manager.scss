@@ -11,12 +11,6 @@
   margin-bottom: 20px;
   color: $black;
 }
-.subscriptionManager--trigger {
-  &:hover {
-    color: $teal !important;
-  }
-}
-
 .subscription-manager {
   width: 400px;
   height: 70%;
@@ -135,7 +129,7 @@
 }
 
 .subscription-card {
-  + .subscription-card {
+  +.subscription-card {
     margin-top: 10px;
   }
 }
@@ -193,7 +187,7 @@
     &.subscriptions-continue, &.subscriptions-done {
       padding-right: 20px;
       font-weight: 600;
-      background:  $green-hover;
+      background: $green-hover;
       color: $white;
       display: block;
 
@@ -238,6 +232,9 @@
   p {
     text-align: left;
     font-weight: 600;
+    &.pdp-delivery-message {
+      font-weight: 700;
+    }
   }
 }
 
@@ -303,10 +300,57 @@
     display: block;
   }
   .subscription--container {
-  font-size: 0.8rem;
+    font-size: 0.8rem;
   }
 }
 
 .modal {
   max-width: 95%;
+}
+@media screen and (max-width: 460px) and (max-height: 1800px) {
+  .cart {
+    .modal {
+      height: 95%;
+      #modal-autoship-sign-in {
+        .modal-autoship-sign-in-body {
+          padding-left: 5px;
+          padding-right: 5px;
+          padding-bottom: 0px;
+        }
+        .modal-autoship-form-container {
+          .modal-autoship-form {
+            width: 100%;
+            margin-left: 0;
+          }
+        }
+        .modal-autoship-new-customer-container {
+          margin-top: 0;
+        }
+        .login {
+          .panel-header {
+            padding: 10px;
+          }
+          .panel-body {
+            padding: 10px;
+            p {
+              margin-bottom: 20px;
+            }
+            button {
+              margin: 0 !important;
+              padding: 0.5rem 4.25rem !important;
+            }
+          }
+        }
+      }
+      .form {
+        margin-bottom: 0;
+      }
+      .form-field {
+        margin-bottom: 10px;
+      }
+      #modal-consultant-choose {
+        width: 100%;
+      }
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'foundation-sites/js/foundation/foundation';
 import swal from '../../global/sweet-alert';
 import utils from '@bigcommerce/stencil-utils';
 import TSCookie from '../../common/ts-cookie';
+import TSAffiliationCheck from '../../common/ts-affiliation-check';
 import ConsultantParties from '../../common/consultant-parties';
 
 // This is set as TRUE when all conditions to proceed to the checkout are cleared
@@ -41,7 +42,6 @@ async function renewToken() {
 
 class SubscriptionCart {
     constructor(tsConsultantId) {
-        this.getAutoshipProducts();
         this.initListeners();
         this.TS_CONSULTANT_ID = tsConsultantId;
     }
@@ -83,28 +83,6 @@ class SubscriptionCart {
     }
 
     /**
-     * Get autoship products from API
-     */
-    getAutoshipProducts() {
-        let subscriptionProductsData = false;
-        $.ajax({
-            url: `${window.subscriptionManager.apiUrl}/Products/available`,
-            type: 'GET',
-            dataType: 'JSON',
-            success(response) {
-                if (response) {
-                    const autoshipData = {
-                        timeout: new Date().getTime() + 3600000, // Data expires in 1 hour
-                        products: response,
-                    };
-                    subscriptionProductsData = JSON.stringify(autoshipData);
-                }
-                window.localStorage.setItem('subscription-products', subscriptionProductsData);
-            },
-        });
-    }
-
-    /**
      * Initialize event listeners
      */
     initListeners() {
@@ -126,14 +104,14 @@ class SubscriptionCart {
         // Enable button on consultant choose modal when an option is selected
         $('body').on('change', '#modal-consultant-choose input[type=radio]', () => {
             $('#modal-consultant-choose .button--primary').prop('disabled', false);
-            $('#modal-consultant-choose .button--primary').html('Checkout');
+            $('#modal-consultant-choose .button--primary').html('checkout');
         });
 
         // Enable button on Choose Consultant and Party modal when an option is selected
         // Also display/hide text under the selection
         $('body').on('change', '#modal-consultant-choose-with-party input[type=radio]', (event) => {
             $('#modal-consultant-choose-with-party .button--primary').prop('disabled', false);
-            $('#modal-consultant-choose-with-party .button--primary').html('Checkout');
+            $('#modal-consultant-choose-with-party .button--primary').html('checkout');
             if ($(event.target).hasClass('current-consultant')) {
                 $('.text-current-consultant').css('visibility', 'visible');
                 $('.text-new-consultant').css('visibility', 'hidden');
@@ -178,6 +156,11 @@ class SubscriptionCart {
         document.querySelector('.cart-actions .button--primary').click();
     }
 
+    cartTSAffiliationCheck() {
+        const tsAffiliationCheck = new TSAffiliationCheck();
+        return tsAffiliationCheck;
+    }
+
     /**
      * Initialize Subscription Cart
      * @param e
@@ -196,9 +179,9 @@ class SubscriptionCart {
                     text: 'An error has happened. Please, try again later. (001)',
                     icon: 'error',
                 });
-            } else if (self.hasAutoshipProducts(response) && cartBoldCheckout.length > 0) {
+            } else if (self.hasAutoshipProducts(response)) {
                 self.isCustomerLogged();
-            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined') || (cartBoldCheckout.length === 0 && !self.hasOpenParties())) {
+            } else if (!self.hasOpenParties() || (self.hasOpenParties() && typeof pid !== 'undefined') || (self.hasAutoshipProducts(response) === false && !self.hasOpenParties())) {
                 window.location = '/checkout';
             }
         });
@@ -236,12 +219,16 @@ class SubscriptionCart {
      * @returns {boolean}
      */
     hasAutoshipProducts(cart) {
-        const autoshipData = window.localStorage.getItem('subscription-products') ?
-            JSON.parse(window.localStorage.getItem('subscription-products')) : [];
+        const autoshipData = window.localStorage.getItem('boldSubscriptionsSuccessfulAddToCarts') ?
+            JSON.parse(window.localStorage.getItem('boldSubscriptionsSuccessfulAddToCarts')) : [];
 
-        for (let i = 0; i < cart.lineItems.physicalItems.length; i++) {
-            if (autoshipData.products.includes(cart.lineItems.physicalItems[i].productId)) {
-                return true;
+        if (autoshipData.length > 0) {
+            for (let i = 0; i < cart.lineItems.physicalItems.length; i++) {
+                for (let j = 0; j < autoshipData.length; j++) {
+                    if (autoshipData[j].line_item_id === cart.lineItems.physicalItems[i].id) {
+                        return true;
+                    }
+                }
             }
         }
 
@@ -360,6 +347,7 @@ class SubscriptionCart {
                         } else {
                             window.subscriptionManager.customerId = response.customerId;
                             window.subscriptionManager.customerEmail = response.email;
+                            this.cartTSAffiliationCheck();
 
                             if (self.hasAutoshipProducts(response)) {
                                 self.isCustomerLogged();
@@ -431,7 +419,7 @@ class SubscriptionCart {
                 const pendingConsultant = consultants.filter(c => c.IsActive === false)[0];
                 const pendingConsultantId = pendingConsultant ? pendingConsultant.ConsultantID.replace(/ /g, '') : false;
 
-                if (activeConsultantId === false && pendingConsultantId === false) {
+                if (activeConsultantId === false) {
                     // Set newconsultant as pending
                     self.setConsultantAsPending(newConsultantId);
                     // Go to Checkout page
@@ -478,7 +466,7 @@ class SubscriptionCart {
                 const pendingConsultant = consultants.filter(c => c.IsActive === false)[0];
                 const pendingConsultantId = pendingConsultant ? pendingConsultant.ConsultantID.replace(/ /g, '') : false;
 
-                if (activeConsultantId === false && pendingConsultantId === false) {
+                if (activeConsultantId === false) {
                     // Set newconsultant as pending
                     self.setConsultantAsPending(newConsultantId);
                     // Go to Checkout page

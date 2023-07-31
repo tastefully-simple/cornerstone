@@ -30,15 +30,27 @@ function formatDate(myDate) {
 }
 
 /**
+ * Sort array by "position" key in its objects
+ * @param arr
+ * @returns {*}
+ */
+function sortByPosition(arr) {
+    return arr.sort((a, b) => a.position - b.position);
+}
+
+/**
  * Get a list of all images
  * @param products
  * @returns {string}
  */
 function getProductsImageList(products) {
     let images = '';
+    let sortedImages = [];
+
     // eslint-disable-next-line guard-for-in
     for (const key in products) {
-        images += `<img src="${products[key].images[0].src}">`;
+        sortedImages = sortByPosition(products[key].images);
+        images += `<img alt="${products[key].ProductName}" src="${sortedImages[0].src}">`;
     }
 
     return images;
@@ -91,7 +103,7 @@ function isAutoshipEnabled(productId) {
     $.ajax({
         url: `${window.subscriptionManager.apiUrl}/Subscriptions/products/${productId}`,
         type: 'GET',
-        dataType: 'JSON', // added data type
+        dataType: 'JSON',
         success(response) {
             if (response) {
                 // This product is Autoship Eligible. Show  Widget Version 2
@@ -145,7 +157,7 @@ function hasSubscriptions(customerId) {
     $.ajax({
         url: `${window.subscriptionManager.apiUrl}/customers/${customerId}/hassubscriptions`,
         type: 'GET',
-        dataType: 'JSON', // added data type
+        dataType: 'JSON',
         success(response) {
             if (response === true) {
                 // show component if the customer has active subscriptions
@@ -166,15 +178,16 @@ function hasSubscriptions(customerId) {
  */
 function subscriptionUpdated(subscriptionId) {
     const newImageUrl = $('.productView-thumbnail-link:first img').attr('src');
+    const newImageAltTitle = $('.productView-thumbnail-link:first img').attr('alt');
     const successTemplate = $(`#subscription-success-template--${window.subscriptionManager.version}`).html();
     const subscription = window.subscriptionManager.subs[subscriptionId];
-    window.subscriptionManager.subs[subscriptionId] += `<img src="${newImageUrl}">`;
+    window.subscriptionManager.subs[subscriptionId] += `<img alt="${newImageAltTitle}" src="${newImageUrl}">`;
 
     const map = {
         '#NextOrder': formatDate(subscription.NextOrder),
         '#Id': subscriptionId,
         '#SubscriptionProducts': subscription.images,
-        '#NewProduct': `<img src="${newImageUrl}">`,
+        '#NewProduct': `<img alt="${newImageAltTitle}" src="${newImageUrl}">`,
     };
 
     $(`#subscriptionManager--${window.subscriptionManager.version} .modal-body:first`).html(formatTemplate(successTemplate, map));
@@ -213,7 +226,7 @@ async function renewToken() {
  * @param productId
  * @returns {Promise<void>}
  */
-async function updateSubscription(subscriptionId, productId) {
+async function updateSubscription(subscriptionId, productId, quantitySubscription) {
     await renewToken();
 
     $.ajax({
@@ -226,7 +239,7 @@ async function updateSubscription(subscriptionId, productId) {
         data: JSON.stringify({
             productId,
             variantId: '',
-            quantity: 1,
+            quantity: quantitySubscription,
         }),
         // eslint-disable-next-line no-unused-vars
         success(response) {
@@ -248,6 +261,69 @@ async function updateSubscription(subscriptionId, productId) {
 }
 
 /**
+ * Creates CSS styles to display the autoship buttons
+ * @param products
+ */
+function displayAutoshipButtonForProducts(products) {
+    // eslint-disable-next-line guard-for-in
+    for (const i in products) {
+        $(`#autoship-card${products[i]}`).addClass('autoship-enabled-product');
+    }
+}
+
+/**
+ * Get list of autoship-enabled products
+ * @param subscriptionManagement
+ */
+function getAutoshipProducts(subscriptionManagement) {
+    let subscriptionProductsData = false;
+    $.ajax({
+        url: `${subscriptionManagement.api_url}/Products/available`,
+        type: 'GET',
+        dataType: 'JSON',
+        success(response) {
+            if (response) {
+                const autoshipData = {
+                    timeout: new Date().getTime() + 3600000, // Data expires in 1 hour
+                    products: response,
+                };
+                subscriptionProductsData = JSON.stringify(autoshipData);
+                displayAutoshipButtonForProducts(autoshipData.products);
+            }
+            window.localStorage.setItem('subscription-products', subscriptionProductsData);
+        },
+    });
+}
+
+function isSubscriptionProduct(productId) {
+    let data = window.BOLD.subscriptions.data;
+    let foundGroup = null;
+    for (let i = 0; i < data.subscriptionGroups.length; i += 1) {
+        let subscriptionGroup = data.subscriptionGroups[i];
+        for (let j = 0; j < subscriptionGroup.selection_options.length; j += 1) {
+            let selectionOption = subscriptionGroup.selection_options[j];
+            if (selectionOption.platform_entity_id === productId) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function toggleAutoshipButtons() {
+    const onPageProducts = document.getElementsByName('product_id');
+    const subscriptionProductIds = [];
+    for (let i = 0; i < onPageProducts.length; i++) {
+        if (isSubscriptionProduct(onPageProducts[i].defaultValue)) {
+            subscriptionProductIds.push(onPageProducts[i].defaultValue);
+        }
+    }
+    if (subscriptionProductIds.length > 0) {
+        displayAutoshipButtonForProducts(subscriptionProductIds);
+    }
+}
+
+/**
  * Main function
  * @param customerId
  * @param productId
@@ -256,6 +332,15 @@ async function updateSubscription(subscriptionId, productId) {
  */
 export default function (customerId, productId, subscriptionManagement, customerEmail) {
     if (!subscriptionManagement.enabled) {
+        return false;
+    }
+
+    // Toggle Autoship buttons after DOM is ready
+    $(document).ready(() => {
+        toggleAutoshipButtons();
+    });
+
+    if (productId === undefined) {
         return false;
     }
 
@@ -309,10 +394,11 @@ export default function (customerId, productId, subscriptionManagement, customer
 
     $('body').on('click', '.subscriptions-continue', () => {
         const selectedSubscription = $('input[name="select-subscription"]:checked').val();
+        const quantitySubscription = parseInt(document.getElementById('qty[]').value, 10);
         $('.subscriptions-continue').addClass('disabled');
 
         if (selectedSubscription !== undefined) {
-            updateSubscription(selectedSubscription, productId);
+            updateSubscription(selectedSubscription, productId, quantitySubscription);
         }
     });
 }

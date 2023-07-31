@@ -2,12 +2,12 @@
     {{#if theme_settings.subscription_management.enabled }}
     <div class="subscription-manager-block" id="subscription-manager-block">
         <div id="subscription--container-next" class="subscription--container">
-            <p style="font-weight: 600">{{lang 'subscriptions.one_time_delivery_message1'}}<br/>{{lang 'subscriptions.one_time_delivery_message2'}}</p>
+            <p class="pdp-delivery-message">{{lang 'subscriptions.one_time_delivery_message1'}}<br/>{{lang 'subscriptions.one_time_delivery_message2'}}</p>
             <a href="#" id="subscriptionManager--trigger-next" class="subscriptionManager--trigger">{{lang 'subscriptions.add_to_next_delivery'}}</a>
         </div>
 
         <div id="subscription--container-future" class="subscription--container">
-            <p style="font-weight: 600">Hey {{first (split customer.name " ") }} {{lang 'subscriptions.future_deliveries_message1' }}<br/>{{lang 'subscriptions.future_deliveries_message2'}}</p>
+            <p class="pdp-delivery-message">Hey {{first (split customer.name " ") }} {{lang 'subscriptions.future_deliveries_message1' }}<br/>{{lang 'subscriptions.future_deliveries_message2'}}</p>
             <a href="#" id="subscriptionManager--trigger-future" class="subscriptionManager--trigger">{{lang 'subscriptions.add_to_future_deliveries'}}</a>
         </div>
 

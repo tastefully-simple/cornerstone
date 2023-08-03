@@ -184,9 +184,9 @@ export default class ConsultantParties {
             window.location = CART_PAGE;
         } else {
             this.modal.close();
+            window.location.reload();
         }
         $('.partybar-accordion').css('max-height', '0px');
-        window.location.reload();
     }
 
     savePartyCookies(party) {

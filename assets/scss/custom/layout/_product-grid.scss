@@ -67,6 +67,17 @@
 
 }
 
+.recipes-page-content {
+    .card-title{
+        height: fit-content;
+    }
+    .add-to-cart-wrapper {
+        &.add-to-cart-category {
+            display: none;
+        }
+    }
+}
+
 .autoship-enabled-product {
     .ts-to-you-link {
         visibility: visible;
@@ -88,6 +99,17 @@
                     top: unset;
                     width: 100%;
                 }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .recipes-page-content {
+        .flex-list {
+            .product {
+                margin-left: 3% !important;
+                margin-right: 3% !important;
             }
         }
     }

@@ -6,7 +6,6 @@
     overflow-x:hidden;
     visibility:visible!important;
     header{
-        background-color:$cream;
         padding:20px;
         text-align:center;
         h1{
@@ -31,10 +30,10 @@
         &.style-logos{
             .styleitem-content{
                 align-items:center;
+                justify-content: space-evenly;
                 img{
-                    width:44%;
+                    max-width:44%;
                     &.logo-white{
-                        background-color:$burgundy;
                         padding:20px;
                     }
                 }

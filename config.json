@@ -401,7 +401,7 @@
         "marketplace_brand": "Party Palooza",
         "subscription_management": {
           "enabled": true,
-          "api_url": "https://qa1-subscription.api.tastefullysimple.com/1"
+          "api_url": "https://qa1-subscription.api.tastefullysimple.com/store/1"
         }
       }
     },
@@ -435,7 +435,7 @@
         "marketplace_brand": "Party Palooza",
         "subscription_management": {
           "enabled": true,
-          "api_url": "https://qa1-subscription.api.tastefullysimple.com/1"
+          "api_url": "https://qa1-subscription.api.tastefullysimple.com/store/1"
         }
       }
     },
@@ -472,7 +472,7 @@
         "marketplace_brand": "Party Palooza",
         "subscription_management": {
           "enabled": true,
-          "api_url": "https://stage-subscription.api.tastefullysimple.com/1"
+          "api_url": "https://stage-subscription.api.tastefullysimple.com/store/1"
         }
       }
     },
@@ -510,7 +510,7 @@
         "marketplace_brand": "Party Palooza",
         "subscription_management": {
           "enabled": true,
-          "api_url": "https://subscription.api.tastefullysimple.com/1"
+          "api_url": "https://subscription.api.tastefullysimple.com/store/1"
         }
       }
     }

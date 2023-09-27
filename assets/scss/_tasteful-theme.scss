@@ -6,28 +6,26 @@
 // -----------------------------------------------------------------------------
 
 // Primary
-$brown: #4c3723;
+$berry: #a22a3c;
 $burgundy: #610b31;
 $butterscotch: #ddcda6;
 $burnt-caramel: #854a0f;
-$caramel: #b46c20;
 $cream: #f0ebdf;
-$grape: #720f4b;
+$grape: #681b49;
+$green: #38602e;
 $light-burgundy: #7f4252;
+$teal: #005f66;
+$teal-hover: #12484c;
+$text-gray: #2d2d2d;
 // Secondary
-$banana: #ffe438;
-$berry: #eb2257;
-$davys-gray: #575757;
 $gainsboro: #e2e2e2;
-$green: #2f722e;
 $green-hover: #859407;
 $green-apple: #6e7a06;
-$orange: #f37929;
+$light-gray: #f5f5f5;
+$light-teal: #e5f1f2;
 $shady-lady: #979797;
 $silver: #bbbbbb;
-$teal: #00757d;
-$teal-hover: #00494e;
-$text-gray: #2d2d2d;
+$text-med-gray: #595959;
 $wan-white: #f1f0ee;
 $white: #fff;
 // Utility
@@ -39,23 +37,14 @@ $utility-success: #d5ffd8;
 
 // Text Color Classes
 // -----------------------------------------------------------------------------
-.banana-text{
-    color: $banana;
-}
 .berry-text{
     color: $berry;
-}
-.brown-text{
-    color: $brown;
 }
 .burgundy-text{
     color: $burgundy;
 }
 .butterscotch-text{
     color: $butterscotch;
-}
-.caramel-text{
-    color: $caramel;
 }
 .cream-text{
     color: $cream;
@@ -78,8 +67,11 @@ $utility-success: #d5ffd8;
 .lightburgundy-text{
     color: $light-burgundy;
 }
-.orange-text{
-    color: $orange;
+.lightgray-text{
+    color: $light-gray;
+}
+.lightteal-text{
+    color: $light-teal;
 }
 .shadylady-text{
     color: $shady-lady;
@@ -95,6 +87,9 @@ $utility-success: #d5ffd8;
 }
 .textgray-text{
     color: $text-gray;
+}
+.textmedgray-text{
+    color: $text-med-gray;
 }
 .utilityblue-text{
     color: $utility-blue;
@@ -115,23 +110,14 @@ $utility-success: #d5ffd8;
 // Background Color Classes
 // -----------------------------------------------------------------------------
 
-.banana-background{
-    background-color: $banana;
-}
 .berry-background{
     background-color: $berry;
-}
-.brown-background{
-    background-color: $brown;
 }
 .burgundy-background{
     background-color: $burgundy;
 }
 .butterscotch-background{
     background-color: $butterscotch;
-}
-.caramel-background{
-    background-color: $caramel;
 }
 .cream-background{
     background-color: $cream;
@@ -154,8 +140,11 @@ $utility-success: #d5ffd8;
 .lightburgundy-background{
     background-color: $light-burgundy;
 }
-.orange-background{
-    background-color: $orange;
+.lightgray-background{
+    background-color: $light-gray;
+}
+.lightteal-background{
+    background-color: $light-teal;
 }
 .shadylady-background{
     background-color: $shady-lady;
@@ -171,6 +160,9 @@ $utility-success: #d5ffd8;
 }
 .textgray-background{
     background-color: $text-gray;
+}
+.textmedgray-background{
+    background-color: $text-med-gray;
 }
 .utilityblue-background{
     background-color: $utility-blue;
@@ -655,7 +647,7 @@ label{
         }
     }
     &.tick-disabled{
-        color:$davys-gray;
+        color:$text-med-gray;
     }
 }
 .input-confirmed{

@@ -226,11 +226,12 @@ export default class ConsultantParties {
 
     updatePartyBarText(host) {
         if (this.selectedPid) {
-            $('#partybar-find').html(`<div class="consultant-info">
+            $('.partybar-left').html(`<div class="consultant-info">
                 <div class="consultant-info-control">
                     <p class="frame-subhead">
-                        <span id="my-host-mobile">My host</span>
+                        <span id="my-partybar-title">my host</span>
                         <p class="framelink-xl host-name">${host}</p>
+                        <div class="partybar-buttons">
                         <button type="button" class="framelink-sm view-party" id="view-single-party">
                             <span class="consultant-edit">view</span>
                         </button>
@@ -242,6 +243,7 @@ export default class ConsultantParties {
                         <button type="button" class="framelink-sm" style="padding: 0" id="remove-current-party">
                             <span class="cart-affilitiate-btn remove-party">remove</span>
                         </button>
+                        </div>
                     </p>
                 </div>
             </div>`);

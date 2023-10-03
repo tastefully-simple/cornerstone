@@ -45,6 +45,9 @@
     "Firefox ESR"
   ],
   "settings": {
+    "store_logo": {
+      "image": "/assets/img/TSLogo-Plate.png"
+      },
     "ts_api_environment": "qa1",
     "ts_current_store_base_url": "https://tastefully-simple-sandbox-2.mybigcommerce.com",
     "ts_shop_more_url": "/shop/",
@@ -102,7 +105,7 @@
     "show_product_weight": true,
     "show_product_dimensions": false,
     "product_list_display_mode": "grid",
-    "logo-position": "left",
+    "logo-position": "center",
     "logo_size": "250x100",
     "logo_fontSize": 28,
     "brand_size": "190x250",
@@ -233,7 +236,7 @@
     "navUser-indicator-backgroundColor": "#d0021b",
     "navPages-color": "#333333",
     "navPages-color-hover": "#2d2d2d",
-    "navPages-subMenu-backgroundColor": "#e5e5e5",
+    "navPages-subMenu-backgroundColor": "#E5F1F2",
     "navPages-subMenu-separatorColor": "#cccccc",
     "dropdown--quickSearch-backgroundColor": "#e5e5e5",
     "dropdown--wishList-backgroundColor": "#ffffff",

@@ -1,36 +1,47 @@
 <header class="header" role="banner">
-    <div class="header-top textgray-background">
-        <div class="container">
-            <div class="header-top-banner">
-                {{#if banners.top}}
-                <div class="banners" data-banner-location="top">
-                    {{#each (limit banners.top_metadata 1)}}
-                    <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-banner-id="{{this.banner-name}}">
-                        <div data-event-type="promotion-click">
-                            {{{this.content}}}
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
-                {{/if}}
+    <div class="header-top">
+        <div class="container new-tst-grid">
+            <div id="bcapi_top_left_menu" style="text-align: right;">
+                <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
+                    <li id="partybar-find" class="navPages-item navPages-item">
+                        <a class="navPages-action" id="find-party-mobile-text">Find a Party</a>
+                    </li>
+                    <li class="navPages-item navPages-item-host">
+                        <a class="navPages-action teal-text" href="/host">host</a>
+                    </li>
+                </ul>
+            </div>
+            <div></div>
+            <div id="bcapi_top_right_menu">
+                <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
+                    <li class="navPages-item navPages-item-join">
+                        <a class="navPages-action teal-text" href="/join-us/">join</a>
+                    </li>
+                    <li class="navPages-item navPages-item-consultant">
+                        <a class="navPages-action teal-text menu-headertoplinks-consult headertoplinks-consult">find a consultant</a>
+                    </li>
+                </ul>
             </div>
             <div class="header-top-links">
-                <button type="button" class="headertoplinks-consult" id="consultant-link-top">
-                    <span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
-                    <span class="headertoplinks-consult-text">Find a Consultant</span>
-                </button>
-                <div class="headertoplinks-nav">
-                    {{> components/common/navigation}}
+                <div>
+                    <div class="headertoplinks-nav" style="color: black;">
+                        {{> components/common/navigation}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
-        <span class="mobileMenu-toggleIcon">Toggle menu</span>
-    </a>
 
-    <div class="header-main" id="headerMain">
-        <div class="container">
+    <div class="header-main new-tst-main" id="headerMain">
+        <div class="container new-tst-header">
+            <div class="left-menu">
+                <div class="navPages-container" id="menu" data-menu>
+                   {{> components/common/navigation-menu-custom}}
+                </div>
+            </div>
+            <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
+                <span class="mobileMenu-toggleIcon">Toggle menu</span>
+            </a>
             {{#if page_type '===' 'default'}}
                 <h1 class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
                     {{> components/common/store-logo}}
@@ -40,8 +51,10 @@
                     {{> components/common/store-logo}}
                 </div>
             {{/if}}
-            <div class="navPages-container" id="menu" data-menu>
-               {{> components/common/navigation-menu-custom}}
+            <div class="right-menu">
+                <div class="navPages-container" id="menu" data-menu>
+                    {{> components/common/navigation-right-custom}}
+                 </div>
             </div>
             <div class="nav-search">
                 {{> components/common/search-box}}
@@ -53,4 +66,5 @@
 {{{region name="header_bottom"}}}
 
 {{!-- Find a Party bar --}}
-{{> components/common/partybar }}
+{{> components/common/custom/consultant-partybar }}
+{{> components/common/custom/banner-custom }}

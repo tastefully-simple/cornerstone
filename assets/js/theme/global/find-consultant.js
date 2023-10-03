@@ -179,9 +179,16 @@ class FindAConsultant {
             () => this.removeAffiliation.openAlert(),
         );
 
+        // Consultant edit button
         $('body').on(
             'click',
-            '#consultantparties-search-results .consultant-remove',
+            '.consultant-edit',
+            (e) => this.createModal(e, this.modalTemplate),
+        );
+
+        $('body').on(
+            'click',
+            '.consultant-remove',
             () => this.removeAffiliation.openAlert(),
         );
 
@@ -191,6 +198,14 @@ class FindAConsultant {
             '.view-consultant-parties',
             (e) => this.openConsultantParties(e),
         );
+
+        $('.find-partybar').each((index, element) => {
+            $(element).on(
+                'click',
+                '.view-consultant-parties',
+                (e) => this.openConsultantParties(e),
+            );
+        });
 
         // Open consultant parties modal in
         // party bar mobile
@@ -609,9 +624,7 @@ class FindAConsultant {
 
     renderConsultant() {
         // Main consultant DOM rendering
-        this.defaultConsultantHtml =
-            `<span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
-                <span class="headertoplinks-consult-text">Find a Consultant</span>`;
+        this.defaultConsultantHtml = $('.menu-headertoplinks-consult').html();
 
         if (window.innerWidth <= this.screenMinWidth) {
             this.renderConsultantInMobileMenu();
@@ -654,10 +667,13 @@ class FindAConsultant {
         const html =
             `<div class="consultant-info">
                 <div class="consultant-info-control">
-                    <p class="frame-subhead">
-                        <span id="my-consultant-mobile">My consultant</span>
+                    <p class="frame-subhead my-partybar-title"><span id="my-partybar-title">my consultant</span></p>
                         <p class="framelink-xl consultant-name">${this.consultant.name}</p>
-                        <span id="my-consultant-desktop">is my consultant</span>
+                        <div class="partybar-buttons">
+                        <button type="button" class="framelink-sm consultant-view-button">
+                            <a class="consultant-view" href="/web">view</a>
+                        </button>
+                        <span class="verbar">&verbar;</span>
                         <button type="button" class="framelink-sm consultant-edit-button">
                             <span class="consultant-edit">change</span>
                         </button>
@@ -665,8 +681,7 @@ class FindAConsultant {
                         <button type="button" class="framelink-sm">
                             <span class="cart-affilitiate-btn consultant-remove">remove</span>
                         </button>
-                       
-                    </p>
+                        </div>
                 </div>
             </div>`;
 
@@ -678,7 +693,6 @@ class FindAConsultant {
             return;
         }
 
-        $('.header-top .header-top-links').prepend(this.$findConsultant);
 
         // Account for consultant in the sticky header
         const $header = $('#headerMain');
@@ -691,10 +705,10 @@ class FindAConsultant {
         if (this.isExternalConsultant() && isStickyHeaderDisabled) {
             if (TSCookie.getConsultantId() === this.consultant.id) {
                 this.$findConsultant.setAttribute('title', `${this.consultant.name} is your Consultant`);
-                this.$findConsultant.innerHTML = this.consultantInfoHtml();
+                $('.partybar-consult').html(this.consultantInfoHtml());
             }
         } else {
-            this.$findConsultant.innerHTML = this.defaultConsultantHtml;
+            $('.partybar-consult').html(this.defaultConsultantHtml);
         }
     }
 

@@ -1,11 +1,23 @@
 <nav class="navPages">
-    <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}} tst-menu" >
-        <li class="navPages-item navPages-item-consultant-fundraiser mobile-bar">
-            <div id="mobile_consultant"></div>
-            <div id="mobile_partybar"></div>
+    <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
+        <li class="navPages-item navPages-item-recipes">
+            <a class="navPages-action" href="/recipes/">recipes</a>
         </li>
-        <ul class="navPages-list navPages-list--user" id="navigation-menu-custom">
-            {{#if currency_selector.currencies.length '>' 1}}
+        <li class="navPages-item navPages-item-blog">
+            <a class="navPages-action" href="//blog.tastefullysimple.com">blog</a>
+        </li>
+        <li class="navPages-item">
+            <a class="navPages-action">our story</a>
+        </li>
+        <li class="navPages-item join-mobile">
+            <a class="navPages-action" href="/join">join</a>
+        </li>
+        <li class="navPages-item host-mobile">
+            <a class="navPages-action" href="/host">host</a>
+        </li>
+    </ul>
+    <ul class="navPages-list navPages-list--user" id="navigation-menu-custom">
+        {{#if currency_selector.currencies.length '>' 1}}
             <li class="navPages-item">
                 <a class="navPages-action has-subMenu" href="#" data-collapsible="navPages-currency" aria-controls="navPages-currency" aria-expanded="false">
                     {{lang 'common.currency' code=currency_selector.active_currency_code}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chevron-down"></use></svg></i>
@@ -90,23 +102,20 @@
                 </div>
             </li>
         {{else}}
-            <li class="navPages-item">
-                <a class="navPages-action" href="{{urls.auth.login}}">sign in</a>
+            <li class="navPages-item" style="padding-bottom: 50px">
+                <span style="font-weight: 900;
+    font-size: 16px;
+    color: #00757d"><a class="" style="font-weight: 900;
+    font-size: 16px; text-decoration: none;
+    color: #00757d" href="{{urls.auth.login}}">sign in</a> / <a class="" style="font-weight: 900;
+    font-size: 16px;
+    color: #00757d; text-decoration: none" href="{{urls.auth.create_account}}">register</a></span>
             </li>
         {{/if}}
-        </ul>
-        
         {{#if theme_settings.social_icon_placement_top}}
             <li class="navPages-item">
                 {{> components/common/social-links}}
             </li>
         {{/if}}
-        {{#each categories}}
-            {{#if name '!==' 'Recipes'}}
-            <li class="navPages-item navPages-item-shop">
-                {{> components/common/navigation-list-custom}}
-            </li>
-            {{/if}}
-        {{/each}}
     </ul>
 </nav>

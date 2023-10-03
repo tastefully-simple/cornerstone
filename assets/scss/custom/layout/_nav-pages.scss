@@ -10,6 +10,7 @@
                     padding-bottom:55px;
                     padding-top:0;
                     top:55px;
+                    background-color: $light-teal;
                     .navPages {
                         .headertoplinks-consult {
                             background: $gainsboro;
@@ -73,8 +74,7 @@
                         position:relative;
                         .navPages-item {
                             &.navPages-item-shop, &.navPages-item-recipes, &.navPages-item-blog, &.navPages-item-join, &.navPages-item-host {
-                                margin-right:.75rem;
-                                width:100%;
+                                width: auto;
                                 &>.navPages-action {
                                     display:block;
                                     padding-bottom:0;
@@ -91,25 +91,24 @@
                                 }
                             }
                             .navPages-action {
-                                @extend .framelink-xl;
+                                @extend .frameheading-2;
+                                color: white;
                                 &:not(.navPage-childList-action) {
                                     &.navPage-subMenu-action {
-                                        @extend .subhead-16;
+                                        @extend .frameheading-3;
                                     }
                                 }
                                 &.navPage-childList-action {
                                     @extend .subhead-14;
-                                    margin-bottom:.5rem;
                                 }
                             }
                         }
                     }
                     &.navPages-list--user {
-                        order:4;
-                        background-color:$wan-white;
+                        background-color: transparent;
                         border-top:none;
-                        padding:0 .5rem;
-                        margin:1.5rem;
+                        padding:0 1.5rem;
+                        display: none;
                         .navPages-item {
                             .navPages-action {
                                 @extend .subhead-16;
@@ -144,17 +143,20 @@
                             &.has-subMenu {
                                 display:flex;
                                 justify-content:space-between;
-                                padding:.75rem 0;
+                                padding:0.75rem 0;
                                 &::after {
-                                    content:'\f0da';
+                                    content:'\f054';
                                     font-family:'Font Awesome 5 Pro';
                                     font-size:1.2em;
+                                    color: white;
                                 }
                                 &.is-open {
                                     &::after {
-                                        content:'\f0d7';
+                                        content:'\f078';
+                                        color: white;
                                     }
                                 }
+                                    
                             }
                             &>br {
                                 display:none;
@@ -165,21 +167,22 @@
             }
         }
     }
+    .navPages-action {
+        text-transform: lowercase;
+        @extend .frameheading-2;
+        color: $teal;
+    }
 }
 
+li {
+    &#partybar-mobile-container {
+        &::marker {
+            content: "" !important;
+        }
+    }    
+}
 
 @media only screen and (min-width:801px) {
-    #navPages-mainmenu-catshop.is-open::before {
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-bottom: 5px solid #e2e2e2;
-        content: '';
-        height: 0;
-        left: 31%;
-        position: absolute;
-        top: 20px;
-        width: 0;
-    }
     .navPage-subMenu-item::marker, .navPage-childList-item::marker {
         list-style: none !important;
         font-variant-numeric: unset;
@@ -190,10 +193,12 @@
         margin-bottom: 0;
         padding-bottom: 0;
         font: 900 16px Muli;
+        color: $teal;
+        text-transform: lowercase !important;
     }
     .sticky-header {
         #navPages-catshop {
-            top: 80px;
+            top: 142px;
             ul {
                 list-style: none !important;
             }
@@ -211,6 +216,11 @@
                 .navPages-container {
                     .navPages {
                         display:block;
+
+                        .join-mobile,
+                        .host-mobile {
+                            display: none;
+                        }
                     }
                     .navPages-list {
                         &:not(.navPages-list--user) {
@@ -220,6 +230,7 @@
                             flex-wrap:nowrap;
                             .navPages-item {
                                 &.navPages-item-shop {
+                                    margin-right: 0;
                                     order:1;
                                     padding:0;
                                     width:auto;
@@ -230,6 +241,7 @@
                                         top:unset;
                                         text-align:left;
                                         transform:unset;
+                                        display: inline-grid;
                                     }
                                 }
                                 &.navPages-item-join {
@@ -240,12 +252,10 @@
                                 }
                                 &.navPages-item-recipes {
                                     display:block;
-                                    order:2;
                                     font-weight: bold;
                                 }
                                 &.navPages-item-blog {
                                     display:block;
-                                    order:3;
                                 }
                                 &>.navPages-action {
                                     border:none;
@@ -257,7 +267,7 @@
                                     &:active,
                                     &:focus,
                                     &:hover {
-                                        color: $burnt-caramel;
+                                        color: $green-hover;
                                     }
                                     &:not(.navPage-childList-action) {
                                         &.navPage-subMenu-action {
@@ -274,12 +284,13 @@
                         .navPages-item {
                             position:relative;
                             .navPages-action {
+                                color: $teal;
                                 border:none;
                                 font-size:fontSize("base");
-                                padding:0 1.125rem;
+                                padding:0 0.75rem;
                                 &.is-open {
                                     &:not(.navPage-subMenu-action) {
-                                        background-color:$white;
+                                        background: transparent;
                                     }
                                 }
                             }
@@ -326,6 +337,19 @@
                             }
                         }
                     }
+                }
+                .right-menu {
+                    display: grid;
+                    justify-content: flex-start;
+                        .navPages-list {
+                            &:not(.navPages-list--user){
+                                justify-content: flex-start;
+                            }
+                        }
+                }
+                .left-menu,
+                .right-menu {
+                    padding: 0 0 20px 0;
                 }
             }
         }
@@ -408,28 +432,46 @@
     }
     .sticky-header {
         #navPages-catshop {
-            top: 80px;
+            top: 146px;
             ul {
                 list-style: none !important;
             }
         }
     }
-    #navPages-mainmenu-catshop.is-open::before {
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-bottom: 5px solid #e2e2e2;
-        content: '';
-        height: 0;
-        left: 31%;
-        position: absolute;
-        top: 20px;
-        width: 0;
+    .navPages-item-shop:has(.has-subMenu)::after{
+        content: '\f078';
+        color: #fff;
+        font-family: 'Font Awesome 5 Pro';
+        font-size: 15px;
+        display: inline-flex;
+    }
+    .navPages-item-shop{
+        &:hover{
+            &::after{
+                color: $green-hover;
+            }
+        }
+    }
+    .navPages-item-shop:has(.is-open)::after{
+        content: '\f077';
+        color: $green-hover;
+        font-family: 'Font Awesome 5 Pro';
+        font-size: 15px;
+        display: inline-flex;
+    }
+
+    .navPages-item-shop{
+        .is-open::after {
+            content: '\f077';
+            height: 0;
+            width: 0;
+        }
     }
     #navPages-catshop {
         width: 1000px !important;
         left: -500px !important;
         margin-left: 50% !important;
-        top: 115px;
+        top: 153px;
 
         .navPage-subMenu-list li.navPage-subMenu-item:nth-child(1) {
             width: 15%;
@@ -506,16 +548,21 @@
             &.is-open {
                 .mobileMenu-toggle,
                 .header-logo-image-container {
-                    background-color: $white;
                 }
             }
         }
     }
 }
 @media only screen and (min-width:801px) {
+    .my-partybar-title {
+        text-transform: lowercase;
+        margin: 0;
+    }
+    .consultant-name, .host-name {
+        margin: auto;
+    }
     #my-consultant-desktop {
         display: block;
-        float: left;
         font-weight: 500;
         font-size: 14px;
         padding-top: 3px;
@@ -533,12 +580,47 @@
     }
     .navPages-container {
         background: $white;
+        .navPage-subMenu-action {
+            &.is-open {
+                &::after {
+                    content:'\f077' !important;
+                }
+            }
+            &.has-subMenu {
+                display:flex;
+                justify-content:space-between;
+                padding:0.75rem 0;
+                &::after {
+                    content:'\f078';
+                    font-family:'Font Awesome 5 Pro';
+                    font-size:1.2em;
+                    color: $teal !important;
+                }
+            }
+        }
+        .tst-menu {
+            .navPages-list--user {
+                .navPages-item {
+                    border-bottom: 1px solid $teal;
+                    height: inherit;
+                }
+            } 
+        }
     }
-
+    .banner-tst {
+        .banner-container {
+            display: none;
+        }
+    }
     #partybar-mobile-container {
         padding-top: 8px;
         display: block;
         padding-bottom: 8px;
+        &::marker {
+            list-style: none !important;
+            font-variant-numeric: unset;
+            content: "" !important;
+        }
     }
     #party-icon-mobile {
         top: 12px;
@@ -546,7 +628,9 @@
         padding-left: 20px;
     }
     #find-party-mobile-text {
-        width: 60%;
+        width: 100%;
+        color: white;
+        text-align: center;
     }
     #my-consultant-desktop {
         display: none;
@@ -555,14 +639,9 @@
         display: block;
     }
     .navPage-subMenu {
-        margin-left: 10px;
     }
-    .navPages-item-shop:first-child,  .navPages-item-recipes a, .navPages-item-blog a,
-    .navPages-item-join a, .navPages-item-host a {
-            color: $burgundy !important;
-    }
+
     .navPages-item-consultant-fundraiser {
-        height: 63px;
         float: left;
         width: 100%;
         .partybar-accordion {
@@ -581,7 +660,7 @@
         .partybar-main-text {
             line-height: 14px;
             font-size: 12px;
-            height: 44px;
+            height: 60px;
         }
         .headertoplinks-consult {
             width: 100%;
@@ -616,6 +695,35 @@
                 overflow: hidden;
             }
         }
+    }
+    .header {
+        .header-main {
+            .container {
+                .navPages-container {
+                    .navPages-item {
+                        a {
+                            padding-bottom: 0;
+                        }
+                    } 
+                    #navPages-catshop {
+                        .navPage-subMenu-list {
+                            margin: 0;
+                        }    
+                    }
+                    .navPages-list {
+                        &.navPages-list--user {
+                            display: grid;
+                            height: 38px;
+                            position: relative;
+                            overflow: hidden;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .navPages-list--user{
+        display: grid;
     }
 }
 #mobile_partybar {

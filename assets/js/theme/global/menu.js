@@ -32,11 +32,41 @@ class Menu {
     updateMenuLocation() {
         if (window.innerWidth <= 800) {
             // Mobile menu. Move it to the original location
-            $('#navPages-mainmenu-catshop').after($('#navPages-catshop'));
+            $('#navPages-mainmenu-catshop').prependTo($('#navPages-catshop'));
+            $('.right-menu').appendTo($('.tst-menu'));
+            $('.right-menu .navPages-list--user').remove();
         } else {
             // Desktop menu. Move it to after the header
             $('.header-logo').after($('#navPages-catshop'));
         }
+        const empty = function isEmpty(el) {
+            return !$.trim(el.html());
+        };
+        function bannersTop() {
+            if (empty($('.banner_left>div'))) {
+                $('.banner_left').remove();
+            }
+            if (empty($('.banner_middle>div'))) {
+                $('.banner_middle').remove();
+            }
+            if (empty($('.banner_right>div'))) {
+                $('.banner_right').remove();
+            }
+            if (empty($('.banner-container'))) {
+                $('.banner-tst').remove();
+            }
+            if (document.getElementsByClassName('find-partybar')[0].innerText === 'FIND A PARTY OR A FUNDRAISER') {
+                $('.partybar-left').css('display', 'none');
+                $('.consultant-partybar-container').css('grid-template-columns', '1fr');
+            }
+            if (document.getElementsByClassName('partybar-consult')[0].innerText === 'FIND A CONSULTANT') {
+                $('.partybar-right').remove();
+            }
+            if (($('.partybar-consult').html() === 'find a consultant') && ($('.partybar-main-text').html() === 'Find a Party or a Fundraiser')) {
+                $('.consultant-partybar').remove();
+            }
+        }
+        setTimeout(bannersTop, 500);
     }
 
     collapseAll() {

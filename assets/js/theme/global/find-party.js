@@ -201,7 +201,9 @@ class FindAParty {
                 </div>
             </div>`;
 
-        $('.partybar-accordion').html(html);
+        $('.partybar-left').css('display', 'grid');
+        $('.consultant-partybar-container').css('grid-template-columns', '1fr 1fr');
+        $('.find-partybar').html(html);
 
         // View all parties button
         const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
@@ -223,10 +225,10 @@ class FindAParty {
                 </div>
             </div>`;
 
-        $('.partybar-accordion').html(html);
+        $('.find-partybar').html(html);
 
         // View party
-        const $viewPartyButton = this.$findPartyBar.find('.partybar-accordion-items .view-party');
+        const $viewPartyButton = this.$findPartyBar.find('.view-party');
         $viewPartyButton.on('click', () => {
             window.location.href = `/p/${this.party.id}`;
         });
@@ -245,7 +247,7 @@ class FindAParty {
          */
 
         // Remove party
-        const $removeParty = this.$findPartyBar.find('.partybar-accordion-items .remove-party');
+        const $removeParty = this.$findPartyBar.find('.cart-affilitiate-btn .remove-party');
         $removeParty.on('click', () => {
             TSCookie.deleteParty();
 
@@ -275,7 +277,9 @@ class FindAParty {
                 </div>
             </div>`;
 
-        $('.partybar-accordion').html(html);
+        $('.partybar-left').css('display', 'grid');
+        $('.consultant-partybar-container').css('grid-template-columns', '1fr 1fr');
+        $('.find-partybar').html(html);
 
         // View all parties button
         const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
@@ -286,30 +290,35 @@ class FindAParty {
         if (hostname) {
             return `<div class="consultant-info">
                 <div class="consultant-info-control">
-                    <p class="frame-subhead">
-                        <span id="my-host-mobile">My host</span>
+                    <p class="frame-subhead my-partybar-title">
+                        <span id="my-partybar-title">my host</span></p>
                         <p class="framelink-xl host-name">${hostname}</p>
-                        <button type="button" class="framelink-sm view-party" id="view-single-party">
-                            <span class="consultant-edit">view</span>
-                        </button>
-                        <span class="verbar">&verbar;</span>
-                        <button type="button" class="framelink-sm view-all-parties" id="change-current-party">
-                            <span class="consultant-edit">change</span>
-                        </button>
-                        <span class="verbar">&verbar;</span>
-                        <button type="button" class="framelink-sm" id="remove-current-party">
-                            <span class="cart-affilitiate-btn remove-party">remove</span>
-                        </button>
-                    </p>
+                        <div class="partybar-buttons">
+                            <button type="button" class="framelink-sm view-party" id="view-single-party">
+                                <a class="view-party" href="/party-details">view</a>
+                            </button>
+                            <span class="verbar">&verbar;</span>
+                            <button type="button" class="framelink-sm view-all-parties" id="change-current-party">
+                                <span class="view-all-parties">change</span>
+                            </button>
+                            <span class="verbar">&verbar;</span>
+                            <button type="button" class="framelink-sm remove-party" id="remove-current-party">
+                                <span class="cart-affilitiate-btn remove-party" id="remove-current-party">remove</span>
+                            </button>
+                        </div>
                 </div>
             </div>`;
         } else if (TSCookie.getPartyId() === 'null') {
             return `<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`;
         }
-
-        return '<div id="partybar-mobile-container"><span class="fak fa-party-horn-light" aria-hidden="true" id="party-icon-mobile"></span>\n' +
-            '        <button type="button" class="partybar-main-text" id="find-party-mobile-text">Find a Party or Fundraiser</button>\n' +
-            '        <span class="fa fa-caret-right partybar-arrow" aria-hidden="true"></span></div>';
+        if (window.innerWidth > SCREEN_MIN_WIDTH) {
+            return '<div id=""><li id="partybar-find" class="navPages-item navPages-item">\n' +
+            '        <a class="navPages-action" id="find-party-mobile-text">Find a Party or a Fundraiser</a>\n' +
+            '         </li></div>';
+        }
+        return '<div id=""><div id="partybar-find" class="navPages-item navPages-item">\n' +
+            '        <a class="navPages-action" id="find-party-mobile-text">Find a Party</a>\n' +
+            '         </div></div>';
     }
 
     modalLoaded(result) {
@@ -431,7 +440,7 @@ class FindAParty {
         // Partybar Greeting Text
         const hostname = TSCookie.getPartyHost();
 
-        $('#partybar-find').html(this.partyGreeting(hostname));
+        $('.find-partybar').html(this.partyGreeting(hostname));
 
         // View party
         const $viewPartyButton = this.$findPartyBar.find('#view-single-party');
@@ -446,7 +455,7 @@ class FindAParty {
         });
 
         // Remove party
-        const $removeParty = this.$findPartyBar.find('#remove-current-party');
+        const $removeParty = $('.remove-party.remove-party');
         $removeParty.on('click', () => {
             TSCookie.deleteParty();
 
@@ -467,12 +476,9 @@ class FindAParty {
          */
         const appleGreen = '#6e7a06';
 
-        $party.css('background-color', appleGreen);
 
         // Show party bar in desktop or mobile
-        if (this.isDesktop()) {
-            $('header.header').append($party);
-        } else {
+        if (!this.isDesktop()) {
             $navPages.append($party);
         }
     }
@@ -649,8 +655,8 @@ export default function (themeSettings) {
                 'common/find-party',
                 tsConsultantId,
             );
-        } else {
-            $('.partybar-container').each((index, element) => {
+        } else if (window.innerWidth > SCREEN_MIN_WIDTH) {
+            $('#bcapi_top_left_menu>.navPages-list>#partybar-find').each((index, element) => {
                 // eslint-disable-next-line no-new
                 new FindAParty(
                     $(element),
@@ -659,7 +665,17 @@ export default function (themeSettings) {
                 );
             });
         }
-
+        if (window.innerWidth < SCREEN_MIN_WIDTH) {
+            $('.nav-search').insertAfter($('.navPages-item-consultant-fundraiser'));
+            $('.partybar-left>#partybar-find').each((index, element) => {
+                // eslint-disable-next-line no-new
+                new FindAParty(
+                    $(element),
+                    'common/find-party',
+                    tsConsultantId,
+                );
+            });
+        }
         return party;
     });
 }

@@ -64,7 +64,7 @@
                    href="{{urls.account.index}}"
                    data-dropdown="user-preview-dropdown"
                    aria-expanded="false">
-                  <span class="fas fa-user-circle fa-lg" aria-hidden="true"></span>
+                  <span class="fal fa-user-circle" aria-hidden="true"></span>
                   <span class="navUser-action--account-text">Hi, {{ first (split customer.name " ") }}</span>
                   <span class="fas fa-caret-down fa-lg" aria-hidden="true"></span>
                 </a>
@@ -86,8 +86,8 @@
                 </div>
             {{else}}
                 <a class="navUser-action" href="{{urls.auth.login}}">
-                  <span class="fas fa-user-circle fa-lg" aria-hidden="true"></span>
-                  <span class="navUser-action--account-text">{{lang 'common.login'}}</span>
+                  <span class="fal fa-user-circle" aria-hidden="true"></span>
+                  <span class="navUser-action--account-text teal-text">{{lang 'common.login'}}</span>
                 </a>
             {{/if}}
         </li>

@@ -34,10 +34,17 @@ class Menu {
             // Mobile menu. Move it to the original location
             $('#navPages-mainmenu-catshop').prependTo($('#navPages-catshop'));
             $('.right-menu').appendTo($('.tst-menu'));
-            $('.right-menu .navPages-list--user').remove();
+            $('.right-menu .navPages-list--user').css('display', 'none');
+            $('.nav-search').insertAfter($('.navPages-item-consultant-fundraiser'));
+            $('#mobile_consultant').css('display', 'grid');
+            $('#mobile_partybar').css('display', 'grid');
         } else {
             // Desktop menu. Move it to after the header
             $('.header-logo').after($('#navPages-catshop'));
+            $('.right-menu').appendTo($('.new-tst-header'));
+            $('.nav-search').insertAfter($('.right-menu'));
+            $('#mobile_consultant').css('display', 'none');
+            $('#mobile_partybar').css('display', 'none');
         }
         const empty = function isEmpty(el) {
             return !$.trim(el.html());
@@ -60,7 +67,7 @@ class Menu {
                 $('.consultant-partybar-container').css('grid-template-columns', '1fr');
             }
             if (document.getElementsByClassName('partybar-consult')[0].innerText === 'FIND A CONSULTANT') {
-                $('.partybar-right').remove();
+                $('.partybar-right').css('display', 'none');
             }
             if (($('.partybar-consult').html() === 'find a consultant') && ($('.partybar-main-text').html() === 'Find a Party or a Fundraiser')) {
                 $('.consultant-partybar').remove();

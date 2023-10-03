@@ -666,7 +666,6 @@ export default function (themeSettings) {
             });
         }
         if (window.innerWidth < SCREEN_MIN_WIDTH) {
-            $('.nav-search').insertAfter($('.navPages-item-consultant-fundraiser'));
             $('.partybar-left>#partybar-find').each((index, element) => {
                 // eslint-disable-next-line no-new
                 new FindAParty(

@@ -637,6 +637,8 @@ class FindAConsultant {
         if ($(this.$findConsultant).hasClass('consultant-finder')) {
             return;
         }
+        $('.partybar-right').css('display', 'grid');
+
         $('#mobile_consultant').append(this.$findConsultant);
 
         if (this.isExternalConsultant()) {
@@ -646,7 +648,7 @@ class FindAConsultant {
                 $('.find-consultant-m .consultant-img').attr('src', this.consultant.image);
             }
         } else {
-            this.$findConsultant.innerHTML = this.defaultConsultantHtml;
+            $('.partybar-right').innerHTML = this.defaultConsultantHtml;
         }
     }
 

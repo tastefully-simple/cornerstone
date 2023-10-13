@@ -165,10 +165,22 @@
         grid-template-columns: 1fr 1fr;
         align-items: center;
         justify-items: center;
-        
-            .navPages-action{
-                color: white;
+
+        .partybar-left {
+            display: none;
+            &:has(div) {
+                display: grid;
             }
+        }
+        .partybar-consult {
+            display: none;
+            &:has(div) {
+                display: inline-block;
+            }
+        }
+        .navPages-action{
+            color: white;
+        }
     }
     a {
         .consultant-view {
@@ -287,6 +299,10 @@
                     float: unset;
                     height: 100%;
                     align-content: center;
+
+                    .headertoplinks-consult {
+                        display: grid!important;// overrides inline style
+                    }
                 }
                 
                 .my-partybar-title {
@@ -436,9 +452,9 @@
                 } 
             } 
         } 
-        
-        
-
+    }
+    .consultant-partybar {
+        display: none;
     }
 }
 

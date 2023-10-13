@@ -62,10 +62,6 @@ class Menu {
             if (empty($('.banner-container'))) {
                 $('.banner-tst').remove();
             }
-            if (document.getElementsByClassName('find-partybar')[0].innerText === 'FIND A PARTY OR A FUNDRAISER') {
-                $('.partybar-left').css('display', 'none');
-                $('.consultant-partybar-container').css('grid-template-columns', '1fr');
-            }
             if (document.getElementsByClassName('partybar-consult')[0].innerText === 'FIND A CONSULTANT') {
                 $('.partybar-right').css('display', 'none');
             }

@@ -26,7 +26,7 @@ class FindAParty {
         this.$findParty = trigger;
         this.modalTemplate = template;
         this.TS_CONSULTANT_ID = tsConsultantId;
-        this.$findPartyBar = trigger.parent();
+        this.$findPartyBar = trigger;
         this.api = new TSApi();
         this.setParty(this.loadParty());
         this.initListeners();
@@ -68,6 +68,13 @@ class FindAParty {
     setParty(party) {
         this.party = party;
         this.renderPartyBar(this.$findPartyBar);
+
+        console.log('party', party);
+        if(party.id != null) {
+            $('#bcapi_top_left_menu #partybar-find').hide();
+        } else {
+            $('#bcapi_top_left_menu #partybar-find').show();
+        }
     }
 
     initListeners() {
@@ -139,6 +146,7 @@ class FindAParty {
     }
 
     openPartyBarDropdown(target) {
+        console.log('openPartyBarDropdown');
         target.toggleClass('active');
 
         const $findPartyBarArrow = this.$findParty.find('.partybar-arrow');
@@ -188,6 +196,7 @@ class FindAParty {
     }
 
     hasOpenPartiesNoPartySelected() {
+        console.log('hasOpenPartiesNoPartySelected');
         // Get consultant's first name
         const consultant = TSCookie.getConsultantName().split(' ').slice(0, -1);
 
@@ -201,16 +210,24 @@ class FindAParty {
                 </div>
             </div>`;
 
-        $('.partybar-left').css('display', 'grid');
+        //$('.partybar-left').css('display', 'grid');
         $('.consultant-partybar-container').css('grid-template-columns', '1fr 1fr');
-        $('.find-partybar').html(html);
 
         // View all parties button
-        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        let selector;
+        if (window.innerWidth > SCREEN_MIN_WIDTH) {
+            selector = '#consultant-partybar-container';
+            $('.partybar-left').html(html);
+        } else {
+            selector = '#mobile_partybar';
+            $('#partybar-find #partybar-find').html(html);
+        }
+        const $viewAllParties = $(selector).find('.view-all-parties');
         $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
     hasOpenPartiesWithPartySelected() {
+        console.log('hasOpenPartiesWithPartySelected');
         const html =
             `<div class="partybar-accordion-items hide-on-mobile">
                 <div class="partybar-button">
@@ -264,6 +281,7 @@ class FindAParty {
     }
 
     noOpenParties() {
+        console.log('noOpenParties');
         // Get consultant's first name
         const consultant = TSCookie.getConsultantName().split(' ').slice(0, -1);
 
@@ -277,12 +295,16 @@ class FindAParty {
                 </div>
             </div>`;
 
-        $('.partybar-left').css('display', 'grid');
-        $('.consultant-partybar-container').css('grid-template-columns', '1fr 1fr');
-        $('.find-partybar').html(html);
-
         // View all parties button
-        const $viewAllParties = this.$findPartyBar.find('.view-all-parties');
+        let selector;
+        if (window.innerWidth > SCREEN_MIN_WIDTH) {
+            selector = '#consultant-partybar-container';
+            $('.partybar-left').html(html);
+        } else {
+            selector = '#mobile_partybar';
+            $('#partybar-find #partybar-find').html(html);
+        }
+        const $viewAllParties = $(selector).find('.view-all-parties');
         $viewAllParties.on('click', (e) => this.createModal(e, this.modalTemplate));
     }
 
@@ -312,13 +334,11 @@ class FindAParty {
             return `<span><strong>${SHOP_NO_PARTY_MESSAGE}</strong></span>`;
         }
         if (window.innerWidth > SCREEN_MIN_WIDTH) {
-            return '<div id=""><li id="partybar-find" class="navPages-item navPages-item">\n' +
+            return '';
+        }
+        return '<div><li id="partybar-find" class="navPages-item navPages-item">\n' +
             '        <a class="navPages-action" id="find-party-mobile-text">Find a Party or a Fundraiser</a>\n' +
             '         </li></div>';
-        }
-        return '<div id=""><div id="partybar-find" class="navPages-item navPages-item">\n' +
-            '        <a class="navPages-action" id="find-party-mobile-text">Find a Party</a>\n' +
-            '         </div></div>';
     }
 
     modalLoaded(result) {
@@ -440,7 +460,8 @@ class FindAParty {
         // Partybar Greeting Text
         const hostname = TSCookie.getPartyHost();
 
-        $('.find-partybar').html(this.partyGreeting(hostname));
+        $('#mobile_partybar').html(this.partyGreeting(hostname));
+        $('.partybar-left').html(this.partyGreeting(hostname));
 
         // View party
         const $viewPartyButton = this.$findPartyBar.find('#view-single-party');
@@ -455,7 +476,7 @@ class FindAParty {
         });
 
         // Remove party
-        const $removeParty = $('.remove-party.remove-party');
+        const $removeParty = $('.remove-party');
         $removeParty.on('click', () => {
             TSCookie.deleteParty();
 
@@ -466,6 +487,7 @@ class FindAParty {
             }
         });
 
+        //console.log('party', $party);
         const $navPages = $('#mobile_partybar');
 
         /* Party bar does not have a background color by default
@@ -476,10 +498,13 @@ class FindAParty {
          */
         const appleGreen = '#6e7a06';
 
-
         // Show party bar in desktop or mobile
         if (!this.isDesktop()) {
             $navPages.append($party);
+        } else {
+            if($('#bcapi_top_left_menu').find('#partybar-find').length == 0) {
+                $('#bcapi_top_left_menu .navPages-list').first().prepend($party);
+            }
         }
     }
 
@@ -666,7 +691,7 @@ export default function (themeSettings) {
             });
         }
         if (window.innerWidth < SCREEN_MIN_WIDTH) {
-            $('.partybar-left>#partybar-find').each((index, element) => {
+            $('.partybar-left #partybar-find').each((index, element) => {
                 // eslint-disable-next-line no-new
                 new FindAParty(
                     $(element),

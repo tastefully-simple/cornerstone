@@ -620,9 +620,17 @@ class FindAConsultant {
     setConsultant(consultant) {
         this.consultant = consultant;
         this.renderConsultant();
+
+        console.log('consultant', consultant);
+        if(consultant.id != null) {
+            $('#bcapi_top_right_menu .headertoplinks-consult').hide();
+        } else {
+            $('#bcapi_top_right_menu .headertoplinks-consult').show();
+        }
     }
 
     renderConsultant() {
+        console.log('renderConsultant');
         // Main consultant DOM rendering
         this.defaultConsultantHtml = $('.menu-headertoplinks-consult').html();
 
@@ -634,6 +642,7 @@ class FindAConsultant {
     }
 
     renderConsultantInMobileMenu() {
+        console.log('renderConsultantInMobileMenu');
         if ($(this.$findConsultant).hasClass('consultant-finder')) {
             return;
         }
@@ -703,6 +712,9 @@ class FindAConsultant {
 
         const isStickyHeader = $header.hasClass('sticky-header');
         const isStickyHeaderDisabled = !isStickyHeader && !(window.pageYOffset === offsetTop);
+        if(window.innerWidth <= this.screenMinWidth) {
+            $('#bcapi_top_right_menu .navPages-item-consultant').append(this.$findConsultant);
+        }
 
         if (this.isExternalConsultant() && isStickyHeaderDisabled) {
             if (TSCookie.getConsultantId() === this.consultant.id) {
@@ -734,7 +746,7 @@ class FindAConsultant {
         }
 
         const $partyBarText = $('#partybar-find .partybar-text');
-        $partyBarText.text('Find a party');
+        $partyBarText.text('Find a Party or Fundraiser');
 
         TSCookie.deleteParty();
     }

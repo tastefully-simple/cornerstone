@@ -60,7 +60,7 @@
         --}}
         <li class="navUser-item navUser-item--account">
             {{#if customer}}
-                <a class="navUser-action"
+                <a class="navUser-action teal-text"
                    href="{{urls.account.index}}"
                    data-dropdown="user-preview-dropdown"
                    aria-expanded="false">
@@ -70,36 +70,36 @@
                 </a>
                 <div class="dropdown-menu" id="user-preview-dropdown" aria-hidden="true">
                   <ul>
-                    <li><a class="textgray-text" href="{{urls.account.details}}">Account Profile</a></li>
-                    <li><a class="textgray-text" href="{{urls.account.orders.all}}">Order History</a></li>
+                    <li><a class="teal-text" href="{{urls.account.details}}">Account Profile</a></li>
+                    <li><a class="teal-text" href="{{urls.account.orders.all}}">Order History</a></li>
                       <li>
-                          <a class="textgray-text"
+                          <a class="teal-text"
                              href="/manage-subscriptions/"
                              aria-label="{{lang 'account.nav.manage_subscriptions'}}"
                           >
                               {{lang 'account.nav.manage_subscriptions'}}
                           </a>
                       </li>
-                    <li><a class="textgray-text" href="{{urls.account.wishlists.all}}">Wish List</a></li>
-                    <li><a class="textgray-text" href="{{urls.auth.logout}}">Logout</a></li>
+                    <li><a class="teal-text" href="{{urls.account.wishlists.all}}">Wish List</a></li>
+                    <li><a class="teal-text" href="{{urls.auth.logout}}">Logout</a></li>
                   </ul>
                 </div>
             {{else}}
-                <a class="navUser-action" href="{{urls.auth.login}}">
-                  <span class="fas fa-user-circle fa-lg" aria-hidden="true"></span>
-                  <span class="navUser-action--account-text">{{lang 'common.login'}}</span>
+                <a class="navUser-action teal-text" href="{{urls.auth.login}}">
+                  <span class="fas fa-user-circle fa-lg teal-text" aria-hidden="true"></span>
+                  <span class="navUser-action--account-text teal-text">{{lang 'common.login'}}</span>
                 </a>
             {{/if}}
         </li>
         <li class="navUser-item navUser-item--cart">
             <a
-                class="navUser-action"
+                class="navUser-action teal-text"
                 data-cart-preview
                 data-dropdown="cart-preview-dropdown"
                 data-options="align:right"
                 aria-label="{{lang 'cart.nav_aria_label'}}"
                 href="{{urls.cart}}">
-                <span class="navUser-item-cartLabel fas fa-shopping-cart"></span>
+                <span class="navUser-item-cartLabel fas fa-shopping-cart white-text"></span>
                 <span class="countPill cart-quantity"></span>
             </a>
 

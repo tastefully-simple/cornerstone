@@ -1,5 +1,5 @@
 <nav class="navPages">
-    <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
+    <ul class="left navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
         {{#each categories}}
             {{#if name '!==' 'Recipes'}}
             <li class="navPages-item navPages-item-shop">
@@ -8,16 +8,27 @@
             {{/if}}
         {{/each}}
         <li class="navPages-item navPages-item-recipes">
-            <a class="navPages-action" href="/recipes/">recipes</a>
+            <a class="navPages-action white-text" href="/recipes/">recipes</a>
         </li>
         <li class="navPages-item navPages-item-blog">
-            <a class="navPages-action" href="//blog.tastefullysimple.com">blog</a>
+            <a class="navPages-action white-text" href="//blog.tastefullysimple.com">blog</a>
         </li>
+    </ul>
+    {{#if page_type '===' 'default'}}
+    <h1 class="header-logo header-logo-desktop header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
+        {{> components/common/store-logo}}
+    </h1>
+    {{else}}
+    <div class="header-logo header-logo-desktop header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
+        {{> components/common/store-logo}}
+    </div>
+    {{/if}}
+    <ul class="right navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
         <li class="navPages-item navPages-item-join">
-            <a class="navPages-action teal-text" href="/join-us/">join</a>
+            <a class="navPages-action white-text" href="/join-us/">join</a>
         </li>
         <li class="navPages-item navPages-item-host">
-            <a class="navPages-action greenapple-text" href="/host">host</a>
+            <a class="navPages-action white-text" href="/host">host</a>
         </li>
         <li class="navPages-item navPages-item-consultant-fundraiser">
             <div id="mobile_consultant" style="display: block; position: relative; float: left; width: 50%"></div>
@@ -110,14 +121,8 @@
                 </div>
             </li>
         {{else}}
-            <li class="navPages-item" style="padding-bottom: 50px">
-                <span style="font-weight: 900;
-    font-size: 16px;
-    color: #00757d"><a class="" style="font-weight: 900;
-    font-size: 16px; text-decoration: none;
-    color: #00757d" href="{{urls.auth.login}}">sign in</a> / <a class="" style="font-weight: 900;
-    font-size: 16px;
-    color: #00757d; text-decoration: none" href="{{urls.auth.create_account}}">register</a></span>
+            <li class="navPages-item">
+                <span><a href="{{urls.auth.login}}">sign in</a> / <a href="{{urls.auth.create_account}}">register</a></span>
             </li>
         {{/if}}
         {{#if theme_settings.social_icon_placement_top}}

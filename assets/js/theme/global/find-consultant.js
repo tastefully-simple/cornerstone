@@ -610,8 +610,8 @@ class FindAConsultant {
     renderConsultant() {
         // Main consultant DOM rendering
         this.defaultConsultantHtml =
-            `<span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
-                <span class="headertoplinks-consult-text">Find a Consultant</span>`;
+            `<span class="fa fa-map-marker fa-lg teal-text" aria-hidden="true"></span>
+                <span class="headertoplinks-consult-text teal-text">Find a Consultant</span>`;
 
         if (window.innerWidth <= this.screenMinWidth) {
             this.renderConsultantInMobileMenu();
@@ -652,7 +652,7 @@ class FindAConsultant {
 
     consultantInfoHtml() {
         const html =
-            `<div class="consultant-info">
+            `<div class="consultant-info teal-text">
                 <div class="consultant-info-control">
                     <p class="frame-subhead">
                         <span id="my-consultant-mobile">My consultant</span>

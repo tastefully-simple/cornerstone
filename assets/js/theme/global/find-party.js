@@ -460,14 +460,14 @@ class FindAParty {
         const $navPages = $('#mobile_partybar');
 
         /* Party bar does not have a background color by default
-         * and need to set the background color to apple green.
+         * and need to set the background color to teal.
          * It's kind of a hack when hiding it in
          * desktop view when user is in the cart page so that
          * it's not really obvious that the party bar gets hidden.
          */
-        const appleGreen = '#6e7a06';
+        const teal = '#005f66';
 
-        $party.css('background-color', appleGreen);
+        $party.css('background-color', teal);
 
         // Show party bar in desktop or mobile
         if (this.isDesktop()) {

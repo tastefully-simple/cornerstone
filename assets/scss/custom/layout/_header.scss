@@ -85,6 +85,7 @@
             }
             .nav-search {
                 background-color:$teal-hover;
+                margin-top: 20px;
                 .form {
                     margin:0 auto;;
                     max-width:70%;
@@ -270,6 +271,7 @@
                     }
                 }
                 .nav-search {
+                    margin-top: 0px;
                     background:transparent;
                     .form {
                         margin:0;

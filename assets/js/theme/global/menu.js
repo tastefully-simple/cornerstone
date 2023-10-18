@@ -32,11 +32,13 @@ class Menu {
     updateMenuLocation() {
         if (window.innerWidth <= 800) {
             // Mobile menu. Move it to the original location
+            $('#navPages-mainmenu-catshop').after($('#navPages-catshop'));
             if($('#headerMain .container>.nav-search').length == 0) {
                 $('#headerMain .container').first().append($('.nav-search'));
             }
         } else {
             // Desktop menu. Move it to after the header
+            $('.header-logo').first().after($('#navPages-catshop'));
             if($('nav.navPages').find($('.nav-search')).length == 0) {
                 $('nav.navPages').first().append($('.nav-search'));
             }

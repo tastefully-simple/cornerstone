@@ -214,6 +214,7 @@
         left: -390px !important;
         margin-left: 50% !important;
         top: 107px;
+        z-index: 11;
     }
     .header {
         .header-main {
@@ -285,7 +286,7 @@
                                     padding:0 .5rem;
                                     &.is-open {
                                         &:not(.navPage-subMenu-action) {
-                                            background-color:$white;
+                                            background-color:$teal-hover;
                                         }
                                     }
                                 }
@@ -522,14 +523,6 @@
             .navPages {
                 height:auto;
                 -webkit-overflow-scrolling:auto;
-            }
-        }
-        header {
-            &.is-open {
-                .mobileMenu-toggle,
-                .header-logo-image-container {
-                    background-color: $white;
-                }
             }
         }
     }

@@ -1,5 +1,5 @@
 <header class="header" role="banner">
-    <div class="header-top textgray-background">
+    <div class="header-top wanwhite-background">
         <div class="container">
             <div class="header-top-banner">
                 {{#if banners.top}}
@@ -16,8 +16,8 @@
             </div>
             <div class="header-top-links">
                 <button type="button" class="headertoplinks-consult" id="consultant-link-top">
-                    <span class="fa fa-map-marker fa-lg" aria-hidden="true"></span>
-                    <span class="headertoplinks-consult-text">Find a Consultant</span>
+                    <span class="fa fa-map-marker fa-lg teal-text" aria-hidden="true"></span>
+                    <span class="headertoplinks-consult-text teal-text">Find a Consultant</span>
                 </button>
                 <div class="headertoplinks-nav">
                     {{> components/common/navigation}}
@@ -32,11 +32,11 @@
     <div class="header-main" id="headerMain">
         <div class="container">
             {{#if page_type '===' 'default'}}
-                <h1 class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
+                <h1 class="header-logo header-logo-mobile header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
                     {{> components/common/store-logo}}
                 </h1>
             {{else}}
-                <div class="header-logo header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
+                <div class="header-logo header-logo-mobile header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
                     {{> components/common/store-logo}}
                 </div>
             {{/if}}

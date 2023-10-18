@@ -18,7 +18,7 @@
                             text-align: center;
                         }
                         .headertoplinks-consult.consultant-mobile {
-                            background: $cream;
+                            background: $teal;
 
                             .find-consultant-m {
                                 display: flex;
@@ -32,12 +32,12 @@
                                     margin: auto 1rem;
                                     p {
                                         margin: 0;
-                                        color: $text-gray;
+                                        color: $white;
                                     }
                                     .consultant-edit,
                                     .verbar,
                                     .consultant-remove {
-                                        color: $teal;
+                                        color: $white;
                                     }
                                 }
                             }
@@ -52,7 +52,7 @@
                     }
                 }
                 .navPages {
-                    background-color: transparent;
+                    background-color: $light-teal;
                     display:flex;
                     flex-direction:column;
                     padding:0;
@@ -65,7 +65,6 @@
                 }
                 .navPages-list {
                     &:not(.navPages-list--user) {
-                        order:1;
                         display:flex;
                         flex-wrap:wrap;
                         justify-content:space-between;
@@ -73,12 +72,17 @@
                         position:relative;
                         .navPages-item {
                             &.navPages-item-shop, &.navPages-item-recipes, &.navPages-item-blog, &.navPages-item-join, &.navPages-item-host {
-                                margin-right:.75rem;
                                 width:100%;
                                 &>.navPages-action {
+                                    color: $black;
                                     display:block;
                                     padding-bottom:0;
                                     top:0;
+                                }
+                                .navPage-subMenu {
+                                    a {
+                                        color: $teal;
+                                    }
                                 }
                             }
                             &>.navPages-action {
@@ -106,11 +110,17 @@
                     }
                     &.navPages-list--user {
                         order:4;
-                        background-color:$wan-white;
                         border-top:none;
                         padding:0 .5rem;
                         margin:1.5rem;
                         .navPages-item {
+                            padding-bottom: 50px;
+                            span, span a {
+                                color: $teal;
+                                font-size: 16px;
+                                font-weight: 900;
+                                text-decoration: none;
+                            }
                             .navPages-action {
                                 @extend .subhead-16;
                                 &.navPage-subMenu-action {
@@ -209,120 +219,132 @@
         .header-main {
             .container {
                 .navPages-container {
+                    margin: auto;
                     .navPages {
-                        display:block;
-                    }
-                    .navPages-list {
-                        &:not(.navPages-list--user) {
-                            align-items:center;
-                            flex-direction:row;
-                            justify-content:flex-end;
-                            flex-wrap:nowrap;
-                            .navPages-item {
-                                &.navPages-item-shop {
-                                    order:1;
-                                    padding:0;
-                                    width:auto;
-                                    &>.navPages-action {
-                                        border:none;
-                                        left:unset;
-                                        position:unset;
-                                        top:unset;
-                                        text-align:left;
-                                        transform:unset;
-                                    }
-                                }
-                                &.navPages-item-join {
-                                    order:4;
-                                }
-                                &.navPages-item-host {
-                                    order:5;
-                                }
-                                &.navPages-item-recipes {
-                                    display:block;
-                                    order:2;
-                                    font-weight: bold;
-                                }
-                                &.navPages-item-blog {
-                                    display:block;
-                                    order:3;
-                                }
-                                &>.navPages-action {
-                                    border:none;
-                                    &::after {
-                                        display:none;
-                                    }
-                                }
-                                .navPages-action {
-                                    &:active,
-                                    &:focus,
-                                    &:hover {
-                                        color: $burnt-caramel;
-                                    }
-                                    &:not(.navPage-childList-action) {
-                                        &.navPage-subMenu-action {
-                                            @extend .framelink-xl;
+                        background-color: $teal-hover;
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        .navPages-list {
+                            &:not(.navPages-list--user) {
+                                align-items:center;
+                                flex-direction:row;
+                                flex-basis: 33%;
+                                justify-content:flex-end;
+                                flex-wrap:nowrap;
+                                .navPages-item {
+                                    &.navPages-item-shop {
+                                        padding:0;
+                                        width:auto;
+                                        &>.navPages-action {
+                                            border:none;
+                                            left:unset;
+                                            position:unset;
+                                            top:unset;
+                                            text-align:left;
+                                            transform:unset;
                                         }
                                     }
-                                }
-                            }
-                        }
-                        &navPages-list-main {
-                            display:flex;
-                            justify-content:flex-end;
-                        }
-                        .navPages-item {
-                            position:relative;
-                            .navPages-action {
-                                border:none;
-                                font-size:fontSize("base");
-                                padding:0 1.125rem;
-                                &.is-open {
-                                    &:not(.navPage-subMenu-action) {
-                                        background-color:$white;
+                                    &.navPages-item-recipes {
+                                        display:block;
+                                        font-weight: bold;
                                     }
-                                }
-                            }
-                            &.frame-text {
-                                .navPages-action {
-                                    font-weight:400;
-                                }
-                            }
-                        }
-                        .navPage-subMenu {
-                            .navPage-subMenu-item {
-                                float:none;
-                                padding:0 !important; //!important required to override !important
-                                width:30%;
-                                &:nth-child(5){
-                                    width:12%;
-                                }
-                                &:nth-child(1){
-                                    margin-left:0.25rem;
-                                }
-                                &>.navPage-subMenu-action {
-                                    margin-bottom:.2rem;
-                                    padding:0;
-                                    &::after {
-                                        display:none;
-                                    }
-                                    &>br {
+                                    &.navPages-item-blog {
                                         display:block;
                                     }
+                                    &>.navPages-action {
+                                        border:none;
+                                        &::after {
+                                            display:none;
+                                        }
+                                    }
+                                    .navPages-action {
+                                        &:active,
+                                        &:focus,
+                                        &:hover {
+                                            color: $green-hover;
+                                        }
+                                        &:not(.navPage-childList-action) {
+                                            &.navPage-subMenu-action {
+                                                @extend .framelink-xl;
+                                            }
+                                        }
+                                        color: $white;
+                                    }
                                 }
                             }
-                            .navPage-subMenu-list {
+                            &navPages-list-main {
                                 display:flex;
-                                .navPage-childList {
-                                    .navPage-childList-item {
-                                        .navPage-childList-action{
-                                            line-height:inherit;
-                                            margin:0;
-                                            padding:0;
-                                            @extend .frametext-body;
+                                justify-content:flex-end;
+                            }
+                            .navPages-item {
+                                position:relative;
+                                .navPages-action {
+                                    border:none;
+                                    font-size:fontSize("base");
+                                    padding:0 .5rem;
+                                    &.is-open {
+                                        &:not(.navPage-subMenu-action) {
+                                            background-color:$white;
                                         }
                                     }
                                 }
+                                &.frame-text {
+                                    .navPages-action {
+                                        font-weight:400;
+                                    }
+                                }
+                            }
+                            .navPage-subMenu {
+                                .navPage-subMenu-item {
+                                    float:none;
+                                    padding:0 !important; //!important required to override !important
+                                    width:30%;
+                                    &:nth-child(5){
+                                        width:12%;
+                                    }
+                                    &:nth-child(1){
+                                        margin-left:0.25rem;
+                                    }
+                                    &>.navPage-subMenu-action {
+                                        margin-bottom:.2rem;
+                                        padding:0;
+                                        &::after {
+                                            display:none;
+                                        }
+                                        &>br {
+                                            display:block;
+                                        }
+                                    }
+                                }
+                                .navPage-subMenu-list {
+                                    display:flex;
+                                    .navPage-childList {
+                                        .navPage-childList-item {
+                                            .navPage-childList-action{
+                                                line-height:inherit;
+                                                margin:0;
+                                                padding:0;
+                                                @extend .frametext-body;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .navPages-list:not(:first-child) {
+                            .navPages-action {
+                                text-align: right;
+                            }
+                        }
+                        .nav-search {
+                            display: flex;
+                            flex-direction: column;
+                            flex-basis: 100%;
+                            justify-content: space-around;
+                            .form {
+                                width: 300px;
+                                margin: 1rem auto;
                             }
                         }
                     }
@@ -559,7 +581,7 @@
     }
     .navPages-item-shop:first-child,  .navPages-item-recipes a, .navPages-item-blog a,
     .navPages-item-join a, .navPages-item-host a {
-            color: $burgundy !important;
+            color: $black !important;
     }
     .navPages-item-consultant-fundraiser {
         height: 63px;

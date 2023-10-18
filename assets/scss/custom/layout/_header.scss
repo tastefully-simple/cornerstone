@@ -68,8 +68,12 @@
         }
     }
     .header-main {
+        background: $teal-hover;
         .container {
             position:unset;
+            .header-logo-desktop {
+                display: none;
+            }
             .header-logo--left {
                 text-align:center;
                 &>a {
@@ -80,7 +84,7 @@
                 }
             }
             .nav-search {
-                background-color:$wan-white;
+                background-color:$teal-hover;
                 .form {
                     margin:0 auto;;
                     max-width:70%;
@@ -214,6 +218,9 @@
                                         position:unset;
                                         .navUser-action{
                                             color:stencilColor("navUser-color");
+                                            .navUser-item-cartLabel {
+                                                color: $teal;
+                                            }
                                         }
                                     }
                                 }
@@ -237,8 +244,14 @@
                 padding-bottom:0;
                 padding-top:0;
                 .header-logo {
-                    flex:2 33%;
-                    margin:2rem 0;
+                    flex-basis: 30%;
+                    margin: 0px;
+                    &.header-logo-desktop {
+                        display: block;
+                    }
+                    &.header-logo-mobile {
+                        display: none;
+                    }
                     &.header-logo--left {
                         text-align:left;
                     }
@@ -287,7 +300,7 @@
             text-transform: capitalize;
             &:hover,
             &:focus {
-                color: $white;
+                color: $teal;
             }
         }
         .dropdown-menu {
@@ -354,6 +367,7 @@
                     color: $text-gray;
                 }
                 &>span {
+                    color: $white;
                     padding: 1rem 0.5rem;
                     width: auto;
                 }
@@ -364,6 +378,11 @@
                     &.navUser-section {
                         align-items: center;
                         display: flex;
+                        a {
+                            ::before {
+                                color: $white;
+                            }
+                        }
                     }
                 }
                 .navUser-action {

@@ -231,12 +231,11 @@
                                 align-items:center;
                                 flex-direction:row;
                                 justify-content:flex-end;
-                                flex-wrap:nowrap;
                                 &.right {
-                                  flex-basis: 33;
+                                  flex-basis: 40%;
                                 }
                                 &.left {
-                                  flex-basis: 30%;
+                                  flex-basis: 40%;
                                   justify-content: flex-start;
                                 }
                                 .navPages-item {
@@ -351,7 +350,7 @@
                             flex-basis: 100%;
                             justify-content: space-around;
                             .form {
-                                margin: 1rem 0;
+                                margin: 1rem 0 0;
                             }
                         }
                     }

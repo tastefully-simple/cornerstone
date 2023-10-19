@@ -86,6 +86,7 @@
             .nav-search {
                 background-color:$teal-hover;
                 margin-top: 20px;
+                padding-bottom: 10px;
                 .form {
                     margin:0 auto;;
                     max-width:70%;
@@ -95,14 +96,33 @@
                         .form-prefixPostfix {
                             align-items:center;
                             .form-input {
-                                border-radius:0;
+                                background-color: $light-teal;
+                                -webkit-border-top-left-radius: 50px;
+                                -webkit-border-bottom-left-radius: 50px;
+                                -moz-border-radius-topleft: 50px;
+                                -moz-border-radius-bottomleft: 50px;
+                                border-top-left-radius: 50px;
+                                border-bottom-left-radius: 50px;
+                                border-color: transparent;
+                                color: #333;
                                 height:25px;
                                 margin:0;
                                 padding:0 1rem;
+                                &::placeholder {
+                                  color: #333;
+                                }
                             }
                             .button--search {
                                 max-height:25px;
                                 padding:0;
+                              .icon-system-search-teal {
+                                -webkit-border-top-right-radius: 50px;
+                                -webkit-border-bottom-right-radius: 50px;
+                                -moz-border-radius-topright: 50px;
+                                -moz-border-radius-bottomright: 50px;
+                                border-top-right-radius: 50px;
+                                border-bottom-right-radius: 50px;
+                              }
                             }
                         }
                     }
@@ -114,11 +134,21 @@
         cursor: pointer;
         color: white;
         text-decoration: none;
+      font-weight: 700;
         font-size: 1rem;
         &:hover {
             color: white;
         }
     }
+}
+
+@media only screen and (max-width: 800px) {
+  .navPages-container:not(.is-open) {
+    +.nav-search {
+      position: relative;
+        z-index: 999;
+    }
+  }
 }
 
 @media only screen and (min-height:600px) {
@@ -201,6 +231,9 @@
                         display:flex;
                         justify-content:flex-end;
                         padding:0.75rem 0;
+                        span {
+                            text-transform: lowercase;
+                        }
                         &>div {
                             align-items:center;
                             display:flex;
@@ -214,13 +247,14 @@
                                     display:flex;
                                     .navUser-action {
                                         padding:0 0 0 1rem;
+                                        font-weight: 700;
                                     }
                                     .navUser-item--cart{
                                         position:unset;
                                         .navUser-action{
                                             color:stencilColor("navUser-color");
                                             .navUser-item-cartLabel {
-                                                color: $teal;
+                                                color: $green-apple;
                                             }
                                         }
                                     }
@@ -245,10 +279,12 @@
                 padding-bottom:0;
                 padding-top:0;
                 .header-logo {
-                    flex-basis: 30%;
+                    flex-basis: 20%;
                     margin: 0px;
                     &.header-logo-desktop {
-                        display: block;
+                        display: flex;
+                        margin: -3rem 0 0;
+                        overflow: visible;
                     }
                     &.header-logo-mobile {
                         display: none;
@@ -352,11 +388,15 @@
         .fa-caret-down {
             display: none;
         }
+        .navPages-list {
+            flex-wrap: wrap;
+        }
         .header-top-links {
             align-items: center;
             color: $text-gray;
             display: flex;
             justify-content: flex-end;
+            margin-top: -4rem;
             max-width: 125px;
             width: 100%;
             .fa-lg {

@@ -10,6 +10,7 @@
                     padding-bottom:55px;
                     padding-top:0;
                     top:55px;
+                    z-index: 20;
                     .navPages {
                         .headertoplinks-consult {
                             background: $gainsboro;
@@ -57,7 +58,6 @@
                     flex-direction:column;
                     padding:0;
                     .headertoplinks-consult {
-                        order:2;
                     }
                     .partybar {
                         order:3;
@@ -179,6 +179,9 @@
 
 
 @media only screen and (min-width:801px) {
+    .navPage-subMenu.is-open {
+      z-index: 30;
+    }
     #navPages-mainmenu-catshop.is-open::before {
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
@@ -230,9 +233,14 @@
                             &:not(.navPages-list--user) {
                                 align-items:center;
                                 flex-direction:row;
-                                flex-basis: 33%;
                                 justify-content:flex-end;
-                                flex-wrap:nowrap;
+                                &.right {
+                                  flex-basis: 40%;
+                                }
+                                &.left {
+                                  flex-basis: 40%;
+                                  justify-content: flex-start;
+                                }
                                 .navPages-item {
                                     &.navPages-item-shop {
                                         padding:0;
@@ -280,6 +288,7 @@
                             }
                             .navPages-item {
                                 position:relative;
+                                flex-basis: fit-content;
                                 .navPages-action {
                                     border:none;
                                     font-size:fontSize("base");
@@ -344,8 +353,7 @@
                             flex-basis: 100%;
                             justify-content: space-around;
                             .form {
-                                width: 300px;
-                                margin: 1rem auto;
+                                margin: 1rem 0 0;
                             }
                         }
                     }
@@ -384,7 +392,6 @@
                     .navPages-list {
                         .navPage-subMenu {
                             &.is-open{
-                                left:100%;
                                 &::before{
                                     left:46%;
                                 }
@@ -541,10 +548,10 @@
     }
 }
 @media only screen and (max-width:800px) {
-    .navPages-item {
-        &.navPages-item-shop, &.navPages-item-recipes, &.navPages-item-blog, &.navPages-item-join, &.navPages-item-host {
-            padding: 0 1.5rem 0;
-        }
+   .navPages-list {
+      li[class^="navPages-item navPages-item-"]:not(.navPages-item-consultant-fundraiser) {
+          padding: 0 1.5rem 0;
+      }
     }
     .navPages-container {
         background: $white;
@@ -572,8 +579,8 @@
     .navPage-subMenu {
         margin-left: 10px;
     }
-    .navPages-item-shop:first-child,  .navPages-item-recipes a, .navPages-item-blog a,
-    .navPages-item-join a, .navPages-item-host a {
+    .navPages-item-shop:first-child,
+    li[class^="navPages-item navPages-item-"] a.white-text {
             color: $black !important;
     }
     .navPages-item-consultant-fundraiser {

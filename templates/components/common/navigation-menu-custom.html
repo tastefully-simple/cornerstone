@@ -7,12 +7,6 @@
             </li>
             {{/if}}
         {{/each}}
-        <li class="navPages-item navPages-item-recipes">
-            <a class="navPages-action white-text" href="/recipes/">recipes</a>
-        </li>
-        <li class="navPages-item navPages-item-blog">
-            <a class="navPages-action white-text" href="//blog.tastefullysimple.com">blog</a>
-        </li>
     </ul>
     {{#if page_type '===' 'default'}}
     <h1 class="header-logo header-logo-desktop header-logo--{{theme_settings.logo-position}} header-logo--collapsed">
@@ -24,12 +18,21 @@
     </div>
     {{/if}}
     <ul class="right navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}">
-        <li class="navPages-item navPages-item-join">
-            <a class="navPages-action white-text" href="/join-us/">join</a>
+        <li class="navPages-item navPages-item-recipes">
+            <a class="navPages-action white-text" href="/recipes/">recipes</a>
         </li>
-        <li class="navPages-item navPages-item-host">
-            <a class="navPages-action white-text" href="/host">host</a>
+        <li class="navPages-item navPages-item-blog">
+            <a class="navPages-action white-text" href="//blog.tastefullysimple.com">blog</a>
         </li>
+          <li class="navPages-item navPages-item-join">
+              <a class="navPages-action white-text" href="/join-us/">join</a>
+          </li>
+          <li class="navPages-item navPages-item-host">
+              <a class="navPages-action white-text" href="/host">host</a>
+          </li>
+          <li class="navPages-item navPages-item-story">
+              <a class="navPages-action white-text" href="/our-culture">our story</a>
+          </li>
         <li class="navPages-item navPages-item-consultant-fundraiser">
             <div id="mobile_consultant" style="display: block; position: relative; float: left; width: 50%"></div>
             <div id="mobile_partybar" style="display: block; position: relative; float: left; width: 50%; height: 63px !important"></div>

@@ -179,6 +179,9 @@
 
 
 @media only screen and (min-width:801px) {
+    .navPage-subMenu.is-open {
+      z-index: 30;
+    }
     #navPages-mainmenu-catshop.is-open::before {
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
@@ -389,7 +392,6 @@
                     .navPages-list {
                         .navPage-subMenu {
                             &.is-open{
-                                left:100%;
                                 &::before{
                                     left:46%;
                                 }

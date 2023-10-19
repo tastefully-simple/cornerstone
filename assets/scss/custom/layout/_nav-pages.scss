@@ -364,7 +364,7 @@
 }
 
 
-@media only screen and (min-width:801px) and (max-width:920px){
+@media only screen and (min-width:801px) and (max-width:1104px){
     .header {
         .header-main {
             .container {
@@ -372,28 +372,9 @@
                     .navPages-list {
                         .navPage-subMenu {
                             &.is-open{
-                                left:145%;
+                                left:-20px;
+                                width: 97vw;
                                 &::before{
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media only screen and (min-width:921px){
-    .header {
-        .header-main {
-            .container {
-                .navPages-container {
-                    .navPages-list {
-                        .navPage-subMenu {
-                            &.is-open{
-                                &::before{
-                                    left:46%;
                                 }
                             }
                         }
@@ -488,27 +469,6 @@
                         .navPage-subMenu {
                             &.is-open{
                                 min-width:920px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media only screen and (min-width:963px) and (max-width:1019px) {
-    .header {
-        .header-main {
-            .container {
-                .navPages-container {
-                    .navPages-list {
-                        .navPage-subMenu {
-                            &.is-open{
-                                left:150%;
-                                &::before {
-                                    left:40%;
-                                }
                             }
                         }
                     }

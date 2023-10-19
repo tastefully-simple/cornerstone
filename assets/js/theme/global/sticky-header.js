@@ -21,7 +21,7 @@ class StickyHeader {
 
         if (window.pageYOffset > sticky && (window.innerWidth >= screenMinWidth)) {
             $mainHeader.classList.add('sticky-header');
-            $mainHeaderContainer.appendChild($navlinks);
+            document.querySelector('.navPages-list.right').appendChild($navlinks);
         } else {
             $mainHeader.classList.remove('sticky-header');
             $topHeaderContainer.appendChild($navlinks);

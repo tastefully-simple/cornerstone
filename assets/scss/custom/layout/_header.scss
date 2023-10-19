@@ -83,9 +83,17 @@
                     }
                 }
             }
+            .navPages-container.is-open {
+              + .nav-search {
+                position: unset;
+              }
+            }
             .nav-search {
                 background-color:$teal-hover;
                 margin-top: 20px;
+                position: relative;
+                z-index: 999;
+                padding-bottom: 10px;
                 .form {
                     margin:0 auto;;
                     max-width:70%;
@@ -95,14 +103,33 @@
                         .form-prefixPostfix {
                             align-items:center;
                             .form-input {
-                                border-radius:0;
+                                background-color: $light-teal;
+                                -webkit-border-top-left-radius: 50px;
+                                -webkit-border-bottom-left-radius: 50px;
+                                -moz-border-radius-topleft: 50px;
+                                -moz-border-radius-bottomleft: 50px;
+                                border-top-left-radius: 50px;
+                                border-bottom-left-radius: 50px;
+                                border-color: transparent;
+                                color: #333;
                                 height:25px;
                                 margin:0;
                                 padding:0 1rem;
+                                &::placeholder {
+                                  color: #333;
+                                }
                             }
                             .button--search {
                                 max-height:25px;
                                 padding:0;
+                              .icon-system-search-teal {
+                                -webkit-border-top-right-radius: 50px;
+                                -webkit-border-bottom-right-radius: 50px;
+                                -moz-border-radius-topright: 50px;
+                                -moz-border-radius-bottomright: 50px;
+                                border-top-right-radius: 50px;
+                                border-bottom-right-radius: 50px;
+                              }
                             }
                         }
                     }
@@ -114,6 +141,7 @@
         cursor: pointer;
         color: white;
         text-decoration: none;
+      font-weight: 700;
         font-size: 1rem;
         &:hover {
             color: white;
@@ -214,13 +242,14 @@
                                     display:flex;
                                     .navUser-action {
                                         padding:0 0 0 1rem;
+                                        font-weight: 700;
                                     }
                                     .navUser-item--cart{
                                         position:unset;
                                         .navUser-action{
                                             color:stencilColor("navUser-color");
                                             .navUser-item-cartLabel {
-                                                color: $teal;
+                                                color: $green-apple;
                                             }
                                         }
                                     }
@@ -248,7 +277,12 @@
                     flex-basis: 30%;
                     margin: 0px;
                     &.header-logo-desktop {
-                        display: block;
+                        display: flex;
+                        margin: -3rem auto 0;
+                        overflow: visible;
+                       .header-logo-image {
+                         max-width: none;
+                       }
                     }
                     &.header-logo-mobile {
                         display: none;

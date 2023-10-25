@@ -95,7 +95,10 @@
                                 }
                             }
                             .navPages-action {
-                                @extend .framelink-xl;
+                                &:hover {
+                                    @extend .framelink-xl;
+                                    color: $white;
+                                }
                                 &:not(.navPage-childList-action) {
                                     &.navPage-subMenu-action {
                                         @extend .subhead-16;
@@ -268,11 +271,6 @@
                                         }
                                     }
                                     .navPages-action {
-                                        &:active,
-                                        &:focus,
-                                        &:hover {
-                                            color: $green-hover;
-                                        }
                                         &:not(.navPage-childList-action) {
                                             &.navPage-subMenu-action {
                                                 @extend .framelink-xl;

@@ -19,7 +19,11 @@
     }
     .header-top-banner {
         .banners {
-            background-color: $white;
+            background-color: $wan-white;
+            @media only screen and (max-width:800px) {
+                position: relative;
+                z-index: 99;
+            }
             color: $teal;
             text-align: center;
             .banner {

@@ -257,7 +257,7 @@
     "optimizedCheckout-show-logo": "none",
     "optimizedCheckout-logo": "",
     "optimizedCheckout-logo-size": "250x100",
-    "optimizedCheckout-logo-position": "left",
+    "optimizedCheckout-logo-position": "center",
     "optimizedCheckout-headingPrimary-color": "#333333",
     "optimizedCheckout-headingPrimary-font": "Muli",
     "optimizedCheckout-headingSecondary-color": "#333333",

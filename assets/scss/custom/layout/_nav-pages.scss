@@ -305,28 +305,9 @@
                             }
                             .navPage-subMenu {
                                 .navPage-subMenu-item {
-                                    float:none;
-                                    padding:0 !important; //!important required to override !important
-                                    width:30%;
-                                    &:nth-child(5){
-                                        width:12%;
-                                    }
-                                    &:nth-child(1){
-                                        margin-left:0.25rem;
-                                    }
-                                    &>.navPage-subMenu-action {
-                                        margin-bottom:.2rem;
-                                        padding:0;
-                                        &::after {
-                                            display:none;
-                                        }
-                                        &>br {
-                                            display:block;
-                                        }
-                                    }
+                                  padding: .5rem .75rem !important;
                                 }
                                 .navPage-subMenu-list {
-                                    display:flex;
                                     .navPage-childList {
                                         .navPage-childList-item {
                                             .navPage-childList-action{

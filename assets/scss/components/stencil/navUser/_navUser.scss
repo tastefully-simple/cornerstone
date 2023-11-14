@@ -170,7 +170,7 @@
     }
 
     .navUser-action {
-        color: stencilColor("navUser-color");
+        color: $teal-hover;
 
         // scss-lint:disable NestingDepth
         &:hover,

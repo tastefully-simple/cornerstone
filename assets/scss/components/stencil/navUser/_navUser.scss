@@ -175,7 +175,7 @@
         // scss-lint:disable NestingDepth
         &:hover,
         &.is-open {
-            color: stencilColor("navUser-color-hover");
+            color: #12484c;
         }
     }
 
@@ -245,7 +245,7 @@
 }
 
 .navUser-or {
-    color: stencilColor("navUser-color");
+    color: #12484c;
     cursor: default;
     display: inline-block;
     margin: 0 remCalc(-12px);

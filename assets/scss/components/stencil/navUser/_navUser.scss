@@ -73,7 +73,7 @@
 }
 
 .navUser-action {
-    color: stencilColor("navUser-color");
+    color: #12484c;
     font-weight: fontWeight("bold");
     padding: spacing("base") spacing("half");
     text-decoration: none;
@@ -81,12 +81,12 @@
 
     &:hover,
     &.is-open {
-        color: stencilColor("navUser-color-hover");
+        color: #12484c;
 
         // scss-lint:disable NestingDepth
         svg {
-            fill: stencilColor("navUser-color-hover");
-            stroke: stencilColor("navUser-color-hover");
+            fill: #12484c;
+            stroke: #12484c;
         }
         // scss-lint:enable NestingDepth
     }
@@ -97,8 +97,8 @@
     }
 
     svg {
-        fill: stencilColor("navUser-color");
-        stroke: stencilColor("navUser-color");
+        fill: #12484c;
+        stroke: #12484c;
         transition: all 0.15s ease;
     }
 }

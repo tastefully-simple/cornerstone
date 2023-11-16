@@ -61,7 +61,7 @@
                     right:0;
                     top:50%;
                     .navUser-action {
-                        color:$burgundy;
+                        color:#137f87;
                     }
                 }
             }
@@ -213,7 +213,7 @@
                                     .navUser-item--cart{
                                         position:unset;
                                         .navUser-action{
-                                            color:stencilColor("navUser-color");
+                                            color: $white;
                                         }
                                     }
                                 }

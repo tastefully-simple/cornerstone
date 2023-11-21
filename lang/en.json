@@ -300,7 +300,7 @@
       "addresses": "Addresses",
       "payment_methods": "Payment Methods",
       "preferences": "Communication Preferences",
-      "manage_subscriptions": "Manage Subscriptions"
+      "manage_subscriptions": "Manage Autoship Subscriptions"
     },
     "mobile_nav": {
       "messages": "Messages",

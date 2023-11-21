@@ -54,7 +54,7 @@ product:
                 recipeImage = `<img src="${document.querySelectorAll('#slick-slide00 img')[0].src}" />`;
             }
 
-            logoImage = `<div class="header-logo-image-container"><img class="header-logo-image"  style="float:left;margin-left:0;padding-bottom:20px;width: 350px;height:70;max-width: 80%;" src="{{getImage settings.store_logo.image 'logo_size'}}"></div>`;
+            logoImage = `<div><div class="header-logo-image-container"><img class="header-logo-image"  style="float:left;margin-left:0;padding-bottom:20px;width: 350px;height:70px;max-width: 80%;" src="{{getImage settings.store_logo.image 'logo_size'}}"></div></div>`;
            
             const printLayer = document.createElement('div');
             printLayer.className = 'recipe-print-layer';

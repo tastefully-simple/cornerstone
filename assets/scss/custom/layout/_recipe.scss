@@ -324,7 +324,7 @@
 
 @media print {
     .header, .footer, #consent-manager-update-banner, #consent-manager,
-    .sharethis_toolbox, .productView-rating, .footer, .productView, #main-content, .partybar, nav, iframe#launcher {
+    .sharethis_toolbox, .productView-rating, .footer, .productView, #main-content, .partybar, nav, iframe#launcher, iframe#SmileUIPromptContainer, iframe#smile-ui-container, iframe.smile-launcher-frame {
         display: none;
     }
 

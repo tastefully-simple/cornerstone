@@ -466,8 +466,8 @@ class FindAParty {
          * it's not really obvious that the party bar gets hidden.
          */
         const appleGreen = '#6e7a06';
-
-        $party.css('background-color', appleGreen);
+        const grape = '#681B49';
+        $party.css('background-color', grape);
 
         // Show party bar in desktop or mobile
         if (this.isDesktop()) {

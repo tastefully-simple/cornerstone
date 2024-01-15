@@ -14,7 +14,7 @@
             {{inject 'enterPass' (lang 'forms.validate.common.password')}}
             <div class="form-field">
                 <label class="form-label" for="login_email">{{lang 'login.field_email'}}</label>
-                <input class="form-input" name="login_email" id="login_email" type="email">
+                <input class="form-input" name="login_email" id="login_email" type="email" debounce-disable="true">
             </div>
             <div class="form-field">
                 <label class="form-label" for="login_pass">{{lang 'login.field_password'}}</label>

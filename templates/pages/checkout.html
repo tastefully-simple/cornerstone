@@ -8,6 +8,11 @@
     window.language = {{{langJson 'optimized_checkout'}}};
 </script>
 
+{{~inject 'template' template}}
+<script>window.__webpack_public_path__ = "{{cdn 'assets/dist/'}}";</script>
+<script src="{{cdn 'assets/dist/theme-bundle.main.js'}}"></script>
+<script>window.stencilBootstrap("checkout", {{jsContext}}, false).load();</script>
+
 {{{head.scripts}}}
 
 {{/partial}}

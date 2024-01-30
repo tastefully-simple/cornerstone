@@ -384,3 +384,29 @@ $optimizedCheckout-input--error-boxShadow: 0 0 3px transparentize(stencilColor("
 .continueButtonContainer {
     display: none;
 }
+
+#checkout-page-container {
+    .customer-no-account {
+        display: flex;
+        .img-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            img {
+                height: 100px;
+                min-width: 100px;
+                width: 100px;
+            }
+        }
+        .customer-no-account-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 30px;
+            .have-account-text {
+                margin-bottom: 0px;
+            }
+        }
+    }
+}

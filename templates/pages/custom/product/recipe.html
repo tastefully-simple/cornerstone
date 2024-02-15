@@ -43,6 +43,7 @@ product:
          */
         if(document.readyState === 'complete'){
             let recipeImage;
+            let logoImage;
             const recipeBody = document.getElementsByClassName('recipe-main')[0].innerHTML;
             const recipeTitle = document.getElementsByClassName('productView-product')[0].innerHTML;
 
@@ -53,13 +54,15 @@ product:
                 recipeImage = `<img src="${document.querySelectorAll('#slick-slide00 img')[0].src}" />`;
             }
 
+            logoImage = `<div style="display: flex;flex-direction: column-reverse;"><img style="float:left;margin-left:0;margin-bottom:20px;width: 300px;height:44px;max-width: 70%;" src="{{getImage settings.store_logo.image 'logo_size'}}"></div>`;
+           
             const printLayer = document.createElement('div');
             printLayer.className = 'recipe-print-layer';
 
             const target = document.querySelector('.footer');
             target.parentNode.insertBefore(printLayer, target);
 
-            document.getElementsByClassName('recipe-print-layer')[0].innerHTML = `${recipeImage}<div id="recipe-print-title">${recipeTitle}</div><div id="recipe-print-body">${recipeBody}</div>`;
+            document.getElementsByClassName('recipe-print-layer')[0].innerHTML = `${logoImage}${recipeImage}<div id="recipe-print-title">${recipeTitle}</div><div id="recipe-print-body">${recipeBody}</div>`;
 
             const costPerSaving = document.getElementById('cost-per-saving').innerHTML;
             const recipeDescription = document.querySelector('#recipe-print-title .productView-recipe-description').innerHTML;

@@ -2,8 +2,8 @@ __webpack_public_path__ = window.__webpack_public_path__; // eslint-disable-line
 
 import Global from './theme/global';
 
-const getAccount = () => import('./theme/account');
-const getLogin = () => import('./theme/auth');
+const getAccount = () => import('./theme/account-override');
+const getLogin = () => import('./theme/auth-override');
 const noop = null;
 
 const pageClasses = {

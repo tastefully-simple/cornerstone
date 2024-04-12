@@ -34,7 +34,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     - name: Install Stencil CLI Dependency
-      run: npm install -g @bigcommerce/stencil-cli
+      run: npm install -g @bigcommerce/stencil-cli@7.4.0
     
     - name: Install Dependencies
       run: npm ci

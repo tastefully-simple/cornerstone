@@ -48,7 +48,7 @@
     "ts_api_environment": "qa1",
     "ts_current_store_base_url": "https://tastefully-simple-sandbox-2.mybigcommerce.com",
     "ts_shop_more_url": "/shop/",
-    "ts_tsapi_base_url": "tsapi.tastefullysimple.com",
+    "ts_tsapi_base_url": "gateway.api.tastefullysimple.com/tsapi",
     "consultant_api_base_url": "consultant.api.tastefullysimple.com",
     "ts_tsapi_host_party_base_url": "party.api.tastefullysimple.com",
     "ts_help_email": "help@tastefullysimple.com",

@@ -350,6 +350,20 @@
         // scss-lint:disable SelectorDepth, NestingDepth
         .button {
             width: 100%;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+            
+            i.fas {
+                color: #ffffff;
+                text-shadow: -1px 0 #7f4252, 0 1px #7f4252, 1px 0 #7f4252, 0 -1px #7f4252;
+            }
+
+            &.is-open {
+                i.fas {
+                    color: #7f4252;
+                    text-shadow: none;
+                }
+            }
 
             @include breakpoint("large") {
                 margin-right: spacing("half");

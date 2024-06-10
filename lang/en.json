@@ -294,7 +294,7 @@
       "orders": "Order History",
       "returns": "Returns",
       "messages": "Messages ({num_new_messages})",
-      "wishlists": "Favorite Lists",
+      "wishlists": "Favorite Lists ({num_wishlists})",
       "your_favorites": "Favorite Lists",
       "view_favorite": "View Favorite",
       "recently_viewed": "Recently Viewed",
@@ -306,7 +306,7 @@
     },
     "mobile_nav": {
       "messages": "Messages",
-      "wishlists": "Favorites"
+      "wishlists": "Favorite Lists"
     },
     "addresses": {
       "heading": "Addresses",
@@ -481,8 +481,8 @@
       "add": "Add Favorite",
       "delete_all": "Delete All",
       "edit": "Edit Favorite",
-      "view_heading": "Favorite: {name}",
-      "share_intro": "Share this Favorite with friends:",
+      "view_heading": "Favorite List: {name}",
+      "share_intro": "Share this Favorite List with friends:",
       "num_products": "{num_products, plural, one {1 product} other {# products}}",
       "create": "Create Favorite",
       "save": "Save Favorite",

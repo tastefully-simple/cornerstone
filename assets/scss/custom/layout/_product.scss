@@ -5,6 +5,9 @@
 // Product Page
 .productView {
   // Product Details Section - productView-product
+  .productView-description.mobile-only{
+    padding-top: 1.5rem;
+  }
   .productView-details {
     margin-bottom: 0px;
 

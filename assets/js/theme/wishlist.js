@@ -43,7 +43,7 @@ export default class WishList extends PageManager {
 
                     cb(result);
                 },
-                errorMessage: 'You must enter a wishlist name.',
+                errorMessage: 'You must enter a favorite list name.',
             },
         ]);
 

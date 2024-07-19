@@ -294,7 +294,7 @@
       "orders": "Order History",
       "returns": "Returns",
       "messages": "Messages ({num_new_messages})",
-      "wishlists": "Favorite Lists ({num_wishlists})",
+      "wishlists": "Favorite Lists",
       "your_favorites": "Favorite Lists",
       "view_favorite": "View Favorite",
       "recently_viewed": "Recently Viewed",

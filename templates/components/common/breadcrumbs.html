@@ -15,8 +15,12 @@
                                 {{lang 'account.nav.orders'}}
                             {{else if name "==" "Address Book"}}
                                 {{lang 'account.nav.addresses'}}
+                            {{else if name "==" "Your Wishlists"}}
+                                {{lang 'account.nav.your_favorites'}}
+                            {{else if name "==" "View Wishlist"}}
+                                {{lang 'account.nav.view_favorite'}}
                             {{else}}
-                                {{name}}
+                                {{#if name "==" "Edit Wishlist" }}Edit Favorite List{{else}}{{name}}{{/if}}
                             {{/if}}
                             </span>
                     </a>

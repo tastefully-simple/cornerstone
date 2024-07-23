@@ -279,7 +279,7 @@
       "fact2": "Save multiple shipping addresses",
       "fact3": "Access your order history",
       "fact4": "Track new orders",
-      "fact5": "Save items to your Wish List",
+      "fact5": "Save items to your Favorite",
       "create_account": "Create Account"
     }
   },
@@ -294,7 +294,9 @@
       "orders": "Order History",
       "returns": "Returns",
       "messages": "Messages ({num_new_messages})",
-      "wishlists": "Wish Lists",
+      "wishlists": "Favorite Lists",
+      "your_favorites": "Favorite Lists",
+      "view_favorite": "View Favorite",
       "recently_viewed": "Recently Viewed",
       "settings": "Account Profile",
       "addresses": "Addresses",
@@ -304,7 +306,7 @@
     },
     "mobile_nav": {
       "messages": "Messages",
-      "wishlists": "Wish Lists"
+      "wishlists": "Favorite Lists"
     },
     "addresses": {
       "heading": "Addresses",
@@ -465,28 +467,28 @@
       "no_items": "The items you've recently looked at on our site will appear below."
     },
     "wishlists": {
-      "heading": "Wish Lists",
-      "tag_line": "Fill in the form below to create a new Wish List. Click the \"Create Wish List\" button when you're done.",
-      "new": "New Wish List",
-      "you_have_none": "You have no Wish Lists, add one now.",
-      "empty_wishlist": "Your Wish List is empty. When you add items to your Wish List they will appear here.",
+      "heading": "Favorite Lists",
+      "tag_line": "Fill in the form below to create a new Favorite. Click the \"Create Favorite\" button when you're done.",
+      "new": "New Favorite List",
+      "you_have_none": "You have no Favorites, add one now.",
+      "empty_wishlist": "Your Favorite is empty. When you add items to your Favorite they will appear here.",
       "num_items": "Items",
-      "add_item": "Add to Wish List",
+      "add_item": "Add to Favorite",
       "remove_item": "Remove Item",
-      "name": "Wish List Name",
+      "name": "Favorite List Name",
       "shared": "Shared",
       "action": "Action",
-      "add": "Add Wish List",
+      "add": "Add Favorite",
       "delete_all": "Delete All",
-      "edit": "Edit Wish List",
-      "view_heading": "Wish List: {name}",
-      "share_intro": "Share this Wish List with friends:",
+      "edit": "Edit Favorite",
+      "view_heading": "Favorite List: {name}",
+      "share_intro": "Share this Favorite List with friends:",
       "num_products": "{num_products, plural, one {1 product} other {# products}}",
-      "create": "Create Wish List",
-      "save": "Save Wish List",
-      "delete_alert": "Are you sure you want to delete your Wish List(s)? This action cannot be undone.",
-      "create_new": "Create New Wish List",
-      "add_to_default": "Add to My Wish List",
+      "create": "Create Favorite",
+      "save": "Save Favorite",
+      "delete_alert": "Are you sure you want to delete your Favorite(s)? This action cannot be undone.",
+      "create_new": "Create New Favorite",
+      "add_to_default": "Add to My Favorite",
       "copy_link": "Copy Link",
       "link_copied": "Copied!"
     }
@@ -650,8 +652,8 @@
       "searchsubs": "Automatically search sub categories"
     },
     "wishlist": {
-      "name": "Wish List Name:",
-      "public": "Share Wish List?"
+      "name": "Favorite Name:",
+      "public": "Share Favorite?"
     },
     "validate": {
       "account": {

@@ -465,7 +465,7 @@
         "ts_current_store_base_url": "https://tastefully-simple-sandbox-1.mybigcommerce.com",
         "ts_shop_more_url": "/shop/",
         "ts_join_store_url": "https://tastefully-simple-inc-sandbox-5.mybigcommerce.com",
-        "ts_affiliation_timer": 60,
+        "ts_affiliation_timer": 720,
         "zoy_dev_mode": false,
         "ts_affiliate_link": "https://tastefully-simple-sandbox-3.mybigcommerce.com/ts-affiliate-marketing",
         "google_tagmanager_status": "1",

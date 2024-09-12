@@ -68,8 +68,9 @@
     "webpack-merge": "~6.0.1"
   },
   "scripts": {
-    "build": "npx webpack --config webpack.prod.js",
-    "buildDev": "npx webpack --config webpack.dev.js",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": " react-scripts --openssl-legacy-provider build && npx webpack --config webpack.prod.js",
+    "buildDev": "react-scripts --openssl-legacy-provider build && npx webpack --config webpack.dev.js",
     "lighthouse": "npx lighthouse --config-path=lighthouse-config.js --quiet --output json --chrome-flags=\"--headless\" $URL | jq '.audits | map_values(.rawValue)'",
     "test": "npx jest"
   }

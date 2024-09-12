@@ -68,7 +68,7 @@
   },
   "scripts": {
     "start": "set NODE_OPTIONS=--openssl-legacy-provider",
-    "build": "npx webpack --config webpack.prod.js",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && npx webpack --config webpack.prod.js",
     "buildDev": "npx webpack --config webpack.dev.js",
     "lighthouse": "npx lighthouse --config-path=lighthouse-config.js --quiet --output json --chrome-flags=\"--headless\" $URL | jq '.audits | map_values(.rawValue)'",
     "test": "npx jest"
